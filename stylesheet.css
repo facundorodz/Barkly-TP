@@ -1,0 +1,32 @@
+
+body {
+    font-family: 'Oswald', sans-serif;
+    background: #191919;
+}
+
+.navbar {
+  background: linear-gradient(90deg, #222222 0%, #000000 100%);
+}
+
+.navbar-brand {
+    font-family: 'Oswald', oblique;
+    color:#DC3545;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.buscador{
+    margin-left: 45px;
+}
+
+
+
+#mas-info #iniciar-sesion {
+    margin-right: 10px;
+}
+
+#mas-info .nav-link {
+    font-size: 19px;
+    color:#DC3545;
+    margin-right: 10px;
+}
