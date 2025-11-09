@@ -1,9 +1,3 @@
-#loginCard {
-    display: inline-block;
-    justify-content: center;
-    align-items: center;
-}
-
 #loginElegir {
     display: flex;
     align-items: center;
