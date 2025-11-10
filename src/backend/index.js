@@ -1,10 +1,14 @@
-const express = require('express');
-const router = express.Router();
+import express from "express";
 
-router.get('/', (req, res) => {
-  res.json({ mensaje: 'Backend de Barkly-TP funcionando 🚀' });
-});
+const app = express();
 
-module.exports = router;
+app.use(express.json());
 
-// puedo correr con npm run dev
+app.get('/', (req,res) => {
+    res.send("Hello World")
+})
+
+
+
+export default app;
+// puedo correr con npm start

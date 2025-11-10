@@ -1,11 +1,6 @@
-const express = require('express');
-const app = express();
-const PORT = process.env.PORT || 3000;
+import app from "./index.js";
 
-app.use(express.json());
-
-const routes = require('./index');
-app.use('/api', routes);
+const PORT =  3000;
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
