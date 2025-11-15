@@ -6,7 +6,7 @@ En esta carpeta va todo el código del **home** y dentro de la carpeta **pages**
 >>> login.html
 >>> login.css
 >>> login.js 
->> Home
+> Home
 >>> home.html
 >>> home.css
 >>> home.js
