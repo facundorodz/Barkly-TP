@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postulate como Cuidador</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        h2, h3 {
+            color: #333;
+        }
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #cccccc;
+        }
+        textarea {
+            height: 100px;
+        }
+        .service-plan {
+            background: #fafafa;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .service-plan h4 {
+            margin: 0;
+            color: #444;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #4CAF50;
+            border: none;
+            color: white;
+            font-size: 18px;
+            border-radius: 8px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #45A049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🐾 Postulate como Cuidador</h2>
+    <p>Completá este formulario para ofrecer tus servicios de cuidado de perros.</p>
+
+    <form>
+
+        <!-- DATOS PERSONALES -->
+        <h3>1. Datos personales</h3>
+        <label>Nombre completo</label>
+        <input type="text" name="nombre" required>
+
+        <label>Email</label>
+        <input type="email" name="email" required>
+
+        <label>Teléfono</label>
+        <input type="tel" name="telefono" required>
+
+        <label>Ubicación (Ciudad / Barrio)</label>
+        <input type="text" name="ubicacion" required>
+
+        <label>Foto de perfil</label>
+        <input type="file" name="foto" accept="image/*" required>
+
+        <label>Edad</label>
+        <input type="number" name="edad" min="18" required>
+
+        <!-- EXPERIENCIA -->
+        <h3>2. Experiencia como cuidador</h3>
+
+        <label>Años de experiencia</label>
+        <select name="experiencia">
+            <option value="0">0 años</option>
+            <option value="1">1 año</option>
+            <option value="2">2 años</option>
+            <option value="3">3 años</option>
+            <option value="4+">4+ años</option>
+        </select>
+
+        <label>Descripción personal</label>
+        <textarea name="descripcion" placeholder="Contanos sobre vos y tu experiencia" required></textarea>
+
+        <!-- SERVICIOS -->
+        <h3>3. Planes de Servicio</h3>
+
+        <div class="service-plan">
+            <h4>🐾 Plan Estándar</h4>
+            <p>Incluye: Paseo corto + fotos del perro + comunicación básica.</p>
+            <label>Precio Estándar</label>
+            <input type="number" name="precio_estandar" placeholder="Ej: 6000" required>
+        </div>
+
+        <div class="service-plan">
+            <h4>🌟 Plan Premium</h4>
+            <p>Incluye: Paseo largo + juegos + reporte diario con fotos + comida (si es provista por el dueño).</p>
+            <label>Precio Premium</label>
+            <input type="number" name="precio_premium" placeholder="Ej: 9000" required>
+        </div>
+
+        <div class="service-plan">
+            <h4>💎 Plan Deluxe</h4>
+            <p>Incluye: Paseo largo + entrenamiento básico + videos diarios + cuidado en el hogar + atención especial.</p>
+            <label>Precio Deluxe</label>
+            <input type="number" name="precio_deluxe" placeholder="Ej: 12000" required>
+        </div>
+
+        <!-- DISPONIBILIDAD -->
+        <h3>4. Disponibilidad</h3>
+        <label>Días disponibles</label>
+        <select name="dias" multiple required>
+            <option>Lunes</option>
+            <option>Martes</option>
+            <option>Miércoles</option>
+            <option>Jueves</option>
+            <option>Viernes</option>
+            <option>Sábado</option>
+            <option>Domingo</option>
+        </select>
+
+        <label>Horarios disponibles</label>
+        <input type="text" name="horarios" placeholder="Ej: 9:00 - 20:00" required>
+
+        <label>Capacidad máxima (perros al mismo tiempo)</label>
+        <input type="number" name="capacidad" min="1" required>
+
+        <!-- FOTOS -->
+        <h3>5. Fotos del hogar o entorno</h3>
+        <input type="file" accept="image/*">
+        <input type="file" accept="image/*">
+        <input type="file" accept="image/*">
+        <input type="file" accept="image/*">
+
+        <!-- POLÍTICAS -->
+        <h3>6. Políticas y verificación</h3>
+        <label><input type="checkbox" required> Acepto los términos y condiciones</label>
+        <label><input type="checkbox" required> Me comprometo a cuidar de los animales con responsabilidad</label>
+
+        <!-- BOTÓN -->
+        <button type="submit">Enviar solicitud</button>
+
+    </form>
+</div>
+
+</body>
+</html>
