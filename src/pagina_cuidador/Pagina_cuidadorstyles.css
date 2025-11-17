@@ -31,8 +31,6 @@ body {
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -66,10 +64,14 @@ body {
     margin-bottom: 40px;
 }
 
+.cuidador-info {
+    padding: 0 20%;
+}
+
 .form-control {
     width: 100%;
     padding: 12px;
-    background-color: #0000;
+    background-color: #FFFF;
     border: 1px solid #3a3a3a;
     border-radius: 4px;
     color: var(--text);
@@ -84,6 +86,7 @@ body {
 
 h2, h3 {
     color: #FFFF;
+    font-family: 'Oswald', oblique;
 }
 
 label {
@@ -99,6 +102,19 @@ input, select {
     margin-top: 5px;
     border-radius: 5px;
     border: 1px solid #cccccc;
+}
+
+.title-campo {
+    margin-top: 40px;
+    text-align: center;
+    font-family: 'Oswald', oblique;
+}
+
+.label-beneficios {
+    margin-top: 10px;
+    margin-bottom: 0;
+    color: #DC3545;
+    font-weight: bold;
 }
 
 .paquetes-container, .photos-container {
