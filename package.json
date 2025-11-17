@@ -1,8 +1,9 @@
 {
   "name": "barkly-tp",
   "version": "1.0.0",
+  "type":"module",
   "description": "## Descripción Una página que permite contratar superheroes que se postulan como cuidadores/entrenadores de perros, donde el usuario puede acceder al catalogo completo, con el fin de encontrar el cuidador ideal para su perro. Al momento de la elección, el usuario cuenta con un servicio de reseñas para evaluar el desempeño del superheroe calificado por anteriores clientes. Los superheroes tienen distintas caracteristicas y experiencia, que determinan la relación con el perro del cliente. Los clientes pueden contratar tantos cuidadores como cantidad de perros. Los superheroes venden distintos paquetes, los cuales son determinados por sus cualidades y la cantidad de actividades que pueda ofrecer, deben ofrecer minimo 1 y como maximo 3.",
-  "main": "src/backend/index.js",
+  "main": "src/backend/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/backend/server.js",
