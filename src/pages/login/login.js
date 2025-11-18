@@ -1,8 +1,8 @@
 function redirigir() {
     if (document.getElementById("btnradio1").checked) {
-        console.log('Elegiste Usuario');
+        window.location.href = "../../index.html";
     } 
     else {
-        console.log('Elegiste Superheroe');
+        window.location.href = "index-superheroe.html";
     }
 }
