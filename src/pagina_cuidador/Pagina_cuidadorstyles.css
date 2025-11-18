@@ -153,7 +153,7 @@ input, select {
 .btn-success {
     width: 100%;
     padding: 15px;
-    background: #4CAF50;
+    background: #DC3545;
     border: none;
     color: white;
     font-size: 18px;
@@ -163,6 +163,5 @@ input, select {
 }
 
 .btn-success:hover {
-    background: #45A049;
+    background: #440E03;
 }
-
