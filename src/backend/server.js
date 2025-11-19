@@ -22,7 +22,10 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  //const { email, password } = req.body;
+  /*const { email, password } = req.body;
+  try {
+
+  } catch() */
   res.redirect("/login/login.html");
 });
 
