@@ -1,7 +1,6 @@
 {
   "name": "barkly-tp",
   "version": "1.0.0",
-  "type":"module",
   "description": "",
   "main": "src/backend/server.js",
   "scripts": {
