@@ -1,0 +1,115 @@
+<<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">  
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> 
+    
+    <title>Registro Usuario-Barkly Corporation</title>
+    
+    <link rel="stylesheet" href = "./registro_usuariostyle.css">
+    <link rel="icon" href="./assets/images/icono-metadata.png" type="image/png">
+    </link>        
+</head>
+
+<body>
+	<header>
+		<div class="navbar-container" justify-content="center" >            
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand d-flex align-items-center" href="#inicio"> 
+                    	<img src="./assets/images/icono-rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
+                    </a>
+                        <div class="collapse navbar-collapse align" id="mas-info">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#servicios">Servicios</a> 
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#about">Sobre Nosotros</a>
+                                </li>
+                            </ul>
+                            <button type="button" id="iniciar-sesion" class="btn btn-danger">Iniciar Sesión</button>
+                            <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                    	</div>
+                </div>
+            </nav>
+        </div>
+	</header>
+	<main>
+		<section class="admin-section">
+			<div class="conteiner">
+				<div class="admin-header">
+					<h1>Se parte de este gran mundo y encuentra el tu supercuidador ideal</h1>
+					<p>Rápido, seguro y completamente gratis.</p>
+				</div>
+				<form id="cuidador-form" class="cuidador-form" action="/registrar_cuidador" method="get">
+                    <div class="cuidador-info">
+
+                        <div class="campo-nombre">
+                          <label>Nombre Completo</label>
+                          <div class="control">
+                            <input class="input" type="text" placeholder="Nombre Completo">
+                          </div>
+                        </div>
+
+                        <div class="campo-nombre-perfil">
+                          <label>Nombre de perfil</label>
+                          <div class="control">
+                            <input class="input" type="text" placeholder="Nombre">
+                          </div>
+                        </div>
+
+                        <div class="campo-contrasenia">
+                          <label>Contraseña</label>
+                          <div class="control">
+                            <input class="input" type="text">
+                          </div>
+                        </div>
+
+                        <div class="campo-ubicacion">
+                          <label>Cuidad</label>
+                          <div class="control">
+                            <input class="input" type="text" placeholder="Cuidad">
+                          </div>
+                        </div>
+
+                        <div class="imagen-form"></div>
+                        <label for="cuidador-imagen">Foto de perfil</label>
+                        <input type="file" id="cuidador-imagen" class="form-control" accept="image/*" required>
+                        <small style="color: #FFFF;">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
+                        <div id="status" class="upload-status"></div>
+                        <div id="preview-imagen-conteiner" style="display: none;">
+                            <img id="imagen-preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; background-color: white;" alt="Preview imagen">
+                        </div>
+
+                        <h3 class="title-campo">Cantidad de Perros</h3>
+
+                        <select name="cant-perro">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4+">4+</option>
+                        </select>                       
+                    </div>
+                    <!-- TÉRMINOS Y CONDICIONES -->
+                    <h3 class="title-campo">Políticas y verificación</h3>
+
+                    <div class="section-terms mb-3">
+                        <input class="form-check-input" type="checkbox" required>
+                        <label class="form-check-label">
+                             Acepto los términos y condiciones
+                        </label>
+                        <button class="btn-success" type="submit">Registrarse</button>
+                    </div>
+				</form>
+			</div>
+		</section>
+	</main>
+</body>
+</html>
