@@ -1,26 +1,29 @@
 import express from "express";
 import cors from "cors";
-import path from "path";
-import { fileURLToPath } from "url";
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// Necesario para __dirname cuando usamos modules
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static("src/public")); // base de donde esta todo lo del front y back, entonces uso solo la ruta desde ahi en adelante
 
-// Ejemplo de ruta principal
+/*
+GET para mostrar las paginas 
+*/ 
+
 app.get("/", (req, res) => {
-  res.json({ message: "Backend Barkly-TP funcionando 🚀" });
+  res.redirect("/index.html");
 });
 
-// Puerto (usar env si existe)
-const PORT = process.env.PORT || 3000;
+app.get("/cargar_registrar_cuidador", (req, res) => {
+  res.redirect("/pagina_cuidador/pagina_cuidador.html");
+});
+
+app.get("/cargar_login", (req, res) => {
+  res.redirect("/login/login.html");
+});
 
 app.listen(PORT, () => {
   console.log(`🔥 Servidor backend corriendo en http://localhost:${PORT}`);
