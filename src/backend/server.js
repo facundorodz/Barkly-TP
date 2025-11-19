@@ -17,11 +17,11 @@ app.get("/", (req, res) => {
   res.redirect("/index.html");
 });
 
-app.get("/registrar_cuidador", (req, res) => {
+app.get("/cargar_registrar_cuidador", (req, res) => {
   res.redirect("/pagina_cuidador/pagina_cuidador.html");
 });
 
-app.get("/login", (req, res) => {
+app.get("/cargar_login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
