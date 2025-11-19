@@ -11,7 +11,7 @@ body {
 
 .navbar-brand {
     font-family: 'Oswald', oblique;
-    color:#DC3545;
+    color: #DC3545;
     font-size: 30px;
     font-weight: 500;
 }
@@ -31,8 +31,6 @@ body {
 }
 
 .container {
-    width: 90%;
-    max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
@@ -44,6 +42,8 @@ body {
 .admin-header {
     margin-bottom: 40px;
     text-align: center;
+    /*color: #FFFF;*/
+    background-color: #DC3545;
 }
 
 .admin-header h1 {
@@ -54,7 +54,7 @@ body {
 
 .admin-header p {
     color: var(--light-text);
-    font-size:  1.1rem;
+    font-size:  1.5rem;
     max-width: 700px;
     margin: 0 auto;
 }
@@ -66,10 +66,14 @@ body {
     margin-bottom: 40px;
 }
 
+.cuidador-info {
+    padding: 0 20%;
+}
+
 .form-control {
     width: 100%;
     padding: 12px;
-    background-color: #0000;
+    background-color: #FFFF;
     border: 1px solid #3a3a3a;
     border-radius: 4px;
     color: var(--text);
@@ -84,6 +88,7 @@ body {
 
 h2, h3 {
     color: #FFFF;
+    font-family: 'Oswald', oblique;
 }
 
 label {
@@ -101,6 +106,27 @@ input, select {
     border: 1px solid #cccccc;
 }
 
+.section-terms{
+    font-weight: bold;
+    display: block;
+    color: #DC3545;
+    padding: 0 10%;
+}
+
+.title-campo {
+    margin-top: 40px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Oswald', oblique;
+}
+
+.label-beneficios {
+    margin-top: 10px;
+    margin-bottom: 0;
+    color: #DC3545;
+    font-weight: bold;
+}
+
 .paquetes-container, .photos-container {
     max-width: 900px;
     margin: auto;
@@ -116,6 +142,8 @@ input, select {
     border-radius: 10px;
     padding: 15px;
     margin-bottom: 15px;
+    box-shadow: 0.4rem 0.4rem #DC3545;
+
 }
 .service-plan h4 {
     margin: 0;
@@ -125,7 +153,7 @@ input, select {
 .btn-success {
     width: 100%;
     padding: 15px;
-    background: #4CAF50;
+    background: #DC3545;
     border: none;
     color: white;
     font-size: 18px;
@@ -135,5 +163,5 @@ input, select {
 }
 
 .btn-success:hover {
-    background: #45A049;
+    background: #440E03;
 }
