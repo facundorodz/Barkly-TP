@@ -7,7 +7,7 @@ const port = 3000;
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
 app.use(express.static("src/public")); // acceder a todo lo de la carpeta public desde ese punto en adelante
-app.use("/users", usersRouter);
+
 
 /*
 GET para mostrar las paginas 
@@ -36,6 +36,8 @@ app.get("/pagina_seleccionar", (req, res) => {  // carga la pagina de seleccion 
     }*/
    res.redirect("/pagina_seleccion_registrar/pagina_seleccion_registro.html");
 });
+
+app.use("/users", usersRouter);
 
 
 app.listen(port, () => {
