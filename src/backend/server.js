@@ -1,17 +1,21 @@
 const express = require("express");
+const usersRouter = require("./routes/users.js");
+
 const app = express();
 const port = 3000;
 
-const pool = require("./bdd/bdd");
-
+app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
-
 app.use(express.static("src/public")); // acceder a todo lo de la carpeta public desde ese punto en adelante
+app.use("/users", usersRouter);
 
 /*
 GET para mostrar las paginas 
 */ 
 
+app.get("/", (req, res) => {
+  res.redirect("/index.html");
+});
 
 app.get("/registrar_cuidador", (req, res) => {
   res.redirect("/pagina_cuidador/pagina_cuidador.html");
@@ -31,41 +35,6 @@ app.get("/pagina_seleccionar", (req, res) => {  // carga la pagina de seleccion 
         return res.redirect("/registrar_cuidador");
     }*/
    res.redirect("/pagina_seleccion_registrar/pagina_seleccion_registro.html");
-});
-
-app.post("/login", (req, res) => {
-  console.log("login", req.body); 
-  const { name, pass } = req.body;
-  // let response_usuario = await pg.realizarQuery  ("SELECT * FROM usuarios WHERE nombre = $1 AND contrasenia = $2",[req.body.name, req.body.pass]);
-  // let response_superheroe = await pg.realizarQuery  ("SELECT * FROM superheroes WHERE nombre = $1 AND contrasenia = $2",[req.body.name, req.body.pass]);
-  try {
-      let is_user = false
-  if (response_usuario.lenght > 0 || response_superheroe > 0){
-    is_user = true
-  } 
-  
-  } catch(error) {
-      console.error(error);
-      res.status(404).send("not found"); 
-  }
-
-  if (response_usuario.lenght > 0 && is_user == true) {
-     // res.redirect("/pagina_para_usuario");  
-  }
-    if (response_superheroe.lenght > 0 && is_user == true) {
-     // res.redirect("/pagina_para_superheroe"); 
-  }
-  // terminar pero esta seria la base
-});
-
-app.get("/usuarios", async (req, res) => {
-  try {
-    const resultado = await pool.query("SELECT * FROM usuarios");
-    res.json(resultado.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error en la BD");
-  }
 });
 
 
