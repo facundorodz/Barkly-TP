@@ -1,7 +1,10 @@
 
 body {
     font-family: 'Oswald', sans-serif;
-    background: #191919;
+    background-image: url(../assets/images/newspaper.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     cursor: url(../assets/images/cursor_default.png), auto;
 }
 
@@ -11,6 +14,7 @@ a {
 
 .navbar {
   background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+  position: sticky;
 }
 
 .navbar-brand {
@@ -18,10 +22,16 @@ a {
     color:#DC3545;
     font-size: 30px;
     font-weight: 500;
+    
 }
 
 .buscador{
     margin-left: 45px;
+    top: 0px;
+}
+
+[role=button] {
+  margin-right: 10px;
 }
 
 .btn:hover {
@@ -34,12 +44,12 @@ a {
 
 #mas-info .nav-link {
     font-size: 19px;
-    color:#DC3545;
+    color:rgb(220, 53, 69);
     margin-right: 10px;
 }
 
 .eslogan {
-    height:450px;
+    height:600px;
     background: linear-gradient(180deg, #040000 0%, #a02424 100%);
     color: #ffffff;
     display: flex;
@@ -58,4 +68,120 @@ a {
     font-size: 40px;
     font-weight: 300;
     line-height: 0.6;
+}
+
+.servicios {
+    height: 400px;
+    color: #590101;
+    margin-top: 40px;
+
+}
+
+.servicios h1 {
+    -webkit-text-stroke: 1px #f9c8ac;
+    font-weight: 600;
+}
+.domicilio {
+    background-color: #590101; 
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;      
+    width: 80%;               
+    color: #ffffff; 
+    transition: all 0.4s ease;           
+}
+
+.domicilio p {
+    margin: 0px;
+}
+
+.paseo {
+    background-color: #590101;
+    padding-top: 5px;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                    
+    color: #ffffff;   
+    height: 200px;
+    width: 400px;  
+    transition: all 0.4s ease;       
+}
+
+.entrenamiento {
+    background-color: #590101;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                 
+    color: #ffffff;   
+    height: 200px;
+    width: 400px;  
+    transition: all 0.4s ease;      
+}
+
+.entrenamiento p {
+    margin: 0px;
+}
+
+.cuidadores {
+
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 100%;
+    height: 1000px;
+    flex-wrap: wrap;
+   
+    background: linear-gradient(180deg, #a02424 0%, #000000 100%);
+    color:#ffffff;
+    background-color: #040000;
+
+}
+
+.cuidadores h1 {
+    margin-top: 40px;
+}
+.cuidadores h3 {
+    color: #ffffff;
+}
+
+.cuidadores p{
+    color: #ffffff;
+}
+
+ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+li {
+   list-style-position: inside;
+}
+
+.polaroid {
+    box-shadow: #000000;
+    transform: rotate(-5deg);
+}
+
+hr {
+    width: 300px;
+    margin: auto;
+    height: 4px;
+    padding-top: 4px;
+}
+
+.resenias {
+    padding: 2px;
+}
+
+.cuidador_perfil {
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0px 0px 10px #ffc6a0;
+}
+
+.btn-vermas {
+    display: inline-block;   /* IMPORTANTE */
+    width: auto;             /* evita que ocupe toda la pantalla */
+    padding: 10px 20px;      /* tamaño del botón */
+    font-size: 16px;         /* tamaño del texto */
 }
