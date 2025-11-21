@@ -1,13 +1,6 @@
-const { Pool } = require("pg");
-const express = require("express");
-const cors = require("cors");
+import pg from "pg";
 
-const app = express();
-app.use(cors());
-app.use(express.json()); 
-app.use(express.static("src/public"));
-
-const pool = new Pool({
+export const pool = new pg.Pool({
   user: "postgres",
   host: "localhost",
   database: "postgres",
