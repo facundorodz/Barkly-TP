@@ -1,6 +1,3 @@
-import { pool } from "./src/bdd/bdd.js";
-
-
 const express = require("express");
 const cors = require("cors");
 const pool = require("./src/bdd/bdd.js");  // ← Importa la conexión
