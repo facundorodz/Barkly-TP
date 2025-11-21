@@ -54,28 +54,21 @@
                         <div class="campo-nombre">
                           <label>Nombre Completo</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Nombre Completo">
+                            <input id="nombre" class="input" type="text" placeholder="Nombre Completo">
                           </div>
                         </div>
 
                         <div class="campo-nombre-perfil">
                           <label>Nombre de perfil</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Nombre">
+                            <input id="perfil" class="input" type="text" placeholder="Nombre">
                           </div>
                         </div>
 
                         <div class="campo-contrasenia">
                           <label>Contraseña</label>
                           <div class="control">
-                            <input class="input" type="text">
-                          </div>
-                        </div>
-
-                        <div class="campo-ubicacion">
-                          <label>Cuidad</label>
-                          <div class="control">
-                            <input class="input" type="text" placeholder="Cuidad">
+                            <input id="password" class="input" type="text">
                           </div>
                         </div>
 
@@ -90,7 +83,7 @@
 
                         <h3 class="title-campo">Cantidad de Perros</h3>
 
-                        <select name="cant-perro">
+                        <select id="perros" name="cant-perro">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -112,4 +105,27 @@
 		</section>
 	</main>
 </body>
+
+<script>
+    document.querySelector("form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const datos = {
+        nombre_completo: document.getElementById("nombre").value,
+        nombre_perfil: document.getElementById("perfil").value,
+        contrasena: document.getElementById("password").value,
+        cantidad_perros: document.getElementById("perros").value
+    };
+
+    const resp = await fetch("http://localhost:3000/registro_usuario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    });
+
+    const data = await resp.json();
+    alert(data.mensaje);
+});
+</script>
+
 </html>
