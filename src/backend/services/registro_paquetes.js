@@ -13,13 +13,12 @@ app.post("/registrar_paquete", async (req, res) => {
       nombre_paquete,
       descripcion,
       precio,
-      cupos_disponibles
     } = req.body;
 
     const query = `
       INSERT INTO paquetes
-      (id_superheroe, nombre_paquete, descripcion, precio, cupos_disponibles)
-      VALUES ($1, $2, $3, $4, $5)
+      (id_superheroe, nombre_paquete, descripcion, precio)
+      VALUES ($1, $2, $3, $4)
       RETURNING *;
     `;
 
@@ -28,7 +27,6 @@ app.post("/registrar_paquete", async (req, res) => {
       nombre_paquete,
       descripcion,
       precio,
-      cupos_disponibles
     ];
 
     const result = await pool.query(query, values);
@@ -44,7 +42,7 @@ app.post("/registrar_paquete", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log("Backend de paquetes activo → http://localhost:3001");
+app.listen(3000, () => {
+  console.log("Backend de paquetes activo → http://localhost:3000");
 });
 
