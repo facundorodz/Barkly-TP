@@ -1,0 +1,41 @@
+* {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body {
+    background-image: url("../../../assets/images/fondo_crear-post.jpg");
+    backdrop-filter: blur(10px);
+}
+
+#navbar-negra {
+    background-color: black;
+}
+
+#texto-navbar {
+    color: red;
+}
+
+.titulos {
+    color: white;
+}
+
+#descripcion-del-titulo {
+    color: gray;    
+}
+
+.cajas-de-texto {
+    color: white;
+    background-color: darkred; 
+}
+
+
+.table th, .table td {
+    background-color: darkred; 
+    color: white;
+}
+
+.table input {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    border: 1px solid white;
+}
