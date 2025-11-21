@@ -28,9 +28,6 @@
                                 <a class="nav-link active" aria-current="page" href="#servicios">Servicios</a> 
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
-                                </li>
-                                <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#about">Sobre Nosotros</a>
                                 </li>
                             </ul>
@@ -57,17 +54,17 @@
                           </div>
                         </div>
 
-                        <div class="campo-telefono">
-                          <label>Telefono</label>
+                        <div class="campo-franquicia">
+                          <label>Nombre Franquisia</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Telefono">
+                            <input class="input" type="text" placeholder="Franquicia">
                           </div>
                         </div>
 
-                        <div class="campo-ubicacion">
-                          <label>Cuidad</label>
+                        <div class="campo-poderes">
+                          <label>Poderes</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Cuidad">
+                            <input class="input" type="text">
                           </div>
                         </div>
 
@@ -105,7 +102,7 @@
                     <div class="paquetes-container">
 
                         <div class="card text-bg-light mb-3 service-plan">
-                            <h4 class="card-header">🐾 Paquete Estándar</h4>
+                            <h4 class="card-header" id="nombre_paquete">🐾 Paquete Estándar</h4>
                             <p class="label-beneficios">Beneficios</p>
                             <input type="text" name="precio_estandar" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
                             <label>Precio Estándar</label>
@@ -148,4 +145,33 @@
 		</section>
 	</main>
 </body>
+
+<script>
+document.getElementById("form-superheroe").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const datos = {
+        nombre_superheroe: document.getElementById("nombre_superheroe").value,
+        franquicia: document.getElementById("franquicia").value,
+        experiencia: document.getElementById("experiencia").value,
+        poderes: document.getElementById("poderes").value,
+
+        // paquete
+        nombre_paquete: document.getElementById("nombre_paquete").value,
+        descripcion: document.getElementById("descripcion").value,
+        precio: document.getElementById("precio").value,
+        cupos_disponibles: document.getElementById("cupos_disponibles").value
+    };
+
+    const res = await fetch("http://localhost:3000/registrar_superheroe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    });
+
+    const data = await res.json();
+    alert(data.mensaje);
+});
+</script>
+
 </html>
