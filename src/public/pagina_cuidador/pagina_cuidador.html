@@ -45,7 +45,7 @@
                     <h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
                     <p>Registrate para poder ofrecer sus paquetes de servicios</p>
                 </div>
-                <form id="cuidador-form" class="cuidador-form" action="/registrar_cuidador" method="get">
+                <form id="cuidador-form" class="cuidador-form" action="./src/backend/services/registrar_paquetes" method="get">
                     <div class="cuidador-info">
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
@@ -147,7 +147,7 @@
 </body>
 
 <script>
-document.getElementById("form-superheroe").addEventListener("submit", async (e) => {
+document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const datos = {
@@ -157,7 +157,7 @@ document.getElementById("form-superheroe").addEventListener("submit", async (e) 
         //cupos_disponibles: document.getElementById("cupos_disponibles").value
     };
 
-    const res = await fetch("http://localhost:3000/registrar_superheroe", {
+    const res = await fetch("http://localhost:3000/registrar_paquetes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(datos)
