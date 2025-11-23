@@ -8,51 +8,52 @@
         <title> Barkly Corporation</title>
         
         <link rel="stylesheet" href="./seleccion_registrostyle.css">
-        <link rel="icon" href="./assets/images/icono-metadata.png" type="image/png">
+        <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
         </link>
     </head>
 
     <body>
-        <div class="container text-center py-5">
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="container text-center py-5" id="fondo-registrar">
+                <form id="pagina_seleccionar-form" class="pagina_seleccionar-form" action="/pagina_seleccionar" method="get">
+                    <h2 class="mb-3">Regístrate</h2>
+                    <p class="descripcion-boton">Elegí cómo querés registrarte en la plataforma</p>
+                    <div class="row justify-content-center g-4">
 
-            <form id="pagina_seleccionar-form" class="pagina_seleccionar-form" action="/pagina_seleccionar" method="get">
-
-                <h2 class="mb-3">Regístrate</h2>
-                <p class="text-light mb-5">Elegí cómo querés registrarte en la plataforma</p>
-
-                <div class="row justify-content-center g-4">
-
-                    <!-- Usuario -->
-                    <div class="col-md-4">
-                        <button type="submit" name="tipo" value="usuario" class="text-decoration-none" style="background:none;border:none;padding:0;width:100%;">
-                            <div class="card p-4 shadow card-option">
-                                <div class="icon-circle mb-3">👤</div>
-                                <h4>Como Usuario</h4>
-                                <p class="text-muted">
-                                    Soy dueño de un perro y busco cuidadores o servicios.
-                                </p>
-                            </div>
-                        </button>
-                    </div>
-
-                    <!-- Superhéroe / Cuidador -->
-                    <div class="col-md-4">
-                        <button type="submit" name="tipo" value="cuidador" class="text-decoration-none" style="background:none;border:none;padding:0;width:100%;">
-                            <div class="card p-4 shadow card-option">
-                                <div class="icon-circle mb-3">
-                                    <img src="./assets/images/icono-metadata.png" class="imagen-icono">
+                        <!-- Usuario -->
+                        <div class="col-md-4">
+                            <button type="submit" name="tipo" value="usuario" class="text-decoration-none" style="background:none;border:none;padding:0;width:100%;">
+                                <div class="card p-4 shadow card-option">
+                                    <div class="icon-circle mb-3">
+                                        <img src="../../../assets/images/icono_login.png" class="imagen-icono">
+                                    </div>
+                                    <h4>Como Usuario</h4>
+                                    <p class="descripcion-boton">
+                                        Soy dueño de un perro y busco cuidadores o servicios.
+                                    </p>
                                 </div>
-                                <h4>Como Superhéroe</h4>
-                                <p class="text-muted">
-                                    Quiero cuidar perros y ofrecer mis servicios en la plataforma.
-                                </p>
-                            </div>
-                        </button>
+                            </button>
+                        </div>
+
+                        <!-- Superhéroe / Cuidador -->
+                        <div class="col-md-4">
+                            <button type="submit" name="tipo" value="cuidador" class="text-decoration-none" style="background:none;border:none;padding:0;width:100%;">
+                                <div class="card p-4 shadow card-option">
+                                    <div class="icon-circle mb-3">
+                                        <img src="../../../assets/images/icono_metadata.png" class="imagen-icono">
+                                    </div>
+                                    <h4>Como Superhéroe</h4>
+                                    <p class="descripcion-boton">
+                                        Quiero cuidar perros y ofrecer mis servicios en la plataforma.
+                                    </p>
+                                </div>
+                            </button>
+                        </div>
+                        
                     </div>
-                </div>
-
-            </form>
-
+                </form>
+            </div>
         </div>
     </body>
+
 </html>
