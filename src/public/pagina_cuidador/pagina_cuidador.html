@@ -55,16 +55,16 @@
                         </div>
 
                         <div class="campo-franquicia">
-                          <label>Nombre Franquisia</label>
+                          <label>Nombre de su Franquicia</label>
                           <div class="control">
                             <input class="input" type="text" placeholder="Franquicia">
                           </div>
                         </div>
 
                         <div class="campo-poderes">
-                          <label>Poderes</label>
+                          <label>Explica tu trabajo como Superheroe</label>
                           <div class="control">
-                            <input class="input" type="text">
+                            <input class="input" type="text" placeholder="ej. Mis poderes son ... y los uso para ...">
                           </div>
                         </div>
 
@@ -80,52 +80,22 @@
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
                         <select name="experiencia">
-                            <option value="0">0 años</option>
-                            <option value="1">1 año</option>
-                            <option value="2">2 años</option>
-                            <option value="3">3 años</option>
-                            <option value="4+">4+ años</option>
+                            <option value="0">0-1 Años</option>
+                            <option value="1">2-3 Años</option>
+                            <option value="2">3-5 Años</option>
+                            <option value="3">+5 Años</option>
                         </select>
 
-                        <label>Perfil de perros que aceptás</label>
+                        <label>¿Qué tipo de perros aceptas?</label>
                         <select name="tipos-perros" multiple>
+                            <option>Cachorros</option>
                             <option>Pequeños</option>
                             <option>Medianos</option>
                             <option>Grandes</option>
-                            <option>Cachorros</option>
                             <option>Perros con medicación</option>
                         </select>                        
                     </div>
 
-                    <h3 class="title-campo">Paquetes ofrecidos</h3>
-
-                    <div class="paquetes-container">
-
-                        <div class="card text-bg-light mb-3 service-plan">
-                            <h4 class="card-header" id="nombre_paquete">🐾 Paquete Estándar</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                            <label>Precio Estándar</label>
-                            <input type="number" id="precio" placeholder="Ej: $6000" required>
-                        </div>
-
-                        <div class="card text-bg-warning mb-3 service-plan">
-                            <h4 class="card-header" id="nombre_paquete">🌟 Paquete Premium</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                            <label>Precio Premium</label>
-                            <input type="number" id="precio" placeholder="Ej: $9000" required>
-                        </div>
-
-                        <div class="card text-bg-dark mb-3 service-plan">
-                            <h4 class="card-header" id="nombre_paquete" style="color: white;">💎 Paquete de Superheroe</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                            <label>Precio Deluxe</label>
-                            <input type="number" id="precio" placeholder="Ej: $12000" required>
-                        </div>
-
-                    </div>
                     <!-- TÉRMINOS Y CONDICIONES -->
                     <h3 class="title-campo">Políticas y verificación</h3>
 
@@ -146,26 +116,5 @@
 	</main>
 </body>
 
-<script>
-document.getElementById("form-superheroe").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const datos = {
-        nombre_paquete: document.getElementById("nombre_paquete").value,
-        descripcion: document.getElementById("descripcion").value,
-        precio: document.getElementById("precio").value,
-        //cupos_disponibles: document.getElementById("cupos_disponibles").value
-    };
-
-    const res = await fetch("http://localhost:3000/registrar_superheroe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datos)
-    });
-
-    const data = await res.json();
-    alert(data.mensaje);
-});
-</script>
-
+<script src="src\public\pagina_cuidador\pagina_cuidador.js"></script>
 </html>
