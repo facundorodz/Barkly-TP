@@ -1,18 +1,24 @@
-
+* {
+    font-family: 'Oswald', sans-serif;
+}
 
 body {
-    font-family: 'Oswald', sans-serif;
-    background: linear-gradient(90deg, #222222 0%, #000000 100%);
+    background-image: url("../../../assets/images/fondo-pagina_seleccion_registro.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    backdrop-filter: blur(6px);
 }
 
 .card-option {
     transition: transform 0.2s ease;
     cursor: pointer;
-}
-.card-option:hover {
-    transform: scale(1.05);
     background-color: #DC3545;
 }
+
+.card-option:hover {
+    transform: scale(1.05);
+}
+
 .icon-circle {
     width: 80px;
     height: 80px;
@@ -23,16 +29,18 @@ body {
     justify-content: center;
     margin: auto;
     font-size: 40px;
-    color: #0d6efd;
 }
 
-h2 {
+h2, h4 {
     font-weight: bold;
-    color: #DC3545;
+    color: wheat;
+    text-shadow: 2px 2px 1px darkred;
 }
 
 .imagen-icono {
-    width: 80px;
+    width: 50px;
 }
 
-
+.descripcion-boton {
+    color: lightgoldenrodyellow;
+}
