@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
     <title>Registro Cuidador-Barkly Corporation</title>
     
     <link rel="stylesheet" href = "./Pagina_cuidadorstyles.css">
-    <link rel="icon" href="./assets/images/icono-metadata.png" type="image/png">
+    <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
     </link>        
 </head>
 
@@ -50,7 +50,7 @@
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Nombre">
+                            <input type="text" placeholder="Nombre">
                           </div>
                         </div>
 
@@ -71,28 +71,26 @@
                         <div class="imagen-form"></div>
                         <label for="cuidador-imagen">Foto de perfil</label>
                         <input type="file" id="cuidador-imagen" class="form-control" accept="image/*" required>
-                        <small style="color: #FFFF;">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
-                        <div id="status" class="upload-status"></div>
-                        <div id="preview-imagen-conteiner" style="display: none;">
+                        <small style="color: wheat;">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
+                        <div id="preview-imagen-container" style="display: none;">
                             <img id="imagen-preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; background-color: white;" alt="Preview imagen">
                         </div>
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
                         <select name="experiencia">
-                            <option value="0">0 años</option>
-                            <option value="1">1 año</option>
-                            <option value="2">2 años</option>
-                            <option value="3">3 años</option>
-                            <option value="4+">4+ años</option>
+                            <option value="0">0-1 Años</option>
+                            <option value="1">2-3 Años</option>
+                            <option value="2">3-5 Años</option>
+                            <option value="3">+5 Años</option>
                         </select>
 
-                        <label>Perfil de perros que aceptás</label>
+                        <label>¿Qué tipo de perros aceptas?</label>
                         <select name="tipos-perros" multiple>
+                            <option>Cachorros</option>
                             <option>Pequeños</option>
                             <option>Medianos</option>
                             <option>Grandes</option>
-                            <option>Cachorros</option>
                             <option>Perros con medicación</option>
                         </select>                        
                     </div>
@@ -129,11 +127,12 @@
                     <!-- TÉRMINOS Y CONDICIONES -->
                     <h3 class="title-campo">Políticas y verificación</h3>
 
-                    <div class="section-terms mb-3">
+                    <div class="section-terms mb-3 checkbox-y-texto">
                         <input class="form-check-input" type="checkbox" required>
-                        <label class="form-check-label">
-                             Acepto los términos y condiciones
-                        </label>
+                        <label class="form-check-label">Acepto los términos y condiciones</label>
+                    </div>
+
+                    <div class="section-terms mb-3 checkbox-y-texto">
                         <input class="form-check-input" type="checkbox" required>
                         <label class="form-check-label">
                              Me comprometo a cuidar de los animales con responsabilidad
