@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es" data-bs-theme="dark">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,13 +10,15 @@
 </head>
 
 <body>
-        <div class="card container justify-content-center vh-100" style="width: 30rem;"> 
-            <h1>Iniciar sesión</h1>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        
+        <div class="card p-4" id="fondoLogin" style="width: 30rem;">
+            <h1 class="fw-bold">Iniciar sesión</h1>
                 <p>¿Todavía no tenes cuenta? <a href="">Unite acá</a></p>
                 <form id="login-form" class="login-form" action="/login" method="post">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Número de usuario</label>
-                    <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <input type="email" name="email" class="form-control" aria-describedby="emailHelp">
                     <div id="emailHelp" class="form-text">No compartiremos esta información con nadie.</div>
                 </div>
                 <div class="mb-3">
@@ -25,15 +27,17 @@
 
                     <div id="loginElegir" class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                        <label class="btn btn-outline-primary" for="btnradio1">Usuario</label>
+                        <label class="btn btn-outline-danger texto-elegir" for="btnradio1"> <img src="../../../assets/images/icono_para_cliente.png" alt="Cliente" id="iconoCliente"> Usuario</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                        <label class="btn btn-outline-primary" for="btnradio2">Superheroe</label>
+                        <label class="btn btn-outline-danger texto-elegir" for="btnradio2"> <img src="../../../assets/images/icono_superheroe.png" id="iconoSuperheroe" alt="Superheroe"> Superheroe</label>
                     </div>
                 </div>
-                <button id="loginBotonEnviar" type="submit" class="btn btn-primary" onclick="redirigir()">Enviar</button>
-                <div class="form-text">Al unirte, aceptas los Términos de servicio de Barkly CO.</div>
-                <div class="form-text">Lee nuestra Política de privacidad para saber cómo utilizamos tus datos personales.</div>
+                <div class="container text-center">
+                    <button id="loginBotonEnviar" type="submit" class="btn btn-danger" onclick="redirigir()">Enviar</button>
+                    <div class="form-text">Al unirte, aceptas los Términos de servicio de Barkly CO.</div>
+                    <div class="form-text">Lee nuestra Política de privacidad para saber cómo utilizamos tus datos personales.</div>
+                </div>
                 </form>
         </div>
     </div>
