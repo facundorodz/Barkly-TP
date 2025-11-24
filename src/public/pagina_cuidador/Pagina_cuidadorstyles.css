@@ -2,7 +2,7 @@
 
 body {
     font-family: 'Oswald', sans-serif;
-    background: #191919;
+    background-image: url("../../../assets/images/fondo_pagina-cuidador.jpg");
 }
 
 .navbar {
@@ -43,7 +43,7 @@ body {
     margin-bottom: 40px;
     text-align: center;
     /*color: #FFFF;*/
-    background-color: #DC3545;
+    background-color: #fa1f026c;
 }
 
 .admin-header h1 {
@@ -59,13 +59,6 @@ body {
     margin: 0 auto;
 }
 
-.cuidador-form {
-    background-color: #0000;
-    border-radius: 8px;
-    padding: 40px;
-    margin-bottom: 40px;
-}
-
 .cuidador-info {
     padding: 0 20%;
 }
@@ -73,7 +66,7 @@ body {
 .form-control {
     width: 100%;
     padding: 12px;
-    background-color: #FFFF;
+    background-color: #ffffff;
     border: 1px solid #3a3a3a;
     border-radius: 4px;
     color: var(--text);
@@ -87,15 +80,16 @@ body {
 }
 
 h2, h3 {
-    color: #FFFF;
+    font-size: 30px;
     font-family: 'Oswald', oblique;
 }
 
-label {
+label, h3 {
     font-weight: bold;
     margin-top: 10px;
     display: block;
-    color: #DC3545;
+    color: wheat;
+    text-shadow: 2px 2px 2px darkred;
 }
 
 input, select {
@@ -103,7 +97,7 @@ input, select {
     padding: 10px;
     margin-top: 5px;
     border-radius: 5px;
-    border: 1px solid #cccccc;
+    border: 1px solid #a3a0a0;
 }
 
 .section-terms{
@@ -127,10 +121,10 @@ input, select {
     font-weight: bold;
 }
 
-.paquetes-container, .photos-container {
+.photos-container {
     max-width: 900px;
     margin: auto;
-    background: #0000;
+    background: #000000;
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0,0,0,0.1);
@@ -164,4 +158,20 @@ input, select {
 
 .btn-success:hover {
     background: #440E03;
+}
+
+.checkbox-y-texto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-check-input {
+    width: 3px;
+    height: 3px;
+    margin-right: 5px; 
+}
+
+.admin-header h1, .admin-header p {
+   color: white; 
 }
