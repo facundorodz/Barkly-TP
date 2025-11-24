@@ -4,6 +4,7 @@ const usersRouter = require("./routes/users.js");
 const app = express();
 const port = 3000;
 
+
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
 app.use(express.static("src/public")); // acceder a todo lo de la carpeta public desde ese punto en adelante
@@ -38,6 +39,7 @@ app.get("/pagina_seleccionar", (req, res) => {  // carga la pagina de seleccion 
 });
 
 app.use("/users", usersRouter);
+
 
 
 app.listen(port, () => {
