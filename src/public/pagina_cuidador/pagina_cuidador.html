@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -10,25 +10,21 @@
     <title>Registro Cuidador-Barkly Corporation</title>
     
     <link rel="stylesheet" href = "./Pagina_cuidadorstyles.css">
-    <link rel="icon" href="./assets/images/icono-metadata.png" type="image/png">
+    <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
     </link>        
 </head>
 
 <body>
-	<header>
-		<div class="navbar-container" justify-content="center" >            
+	<header>       
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand d-flex align-items-center" href="#inicio"> 
-                    	<img src="./assets/images/icono-rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
+                    	<img src="../../../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
                     </a>
                         <div class="collapse navbar-collapse align" id="mas-info">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#servicios">Servicios</a> 
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
                                 </li>
                                 <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#about">Sobre Nosotros</a>
@@ -39,113 +35,86 @@
                     	</div>
                 </div>
             </nav>
-        </div>
 	</header>
+
 	<main>
 		<section class="admin-section">
-			<div class="conteiner">
+			<div class="container">
 				<div class="admin-header">
-					<h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
+					<h1>¡CONVIERTETE EN UNO DE NUESTROS AGENTES!</h1>
 					<p>Registrate para poder ofrecer sus paquetes de servicios</p>
 				</div>
 				<form id="cuidador-form" class="cuidador-form" action="/registrar_cuidador" method="get">
+          <h3 class="title-campo">Tus datos</h3>
                     <div class="cuidador-info">
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Nombre">
+                            <input type="text" placeholder="Nombre">
                           </div>
                         </div>
 
-                        <div class="campo-telefono">
-                          <label>Telefono</label>
+                        <div class="campo-franquicia">
+                          <label>Nombre de su Franquicia</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Telefono">
+                            <input type="text" placeholder="Franquicia">
                           </div>
                         </div>
 
-                        <div class="campo-ubicacion">
-                          <label>Cuidad</label>
+                        <div class="campo-poderes">
+                          <label>Explica tu trabajo como Superheroe</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Cuidad">
+                            <input type="text" placeholder="ej. Mis poderes son ... y los uso para ...">
                           </div>
                         </div>
 
                         <div class="imagen-form"></div>
                         <label for="cuidador-imagen">Foto de perfil</label>
                         <input type="file" id="cuidador-imagen" class="form-control" accept="image/*" required>
-                        <small style="color: #FFFF;">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
-                        <div id="status" class="upload-status"></div>
-                        <div id="preview-imagen-conteiner" style="display: none;">
+                        <small style="color: wheat;">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
+                        <div id="preview-imagen-container" style="display: none;">
                             <img id="imagen-preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; background-color: white;" alt="Preview imagen">
                         </div>
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
                         <select name="experiencia">
-                            <option value="0">0 años</option>
-                            <option value="1">1 año</option>
-                            <option value="2">2 años</option>
-                            <option value="3">3 años</option>
-                            <option value="4+">4+ años</option>
+                            <option value="0">0-1 Años</option>
+                            <option value="1">2-3 Años</option>
+                            <option value="2">3-5 Años</option>
+                            <option value="3">+5 Años</option>
                         </select>
 
-                        <label>Perfil de perros que aceptás</label>
+                        <label>¿Qué tipo de perros aceptas?</label>
                         <select name="tipos-perros" multiple>
+                            <option>Cachorros</option>
                             <option>Pequeños</option>
                             <option>Medianos</option>
                             <option>Grandes</option>
-                            <option>Cachorros</option>
                             <option>Perros con medicación</option>
                         </select>                        
                     </div>
 
-                    <h3 class="title-campo">Paquetes ofrecidos</h3>
-
-                    <div class="paquetes-container">
-
-                        <div class="card text-bg-light mb-3 service-plan">
-                            <h4 class="card-header">🐾 Paquete Estándar</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" name="precio_estandar" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                            <label>Precio Estándar</label>
-                            <input type="number" name="precio_estandar" placeholder="Ej: 6000" required>
-                        </div>
-
-                        <div class="card text-bg-warning mb-3 service-plan">
-                            <h4 class="card-header">🌟 Paquete Premium</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" name="precio_premium" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                            <label>Precio Premium</label>
-                            <input type="number" name="precio_premium" placeholder="Ej: 9000" required>
-                        </div>
-
-                        <div class="card text-bg-dark mb-3 service-plan">
-                            <h4 class="card-header" style="color: white;">💎 Paquete de Superheroe</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" name="precio_deluxe" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                            <label>Precio Deluxe</label>
-                            <input type="number" name="precio_deluxe" placeholder="Ej: 12000" required>
-                        </div>
-
-                    </div>
                     <!-- TÉRMINOS Y CONDICIONES -->
                     <h3 class="title-campo">Políticas y verificación</h3>
 
-                    <div class="section-terms mb-3">
+                    <div class="section-terms mb-3 checkbox-y-texto">
                         <input class="form-check-input" type="checkbox" required>
-                        <label class="form-check-label">
-                             Acepto los términos y condiciones
-                        </label>
+                        <label class="form-check-label">Acepto los términos y condiciones</label>
+                    </div>
+
+                    <div class="section-terms mb-3 checkbox-y-texto">
                         <input class="form-check-input" type="checkbox" required>
                         <label class="form-check-label">
                              Me comprometo a cuidar de los animales con responsabilidad
                         </label>
-                        <button class="btn-success" type="submit">Registrarse</button>
-                    </div>
+                      </div>
+                    <button class="btn-success" type="submit">Registrarse</button>
 				</form>
 			</div>
 		</section>
 	</main>
 </body>
+
+<script src="src\public\pagina_cuidador\pagina_cuidador.js"></script>
 </html>
