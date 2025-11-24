@@ -17,3 +17,11 @@ document.getElementById("form-superheroe").addEventListener("submit", async (e) 
     const data = await res.json();
     alert(data.mensaje);
 });
+
+function redirigir_login() {
+    window.location.href = "../login/login.html";
+}
+
+function redirigir_register() {
+    window.location.href = "../pagina_seleccion_registrar/pagina_seleccion_registro.html";
+}

@@ -15,14 +15,14 @@
     <body>
         <div class="d-flex justify-content-center align-items-center vh-100">
             <div class="container text-center py-5" id="fondo-registrar">
-                <form id="pagina_seleccionar-form" class="pagina_seleccionar-form" action="/pagina_seleccionar" method="get">
+                <form id="pagina_seleccionar-form" class="pagina_seleccionar-form">
                     <h2 class="mb-3">Regístrate</h2>
                     <p class="descripcion-boton">Elegí cómo querés registrarte en la plataforma</p>
                     <div class="row justify-content-center g-4">
 
                         <!-- Usuario -->
                         <div class="col-md-4">
-                            <button type="submit" name="tipo" value="usuario" class="text-decoration-none" style="background:none;border:none;padding:0;width:100%;">
+                            <button type="button" name="tipo" value="usuario" class="text-decoration-none" onclick="redirigir_usuario()" style="background:none;border:none;padding:0;width:100%;">
                                 <div class="card p-4 shadow card-option">
                                     <div class="icon-circle mb-3">
                                         <img src="../../../assets/images/icono_login.png" class="imagen-icono">
@@ -37,7 +37,7 @@
 
                         <!-- Superhéroe / Cuidador -->
                         <div class="col-md-4">
-                            <button type="submit" name="tipo" value="cuidador" class="text-decoration-none" style="background:none;border:none;padding:0;width:100%;">
+                            <button type="button" name="tipo" value="cuidador" class="text-decoration-none" onclick="redirigir_cuidador()" style="background:none;border:none;padding:0;width:100%;">
                                 <div class="card p-4 shadow card-option">
                                     <div class="icon-circle mb-3">
                                         <img src="../../../assets/images/icono_metadata.png" class="imagen-icono">
@@ -54,6 +54,7 @@
                 </form>
             </div>
         </div>
+        <script src="pagina_seleccion_registro.js"></script>
     </body>
 
 </html>
