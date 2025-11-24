@@ -2,7 +2,10 @@
 
 body {
     font-family: 'Oswald', sans-serif;
-    background: #191919;
+    background-image: url("../../../assets/images/fondo_pagina-usuario.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 
 .navbar {
@@ -87,15 +90,16 @@ body {
 }
 
 h2, h3 {
-    color: #FFFF;
+    font-size: 30px;
     font-family: 'Oswald', oblique;
 }
 
-label {
+label, h3 {
     font-weight: bold;
     margin-top: 10px;
     display: block;
-    color: #DC3545;
+    color: wheat;
+    text-shadow: 2px 2px 2px darkred;
 }
 
 input, select {
@@ -103,7 +107,7 @@ input, select {
     padding: 10px;
     margin-top: 5px;
     border-radius: 5px;
-    border: 1px solid #cccccc;
+    border: 1px solid #a3a0a0;
 }
 
 .section-terms{
@@ -125,15 +129,6 @@ input, select {
     margin-bottom: 0;
     color: #DC3545;
     font-weight: bold;
-}
-
-.paquetes-container, .photos-container {
-    max-width: 900px;
-    margin: auto;
-    background: #0000;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
 }
 
 .service-plan {
@@ -164,4 +159,20 @@ input, select {
 
 .btn-success:hover {
     background: #440E03;
+}
+
+.checkbox-y-texto {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-check-input {
+    width: 3px;
+    height: 3px;
+    margin-right: 5px; 
+}
+
+.admin-header h1, .admin-header p {
+   color: white; 
 }
