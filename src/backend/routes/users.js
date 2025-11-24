@@ -60,7 +60,20 @@ router.put("/register_hero", async (req, res) => {
         console.error(error);
         return res.status(400).send("Error al registrar usuario"); // manejar bien este error
     }
-});  
+});
+
+router.post("/register_paquetes", async (req, res) => {
+    console.log("registro de paquetes", req.body);
+    const { name, pass } = req.body; // agregar todo lo necesario para cuando se registra para los paquetes
+      try {
+        const exists = await db.realizarQuery("SELECT * FROM paquetes WHERE name = $1",[req.body.name]);
+        await db.realizarQuery("INSERT INTO paquetes (nombre_paquete, descripcion, precio) VALUES ($1, $2, $3)",[name, pass]); // agregar todo lo necesario al insertar un paquete
+        return res.redirect("/index.html"); // redireccionar a la pagina que quiero
+    } catch(error){ 
+        console.error(error);
+        return res.status(400).send("Error al registrar los paquetes"); // manejar bien este error
+    }
+});   
 
 
 module.exports = router;

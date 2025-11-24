@@ -15,12 +15,12 @@
 </head>
 
 <body>
-	<header>
-		<div class="navbar-container" justify-content="center" >            
+    <header>
+        <div class="navbar-container" justify-content="center" >            
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand d-flex align-items-center" href="#inicio"> 
-                    	<img src="./assets/images/icono-rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
+                        <img src="./assets/images/icono-rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
                     </a>
                         <div class="collapse navbar-collapse align" id="mas-info">
                             <ul class="navbar-nav ms-auto">
@@ -28,27 +28,24 @@
                                 <a class="nav-link active" aria-current="page" href="#servicios">Servicios</a> 
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
-                                </li>
-                                <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#about">Sobre Nosotros</a>
                                 </li>
                             </ul>
                             <button type="button" id="iniciar-sesion" class="btn btn-danger">Iniciar Sesión</button>
                             <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
-                    	</div>
+                        </div>
                 </div>
             </nav>
         </div>
-	</header>
-	<main>
-		<section class="admin-section">
-			<div class="conteiner">
-				<div class="admin-header">
-					<h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
-					<p>Registrate para poder ofrecer sus paquetes de servicios</p>
-				</div>
-				<form id="cuidador-form" class="cuidador-form" action="/registrar_cuidador" method="get">
+    </header>
+    <main>
+        <section class="admin-section">
+            <div class="conteiner">
+                <div class="admin-header">
+                    <h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
+                    <p>Registrate para poder ofrecer sus paquetes de servicios</p>
+                </div>
+                <form id="cuidador-form" class="cuidador-form" action="./src/backend/services/registrar_paquetes" method="get">
                     <div class="cuidador-info">
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
@@ -57,17 +54,17 @@
                           </div>
                         </div>
 
-                        <div class="campo-telefono">
-                          <label>Telefono</label>
+                        <div class="campo-franquicia">
+                          <label>Nombre Franquisia</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Telefono">
+                            <input class="input" type="text" placeholder="Franquicia">
                           </div>
                         </div>
 
-                        <div class="campo-ubicacion">
-                          <label>Cuidad</label>
+                        <div class="campo-poderes">
+                          <label>Poderes</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Cuidad">
+                            <input class="input" type="text">
                           </div>
                         </div>
 
@@ -105,27 +102,27 @@
                     <div class="paquetes-container">
 
                         <div class="card text-bg-light mb-3 service-plan">
-                            <h4 class="card-header">🐾 Paquete Estándar</h4>
+                            <h4 class="card-header" id="nombre_paquete">🐾 Paquete Estándar</h4>
                             <p class="label-beneficios">Beneficios</p>
-                            <input type="text" name="precio_estandar" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
+                            <input type="text" id="descripcion" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
                             <label>Precio Estándar</label>
-                            <input type="number" name="precio_estandar" placeholder="Ej: 6000" required>
+                            <input type="number" id="precio" placeholder="Ej: $6000" required>
                         </div>
 
                         <div class="card text-bg-warning mb-3 service-plan">
-                            <h4 class="card-header">🌟 Paquete Premium</h4>
+                            <h4 class="card-header" id="nombre_paquete">🌟 Paquete Premium</h4>
                             <p class="label-beneficios">Beneficios</p>
-                            <input type="text" name="precio_premium" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
+                            <input type="text" id="descripcion" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
                             <label>Precio Premium</label>
-                            <input type="number" name="precio_premium" placeholder="Ej: 9000" required>
+                            <input type="number" id="precio" placeholder="Ej: $9000" required>
                         </div>
 
                         <div class="card text-bg-dark mb-3 service-plan">
-                            <h4 class="card-header" style="color: white;">💎 Paquete de Superheroe</h4>
+                            <h4 class="card-header" id="nombre_paquete" style="color: white;">💎 Paquete de Superheroe</h4>
                             <p class="label-beneficios">Beneficios</p>
-                            <input type="text" name="precio_deluxe" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
+                            <input type="text" id="descripcion" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
                             <label>Precio Deluxe</label>
-                            <input type="number" name="precio_deluxe" placeholder="Ej: 12000" required>
+                            <input type="number" id="precio" placeholder="Ej: $12000" required>
                         </div>
 
                     </div>
@@ -143,9 +140,32 @@
                         </label>
                         <button class="btn-success" type="submit">Registrarse</button>
                     </div>
-				</form>
-			</div>
-		</section>
-	</main>
+                </form>
+            </div>
+        </section>
+    </main>
 </body>
+
+<script>
+document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const datos = {
+        nombre_paquete: document.getElementById("nombre_paquete").value,
+        descripcion: document.getElementById("descripcion").value,
+        precio: document.getElementById("precio").value,
+        //cupos_disponibles: document.getElementById("cupos_disponibles").value
+    };
+
+    const res = await fetch("http://localhost:3000/registrar_paquetes", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(datos)
+    });
+
+    const data = await res.json();
+    alert(data.mensaje);
+});
+</script>
+
 </html>
