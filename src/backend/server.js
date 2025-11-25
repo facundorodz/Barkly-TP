@@ -1,6 +1,9 @@
 const express = require("express");
 const usersRouter = require("./routes/users.js");
+const paquetesRouter = require("./routes/paquete.route.js");
+const cors = require("cors");
 
+app.use(cors());
 const app = express();
 const port = 3000;
 
@@ -39,6 +42,10 @@ app.get("/pagina_seleccionar", (req, res) => {  // carga la pagina de seleccion 
 });
 
 app.use("/users", usersRouter);
+
+//Guarda los paquetes en la bdd
+app.use("/", registrarPaquetes)
+
 
 
 
