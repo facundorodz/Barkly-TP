@@ -150,20 +150,43 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
     e.preventDefault();
 
     const datos = {
-        nombre_paquete: document.getElementById("nombre_paquete").value,
-        descripcion: document.getElementById("descripcion").value,
-        precio: document.getElementById("precio").value,
-        //cupos_disponibles: document.getElementById("cupos_disponibles").value
+        paquetes: [
+            {
+                nombre: document.getElementById("nombre_paquete_estandar").value,
+                descripcion: document.getElementById("descripcion_estandar").value,
+                precio: document.getElementById("precio_estandar").value,
+            },
+            {
+                nombre: document.getElementById("nombre_paquete_premuim").value,
+                descripcion: document.getElementById("descripcion_premuim").value,
+                precio: document.getElementById("precio_premuim").value,
+            },
+            {
+                nombre: document.getElementById("nombre_paquete_deluxe").value,
+                descripcion: document.getElementById("descripcion_deluxe").value,
+                precio: document.getElementById("precio_deluxe").value,
+            },
+        ]
     };
 
-    const res = await fetch("http://localhost:3000/registrar_paquetes", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(datos)
-    });
+    try {
+        const res = await fetch("http://localhost:3000/registrar_paquetes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(datos)
+        });
 
-    const data = await res.json();
-    alert(data.mensaje);
+        if (!res.ok) {
+            alert("Error al registrar los paquetes");
+        }
+
+        const data = await res.json();
+        alert(data.mensaje);
+    }
+    catch(error) {
+        console.log("Error a la peticion: ", error);
+        alert("No se pudo conectar al servidor.");
+    }
 });
 </script>
 
