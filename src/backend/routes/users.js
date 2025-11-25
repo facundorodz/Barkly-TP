@@ -62,7 +62,7 @@ router.put("/register_hero", async (req, res) => {
     }
 });
 
-router.post("/register_paquetes", async (req, res) => {
+/*router.post("/register_paquetes", async (req, res) => {
     console.log("registro de paquetes", req.body);
     const { name, pass } = req.body; // agregar todo lo necesario para cuando se registra para los paquetes
       try {
@@ -73,7 +73,7 @@ router.post("/register_paquetes", async (req, res) => {
         console.error(error);
         return res.status(400).send("Error al registrar los paquetes"); // manejar bien este error
     }
-});   
+});*/   
 
 
 module.exports = router;

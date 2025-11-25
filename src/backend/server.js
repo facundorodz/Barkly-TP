@@ -1,12 +1,18 @@
 const express = require("express");
 const usersRouter = require("./routes/users.js");
-const paquetesRouter = require("./routes/paquete.route.js");
+const paquetesRouter = require("./services/paquete.route.js");
 const cors = require("cors");
-
-app.use(cors());
+ 
 const app = express();
 const port = 3000;
 
+
+/*app.use(cors({
+  origin: "*",                // <-- IMPORTANTE
+  methods: "GET,POST",
+  allowedHeaders: "Content-Type"
+}));*/
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
@@ -44,9 +50,7 @@ app.get("/pagina_seleccionar", (req, res) => {  // carga la pagina de seleccion 
 app.use("/users", usersRouter);
 
 //Guarda los paquetes en la bdd
-app.use("/", registrarPaquetes)
-
-
+app.use("/", paquetesRouter);
 
 
 app.listen(port, () => {

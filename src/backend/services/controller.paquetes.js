@@ -9,7 +9,7 @@ exports.registrarPaquete = async (req, res) => {
   try {
     const { paquetes } = req.body;
 
-    if (!Array.isArray(paquetes)) {
+    if (!paquetes || !Array.isArray(paquetes)) {
       return res.status(400).json({ error: "Debe enviar una lista de paquetes" });
     }
 
@@ -18,7 +18,7 @@ exports.registrarPaquete = async (req, res) => {
     for (const p of paquetes) {
       await client.query(
         `INSERT INTO paquetes (nombre_paquete, descripcion, precio)
-         VALUES ($1, $2, $3) RETURNING *;`,
+         VALUES ($1, $2, $3);`,
         [p.nombre, p.descripcion, p.precio]
       );
     }
