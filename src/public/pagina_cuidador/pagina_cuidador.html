@@ -45,7 +45,7 @@
                     <h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
                     <p>Registrate para poder ofrecer sus paquetes de servicios</p>
                 </div>
-                <form id="cuidador-form" class="cuidador-form" action="./src/backend/services/registrar_paquetes" method="get">
+                <form id="cuidador-form" class="cuidador-form">
                     <div class="cuidador-info">
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
@@ -100,6 +100,7 @@
                     <div class="paquetes-container">
 
                         <div class="card text-bg-light mb-3 service-plan">
+                            <input type="checkbox" id="check_estandar">
                             <h4 class="card-header" id="nombre_paquete_estandar">🐾 Paquete Estándar</h4>
                             <p class="label-beneficios">Beneficios</p>
                             <input type="text" id="descripcion_estandar" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
@@ -108,6 +109,7 @@
                         </div>
 
                         <div class="card text-bg-warning mb-3 service-plan">
+                            <input type="checkbox" id="check_premium">
                             <h4 class="card-header" id="nombre_paquete_premuim">🌟 Paquete Premium</h4>
                             <p class="label-beneficios">Beneficios</p>
                             <input type="text" id="descripcion_premuim" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
@@ -116,6 +118,7 @@
                         </div>
 
                         <div class="card text-bg-dark mb-3 service-plan">
+                            <input type="checkbox" id="check_deluxe">
                             <h4 class="card-header" id="nombre_paquete_deluxe" style="color: white;">💎 Paquete de Superheroe</h4>
                             <p class="label-beneficios">Beneficios</p>
                             <input type="text" id="descripcion_deluxe" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
@@ -149,43 +152,58 @@
 document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const datos = {
-        paquetes: [
-            {
-                nombre: document.getElementById("nombre_paquete_estandar").value,
-                descripcion: document.getElementById("descripcion_estandar").value,
-                precio: document.getElementById("precio_estandar").value,
-            },
-            {
-                nombre: document.getElementById("nombre_paquete_premuim").value,
-                descripcion: document.getElementById("descripcion_premuim").value,
-                precio: document.getElementById("precio_premuim").value,
-            },
-            {
-                nombre: document.getElementById("nombre_paquete_deluxe").value,
-                descripcion: document.getElementById("descripcion_deluxe").value,
-                precio: document.getElementById("precio_deluxe").value,
-            },
-        ]
-    };
+    const paquetes = [];
+
+    // PAQUETE ESTANDAR
+    if (document.getElementById("check_estandar").checked) {
+        paquetes.push({
+            nombre: document.getElementById("nombre_paquete_estandar").innerText,
+            descripcion: document.getElementById("descripcion_estandar").value,
+            precio: document.getElementById("precio_estandar").value
+        });
+    }
+
+    // PAQUETE PREMIUM
+    if (document.getElementById("check_premium").checked) {
+        paquetes.push({
+            nombre: document.getElementById("nombre_paquete_premium").innerText,
+            descripcion: document.getElementById("descripcion_premium").value,
+            precio: document.getElementById("precio_premium").value
+        });
+    }
+
+    // PAQUETE DELUXE
+    if (document.getElementById("check_deluxe").checked) {
+        paquetes.push({
+            nombre: document.getElementById("nombre_paquete_deluxe").innerText,
+            descripcion: document.getElementById("descripcion_deluxe").value,
+            precio: document.getElementById("precio_deluxe").value
+        });
+    }
+
+    // Si no seleccionó ningún paquete
+    if (paquetes.length === 0) {
+        alert("Tenés que seleccionar al menos un paquete.");
+        return;
+    }
 
     try {
-        const res = await fetch("http://localhost:3000/registrar_paquetes", {
+        const respuesta = await fetch("http://localhost:3000/register_paquetes", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(datos)
+            body: JSON.stringify({ paquetes })
         });
 
-        if (!res.ok) {
-            alert("Error al registrar los paquetes");
+        if (!respuesta.ok) {
+            throw new Error("Error en la petición");
         }
 
-        const data = await res.json();
-        alert(data.mensaje);
-    }
-    catch(error) {
-        console.log("Error a la peticion: ", error);
-        alert("No se pudo conectar al servidor.");
+        const data = await respuesta.json();
+        alert("✔ " + data.mensaje);
+
+    } catch (error) {
+        console.log(error);
+        alert("❌ Error al conectar con el servidor.");
     }
 });
 </script>

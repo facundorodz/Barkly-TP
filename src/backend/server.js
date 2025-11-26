@@ -6,12 +6,6 @@ const cors = require("cors");
 const app = express();
 const port = 3000;
 
-
-/*app.use(cors({
-  origin: "*",                // <-- IMPORTANTE
-  methods: "GET,POST",
-  allowedHeaders: "Content-Type"
-}));*/
 app.use(cors());
 
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
