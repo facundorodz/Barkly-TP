@@ -6,6 +6,7 @@ body {
     background-size: cover;
     background-position: center;
     cursor: url(../assets/images/cursor_default.png), auto;
+    max-width: 100%;
 }
 
 a {
@@ -15,6 +16,7 @@ a {
 .navbar {
   background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
   position: sticky;
+  width: 100%;
 }
 
 .navbar-brand {
@@ -87,8 +89,7 @@ a {
     margin: 20px auto;     
     border-radius: 15px;      
     width: 80%;               
-    color: #ffffff; 
-    transition: all 0.4s ease;           
+    color: #ffffff;           
 }
 
 .domicilio p {
@@ -103,8 +104,7 @@ a {
     border-radius: 15px;                    
     color: #ffffff;   
     height: 200px;
-    width: 400px;  
-    transition: all 0.4s ease;       
+    width: 400px;        
 }
 
 .entrenamiento {
@@ -114,8 +114,7 @@ a {
     border-radius: 15px;                 
     color: #ffffff;   
     height: 200px;
-    width: 400px;  
-    transition: all 0.4s ease;      
+    width: 400px;       
 }
 
 .entrenamiento p {
@@ -128,7 +127,7 @@ a {
     flex-direction: column;
     gap: 50px;
     width: 100%;
-    height: 1000px;
+    height: 100%;
     flex-wrap: wrap;
    
     background: linear-gradient(180deg, #a02424 0%, #000000 100%);
@@ -169,9 +168,7 @@ hr {
     padding-top: 4px;
 }
 
-.resenias {
-    padding: 2px;
-}
+
 
 .cuidador_perfil {
     width: 100%;
@@ -179,9 +176,65 @@ hr {
     box-shadow: 0px 0px 10px #ffc6a0;
 }
 
-.btn-vermas {
-    display: inline-block;   /* IMPORTANTE */
-    width: auto;             /* evita que ocupe toda la pantalla */
-    padding: 10px 20px;      /* tamaño del botón */
-    font-size: 16px;         /* tamaño del texto */
+.mas-cuidadores{ 
+    width: 100%;
+    flex-basis: 100%;
+    min-width: 100%;
+    min-height: auto;
+
 }
+
+.ver-mas-boton {
+    margin-bottom: 40px;
+    display: inline-block;   
+    width: auto;             
+    padding: 10px 20px;     
+    font-size: 16px;
+    width: 150px;
+    height: 50px;
+    display: inline-block;
+}
+
+#sobre-nosotros-titulo {
+    font-weight: 300px;
+    padding-top: 30px;
+    font-size: 40px;
+
+}
+
+.sobre-barkly{
+
+    background-color: #c3232b;
+    color:#ffffff;
+    margin-top: 60px;
+    height: 400px;
+    
+}
+
+.sobre-barkly h1 {
+    color: #ffffff ;
+}
+
+.sobre-nosotros hr {
+    margin-bottom: 40px;
+}
+.sobre-nosotros p {
+    font-size: 21px;
+    font-weight:300;
+    margin-top: 30px;
+    justify-content: left;
+}
+
+.img-container {
+    display: flex;
+    justify-content: right;
+    border-radius: 30px;
+}
+
+#imagen-sobre-nosotros{
+    border-radius: 30px;
+}
+.resenias {
+    padding: 2px;
+}
+

@@ -9,7 +9,7 @@
         
         <link rel="stylesheet" href = "style.css">
         <link rel="icon" href="../assets/images/icono_metadata.png" type="image/png">
-
+        <script src="home.js" defer></script>
         
     </head>
  
@@ -33,13 +33,13 @@
                                 <a class="nav-link active" aria-current="page" href="#servicios">Servicios</a> 
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#cuidador">Cuidadores</a>
+                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
                                 </li>
                                 <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#about">Sobre Nosotros</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#resenias">Reseñas</a>
+                                <a class="nav-link active" aria-current="page" href="#resenias-previas">Reseñas</a>
                                 </li>
                                 <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="#contacto">Contacto</a>
@@ -94,38 +94,11 @@
             </div>
         </div>
     </div>
-        <section class="cuidadores" style="text-align:center">
+        <section class="cuidadores" style="text-align:center" id="cuidadores">
             <h1>Nuestros cuidadores</h1>
 
             <div class="row g-4">
-
-                    <div class="col-md-4">
-                        <div class="cuidador_perfil">
-                            <div class="spiderman">
-                                <img src="../assets/images/spidey.png" class="polaroid" width="400" height="400">
-                                <h3>SPIDER-MAN</h3>
-                                <p>Tu amigable vecino, y el niñero perfecto.</p>
-                            </div>
-
-                            <hr>
-
-                            <ul class="especialidades">
-                                <li>Super sentido del peligro</li>
-                                <li>Paseos divertidos y dinámicos</li>
-                                <li>Conocimientos básicos de niñero</li>
-                            </ul>  
-
-                            <hr> 
-
-                            <img src="../assets/images/resenia_cinco.png" width="150" height="100" class="resenias">
-
-                            <div> 
-                                <a role="button" id="ver_paquetes" class="btn btn-danger" href="" > Ver paquetes </a>
-                            </div>
-                        </div>  
-                    </div>  
             
-
             <div class="col-md-4">
                         <div class="cuidador_perfil">
                             <div class="batman">
@@ -147,7 +120,7 @@
                         <img src="../assets/images/resenia_cuatro.png" width="150" height="100" class="resenias">
 
                         <div> 
-                            <a role="button" id="ver_paquetes" class="btn btn-danger" href="" > Ver paquetes </a>
+                            <a role="button"class="btn btn-danger" href="" > Ver paquetes </a>
                         </div>
                     </div>
             </div>
@@ -161,7 +134,7 @@
                         <hr>
                         <ul class="especialidades">
                                 <li>Amigable y confiable</li>
-                                <li>Paseos càlidos y bajo el sol</li>
+                                <li>Paseos cálidos y bajo el sol</li>
                                 <li>Experiencia previa como cuidador</li>
                         </ul> 
 
@@ -169,23 +142,125 @@
 
                         <img src="../assets/images/resenia_cinco.png" width="150" height="100" class="resenias">
                         <div> 
-                            <a role="button" id="ver_paquetes" class="btn btn-danger" href="" > Ver paquetes </a>
+                            <a role="button" 
+                            class="btn btn-danger" href="" > Ver paquetes </a>
                            </div>
                         </div>  
                     </div> 
+                     <div class="col-md-4">
+                        <div class="cuidador_perfil">
+                            <div class="wonderwoman">
+                                <img src="../assets/images/wonderwoman.png" class="polaroid" width="400" height="400">
+                                <h3>WONDER WOMAN</h3>
+                                <p>La Amazona que viene a brindar refugio.</p>
+                            </div>
 
+                            <hr>
+
+                            <ul class="especialidades">
+                                <li>Valentía y delicadeza</li>
+                                <li>Paseos suaves y cálidos</li>
+                                <li>Honesta, recta y seria</li>
+                            </ul>  
+
+                            <hr> 
+
+                            <img src="../assets/images/resenia_cinco.png" width="150" height="100" class="resenias">
+
+                            <div> 
+                                <a role="button" class="btn btn-danger" href="" > Ver paquetes </a>
+                            </div>
+                        </div>  
+                    </div>  
             </div>
-           
-            <div id="info1" class="collapse mt-3">
-                <p>Aquí va el contenido oculto.</p>
+        
+        <div id="mas-cuidadores" style="display: none;">
+            <div class="row g-4">
+
+                    <div class="col-md-4">
+                        <div class="cuidador_perfil">
+                            <div class="deadpool">
+                                <img src="../assets/images/deadpool.png" class="polaroid" width="400" height="400">
+                                <h3>DEADPOOL</h3>
+                                <p>No es un héroe, pero, ¡el mercenario se une a la tarea!</p>
+                            </div>
+
+                            <hr>
+
+                            <ul class="especialidades">
+                                <li>Super sentido del caos</li>
+                                <li>Violencia y diversion</li>
+                                <li>¿Quién lo dejó entrar...?</li>
+                            </ul>  
+
+                            <hr> 
+
+                            <img src="../assets/images/resenia_uno.png" width="150" height="100" class="resenias">
+
+                            <div> 
+                                <a role="button"
+                                class="btn btn-danger" href="" > Ver paquetes </a>
+                            </div>
+                        </div>  
+                    </div>  
+            
+
+            <div class="col-md-4">
+                        <div class="cuidador_perfil">
+                            <div class="spidey">
+                                <img src="../assets/images/spidey.png" class="polaroid" width="400" height="400">
+                                <h3>SPIDER-MAN</h3>
+                                <p>Tu amigable vecino, y el niñero perfecto.</p>
+                            </div>
+
+                        <hr>
+
+                       <ul class="especialidades">
+                            <li>Super sentido del peligro</li>
+                            <li>Paseos divertidos y dinámicos</li>
+                            <li>Conocimientos básicos de niñero</li>
+                        </ul>  
+
+                        <hr> 
+
+                        <img src="../assets/images/resenia_cinco.png" width="150" height="100" class="resenias">
+
+                        <div> 
+                            <a role="button" class="btn btn-danger" href="" > Ver paquetes </a>
+                        </div>
+                    </div>
             </div>
+            <div class="col-md-4">
+                        <div class="cuidador_perfil">
+                            <div class="ironman">
+                            <img src="../assets/images/ironman.png" class="polaroid" width="400" height="400">
+                            <h3>IRON MAN</h3>
+                            <p>El niñero canino de acero y metal.</p>
+                        </div>
+                        <hr>
+                        <ul class="especialidades">
+                                <li>Genio experto en resolver problemas</li>
+                                <li>Vuelos llenos de adrenalina</li>
+                                <li>Recursos ilimitados</li>
+                        </ul> 
+
+                        <hr> 
+
+                        <img src="../assets/images/resenia_cinco.png" width="150" height="100" class="resenias">
+                        <div> 
+                            <a role="button" class="btn btn-danger" href="" > Ver paquetes </a>
+                           </div>
+                        </div>  
+                    </div> 
+                </div>
+            </div>
+        <div class="d-flex justify-content-center">
+            
+        <a role="button" class="btn btn-danger ver-mas-boton" id="ver-mas-boton" style="text-align: center;" href=""> Ver más </a>
+        </div>
 
         </section>
         
-    </main>
-  
-    <footer class="footer">
-        <span>Pie de pagina</span>
-    </footer>
+    
   </body>
 </html>
