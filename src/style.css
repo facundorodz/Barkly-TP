@@ -197,21 +197,21 @@ hr {
 
 #sobre-nosotros-titulo {
     font-weight: 300px;
-    padding-top: 30px;
+    padding-top: 100px;
     font-size: 40px;
 
 }
 
 .sobre-barkly{
 
-    background-color: #c3232b;
+    background: linear-gradient(180deg, #000000 40%, #808694 100%);
     color:#ffffff;
-    margin-top: 60px;
-    height: 400px;
+    height: 700px;
     
 }
 
 .sobre-barkly h1 {
+    padding-top: 100px;
     color: #ffffff ;
 }
 
@@ -221,8 +221,12 @@ hr {
 .sobre-nosotros p {
     font-size: 21px;
     font-weight:300;
-    margin-top: 30px;
+    margin-top: 20px;
     justify-content: left;
+}
+
+.sobre-nosotros h3 {
+    margin-top: 40px;
 }
 
 .img-container {
@@ -231,10 +235,22 @@ hr {
     border-radius: 30px;
 }
 
-#imagen-sobre-nosotros{
-    border-radius: 30px;
+.hopecore{
+    border-radius: 50%;
+    padding-left: 100px;
+    object-fit: cover;
+    padding-top: 20px;
+    overflow: hidden;
+    display: block;
+    width: 1000px;                
+    height: 400px;
 }
-.resenias {
+.resenias-container {
     padding: 2px;
+    background-color: #590101;
+    height: 300px;
+    position: relative;
+    overflow: hidden;
 }
+
 
