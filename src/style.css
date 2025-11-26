@@ -247,10 +247,103 @@ hr {
 }
 .resenias-container {
     padding: 2px;
-    background-color: #590101;
-    height: 300px;
     position: relative;
     overflow: hidden;
+    height: 600px;
+    
+}
+
+.resenias-container h1 {
+    -webkit-text-stroke: 1px #f9c8ac;
+    color: #590101;
+    font-weight: 800px;
+    font-size: 50px;
+    padding-top: 30px;
+}
+
+.primera-resenia {
+    background-color: #7e1b1b; 
+    padding: 20px;          
+    margin: 20px auto;     
+    border-radius: 15px;      
+    width: 80%;               
+    color: #ffffff; 
+    height: 150px; 
+    width: 500;         
+}
+
+.primera-resenia h3 {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.primera-resenia p {
+    font-size: 20px;
 }
 
 
+.segunda-resenia {
+    background-color: #7e1b1b;
+    padding-top: 5px;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                    
+    color: #ffffff; 
+    height: 150px; 
+    width: 600px;   
+       
+}
+
+.segunda-resenia h3 {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.segunda-resenia p {
+    font-size: 20px;
+}
+
+
+.tercera-resenia {
+    background-color: #7e1b1b;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                 
+    color: #ffffff;   
+    height: 150px; 
+    width: 600px;        
+}
+
+.tercera-resenia h3 {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.tercera-resenia p {
+    font-size: 20px;
+}
+
+
+.cuarta-resenia {
+    background-color: #7e1b1b;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                 
+    color: #ffffff;   
+    height: 200px;
+    width: 400px;       
+}
+
+.cuarta-resenia h3 {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.cuarta-resenia p {
+    font-size: 20px;
+}
+.card-body{
+    background-color: #2b1010;
+    color:#ffffff;
+    height: 55px;
+}
