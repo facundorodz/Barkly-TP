@@ -316,7 +316,64 @@ async function editarCuidador(id) {
 
     cargarCuidadores();
 }
+/* ===========================================
+   4️⃣ EDITAR PAQUETE
+=========================================== */
+async function guardarPaquete(id) {
+    const nombre = document.querySelector(`.edit-nombre[data-id="${id}"]`).value;
+    const descripcion = document.querySelector(`.edit-desc[data-id="${id}"]`).value;
+    const precio = document.querySelector(`.edit-precio[data-id="${id}"]`).value;
 
+    await fetch(`${API_URL}/paquetes/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre, descripcion, precio })
+    });
+
+    alert("Paquete actualizado");
+    cargarPaquetes();
+}
+
+
+/* ===========================================
+   5️⃣ ELIMINAR PAQUETE
+=========================================== */
+async function eliminarPaquete(id) {
+    if (!confirm("¿Eliminar paquete?")) return;
+
+    await fetch(`${API_URL}/paquetes/${id}`, {
+        method: "DELETE"
+    });
+
+    alert("Paquete eliminado");
+    cargarPaquetes();
+}
+
+
+/* ===========================================
+   6️⃣ AGREGAR NUEVO PAQUETE
+=========================================== */
+document.getElementById("form-agregar-paquete").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    // Inputs
+    const nombre = document.getElementById("nuevo-nombre").value;
+    const descripcion = document.getElementById("nuevo-descripcion").value;
+    const precio = document.getElementById("nuevo-precio").value;
+
+    // Guardar nuevo paquete
+    await fetch(`${API_URL}/cuidadores/${cuidadorId}/paquetes`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre, descripcion, precio })
+    });
+
+    alert("Paquete agregado");
+    document.getElementById("form-agregar-paquete").reset();
+    cargarPaquetes();
+});
+
+cargarPaquetes();
 cargarCuidadores();
 </script>
 
