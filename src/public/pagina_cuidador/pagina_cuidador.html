@@ -95,38 +95,6 @@
                         </select>                        
                     </div>
 
-                    <h3 class="title-campo">Paquetes ofrecidos</h3>
-
-                    <div class="paquetes-container">
-
-                        <div class="card text-bg-light mb-3 service-plan">
-                            <input type="checkbox" id="check_estandar">
-                            <h4 class="card-header" id="nombre_paquete_estandar">🐾 Paquete Estándar</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion_estandar" placeholder="Ej: Paseos + juegos + cuidado en el hogar">
-                            <label>Precio Estándar</label>
-                            <input type="number" id="precio_estandar" placeholder="Ej: $6000">
-                        </div>
-
-                        <div class="card text-bg-warning mb-3 service-plan">
-                            <input type="checkbox" id="check_premium">
-                            <h4 class="card-header" id="nombre_paquete_premuim">🌟 Paquete Premium</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion_premuim" placeholder="Ej: Paseos + juegos + cuidado en el hogar">
-                            <label>Precio Premium</label>
-                            <input type="number" id="precio_premuim" placeholder="Ej: $9000">
-                        </div>
-
-                        <div class="card text-bg-dark mb-3 service-plan">
-                            <input type="checkbox" id="check_deluxe">
-                            <h4 class="card-header" id="nombre_paquete_deluxe" style="color: white;">💎 Paquete de Superheroe</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion_deluxe" placeholder="Ej: Paseos + juegos + cuidado en el hogar">
-                            <label>Precio Deluxe</label>
-                            <input type="number" id="precio_deluxe" placeholder="Ej: $12000">
-                        </div>
-
-                    </div>
                     <!-- TÉRMINOS Y CONDICIONES -->
                     <h3 class="title-campo">Políticas y verificación</h3>
 
@@ -140,7 +108,9 @@
                         <label class="form-check-label">
                              Me comprometo a cuidar de los animales con responsabilidad
                         </label>
-                        <button class="btn-success" type="submit">Registrarse</button>
+                    </div>
+                    <div class="section-terms">
+                        <button class="btn-success" type="submit">Registrarse</button>                        
                     </div>
                 </form>
             </div>
@@ -149,63 +119,32 @@
 </body>
 
 <script>
-document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
+document.addEventListener("DOMContentLoaded", async () => {
+        const cuidadorID = localStorage.getItem("cuidador_id");
 
-    const paquetes = [];
-
-    // PAQUETE ESTANDAR
-    if (document.getElementById("check_estandar").checked) {
-        paquetes.push({
-            nombre: document.getElementById("nombre_paquete_estandar").innerText,
-            descripcion: document.getElementById("descripcion_estandar").value,
-            precio: document.getElementById("precio_estandar").value
-        });
-    }
-
-    // PAQUETE PREMIUM
-    if (document.getElementById("check_premium").checked) {
-        paquetes.push({
-            nombre: document.getElementById("nombre_paquete_premium").innerText,
-            descripcion: document.getElementById("descripcion_premium").value,
-            precio: document.getElementById("precio_premium").value
-        });
-    }
-
-    // PAQUETE DELUXE
-    if (document.getElementById("check_deluxe").checked) {
-        paquetes.push({
-            nombre: document.getElementById("nombre_paquete_deluxe").innerText,
-            descripcion: document.getElementById("descripcion_deluxe").value,
-            precio: document.getElementById("precio_deluxe").value
-        });
-    }
-
-    // Si no seleccionó ningún paquete
-    if (paquetes.length === 0) {
-        alert("Tenés que seleccionar al menos un paquete.");
-        return;
-    }
-
-    try {
-        const respuesta = await fetch("http://localhost:3000/register_paquetes", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ paquetes })
-        });
-
-        if (!respuesta.ok) {
-            throw new Error("Error en la petición");
+        if (!cuidadorID) {
+            bloquearAcceso("No tienes acceso. Primero debes registrarte o iniciar sesión.");
+            return;
         }
 
-        const data = await respuesta.json();
-        alert("✔ " + data.mensaje);
+        // ▶️ Consultamos al backend si este cuidador existe en PostgreSQL
+        try {
+            const respuesta = await fetch(`http://localhost:3000/api/cuidadores/${cuidadorID}`);
+            const data = await respuesta.json();
 
-    } catch (error) {
-        console.log(error);
-        alert("❌ Error al conectar con el servidor.");
-    }
-});
+            if (!data.existe) {
+                bloquearAcceso("El cuidador no está registrado en la base de datos.");
+                return;
+            }
+
+            // ✔ Si existe, cargamos sus datos en el formulario
+            cargarDatosPerfil(data.cuidador);
+
+        } catch (error) {
+            console.error("Error verificando cuidador:", error);
+            bloquearAcceso("Error conectando al servidor. Intenta nuevamente.");
+        }
+    });
 </script>
 
 </html>
