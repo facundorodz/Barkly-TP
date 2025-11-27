@@ -1,12 +1,10 @@
 const express = require("express");
 const usersRouter = require("./routes/users.js");
 const cuidadoresRouter = require("./routes/cuidadores.routes.js");
-const cors = require("cors");
  
 const app = express();
 const port = 3000;
 
-app.use(cors());
 app.use('/assets', express.static('assets')); // para que el back cargue las imagenes
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
@@ -31,15 +29,16 @@ app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
+app.get("/cuidador-form", (req, res) => {
+  res.redirect("/pagina_registro_usuario/registro_usuario.html");
+});
 
 <<<<<<< HEAD
 =======
 app.use("/users", usersRouter);
 
-//Guarda el cuidador dentro de la bdd
 app.use("/", cuidadoresRouter);
 
->>>>>>> 8434b9e (Cree el CRUD de cuidadores en una pagina de prueba)
 
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en http://localhost:${port}`);
