@@ -50,35 +50,27 @@
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
                           <div class="control">
-                            <input type="text" placeholder="Nombre">
+                            <input id="nombre" type="text" placeholder="Nombre">
                           </div>
                         </div>
 
                         <div class="campo-franquicia">
                           <label>Nombre Franquisia</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Franquicia">
+                            <input id="franquicia" class="input" type="text" placeholder="Franquicia">
                           </div>
                         </div>
 
                         <div class="campo-poderes">
                           <label>Poderes</label>
                           <div class="control">
-                            <input class="input" type="text">
+                            <input id="poderes" class="input" type="text">
                           </div>
-                        </div>
-
-                        <div class="imagen-form"></div>
-                        <label for="cuidador-imagen">Foto de perfil</label>
-                        <input type="file" id="cuidador-imagen" class="form-control" accept="image/*" required>
-                        <small style="color: wheat;">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
-                        <div id="preview-imagen-container" style="display: none;">
-                            <img id="imagen-preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; background-color: white;" alt="Preview imagen">
                         </div>
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
-                        <select name="experiencia">
+                        <select id="experiencia" name="experiencia">
                             <option value="0">0-1 Años</option>
                             <option value="1">2-3 Años</option>
                             <option value="2">3-5 Años</option>
@@ -93,39 +85,6 @@
                             <option>Grandes</option>
                             <option>Perros con medicación</option>
                         </select>                        
-                    </div>
-
-                    <h3 class="title-campo">Paquetes ofrecidos</h3>
-
-                    <div class="paquetes-container">
-
-                        <div class="card text-bg-light mb-3 service-plan">
-                            <input type="checkbox" id="check_estandar">
-                            <h4 class="card-header" id="nombre_paquete_estandar">🐾 Paquete Estándar</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion_estandar" placeholder="Ej: Paseos + juegos + cuidado en el hogar">
-                            <label>Precio Estándar</label>
-                            <input type="number" id="precio_estandar" placeholder="Ej: $6000">
-                        </div>
-
-                        <div class="card text-bg-warning mb-3 service-plan">
-                            <input type="checkbox" id="check_premium">
-                            <h4 class="card-header" id="nombre_paquete_premuim">🌟 Paquete Premium</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion_premuim" placeholder="Ej: Paseos + juegos + cuidado en el hogar">
-                            <label>Precio Premium</label>
-                            <input type="number" id="precio_premuim" placeholder="Ej: $9000">
-                        </div>
-
-                        <div class="card text-bg-dark mb-3 service-plan">
-                            <input type="checkbox" id="check_deluxe">
-                            <h4 class="card-header" id="nombre_paquete_deluxe" style="color: white;">💎 Paquete de Superheroe</h4>
-                            <p class="label-beneficios">Beneficios</p>
-                            <input type="text" id="descripcion_deluxe" placeholder="Ej: Paseos + juegos + cuidado en el hogar">
-                            <label>Precio Deluxe</label>
-                            <input type="number" id="precio_deluxe" placeholder="Ej: $12000">
-                        </div>
-
                     </div>
                     <!-- TÉRMINOS Y CONDICIONES -->
                     <h3 class="title-campo">Políticas y verificación</h3>
@@ -152,59 +111,22 @@
 document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const paquetes = [];
+    const cuidador = {
+        nombre: document.getElementById("nombre").value,
+        franquicia: document.getElementById("franquicia").value,
+        experiencia: document.getElementById("experiencia").value,
+        poderes: document.getElementById("poderes").value,
+    };
 
-    // PAQUETE ESTANDAR
-    if (document.getElementById("check_estandar").checked) {
-        paquetes.push({
-            nombre: document.getElementById("nombre_paquete_estandar").innerText,
-            descripcion: document.getElementById("descripcion_estandar").value,
-            precio: document.getElementById("precio_estandar").value
-        });
-    }
+    const res = await fetch("http://localhost:3000/cuidadores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cuidador),
+    });
 
-    // PAQUETE PREMIUM
-    if (document.getElementById("check_premium").checked) {
-        paquetes.push({
-            nombre: document.getElementById("nombre_paquete_premium").innerText,
-            descripcion: document.getElementById("descripcion_premium").value,
-            precio: document.getElementById("precio_premium").value
-        });
-    }
-
-    // PAQUETE DELUXE
-    if (document.getElementById("check_deluxe").checked) {
-        paquetes.push({
-            nombre: document.getElementById("nombre_paquete_deluxe").innerText,
-            descripcion: document.getElementById("descripcion_deluxe").value,
-            precio: document.getElementById("precio_deluxe").value
-        });
-    }
-
-    // Si no seleccionó ningún paquete
-    if (paquetes.length === 0) {
-        alert("Tenés que seleccionar al menos un paquete.");
-        return;
-    }
-
-    try {
-        const respuesta = await fetch("http://localhost:3000/register_paquetes", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ paquetes })
-        });
-
-        if (!respuesta.ok) {
-            throw new Error("Error en la petición");
-        }
-
-        const data = await respuesta.json();
-        alert("✔ " + data.mensaje);
-
-    } catch (error) {
-        console.log(error);
-        alert("❌ Error al conectar con el servidor.");
-    }
+    const data = await res.json();
+    alert(data.mensaje || "Registrado");
+    cargarCuidadores();
 });
 </script>
 
