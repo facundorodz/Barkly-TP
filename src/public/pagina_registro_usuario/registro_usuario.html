@@ -55,37 +55,29 @@
 					<h1>Se parte de este gran mundo y encuentra el tu supercuidador ideal</h1>
 					<p>Rápido, seguro y completamente gratis.</p>
 				</div>
-				<form id="cuidador-form" class="cuidador-form">
+				<form id="cuidador-form" class="cuidador-form" action="/users/register_user" method="post">
                     <div class="cuidador-info">
-
                         <div class="campo-nombre">
                           <label>Nombre Completo</label>
                           <div class="control">
-                            <input id="nombre" type="text" placeholder="Nombre Completo">
+                            <input id="nombre" name="name" type="text" placeholder="Nombre Completo">
                           </div>
                         </div>
 
                         <div class="campo-nombre-perfil">
                           <label>Nombre de perfil</label>
                           <div class="control">
-                            <input id="perfil" type="text" placeholder="Nombre">
+                            <input id="perfil" name="profile_name" type="text" placeholder="Nombre">
                           </div>
                         </div>
 
                         <div class="campo-contrasenia">
                           <label>Contraseña</label>
                           <div class="control">
-                            <input id="password" type="text">
+                            <input id="password" name="pass" type="password">
                           </div>
                         </div>
 
-                        <div class="imagen-form"></div>
-                        <label for="cuidador-imagen">Foto de perfil</label>
-                        <input type="file" id="cuidador-imagen" class="form-control" accept="image/*" required>
-                        <small style="color: #FFFF;">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
-                        <div id="status" class="upload-status"></div>
-                        <div id="preview-imagen-conteiner" style="display: none;">
-                            <img id="imagen-preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; background-color: white;" alt="Preview imagen">
                         </div>
 
                         <h3 class="title-campo">Cantidad de Perros</h3>

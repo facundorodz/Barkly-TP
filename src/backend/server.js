@@ -11,7 +11,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
 app.use(express.static("src/public")); // acceder a todo lo de la carpeta public desde ese punto en adelante
-
+app.use("/users", usersRouter);
 
 /*
 GET para mostrar las paginas 
