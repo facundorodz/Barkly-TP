@@ -320,14 +320,14 @@ async function editarCuidador(id) {
    4️⃣ EDITAR PAQUETE
 =========================================== */
 async function guardarPaquete(id) {
-    const nombre = document.querySelector(`.edit-nombre[data-id="${id}"]`).value;
-    const descripcion = document.querySelector(`.edit-desc[data-id="${id}"]`).value;
-    const precio = document.querySelector(`.edit-precio[data-id="${id}"]`).value;
+    const nombre_paquete = document.querySelector(`.edit-nombre[data-id="${id}"]`).value;
+    const descripcion_paquete = document.querySelector(`.edit-desc[data-id="${id}"]`).value;
+    const precio_paquete = document.querySelector(`.edit-precio[data-id="${id}"]`).value;
 
     await fetch(`${API_URL}/paquetes/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, descripcion, precio })
+        body: JSON.stringify({ nombre_paquete, descripcion_paquete, precio_paquete })
     });
 
     alert("Paquete actualizado");
@@ -353,28 +353,31 @@ async function eliminarPaquete(id) {
 /* ===========================================
    6️⃣ AGREGAR NUEVO PAQUETE
 =========================================== */
-document.getElementById("form-agregar-paquete").addEventListener("submit", async (e) => {
+document.getElementById("form-paquete").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     // Inputs
-    const nombre = document.getElementById("nuevo-nombre").value;
-    const descripcion = document.getElementById("nuevo-descripcion").value;
-    const precio = document.getElementById("nuevo-precio").value;
+    const nombre_paquete = document.getElementById("nuevo-nombre").value;
+    const descripcion_paquete = document.getElementById("nuevo-descripcion").value;
+    const precio_paquete = document.getElementById("nuevo-precio").value;
 
     // Guardar nuevo paquete
     await fetch(`${API_URL}/cuidadores/${cuidadorId}/paquetes`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre, descripcion, precio })
+        body: JSON.stringify({ nombre_paquete, descripcion_paquete, precio_paquete })
     });
 
     alert("Paquete agregado");
-    document.getElementById("form-agregar-paquete").reset();
+    document.getElementById("form-paquete").reset();
     cargarPaquetes();
 });
 
 cargarPaquetes();
 cargarCuidadores();
+
+
+  
 </script>
 
 </body>
