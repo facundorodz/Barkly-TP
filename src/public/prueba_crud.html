@@ -196,7 +196,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- Script base para enganchar al backend (solo estructura, sin lógica de red aún) -->
-  <script>
+  <!--script>
     // Estos IDs/estructuras están pensados para que después conectes tu CRUD:
     // - GET cuidador: rellenar form-perfil y encabezado
     // - PUT cuidador: enviar cambios de form-perfil
@@ -235,11 +235,55 @@
         console.log("Eliminar cuenta (conectar con backend)");
       }
     });
-  </script>
+  </script-->
 
 
 <!-- ================== SCRIPT FINAL CORREGIDO ================== -->
 <script>
+
+   // 🔎 Verificación de cuidador registrado EN BASE DE DATOS POSTGRES
+    document.addEventListener("DOMContentLoaded", async () => {
+        const cuidadorID = localStorage.getItem("cuidador_id");
+
+        if (!cuidadorID) {
+            bloquearAcceso("No tienes acceso. Primero debes registrarte o iniciar sesión.");
+            return;
+        }
+
+        // ▶️ Consultamos al backend si este cuidador existe en PostgreSQL
+        try {
+            const respuesta = await fetch(`http://localhost:3000/api/cuidadores/${cuidadorID}`);
+            const data = await respuesta.json();
+
+            if (!data.existe) {
+                bloquearAcceso("El cuidador no está registrado en la base de datos.");
+                return;
+            }
+
+            // ✔ Si existe, cargamos sus datos en el formulario
+            cargarDatosPerfil(data.cuidador);
+
+        } catch (error) {
+            console.error("Error verificando cuidador:", error);
+            bloquearAcceso("Error conectando al servidor. Intenta nuevamente.");
+        }
+    });
+
+    // ⛔ Si no puede ingresar
+    function bloquearAcceso(mensaje) {
+        document.getElementById("verificacion").innerHTML = `
+            <p style='color:red; font-weight:bold;'>${mensaje}</p>
+        `;
+        document.querySelector(".contenedor").style.display = "none";
+    }
+
+    // 📌 Cargar datos del cuidador en el formulario
+    function cargarDatosPerfil(c) {
+        document.getElementById("nombre").value = c.nombre || "";
+        document.getElementById("apellido").value = c.apellido || "";
+        document.getElementById("telefono").value = c.telefono || "";
+        document.getElementById("descripcion").value = c.descripcion || "";
+    }
 // -------------------- CREAR CUIDADOR --------------------
 document.getElementById("form-perfil").addEventListener("submit", async (e) => {
     e.preventDefault();
