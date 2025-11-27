@@ -30,8 +30,8 @@ Como superheroe podes ofrecer (¡y mostrarle al mundo!) tus servicios como cuida
 |:--:|:----------:|:-------------:|:--------:|:------------:|:----------:|
 
 ## Paquetes
-| ID | ID Superheroe | Nombre Paquete | Descripción | Precio | Cupos Disponibles |
-|:--:|:-------------:|:--------------:|:-----------:|:------:|:-----------------:|
+| ID | ID Superheroe | Nombre Paquete | Descripción | Precio |
+|:--:|:-------------:|:--------------:|:-----------:|:------:|
 
 ## Razas
 | ID | Nombre | Tamaño | Temperamento | Fortaleza | Velocidad | Color Predominante |
