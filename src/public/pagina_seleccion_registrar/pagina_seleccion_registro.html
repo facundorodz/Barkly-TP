@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">   
+        
+        <title> Barkly Corporation</title>
+        
+        <link rel="stylesheet" href="./seleccion_registrostyle.css">
+        <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
+        </link>
+    </head>
+
+    <body>
+        <div class="d-flex justify-content-center align-items-center vh-100">
+            <div class="container text-center py-5" id="fondo-registrar">
+                <form id="pagina_seleccionar-form" class="pagina_seleccionar-form">
+                    <h2 class="mb-3">Regístrate</h2>
+                    <p class="descripcion-boton">Elegí cómo querés registrarte en la plataforma</p>
+                    <div class="row justify-content-center g-4">
+
+                        <!-- Usuario -->
+                        <div class="col-md-4">
+                            <button type="button" name="tipo" value="usuario" class="text-decoration-none" onclick="redirigir_usuario()" style="background:none;border:none;padding:0;width:100%;">
+                                <div class="card p-4 shadow card-option">
+                                    <div class="icon-circle mb-3">
+                                        <img src="../../../assets/images/icono_login.png" class="imagen-icono">
+                                    </div>
+                                    <h4>Como Usuario</h4>
+                                    <p class="descripcion-boton">
+                                        Soy dueño de un perro y busco cuidadores o servicios.
+                                    </p>
+                                </div>
+                            </button>
+                        </div>
+
+                        <!-- Superhéroe / Cuidador -->
+                        <div class="col-md-4">
+                            <button type="button" name="tipo" value="cuidador" class="text-decoration-none" onclick="redirigir_cuidador()" style="background:none;border:none;padding:0;width:100%;">
+                                <div class="card p-4 shadow card-option">
+                                    <div class="icon-circle mb-3">
+                                        <img src="../../../assets/images/icono_metadata.png" class="imagen-icono">
+                                    </div>
+                                    <h4>Como Superhéroe</h4>
+                                    <p class="descripcion-boton">
+                                        Quiero cuidar perros y ofrecer mis servicios en la plataforma.
+                                    </p>
+                                </div>
+                            </button>
+                        </div>
+                        
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="pagina_seleccion_registro.js"></script>
+    </body>
+
+</html>

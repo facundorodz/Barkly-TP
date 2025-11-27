@@ -2,12 +2,13 @@
     font-family: 'Oswald', sans-serif;
 }
 
-p, h1, label, input {
+p, h1, label, input, .texto-elegir {
     color: white;
 }
 
 .form-text {
     color: wheat;
+    text-shadow: 2px 2px 1px darkred;
 }
 
 #loginElegir {
@@ -17,16 +18,19 @@ p, h1, label, input {
 }
 
 body {
-    background-image: url("../../../assets/images/fondo_login.png");
+    background-image: url("../../../assets/images/fondo_login.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    backdrop-filter: blur(15px);
+    background-position: center;
+    backdrop-filter: blur(5px);
 }
 
 #fondoLogin {
     background-color: transparent;
     backdrop-filter: blur(5px);
-    border-width: .5px;
+    border: 3px outset;
+    border-color: #adaa8e;
+    box-shadow: 2px 2px 1px darkred;
 }
 
 #iconoSuperheroe, #iconoCliente {
@@ -34,10 +38,6 @@ body {
     height: 40px;
 }
 
-.etiqueta-elegir {
-    color: white;
-}
-
 a {
-    color: #fa6e83;
+    color: red;
 }
