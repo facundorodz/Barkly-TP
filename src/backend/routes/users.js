@@ -5,30 +5,23 @@ const db = require("../bdd/bdd.js");
 
 
 
-router.get("/login", async (req, res) => {
-  console.log("login", req.body); 
-  const { name, pass } = req.body;
-  //let response_usuario = await pg.realizarQuery  ("SELECT * FROM usuarios WHERE nombre_perfil = $1 AND contrasenia = $2",[req.body.name, req.body.pass]);
-  //let response_superheroe = await pg.realizarQuery  ("SELECT * FROM superheroes WHERE nombre_perfil = $1 AND contrasenia = $2",[req.body.name, req.body.pass]);
-  try {
-    let is_user = false
-    if (response_usuario.length > 0 || response_superheroe.length > 0){
-        is_user = true
-    } 
-  
-  } catch(error) {
-      console.error(error);
-      res.status(404).send("not found"); 
-  }
+router.post("/login_user", async (req, res) => {
+    console.log("Login intento:", req.body);
+    const { profile_name, pass } = req.body;
+    try {
+        const response_usuario = await db.query(
+            "SELECT * FROM usuarios WHERE nombre_perfil = $1 AND contraseña = $2",[profile_name, pass]
+        );
+        if (response_usuario.rows.length === 0) {
+            return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
+        }
+        return res.json({ success: true });
 
-  if (response_usuario.length > 0 && is_user == true) {
-     // res.redirect("/pagina_para_usuario");  
-  }
-    if (response_superheroe.length > 0 && is_user == true) {
-     // res.redirect("/pagina_para_superheroe"); 
-  }
+    } catch (error) {
+        console.error("Error en login:", error);
+        return res.status(500).json({ error: "Error interno en el servidor" });
+    }
 });
-
 
 
 router.post("/register_user", async (req, res) => {
