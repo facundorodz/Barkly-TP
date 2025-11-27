@@ -42,17 +42,17 @@ router.post("/register_user", async (req, res) => {
 
 router.post("/register_hero", async (req, res) => {
     console.log("registro de superheroe", req.body);
-    const { name, pass } = req.body; // agregar todo lo necesario para cuando se registra para los superheroes
+    const { profile_name, pass } = req.body; // agregar todo lo necesario para cuando se registra para los superheroes
       try {
-        const exists = await db.query("SELECT * FROM superheroes WHERE name = $1",[req.body.name]);
-        if (exists.length > 0) {
-            return res.status(400).send("Ya existe un superheroe con ese email");
-        } // si no existe inserto en la tabla
-        await db.query("INSERT INTO superheroes (nombre, contrasenia) VALUES ($1, $2)",[name, pass]); // agregar todo lo necesario al insertar un superheroe
-        return res.redirect("/index.html"); // redireccionar a la pagina que quiero
+        const exists = await db.query("SELECT * FROM superheroes WHERE name = $1",[req.body.profile_name]);
+        if (exists.rows.length > 0) {
+            return res.status(400).json("Ya existe un superheroe con ese email");
+        } 
+        await db.query("INSERT INTO superheroes (nombre, contraseña) VALUES ($1, $2)",[profile_name, pass]); 
+        return res.status(200).json({ success: true }); // hacer el .js del front para el registro de cuidador
     } catch(error){ 
         console.error(error);
-        return res.status(400).send("Error al registrar usuario"); // manejar bien este error
+        return res.status(500).send("Error al registrarse"); // manejar bien este error
     }
 });
 
