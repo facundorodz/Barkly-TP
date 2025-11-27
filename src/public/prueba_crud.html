@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>CRUD de Cuidadores</title>
+
+    <style>
+        body { font-family: Arial; margin: 20px; }
+        .card { border: 1px solid #ccc; padding: 15px; margin-bottom: 10px; border-radius: 8px; }
+        .btn { padding: 6px 12px; cursor: pointer; border: none; border-radius: 5px; margin-right: 6px; }
+        .btn-edit { background: #3498db; color: #fff; }
+        .btn-delete { background: #e74c3c; color: #fff; }
+        .btn-save { background: #27ae60; color: #fff; }
+    </style>
+</head>
+
+<body>
+
+<h2>Registrar Cuidador</h2>
+
+<form id="form-crear">
+    <label>Nombre:</label>
+    <input type="text" id="nombre" required><br><br>
+
+    <label>Franquicia:</label>
+    <input type="text" id="franquicia" required><br><br>
+
+    <label>Experiencia:</label>
+    <input type="number" id="experiencia" required><br><br>
+
+    <label>Poderes:</label>
+    <input type="text" id="poderes" required><br><br>
+
+    <button class="btn btn-save" type="submit">Crear Cuidador</button>
+</form>
+
+<hr>
+
+<h2>Listado de Cuidadores</h2>
+<div id="lista-cuidadores"></div>
+
+<!-- ================== SCRIPT FINAL CORREGIDO ================== -->
+<script>
+// -------------------- CREAR CUIDADOR --------------------
+document.getElementById("form-crear").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const cuidador = {
+        nombre: document.getElementById("nombre").value,
+        franquicia: document.getElementById("franquicia").value,
+        experiencia: document.getElementById("experiencia").value,
+        poderes: document.getElementById("poderes").value,
+    };
+
+    const res = await fetch("http://localhost:3000/cuidadores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cuidador),
+    });
+
+    const data = await res.json();
+    alert(data.mensaje || "Registrado");
+    cargarCuidadores();
+});
+
+// -------------------- OBTENER TODOS --------------------
+async function cargarCuidadores() {
+    const res = await fetch("http://localhost:3000/cuidadores");
+    const cuidadores = await res.json();
+
+    const lista = document.getElementById("lista-cuidadores");
+    lista.innerHTML = "";
+
+    cuidadores.forEach(c => {
+        lista.innerHTML += `
+            <div class="card">
+                <strong>${c.nombre}</strong> — ${c.franquicia}<br>
+                Exp: ${c.experiencia} | Poderes: ${c.poderes}<br><br>
+
+                <button class="btn btn-edit" onclick="editarCuidador(${c.id})">Editar</button>
+                <button class="btn btn-delete" onclick="eliminarCuidador(${c.id})">Eliminar</button>
+            </div>
+        `;
+    });
+}
+
+// -------------------- ELIMINAR --------------------
+async function eliminarCuidador(id) {
+    if (!confirm("¿Eliminar este cuidador?")) return;
+
+    await fetch(`http://localhost:3000/cuidadores/${id}`, {
+        method: "DELETE"
+    });
+
+    cargarCuidadores();
+}
+
+// -------------------- EDITAR --------------------
+async function editarCuidador(id) {
+    const nuevoNombre = prompt("Nuevo nombre:");
+    const nuevaFranquicia = prompt("Nueva franquicia:");
+    const nuevaExperiencia = prompt("Nueva experiencia:");
+    const nuevosPoderes = prompt("Nuevos poderes:");
+
+    const cambios = {
+        nombre: nuevoNombre,
+        franquicia: nuevaFranquicia,
+        experiencia: nuevaExperiencia,
+        poderes: nuevosPoderes
+    };
+
+    await fetch(`http://localhost:3000/cuidadores/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cambios)
+    });
+
+    cargarCuidadores();
+}
+
+cargarCuidadores();
+</script>
+
+</body>
+</html>

@@ -1,6 +1,7 @@
 const express = require("express");
 const usersRouter = require("./routes/users.js");
-const paquetesRouter = require("./services/paquete.route.js");
+//const paquetesRouter = require("./routes/paquete.route.js");
+const cuidadoresRouter = require("./routes/cuidadores.routes.js");
 const cors = require("cors");
  
 const app = express();
@@ -32,6 +33,16 @@ app.get("/login", (req, res) => {
 });
 
 
+<<<<<<< HEAD
+=======
+app.use("/users", usersRouter);
+
+//Guarda los paquetes en la bdd
+//app.use("/", paquetesRouter);
+
+app.use("/", cuidadoresRouter);
+
+>>>>>>> 8434b9e (Cree el CRUD de cuidadores en una pagina de prueba)
 
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en http://localhost:${port}`);
