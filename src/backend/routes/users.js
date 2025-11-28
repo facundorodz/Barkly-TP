@@ -45,7 +45,7 @@ router.post("/register_user", async (req, res) => {
             return res.status(400).json({ error: "Ya existe un usuario con ese nombre de perfil" });
         } 
         await db.query("INSERT INTO usuarios (nombre_perfil, contraseña, nombre_completo) VALUES ($1, $2, $3)",[profile_name, pass, name]);
-        return res.status(200).json({ success: true });
+        return res.redirect("/index.html"); 
     } catch(error){ 
         console.error(error);
         return res.status(500).send("Error al registrar usuario"); 
