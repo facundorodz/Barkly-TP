@@ -17,7 +17,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         const data = await resp.json();
         
         if (data.success) {
-            alert("registro exitoso");
+            window.location.href = "/index.html";  
         } else {
             alert(data.error);
         }
@@ -27,3 +27,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         alert("Error al conectar con el servidor");
     }
 });
+
+// resenias -> que haya un ver mas como con los superheroes
+// registro de superheroes correcto y que vaya a la pagina que deberia
+// mostrar bien los cuidadores en el index.html
+// el buscar superheroes hacerlo bien la busqueda en index.html
