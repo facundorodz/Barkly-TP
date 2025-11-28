@@ -1,0 +1,62 @@
+
+body {
+    font-family: 'Oswald', sans-serif;
+    background-image: url(../../../assets/images/fondo_usuario.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: url(../../assets/images/cursor_default.png), auto;
+    max-width: 100%;
+}
+
+a {
+    cursor: url(../assets/images/click.png), auto;
+}
+
+.navbar {
+  background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+  position: sticky;
+  width: 100%;
+}
+
+.navbar-brand {
+    font-family: 'Oswald', oblique;
+    color:#DC3545;
+    font-size: 30px;
+    font-weight: 500;
+    
+}
+
+
+#mas-info #iniciar-sesion {
+    margin-right: 10px;
+}
+
+#mas-info .nav-link {
+    font-size: 19px;
+    color:rgb(220, 53, 69);
+    margin-right: 10px;
+}
+
+.buscador{
+    margin-left: 45px;
+    top: 0px;
+}
+
+[role=button] {
+  margin-right: 10px;
+}
+
+.btn:hover {
+    cursor: url(../assets/images/click.png), pointer;
+}
+
+.contenedor {
+    background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1),
+    rgba(0, 0, 0, 0));
+
+    color:beige;
+
+}
