@@ -49,33 +49,32 @@
                     <h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
                     <p>Registrate para poder ofrecer sus paquetes de servicios</p>
                 </div>
-                <form id="cuidador-form" class="cuidador-form">
+                <form id="cuidador-form" class="cuidador-form" action="/users/register_hero" method="post" >
                     <div class="cuidador-info">
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
                           <div class="control">
-                            <input type="text" placeholder="Nombre">
+                            <input type="text" placeholder="Nombre" id="profile_name" name="profile_name">
                           </div>
                         </div>
 
                         <div class="campo-franquicia">
                           <label>Nombre Franquicia</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Franquicia">
+                            <input class="input" type="text" placeholder="Franquicia" id="franchise_name" name="franchise_name">
                           </div>
                         </div>
 
                         <div class="campo-poderes">
                           <label>Poderes</label>
                           <div class="control">
-                            <input class="input" type="text">
+                            <input class="input" type="text" id="powers" name="powers">
                           </div>
                         </div>
 
-
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
-                        <select name="experiencia">
+                        <select name="experience" id="experience">
                             <option value="0">0-1 Años</option>
                             <option value="1">2-3 Años</option>
                             <option value="2">3-5 Años</option>

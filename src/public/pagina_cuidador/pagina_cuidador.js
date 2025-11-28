@@ -3,20 +3,21 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
     const datos = {
         profile_name: document.getElementById("profile_name").value,
-        pass: document.getElementById("pass").value
+        franchise_name: document.getElementById("franchise_name").value,
+        powers: document.getElementById("powers").value,
+        experience: document.getElementById("experience").value
     };
 
     try {
-        const resp = await fetch("/users/login_user", {
+        const resp = await fetch("/users/register_hero", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datos)
         });
-
         const data = await resp.json();
-
+        
         if (data.success) {
-            alert("Login exitoso");
+            alert("registro exitoso");
         } else {
             alert(data.error);
         }
@@ -26,4 +27,3 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         alert("Error al conectar con el servidor");
     }
 });
-

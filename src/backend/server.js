@@ -31,9 +31,6 @@ app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
-app.get("/cuidador-form", (req, res) => {
-  res.redirect("/pagina_registro_usuario/registro_usuario.html");
-});
 
 
 app.listen(port, () => {

@@ -15,7 +15,7 @@ router.post("/login_user", async (req, res) => {
         if (response_usuario.rows.length === 0) {
             return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
         }
-        return res.json({ success: true });
+        return res.redirect("/index.html"); 
 
     } catch (error) {
         console.error("Error en login:", error);
@@ -33,7 +33,7 @@ router.post("/register_user", async (req, res) => {
             return res.status(400).json({ error: "Ya existe un usuario con ese nombre de perfil" });
         } 
         await db.query("INSERT INTO usuarios (nombre_perfil, contraseña, nombre_completo) VALUES ($1, $2, $3)",[profile_name, pass, name]);
-        return res.status(200).json({ success: true });
+        return res.redirect("/index.html"); 
     } catch(error){ 
         console.error(error);
         return res.status(500).send("Error al registrar usuario"); 
@@ -42,14 +42,14 @@ router.post("/register_user", async (req, res) => {
 
 router.post("/register_hero", async (req, res) => {
     console.log("registro de superheroe", req.body);
-    const { profile_name, pass } = req.body; // agregar todo lo necesario para cuando se registra para los superheroes
+    const { profile_name, franchise_name, powers, experience } = req.body; // agregar todo lo necesario para cuando se registra para los superheroes
       try {
-        const exists = await db.query("SELECT * FROM superheroes WHERE name = $1",[req.body.profile_name]);
+        const exists = await db.query("SELECT nombre FROM superheroes WHERE nombre = $1",[req.body.profile_name]);
         if (exists.rows.length > 0) {
             return res.status(400).json("Ya existe un superheroe con ese email");
         } 
-        await db.query("INSERT INTO superheroes (nombre, contraseña) VALUES ($1, $2)",[profile_name, pass]); 
-        return res.status(200).json({ success: true }); // hacer el .js del front para el registro de cuidador
+        await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes ) VALUES ($1, $2, $3, $4)",[profile_name, franchise_name, powers, experience]); 
+        return res.redirect("/index.html"); 
     } catch(error){ 
         console.error(error);
         return res.status(500).send("Error al registrarse"); // manejar bien este error
