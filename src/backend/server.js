@@ -8,6 +8,9 @@ const path = require("path");
 const app = express();
 const port = 3000;
 
+
+app.use(cors());
+app.use('/assets', express.static('assets')); // para que el back cargue las imagenes
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
 app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
