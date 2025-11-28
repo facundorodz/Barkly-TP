@@ -3,7 +3,7 @@ const pool = require("../bdd/bdd.js");
 // ==========================
 //      CREATE (POST)
 // ==========================
-exports.crearCuidador = async (req, res) => {
+/*exports.crearCuidador = async (req, res) => {
   const client = await pool.connect();
   try {
     const { nombre, franquicia, experiencia, poderes, paquetes_ofrecidos} = req.body;
@@ -22,7 +22,7 @@ exports.crearCuidador = async (req, res) => {
   } finally {
     client.release();
   }
-};
+};*/
 
 // ==========================
 //      READ (GET)

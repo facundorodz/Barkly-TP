@@ -1,10 +1,10 @@
 const express = require("express");
 const usersRouter = require("./routes/users.js");
 const cuidadoresRouter = require("./routes/cuidadores.routes.js");
- 
+
+
 const app = express();
 const port = 3000;
-
 app.use('/assets', express.static('assets')); // para que el back cargue las imagenes
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
@@ -33,8 +33,6 @@ app.get("/cuidador-form", (req, res) => {
   res.redirect("/pagina_registro_usuario/registro_usuario.html");
 });
 
-<<<<<<< HEAD
-=======
 app.use("/users", usersRouter);
 
 app.use("/", cuidadoresRouter);
