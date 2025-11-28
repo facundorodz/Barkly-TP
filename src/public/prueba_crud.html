@@ -241,51 +241,100 @@
 <!-- ================== SCRIPT FINAL CORREGIDO ================== -->
 <script>
 
-   // 🔎 Verificación de cuidador registrado EN BASE DE DATOS POSTGRES
-    document.addEventListener("DOMContentLoaded", async () => {
-        const cuidadorID = localStorage.getItem("cuidador_id");
 
-        if (!cuidadorID) {
-            bloquearAcceso("No tienes acceso. Primero debes registrarte o iniciar sesión.");
-            return;
-        }
+const API_URL = "http://localhost:3000/cuidadores";
+const CUIDADOR_ID = 1;
 
-        // ▶️ Consultamos al backend si este cuidador existe en PostgreSQL
-        try {
-            const respuesta = await fetch(`http://localhost:3000/api/cuidadores/${cuidadorID}`);
-            const data = await respuesta.json();
+// ===============================
+// 1️⃣ CARGAR DATOS DEL CUIDADOR ID = 1
+// ===============================
+async function cargarCuidador() {
+  try {
+    const res = await fetch(`${API_URL}/${CUIDADOR_ID}`);
+    const data = await res.json();
 
-            if (!data.existe) {
-                bloquearAcceso("El cuidador no está registrado en la base de datos.");
-                return;
-            }
+    // ---------------------------
+    // Cargar encabezado
+    // ---------------------------
+    document.getElementById("nombre-superheroe-header").textContent = data.nombre;
+    document.getElementById("franquicia-header").textContent = data.franquicia;
+    document.getElementById("contador-paquetes").textContent = data.paquetes_ofrecidos;
+    document.getElementById("contador-perros").textContent = 0; // si luego agregas
 
-            // ✔ Si existe, cargamos sus datos en el formulario
-            cargarDatosPerfil(data.cuidador);
+    // ---------------------------
+    // Cargar formulario de edición
+    // ---------------------------
+    document.getElementById("nombre").value = data.nombre;
+    document.getElementById("franquicia").value = data.franquicia;
+    document.getElementById("experiencia").value = data.experiencia;
+    document.getElementById("poderes").value = data.poderes;
 
-        } catch (error) {
-            console.error("Error verificando cuidador:", error);
-            bloquearAcceso("Error conectando al servidor. Intenta nuevamente.");
-        }
+  } catch (err) {
+    console.error("Error cargando cuidador:", err);
+  }
+}
+
+
+// ===============================
+// 2️⃣ GUARDAR CAMBIOS DEL PERFIL
+// ===============================
+document.getElementById("form-perfil").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const cambios = {
+    nombre: document.getElementById("nombre").value,
+    franquicia: document.getElementById("franquicia").value,
+    experiencia: document.getElementById("experiencia").value,
+    poderes: document.getElementById("poderes").value
+  };
+
+  try {
+    const res = await fetch(`${API_URL}/${CUIDADOR_ID}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(cambios)
     });
 
-    // ⛔ Si no puede ingresar
-    function bloquearAcceso(mensaje) {
-        document.getElementById("verificacion").innerHTML = `
-            <p style='color:red; font-weight:bold;'>${mensaje}</p>
-        `;
-        document.querySelector(".contenedor").style.display = "none";
-    }
+    const data = await res.json();
+    alert("Cambios guardados");
 
-    // 📌 Cargar datos del cuidador en el formulario
-    function cargarDatosPerfil(c) {
-        document.getElementById("nombre").value = c.nombre || "";
-        document.getElementById("apellido").value = c.apellido || "";
-        document.getElementById("telefono").value = c.telefono || "";
-        document.getElementById("descripcion").value = c.descripcion || "";
-    }
+    cargarCuidador(); // recargar datos
+
+  } catch (err) {
+    console.error("Error guardando cambios:", err);
+  }
+});
+
+
+// ===============================
+// 3️⃣ CANCELAR CAMBIOS (recargar original)
+// ===============================
+document.getElementById("btn-cancelar-perfil").addEventListener("click", () => {
+  cargarCuidador();
+});
+
+
+// ===============================
+// 4️⃣ ELIMINAR CUIDADOR
+// ===============================
+document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
+  if (!confirm("¿Seguro que querés eliminar esta cuenta?")) return;
+
+  await fetch(`${API_URL}/${CUIDADOR_ID}`, {
+    method: "DELETE"
+  });
+
+  alert("Cuenta eliminada");
+});
+
+
+// ===============================
+// INICIAR LA PÁGINA
+// ===============================
+cargarCuidador();
+
 // -------------------- CREAR CUIDADOR --------------------
-document.getElementById("form-perfil").addEventListener("submit", async (e) => {
+/*document.getElementById("form-perfil").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const cuidador = {
@@ -308,7 +357,7 @@ document.getElementById("form-perfil").addEventListener("submit", async (e) => {
 
 // -------------------- OBTENER TODOS --------------------
 async function cargarCuidadores() {
-    const res = await fetch("http://localhost:3000/cuidadores");
+    const res = await fetch("http://localhost:3000/cuidadores/1");
     const cuidadores = await res.json();
 
     const lista = document.getElementById("lista-cuidadores");
@@ -359,7 +408,7 @@ async function editarCuidador(id) {
     });
 
     cargarCuidadores();
-}
+}*/
 /* ===========================================
    4️⃣ EDITAR PAQUETE
 =========================================== */

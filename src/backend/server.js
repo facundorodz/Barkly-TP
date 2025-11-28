@@ -1,10 +1,10 @@
 const express = require("express");
 const usersRouter = require("./routes/users.js");
 const cuidadoresRouter = require("./routes/cuidadores.routes.js");
- 
+
+
 const app = express();
 const port = 3000;
-
 
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
