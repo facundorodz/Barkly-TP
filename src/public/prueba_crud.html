@@ -54,8 +54,7 @@
         </div>
       </div>
       <div class="text-end">
-        <small class="d-block">Perros atendidos: <span id="contador-perros">0</span></small>
-        <small class="d-block">Paquetes activos: <span id="contador-paquetes">0</span></small>
+        <small class="d-block">Paquetes Ofrecidos: <span id="contador-paquetes">0</span></small>
       </div>
     </div>
 
@@ -200,7 +199,7 @@
 
 
     const API_URL = "http://localhost:3000/cuidadores";
-    const CUIDADOR_ID = 1;
+    const CUIDADOR_ID = 2;
 
     // ===============================
     // CARGAR DATOS DEL CUIDADOR
@@ -288,8 +287,8 @@
         `;
       });
 
+      // 🔥 EL CONTADOR SIEMPRE SE ACTUALIZA DESDE LA BDD
       document.getElementById("contador-paquetes").textContent = paquetes.length;
-
     } catch (error) {
       console.error("Error cargando paquetes:", error);
     }
