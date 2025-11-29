@@ -195,283 +195,80 @@
   <!-- Bootstrap JS (opcional, para componentes como modals si luego usás) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Script base para enganchar al backend (solo estructura, sin lógica de red aún) -->
-  <!--script>
-    // Estos IDs/estructuras están pensados para que después conectes tu CRUD:
-    // - GET cuidador: rellenar form-perfil y encabezado
-    // - PUT cuidador: enviar cambios de form-perfil
-    // - GET paquetes: rellenar tabla-paquetes
-    // - POST/PUT paquete: usar form-paquete
-    // - DELETE paquete: botón eliminar de cada fila
+<!-- ================== SCRIPT FINAL CORREGIDO ================== -->
+  <script>
 
-    // Ejemplo de handler para guardar perfil (luego le agregás el fetch):
+
+    const API_URL = "http://localhost:3000/cuidadores";
+    const CUIDADOR_ID = 2;
+
+    // ===============================
+    // CARGAR DATOS DEL CUIDADOR
+    // ===============================
+    async function cargarCuidador() {
+      try {
+        const res = await fetch(`${API_URL}/${CUIDADOR_ID}`);
+        const data = await res.json();
+
+        // Encabezado
+        document.getElementById("nombre-superheroe-header").textContent = data.nombre;
+        document.getElementById("franquicia-header").textContent = data.franquicia;
+        document.getElementById("contador-paquetes").textContent = data.paquetes_ofrecidos ?? 0;
+
+        // Formulario
+        document.getElementById("nombre").value = data.nombre;
+        document.getElementById("franquicia").value = data.franquicia;
+        document.getElementById("experiencia").value = data.experiencia;
+        document.getElementById("poderes").value = data.poderes;
+
+      } catch (err) {
+        console.error("Error cargando cuidador:", err);
+      }
+    }
+
+    // ===============================
+    // GUARDAR CAMBIOS
+    // ===============================
     document.getElementById("form-perfil").addEventListener("submit", async (e) => {
       e.preventDefault();
-      // acá armás el body y haces fetch a tu endpoint /cuidadores/:id
-      console.log("Guardar perfil (conectar con backend)");
-    });
 
-    document.getElementById("form-paquete").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      // acá armás el body y haces POST o PUT según tenga o no paquete_id
-      console.log("Guardar paquete (conectar con backend)");
-    });
-
-    document.getElementById("btn-limpiar-paquete").addEventListener("click", () => {
-      document.getElementById("paquete_id").value = "";
-      document.getElementById("nombre_paquete").value = "";
-      document.getElementById("precio_paquete").value = "";
-      document.getElementById("cupos_paquete").value = "";
-      document.getElementById("descripcion_paquete").value = "";
-    });
-
-    document.getElementById("btn-cancelar-perfil").addEventListener("click", () => {
-      // Podés volver a cargar datos originales desde el backend si querés
-      console.log("Deshacer cambios del perfil (recargar datos)");
-    });
-
-    document.getElementById("btn-eliminar-cuenta").addEventListener("click", () => {
-      if (confirm("¿Seguro que querés eliminar tu cuenta de cuidador?")) {
-        console.log("Eliminar cuenta (conectar con backend)");
-      }
-    });
-  </script-->
-
-
-<!-- ================== SCRIPT FINAL CORREGIDO ================== -->
-<script>
-
-
-const API_URL = "http://localhost:3000/cuidadores";
-const CUIDADOR_ID = 1;
-
-// ===============================
-// 1️⃣ CARGAR DATOS DEL CUIDADOR ID = 1
-// ===============================
-async function cargarCuidador() {
-  try {
-    const res = await fetch(`${API_URL}/${CUIDADOR_ID}`);
-    const data = await res.json();
-
-    // ---------------------------
-    // Cargar encabezado
-    // ---------------------------
-    document.getElementById("nombre-superheroe-header").textContent = data.nombre;
-    document.getElementById("franquicia-header").textContent = data.franquicia;
-    document.getElementById("contador-paquetes").textContent = data.paquetes_ofrecidos;
-    document.getElementById("contador-perros").textContent = 0; // si luego agregas
-
-    // ---------------------------
-    // Cargar formulario de edición
-    // ---------------------------
-    document.getElementById("nombre").value = data.nombre;
-    document.getElementById("franquicia").value = data.franquicia;
-    document.getElementById("experiencia").value = data.experiencia;
-    document.getElementById("poderes").value = data.poderes;
-
-  } catch (err) {
-    console.error("Error cargando cuidador:", err);
-  }
-}
-
-
-// ===============================
-// 2️⃣ GUARDAR CAMBIOS DEL PERFIL
-// ===============================
-document.getElementById("form-perfil").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const cambios = {
-    nombre: document.getElementById("nombre").value,
-    franquicia: document.getElementById("franquicia").value,
-    experiencia: document.getElementById("experiencia").value,
-    poderes: document.getElementById("poderes").value
-  };
-
-  try {
-    const res = await fetch(`${API_URL}/${CUIDADOR_ID}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(cambios)
-    });
-
-    const data = await res.json();
-    alert("Cambios guardados");
-
-    cargarCuidador(); // recargar datos
-
-  } catch (err) {
-    console.error("Error guardando cambios:", err);
-  }
-});
-
-
-// ===============================
-// 3️⃣ CANCELAR CAMBIOS (recargar original)
-// ===============================
-document.getElementById("btn-cancelar-perfil").addEventListener("click", () => {
-  cargarCuidador();
-});
-
-
-// ===============================
-// 4️⃣ ELIMINAR CUIDADOR
-// ===============================
-document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
-  if (!confirm("¿Seguro que querés eliminar esta cuenta?")) return;
-
-  await fetch(`${API_URL}/${CUIDADOR_ID}`, {
-    method: "DELETE"
-  });
-
-  alert("Cuenta eliminada");
-});
-
-
-// ===============================
-// INICIAR LA PÁGINA
-// ===============================
-cargarCuidador();
-
-// -------------------- CREAR CUIDADOR --------------------
-/*document.getElementById("form-perfil").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const cuidador = {
+      const cambios = {
         nombre: document.getElementById("nombre").value,
         franquicia: document.getElementById("franquicia").value,
-        experiencia: document.getElementById("experiencia").value,
+        experiencia: Number(document.getElementById("experiencia").value),
         poderes: document.getElementById("poderes").value,
-    };
+      };
 
-    const res = await fetch("http://localhost:3000/cuidadores", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cuidador),
-    });
-
-    const data = await res.json();
-    alert(data.mensaje || "Registrado");
-    cargarCuidadores();
-});
-
-// -------------------- OBTENER TODOS --------------------
-async function cargarCuidadores() {
-    const res = await fetch("http://localhost:3000/cuidadores/1");
-    const cuidadores = await res.json();
-
-    const lista = document.getElementById("lista-cuidadores");
-    lista.innerHTML = "";
-
-    cuidadores.forEach(c => {
-        lista.innerHTML += `
-            <div class="card">
-                <strong>${c.nombre}</strong> — ${c.franquicia}<br>
-                Exp: ${c.experiencia} | Poderes: ${c.poderes}<br><br>
-
-                <button class="btn btn-edit" onclick="editarCuidador(${c.id})">Editar</button>
-                <button class="btn btn-delete" onclick="eliminarCuidador(${c.id})">Eliminar</button>
-            </div>
-        `;
-    });
-}
-
-// -------------------- ELIMINAR --------------------
-async function eliminarCuidador(id) {
-    if (!confirm("¿Eliminar este cuidador?")) return;
-
-    await fetch(`http://localhost:3000/cuidadores/${id}`, {
-        method: "DELETE"
-    });
-
-    cargarCuidadores();
-}
-
-// -------------------- EDITAR --------------------
-async function editarCuidador(id) {
-    const nuevoNombre = prompt("Nuevo nombre:");
-    const nuevaFranquicia = prompt("Nueva franquicia:");
-    const nuevaExperiencia = prompt("Nueva experiencia:");
-    const nuevosPoderes = prompt("Nuevos poderes:");
-
-    const cambios = {
-        nombre: nuevoNombre,
-        franquicia: nuevaFranquicia,
-        experiencia: nuevaExperiencia,
-        poderes: nuevosPoderes
-    };
-
-    await fetch(`http://localhost:3000/cuidadores/${id}`, {
+      await fetch(`${API_URL}/${CUIDADOR_ID}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cambios)
+        body: JSON.stringify(cambios),
+      });
+
+      alert("Datos actualizados");
+      cargarCuidador();
     });
 
-    cargarCuidadores();
-}*/
-/* ===========================================
-   4️⃣ EDITAR PAQUETE
-=========================================== */
-async function guardarPaquete(id) {
-    const nombre_paquete = document.querySelector(`.edit-nombre[data-id="${id}"]`).value;
-    const descripcion_paquete = document.querySelector(`.edit-desc[data-id="${id}"]`).value;
-    const precio_paquete = document.querySelector(`.edit-precio[data-id="${id}"]`).value;
+    // ===============================
+    // ELIMINAR CUENTA
+    // ===============================
+    document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
+      if (!confirm("¿Seguro que querés eliminar este cuidador?")) return;
 
-    await fetch(`${API_URL}/paquetes/${id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre_paquete, descripcion_paquete, precio_paquete })
-    });
-
-    alert("Paquete actualizado");
-    cargarPaquetes();
-}
-
-
-/* ===========================================
-   5️⃣ ELIMINAR PAQUETE
-=========================================== */
-async function eliminarPaquete(id) {
-    if (!confirm("¿Eliminar paquete?")) return;
-
-    await fetch(`${API_URL}/paquetes/${id}`, {
+      await fetch(`${API_URL}/${CUIDADOR_ID}`, {
         method: "DELETE"
+      });
+
+      alert("Cuenta eliminada");
     });
 
-    alert("Paquete eliminado");
-    cargarPaquetes();
-}
+    // ===============================
+    // AL CARGAR LA PÁGINA
+    // ===============================
+    cargarCuidador();
 
-
-/* ===========================================
-   6️⃣ AGREGAR NUEVO PAQUETE
-=========================================== */
-document.getElementById("form-paquete").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    // Inputs
-    const nombre_paquete = document.getElementById("nuevo-nombre").value;
-    const descripcion_paquete = document.getElementById("nuevo-descripcion").value;
-    const precio_paquete = document.getElementById("nuevo-precio").value;
-
-    // Guardar nuevo paquete
-    await fetch(`${API_URL}/cuidadores/${cuidadorId}/paquetes`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre_paquete, descripcion_paquete, precio_paquete })
-    });
-
-    alert("Paquete agregado");
-    document.getElementById("form-paquete").reset();
-    cargarPaquetes();
-});
-
-cargarPaquetes();
-cargarCuidadores();
-
-
-  
-</script>
+    
+  </script>
 
 </body>
 </html>
