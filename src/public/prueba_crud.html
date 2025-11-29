@@ -200,7 +200,7 @@
 
 
     const API_URL = "http://localhost:3000/cuidadores";
-    const CUIDADOR_ID = 2;
+    const CUIDADOR_ID = 1;
 
     // ===============================
     // CARGAR DATOS DEL CUIDADOR
@@ -262,10 +262,81 @@
       alert("Cuenta eliminada");
     });
 
+
+  // ===============================
+  // CARGAR LISTA DE PAQUETES
+  // ===============================
+  async function cargarPaquetes() {
+    try {
+      const res = await fetch(`http://localhost:3000/cuidadores/${CUIDADOR_ID}/paquetes`);
+      const paquetes = await res.json();
+
+      const tbody = document.querySelector("#tabla-paquetes tbody");
+      tbody.innerHTML = "";
+
+      paquetes.forEach(p => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${p.nombre_paquete}</td>
+            <td>${p.descripcion}</td>
+            <td>$${p.precio}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary" onclick='cargarFormularioPaquete(${JSON.stringify(p)})'>Editar</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="eliminarPaquete(${p.id})">Eliminar</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("contador-paquetes").textContent = paquetes.length;
+
+    } catch (error) {
+      console.error("Error cargando paquetes:", error);
+    }
+  }
+
+  function cargarFormularioPaquete(p) {
+    document.getElementById("paquete_id").value = p.id;
+    document.getElementById("nombre_paquete").value = p.nombre_paquete;
+    document.getElementById("descripcion_paquete").value = p.descripcion;
+    document.getElementById("precio_paquete").value = p.precio;
+  }
+
+
+  // ===============================
+  // Editar paquete
+  // ===============================
+  async function editarPaquete(id) {
+    const nombre = prompt("Nuevo nombre:");
+    const desc = prompt("Nueva descripción:");
+    const precio = prompt("Nuevo precio:");
+
+    await fetch(`${API_URL}/paquetes/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre_paquete: nombre,
+        descripcion: desc,
+        precio: precio
+      })
+    });
+
+    cargarPaquetes();
+  }
+
+  async function eliminarPaquete(id) {
+    if (!confirm("Eliminar paquete?")) return;
+
+    await fetch(`${API_URL}/paquetes/${id}`, { method: "DELETE" });
+
+    cargarPaquetes();
+  }
+
     // ===============================
     // AL CARGAR LA PÁGINA
     // ===============================
     cargarCuidador();
+    cargarPaquetes();
 
     
   </script>
