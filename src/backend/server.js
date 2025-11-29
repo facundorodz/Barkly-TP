@@ -2,6 +2,7 @@ const express = require("express");
 const usersRouter = require("./routes/users.js");
 const cuidadoresRouter = require("./routes/cuidadores.routes.js");
 const cors = require("cors");
+const path = require("path");
 
 
 const app = express();
@@ -41,9 +42,9 @@ app.use("/users", usersRouter);
 
 app.use("/", cuidadoresRouter);
 
-/*app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "/prueba_crud.html"));
-});*/
+app.get("/prueba_crud.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
+});
 
 
 app.listen(port, () => {
