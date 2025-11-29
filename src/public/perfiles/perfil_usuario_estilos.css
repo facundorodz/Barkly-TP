@@ -5,12 +5,12 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    cursor: url(../../assets/images/cursor_default.png), auto;
+    cursor: url(../../../assets/images/cursor_default.png), auto;
     max-width: 100%;
 }
 
 a {
-    cursor: url(../assets/images/click.png), auto;
+    cursor: url(../../../assets/images/click.png), auto;
 }
 
 .navbar {
@@ -48,15 +48,71 @@ a {
 }
 
 .btn:hover {
-    cursor: url(../assets/images/click.png), pointer;
+    cursor: url(../../../assets/images/click.png), pointer;
 }
 
-.contenedor {
+.izquierda {
+  display: flex;
+  align-items: center; 
+  gap: 15px;
+}
+
+.imagen-placeholder img {
+  display: block;
+}
+
+#imagen {
+    border-radius: 50%;
+    background: #fff;
+    
+}
+
+#usuario-foto {
+    margin-left: 375px;
+    margin-right: 300px;
+    width: 750px;
+}
+ 
+.contenedor-form {
     background: linear-gradient(
     to bottom,
-    rgba(0, 0, 0, 1),
-    rgba(0, 0, 0, 0));
-
-    color:beige;
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 40%,  
+    rgba(0, 0, 0, 0) 100%);
+    text-align: center;
+    justify-content: center;
+   
 
 }
+
+.titulo-pagina {
+
+    margin-top: 100px;
+    color:beige;
+    text-shadow: 2px 2px 1px darkred;
+}
+
+.header {
+    
+    background-color: #DC3545;
+    box-shadow: 2px 2px 1px darkred;
+    border-radius: 10px;
+    padding: 30px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center; 
+
+}
+.usuario-header {
+    text-align: center;
+    background: darkred;
+    color: #fff;
+    border-radius: 10px ;
+    height: 30px;
+    width: 60px;
+    font-weight: 100px;
+}
+
