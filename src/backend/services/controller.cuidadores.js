@@ -25,6 +25,7 @@ exports.obtenerCuidadorPorID = async (req, res) => {
       return res.status(404).json({ error: "Cuidador no encontrado" });
 
     res.json(result.rows[0]);
+    foto_perfil: result.rows[0].foto_perfil
 
   } catch (err) {
     res.status(500).json({ error: "Error al obtener cuidador por ID" });
@@ -39,9 +40,9 @@ exports.editarCuidador = async (req, res) => {
 
     const result = await pool.query(
       `UPDATE superheroes
-       SET nombre = $1, franquicia = $2, experiencia = $3, poderes = $4
-       WHERE id = $5 RETURNING *`,
-      [nombre, franquicia, experiencia, poderes, id]
+       SET nombre = $1, franquicia = $2, experiencia = $3, poderes = $4, contrasenia = $5, foto_perfil = $6
+       WHERE id = $7 RETURNING *`,
+      [nombre, franquicia, experiencia, poderes, contrasenia,foto_perfil,id]
     );
 
     res.json({ mensaje: "Actualizado correctamente", cuidador: result.rows[0] });
@@ -56,10 +57,9 @@ exports.eliminarCuidador = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await pool.query(
-      "DELETE FROM superheroes WHERE id = $1",
-      [id]
-    );
+    await pool.query("DELETE FROM paquetes WHERE id_cuidador = $1", [id]); 
+    
+    await pool.query( "DELETE FROM superheroes WHERE id = $1", [id]);
 
     res.json({ mensaje: "Cuidador eliminado" });
 

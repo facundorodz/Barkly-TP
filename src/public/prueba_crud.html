@@ -20,11 +20,11 @@
       margin-bottom: 1.5rem;
     }
     .avatar {
-      width: 80px;
-      height: 80px;
+      width: 100px;
+      height: 100px;
       border-radius: 50%;
       object-fit: cover;
-      border: 3px solid #fff;
+      border: 2px solid #fff;
     }
     .badge-rol {
       font-size: 0.8rem;
@@ -39,13 +39,8 @@
     <!-- ENCABEZADO PERFIL -->
     <div class="perfil-header d-flex align-items-center justify-content-between">
       <div class="d-flex align-items-center">
-        <img
-          src="https://via.placeholder.com/80"
-          alt="Foto cuidador"
-          class="avatar me-3"
-          id="avatar-cuidador"
-        />
-        <div>
+        <img src="" alt="Foto cuidador" class="avatar me-3" id="foto_perfil"/>
+      <div>
           <h2 class="mb-0" id="nombre-superheroe-header">
             Nombre del Superhéroe
           </h2>
@@ -128,18 +123,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <!-- Ejemplo de fila (luego se reemplaza dinámicamente con JS) -->
-                  <!--
-                  <tr data-id="1">
-                    <td>Paquete Estándar</td>
-                    <td>Paseo básico de 30 minutos.</td>
-                    <td>$1500</td>
-                    <td class="text-center">
-                      <button class="btn btn-sm btn-outline-primary btn-editar">Editar</button>
-                      <button class="btn btn-sm btn-outline-danger btn-eliminar">Eliminar</button>
-                    </td>
-                  </tr>
-                  -->
+                  <!-- Aca va la lista de los paquetes del superherore -->
                 </tbody>
               </table>
             </div>
@@ -213,6 +197,7 @@
         document.getElementById("nombre-superheroe-header").textContent = data.nombre;
         document.getElementById("franquicia-header").textContent = data.franquicia;
         document.getElementById("contador-paquetes").textContent = data.paquetes_ofrecidos ?? 0;
+        document.getElementById("foto_perfil").src = data.foto_perfil;
 
         // Formulario
         document.getElementById("nombre").value = data.nombre;
