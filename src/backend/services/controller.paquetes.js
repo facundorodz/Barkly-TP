@@ -38,10 +38,52 @@ exports.eliminarPaquete = async (req, res) => {
   try {
     const { id } = req.params;
 
-    await pool.query("DELETE FROM paquetes WHERE id=$1", [id]);
+    // Primero obtener id_cuidador del paquete
+    const paquete = await pool.query(
+      "SELECT id_superheroe FROM paquetes WHERE id = $1",
+      [id]
+    );
+
+    if (paquete.rows.length === 0) {
+      return res.status(404).json({ error: "Paquete no encontrado" });
+    }
+
+    const id_superheroe = paquete.rows[0].id_superheroe;
+
+    // Eliminar el paquete
+    await pool.query("DELETE FROM paquetes WHERE id = $1", [id]);
+
+    // 🔥 RESTAR 1 A paquetes_ofrecidos
+    await restarPaquete(id_superheroe);
+
     res.json({ mensaje: "Paquete eliminado" });
 
-  } catch (err) {
+  } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Error al eliminar paquete" });
   }
 };
+
+// ===============================
+// SUMAR 1 A paquetes_ofrecidos
+// ===============================
+async function sumarPaquete(id_superheroe) {
+  await pool.query(
+    `UPDATE superheroes
+     SET paquetes_ofrecidos = paquetes_ofrecidos + 1
+     WHERE id = $1`,
+    [id_superheroe]
+  );
+}
+
+// ===============================
+// RESTAR 1 A paquetes_ofrecidos
+// ===============================
+async function restarPaquete(id_superheroe) {
+  await pool.query(
+    `UPDATE superheroes
+     SET paquetes_ofrecidos = paquetes_ofrecidos - 1
+     WHERE id = $1`,
+    [id_superheroe]
+  );
+}
