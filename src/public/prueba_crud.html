@@ -68,6 +68,11 @@
               </div>
 
               <div class="mb-3">
+                <label for="contrasenia" class="form-label">Contraseña</label>
+                <input type="text" class="form-control" id="contrasenia" required/>
+              </div>
+
+              <div class="mb-3">
                 <label for="franquicia" class="form-label">Franquicia / Universo</label>
                 <input type="text" class="form-control" id="franquicia" placeholder="Marvel, DC, Original..." />
               </div>
@@ -183,7 +188,7 @@
 
 
     const API_URL = "http://localhost:3000/cuidadores";
-    const CUIDADOR_ID = 2;
+    const CUIDADOR_ID = 1;
 
     // ===============================
     // CARGAR DATOS DEL CUIDADOR
@@ -204,6 +209,7 @@
         document.getElementById("franquicia").value = data.franquicia;
         document.getElementById("experiencia").value = data.experiencia;
         document.getElementById("poderes").value = data.poderes;
+        document.getElementById("contrasenia").value = data.contrasenia;
 
       } catch (err) {
         console.error("Error cargando cuidador:", err);
@@ -221,6 +227,7 @@
         franquicia: document.getElementById("franquicia").value,
         experiencia: Number(document.getElementById("experiencia").value),
         poderes: document.getElementById("poderes").value,
+        contrasenia: document.getElementById("contrasenia").value,
       };
 
       await fetch(`${API_URL}/${CUIDADOR_ID}`, {

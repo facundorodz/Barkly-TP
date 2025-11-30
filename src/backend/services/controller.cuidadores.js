@@ -42,7 +42,7 @@ exports.editarCuidador = async (req, res) => {
       `UPDATE superheroes
        SET nombre = $1, franquicia = $2, experiencia = $3, poderes = $4, contrasenia = $5, foto_perfil = $6
        WHERE id = $7 RETURNING *`,
-      [nombre, franquicia, experiencia, poderes, contrasenia,foto_perfil,id]
+      [nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil, id]
     );
 
     res.json({ mensaje: "Actualizado correctamente", cuidador: result.rows[0] });
