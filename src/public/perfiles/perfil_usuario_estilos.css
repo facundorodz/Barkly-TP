@@ -4,6 +4,7 @@ body {
     background-image: url(../../../assets/images/fondo_usuario.png);
     background-repeat: no-repeat;
     background-size: cover;
+    backdrop-filter: blur(5px);
     background-position: center;
     cursor: url(../../../assets/images/cursor_default.png), auto;
     max-width: 100%;
@@ -86,22 +87,21 @@ a {
 }
 
 .titulo-pagina {
-
-    margin-top: 100px;
+    margin-top: 40px;
     color:beige;
     text-shadow: 2px 2px 1px darkred;
 }
 
 .header {
-    
-    background-color: #DC3545;
+    background: linear-gradient(90deg, #DC3545 0%, #ffca3a  100%);
     box-shadow: 2px 2px 1px darkred;
     border-radius: 10px;
     padding: 30px;
     margin-left: 100px;
     margin-right: 100px;
-    margin-top: 40px;
+    margin-top: 30px;
     margin-bottom: 40px;
+    height: 120px;
     display: flex;
     align-items: center; 
 
@@ -115,4 +115,55 @@ a {
     width: 60px;
     font-weight: 100px;
 }
+
+.container {
+    display:flex;
+    gap: 20px;
+}
+
+.formulario {
+    flex-direction: column;
+    gap: 20px; 
+    background-color: #1a1a1a; 
+    color:antiquewhite;
+    border-radius: 20px;
+    padding: 40px;
+    width: 500px;
+    height: auto;
+}
+
+.sobre-mi {
+    height: 70px;
+}
+
+.derecha {
+    display: flex;
+    flex: 1;
+    gap:40px;
+    text-align: left;
+}
+.mis-mascotas {
+    flex: 1;
+    text-align: left;
+    padding: 15px;
+    height: 200px;
+    border-radius: 20px;
+    background-color: bisque;
+}
+
+.anadir {
+    position: relative;
+    flex-direction: column;
+    margin-top: auto;
+}
+
+.mis-reviews {
+    flex: 1;
+    padding: 15px;
+    height: 300px;
+    border-radius: 20px;
+    background-color: #fff;
+}
+
+
 

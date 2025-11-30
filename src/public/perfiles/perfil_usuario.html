@@ -66,68 +66,73 @@
     </div>
   </div>
 </div>
-    
-    <div class="formulario">    
-      <form action="" id="form-perfil">
-      <div class="col-md-6">
-        <label for="nombre" class="form-label">Nombre y Apellido</label>
-        <input type="text" class="form-control" id="nombre" placeholder="Ej: Peter Parker">
+
+  <div class="container">
+    <div class="formulario">  
+      <div class="titulo-seccion">  
+        <h2> Mis datos</h2>  
       </div>
+      <form action="" id="form-perfil">
+        <div class="col-md-6">
+          <label for="nombre" class="form-label">Nombre y Apellido</label>
+          <input type="text" class="form-control" id="nombre" placeholder="Ej: Peter Parker">
+        </div>
+
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Sobre mí</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder=" Contános sobre vos. (500 palabras max.)" maxlength="500">
+      </div>
+
       <div class="col-md-6">
         <label for="input-apellido" class="form-label">Apellido</label>
-        <input type="text" class="form-control" id="input-apellido">
+        <input type="text" class="form-control" id="input-apellido" placeholder="Ej: Parker">
       </div>
+
     <div class="col-12">
-      <label for="inputAddress" class="form-label">Nombre de usuario</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+      <label for="inputAddress" class="form-label">Dirección</label>
+      <input type="text" class="form-control" id="inputAddress" placeholder=" Ej: Avenida Rivadavia 1234">
     </div>
-    <div class="col-12">
-      <label for="inputAddress2" class="form-label">Mascota 1</label>
-      <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
-    </div>
-    <div class="col-md-6">
-      <label for="inputCity" class="form-label">Mascota 2</label>
-      <input type="text" class="form-control" id="inputCity">
-    </div>
+
+     
+
     <div class="col-md-4">
-      <label for="inputState" class="form-label">State</label>
+      <label for="inputState" class="form-label">Género</label>
       <select id="inputState" class="form-select">
-        <option selected>Choose...</option>
-        <option>...</option>
+        <option selected>Elegir...</option>
+        <option>Hombre</option>
+        <option>Mujer</option>
+        <option>Otro</option>
       </select>
+      </form>
     </div>
   </div>
+  <div class="col-md-6 d-flex flex-column gap-2 derecha">
+    <div class="mis-mascotas">    
+      <h2> Mis mascotas</h2>
+      <hr>
+      <button type="button" class="btn btn-danger"> Añadir mascota</button>
+    </div>
+    <div class="mis-reviews">
+        <h2>
+          Mis reseñas
+        </h2>
+        <hr>
+    </div>
 
 
-
-
-
-    </form>
+      </div>
+    </div>
   </div>
-    
-    <section class="imagen-perfil">
-      <div class="imagen-form"></div>
-          <label for="usuario-foto">Foto de perfil</label>
-          <input type="file" id="usuario-foto" class="form-control" accept="image/*" required>
-          <small style="color: #FFFF;">Edita tu foto de perfil (JPG, PNG)</small>
-      </div>
-    </section>
+  </div>
+  </div>
+  
 
-    
-    
-    <div class="col-md-2">
-      <label for="inputZip" class="form-label">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
-    </div>
-    <div class="col-12">
-      <div class="form-check">
-        <input class="form-check-input" type="checkbox" id="gridCheck">
-        <label class="form-check-label" for="gridCheck">
-          Check me out
-        </label>
-      </div>
-    </div>
-    <div class="col-12">
+
+
+   
+  </div>
+
+    <div class="col-12" style="text-align: center;">
       <button type="submit" class="btn btn-primary">Editar</button>
     </div>
   </form>
@@ -135,67 +140,5 @@
     </div>
 
     <div class="gallery">
-
-<div class="gallery-item">
-  <a target="_blank" href="img_5terre.jpg">
-    <img src="img_5terre.jpg" alt="Cinque Terre" width="600" height="400">
-  </a>
-  <div class="desc">Cinque Terre</div>
-</div>
-
-<div class="gallery-item">
-  <a target="_blank" href="img_forest.jpg">
-    <img src="img_forest.jpg" alt="Forest" width="600" height="400">
-  </a>
-  <div class="desc">Green Forest</div>
-</div>
-
-<div class="gallery-item">
-  <a target="_blank" href="img_lights.jpg">
-    <img src="img_lights.jpg" alt="Northern Lights" width="600" height="400">
-  </a>
-  <div class="desc">Northern Lights</div>
-</div>
-
-<div class="gallery-item">
-  <a target="_blank" href="img_mountains.jpg">
-    <img src="img_mountains.jpg" alt="Mountains" width="600" height="400">
-  </a>
-  <div class="desc">Mountains</div>
-</div>
-
-</div>
-
-</body>
+  </body>
 </html>
-
-                          <!-- <div class="paquetes-container">
-
-                              <div class="card text-bg-light mb-3 service-plan">
-                                  <h4 class="card-header">🐾 Paquete Estándar</h4>
-                                  <p class="label-beneficios">Beneficios</p>
-                                  <input type="text" name="precio_estandar" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                                  <label>Precio Estándar</label>
-                                  <input type="number" name="precio_estandar" placeholder="Ej: 6000" required>
-                              </div>
-
-                              <div class="card text-bg-warning mb-3 service-plan">
-                                  <h4 class="card-header">🌟 Paquete Premium</h4>
-                                  <p class="label-beneficios">Beneficios</p>
-                                  <input type="text" name="precio_premium" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                                  <label>Precio Premium</label>
-                                  <input type="number" name="precio_premium" placeholder="Ej: 9000" required>
-                              </div>
-
-                              <div class="card text-bg-dark mb-3 service-plan">
-                                  <h4 class="card-header" style="color: white;">💎 Paquete de Superheroe</h4>
-                                  <p class="label-beneficios">Beneficios</p>
-                                  <input type="text" name="precio_deluxe" placeholder="Ej: Paseos + juegos + cuidado en el hogar" required>
-                                  <label>Precio Deluxe</label>
-                                  <input type="number" name="precio_deluxe" placeholder="Ej: 12000" required>
-                              </div>
-
-                          </div> -->
-
-                          </section>
-    
