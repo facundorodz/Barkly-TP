@@ -18,8 +18,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         const data = await resp.json();
 
         if (data.success) {
-            alert("Registro exitoso");
-            window.location.href = "/index.html";  
+            alert("Registro exitoso");  
         } else {
             alert(data.error);
         }
