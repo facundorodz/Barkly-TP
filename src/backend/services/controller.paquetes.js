@@ -1,5 +1,7 @@
 const pool = require("../bdd/bdd.js");
 
+//FUNCIONES QUE SE ENCARGAN DE COMUNICARSE CON POSTGRES Y ENVIAN DATOS AL FRONT
+
 // Obtener paquetes por cuidador
 exports.obtenerPaquetesPorCuidador = async (req, res) => {
   try {
