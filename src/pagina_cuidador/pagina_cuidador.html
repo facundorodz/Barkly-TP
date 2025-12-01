@@ -1,0 +1,139 @@
+<<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">   
+    
+    <title> Barkly Corporation</title>
+    
+    <link rel="stylesheet" href = "./Pagina_cuidadorstyles.css">
+    <link rel="icon" href="../../assets/images/icono_metadata.png" type="image/png">   
+</head>
+
+<body>
+	<header>
+		<div class="navbar-container" justify-content="center" >            
+            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+                <div class="container-fluid">
+                    <a class="navbar-brand d-flex align-items-center" href="#inicio"> 
+                    	<img src="../../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
+                    </a>
+                        <div class="collapse navbar-collapse align" id="mas-info">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#servicios">Servicios</a> 
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#about">Sobre Nosotros</a>
+                                </li>
+                            </ul>
+                            <button type="button" id="iniciar-sesion" class="btn btn-danger">Iniciar Sesión</button>
+                            <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                    	</div>
+                </div>
+            </nav>
+        </div>
+	</header>
+	<main>
+		<section class="admin-section">
+			<div class="conteiner">
+				<div class="admin-header">
+					<h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
+					<p>Registrate para poder ofrecer sus paquetes de servicios</p>
+				</div>
+				<form id="cuidador-form" class="cuidador-form">
+					<div class="campo-nombre">
+					  <label>Nombre de pila</label>
+					  <div class="control">
+					    <input class="input" type="text" placeholder="Nombre completo">
+					  </div>
+					</div>
+
+                    <div class="campo-telefono">
+                      <label>Telefono</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Nombre completo">
+                      </div>
+                    </div>
+
+                    <div class="campo-ubicacion">
+                      <label>Cuidad</label>
+                      <div class="control">
+                        <input class="input" type="text" placeholder="Nombre completo">
+                      </div>
+                    </div>
+
+                    <div class="imagen-form"></div>
+                    <label for="cuidador-imagen">Foto de perfil</label>
+                    <input type="file" id="cuidador-imagen" class="form-control" accept="image/*" required>
+                    <small style="color:var(--light-text);">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
+                    <div id="status" class="upload-status"></div>
+                    <div id="preview-imagen-conteiner" style="display: none;">
+                        <img id="imagen-preview" style="max-width: 100%; max-height: 200px; border-radius: 4px;" alt="Preview imagen">
+                    </div>
+
+                    <h3>Experiencia como cuidador</h3>
+                    <select name="experiencia">
+                        <option value="0">0 años</option>
+                        <option value="1">1 año</option>
+                        <option value="2">2 años</option>
+                        <option value="3">3 años</option>
+                        <option value="4+">4+ años</option>
+                    </select>
+
+                    <label>Tipos de perros que aceptás</label>
+                    <select name="tipos-perros" multiple>
+                        <option>Pequeños</option>
+                        <option>Medianos</option>
+                        <option>Grandes</option>
+                        <option>Cachorros</option>
+                        <option>Perros con medicación</option>
+                    </select>
+
+                    <h3>Paquetes ofrecidos</h3>
+
+                    <div class="paquetes-container">
+
+                        <div class="service-plan">
+                            <h4>🐾 Paquete Estándar</h4>
+                            <p>Incluye: Paseo corto + fotos del perro + comunicación básica.</p>
+                            <label>Precio Estándar</label>
+                            <input type="number" name="precio_estandar" placeholder="Ej: 6000" required>
+                        </div>
+
+                        <div class="service-plan">
+                            <h4>🌟 Paquete Premium</h4>
+                            <p>Incluye: Paseo largo + juegos + reporte diario con fotos + comida (si es provista por el dueño).</p>
+                            <label>Precio Premium</label>
+                            <input type="number" name="precio_premium" placeholder="Ej: 9000" required>
+                        </div>
+
+                        <div class="service-plan">
+                            <h4>💎 Paquete de Superheroe</h4>
+                            <p>Incluye: Todo lo anteriormente mensionado + otogacion de una nueva habilidad espeacial.</p>
+                            <label>Precio Deluxe</label>
+                            <input type="number" name="precio_deluxe" placeholder="Ej: 12000" required>
+                        </div>
+
+                    </div>
+                    <h3>Políticas y verificación</h3>
+                    <label>
+                        <input type="checkbox" required> Acepto los términos y condiciones
+                    </label>
+                    <label>
+                        <input type="checkbox" required> Declaro que trataré a los animales con responsabilidad y respeto
+                    </label>
+
+                    <!-- BOTÓN -->
+                    <button class="button is-success is-dark btn-success">Registrarse</button>
+				</form>
+			</div>
+		</section>
+	</main>
+</body>
+</html>
