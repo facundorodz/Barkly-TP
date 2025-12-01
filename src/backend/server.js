@@ -46,6 +46,17 @@ app.get("/prueba_crud.html", (req, res) => {
 });
 
 
+app.use("/users", usersRouter);
+
+//Carga la informacion del superheroe junto con sus paquetes
+app.use("/", cuidadoresRouter);
+
+//Pagina donde se imprime la informacion del superheroe
+app.get("/prueba_crud.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
+});
+
+
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en http://localhost:${port}`);
 });
