@@ -1,6 +1,5 @@
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
-
     const datos = {
         profile_name: document.getElementById("profile_name").value,
         franchise_name: document.getElementById("franchise_name").value,

@@ -13,6 +13,8 @@ router.post("/login_user", async (req, res) => {
             if (response_usuario.rows.length === 0) {
                 return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
             }
+            req.session.userId = response_usuario.rows[0].id; 
+            req.session.userName = response_usuario.rows[0].nombre_perfil;
             return res.json({ success: true, type: "user" });
         }   catch (error) {
                 console.error("Error en login:", error);
@@ -20,11 +22,13 @@ router.post("/login_user", async (req, res) => {
         }
     } else if (login_type === "hero"){
         try {
-            const response_hero = await db.query("SELECT * FROM superheroes WHERE nombre_perfil = $1 ",[profile_name]
+            const response_hero = await db.query("SELECT * FROM superheroes WHERE nombre_perfil = $1 RETURNING id, nombre_perfil",[profile_name]
         );
             if (response_hero.rows.length === 0) {
                 return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
             }
+            req.session.userId = response_hero.rows[0].id; 
+            req.session.userName = response_hero.rows[0].nombre_perfil;
             return res.json({ success: true, type: "hero" });
         }   catch (error) {
                 console.error("Error en login:", error);
@@ -42,7 +46,9 @@ router.post("/register_user", async (req, res) => {
         if (exists.rows.length > 0) { // acceder con rows.length porque devuelve un objeto la consutl
             return res.status(400).json({ error: "Ya existe un usuario con ese nombre de perfil" });
         } 
-        await db.query("INSERT INTO usuarios (nombre_perfil, contraseña, nombre_completo) VALUES ($1, $2, $3)",[profile_name, pass, name]);
+        const result = await db.query("INSERT INTO usuarios (nombre_perfil, contraseña, nombre_completo) VALUES ($1, $2, $3) RETURNING id, nombre_perfil ",[profile_name, pass, name]);
+        req.session.userId = result.rows[0].id; 
+        req.session.userName = result.rows[0].nombre_perfil;
         return res.redirect("/index.html"); 
     } catch(error){ 
         console.error(error);
@@ -58,7 +64,9 @@ router.post("/register_hero", async (req, res) => {
         if (exists.rows.length > 0) {
             return res.status(400).json("Ya existe un superheroe con ese email");
         } 
-        await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes ) VALUES ($1, $2, $3, $4)",[profile_name, franchise_name, powers, experience]); 
+        const result = await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes ) VALUES ($1, $2, $3, $4)",[profile_name, franchise_name, powers, experience]); 
+        req.session.userId = result.rows[0].id; 
+        req.session.userName = result.rows[0].nombre_perfil;
         return res.status(200).json({ success: true }); 
     } catch(error){ 
         console.error(error);

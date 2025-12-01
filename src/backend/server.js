@@ -3,6 +3,8 @@ const usersRouter = require("./routes/users.js");
 const cuidadoresRouter = require("./routes/cuidadores.routes.js");
 const cors = require("cors");
 const path = require("path");
+const session = require("express-session");
+
 
 
 const app = express();
@@ -14,7 +16,10 @@ app.use('/assets', express.static('assets')); // para que el back cargue las ima
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
 app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
+app.use(session({secret: "asdasdasd",resave: false,saveUninitialized: false}));
 
+
+app.use("/", cuidadoresRouter);
 app.use("/users", usersRouter); // -> ruta para manejar los usuarios
 
 
@@ -34,14 +39,12 @@ app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
+app.get("/crud_usuario", (req, res) => {
+  res.redirect("/crud_usuarios/crud_usuarios.html");
+});
 
 
-app.use("/users", usersRouter);
 
-//Carga la informacion del superheroe junto con sus paquetes
-app.use("/", cuidadoresRouter);
-
-//Pagina donde se imprime la informacion del superheroe
 app.get("/prueba_crud", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
 });

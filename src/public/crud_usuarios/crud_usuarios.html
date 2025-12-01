@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Usuario</title>
+    <link rel="stylesheet" href="crud_usuarios.css">
+</head>
+<body>
+
+    <div class="container">
+
+        <section class="user-section">
+            <h2>Tu perfil</h2>
+
+            <div class="user-info">
+                <label>Nombre de perfil:</label>
+                <input type="text" id="profile_name" placeholder="Tu nombre de usuario">
+            </div>
+
+            <div class="user-actions">
+                <button id="btn_save_user" type="button">Guardar cambios</button>
+                <button id="btn_delete_user" type="button" class="danger">Eliminar mi cuenta</button>
+            </div>
+        </section>
+
+        <section class="dogs-section">
+            <h2>Mis perros</h2>
+
+            <div id="dogs_list"></div>
+
+            <div class="add-dog">
+                <h3>Agregar un perro</h3>
+                
+                <label>Nombre:</label>
+                <input type="text" id="dog_name">
+
+                <label>Raza:</label>
+                <input type="text" id="dog_breed">
+
+                <label>Edad:</label>
+                <input type="number" id="dog_age">
+
+                <button id="btn_add_dog" type="button">Agregar perro</button>
+            </div>
+        </section>
+
+    </div>
+
+<script src="crud_usuarios.js"></script>
+</body>
+</html>
