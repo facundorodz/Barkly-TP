@@ -53,7 +53,7 @@ exports.eliminarPaquete = async (req, res) => {
     // Eliminar el paquete
     await pool.query("DELETE FROM paquetes WHERE id = $1", [id]);
 
-    // 🔥 RESTAR 1 A paquetes_ofrecidos
+    // RESTAR 1 A paquetes_ofrecidos
     await restarPaquete(id_superheroe);
 
     res.json({ mensaje: "Paquete eliminado" });
