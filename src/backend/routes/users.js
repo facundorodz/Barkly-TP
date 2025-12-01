@@ -14,8 +14,7 @@ router.post("/login_user", async (req, res) => {
                 return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
             }
             req.session.userId = response_usuario.rows[0].id; 
-            req.session.username = response_usuario.rows[0].nombre_perfil;
-            console.log("ID:",req.session.userId);
+            req.session.userName = response_usuario.rows[0].nombre_perfil;
             return res.json({ success: true, type: "user" });
         }   catch (error) {
                 console.error("Error en login:", error);
