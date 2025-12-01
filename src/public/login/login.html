@@ -16,6 +16,7 @@
             <h1 class="fw-bold">Iniciar sesión</h1>
                 <p>¿Todavía no tenes cuenta? <a href="../pagina_seleccion_registrar/pagina_seleccion_registro.html">Unite acá</a></p>
                 <form id="login-form" class="login-form" action="/users/login_user" method="post">
+                    <input type="hidden" name="login_type" id="login_type" value="user">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Nombre de usuario</label>
                     <input type="text" name="profile_name" id="profile_name" class="form-control">
