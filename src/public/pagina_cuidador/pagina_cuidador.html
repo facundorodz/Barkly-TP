@@ -50,35 +50,27 @@
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
                           <div class="control">
-                            <input type="text" placeholder="Nombre">
+                            <input id="nombre" type="text" placeholder="Nombre">
                           </div>
                         </div>
 
                         <div class="campo-franquicia">
                           <label>Nombre Franquisia</label>
                           <div class="control">
-                            <input class="input" type="text" placeholder="Franquicia">
+                            <input id="franquicia" class="input" type="text" placeholder="Franquicia">
                           </div>
                         </div>
 
                         <div class="campo-poderes">
                           <label>Poderes</label>
                           <div class="control">
-                            <input class="input" type="text">
+                            <input id="poderes" class="input" type="text">
                           </div>
-                        </div>
-
-                        <div class="imagen-form"></div>
-                        <label for="cuidador-imagen">Foto de perfil</label>
-                        <input type="file" id="cuidador-imagen" class="form-control" accept="image/*" required>
-                        <small style="color: wheat;">Selecciona una foto para subir a tu perfil (JPG, PNG)</small>
-                        <div id="preview-imagen-container" style="display: none;">
-                            <img id="imagen-preview" style="max-width: 100%; max-height: 200px; border-radius: 4px; background-color: white;" alt="Preview imagen">
                         </div>
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
-                        <select name="experiencia">
+                        <select id="experiencia" name="experiencia">
                             <option value="0">0-1 Años</option>
                             <option value="1">2-3 Años</option>
                             <option value="2">3-5 Años</option>
@@ -94,7 +86,6 @@
                             <option>Perros con medicación</option>
                         </select>                        
                     </div>
-
                     <!-- TÉRMINOS Y CONDICIONES -->
                     <h3 class="title-campo">Políticas y verificación</h3>
 
@@ -119,32 +110,26 @@
 </body>
 
 <script>
-document.addEventListener("DOMContentLoaded", async () => {
-        const cuidadorID = localStorage.getItem("cuidador_id");
+document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
 
-        if (!cuidadorID) {
-            bloquearAcceso("No tienes acceso. Primero debes registrarte o iniciar sesión.");
-            return;
-        }
+    const cuidador = {
+        nombre: document.getElementById("nombre").value,
+        franquicia: document.getElementById("franquicia").value,
+        experiencia: document.getElementById("experiencia").value,
+        poderes: document.getElementById("poderes").value,
+    };
 
-        // ▶️ Consultamos al backend si este cuidador existe en PostgreSQL
-        try {
-            const respuesta = await fetch(`http://localhost:3000/api/cuidadores/${cuidadorID}`);
-            const data = await respuesta.json();
-
-            if (!data.existe) {
-                bloquearAcceso("El cuidador no está registrado en la base de datos.");
-                return;
-            }
-
-            // ✔ Si existe, cargamos sus datos en el formulario
-            cargarDatosPerfil(data.cuidador);
-
-        } catch (error) {
-            console.error("Error verificando cuidador:", error);
-            bloquearAcceso("Error conectando al servidor. Intenta nuevamente.");
-        }
+    const res = await fetch("http://localhost:3000/cuidadores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cuidador),
     });
+
+    const data = await res.json();
+    alert(data.mensaje || "Registrado");
+    cargarCuidadores();
+});
 </script>
 
 </html>

@@ -17,8 +17,8 @@ Como superheroe podes ofrecer (¡y mostrarle al mundo!) tus servicios como cuida
 |:--:|:-------------:|:----------:|:---------------:|:------------------:|:------------------:|
 
 ## Superheroes
-| ID | Nombre | Franquicia | Experiencia | Poderes | Paquetes Ofrecidos |
-|:--:|:------:|:----------:|:-----------:|:-------:|:------------------:|
+| ID | Nombre | Contraseña | Franquicia | Experiencia | Poderes | Paquetes Ofrecidos |
+|:--:|:------:|:----------:|:----------:|:-----------:|:-------:|:------------------:|
 
 ## Perros
 | ID | ID Usuario | ID Entrenador | Nombre | Edad | Raza |
@@ -30,7 +30,7 @@ Como superheroe podes ofrecer (¡y mostrarle al mundo!) tus servicios como cuida
 |:--:|:----------:|:-------------:|:--------:|:------------:|:----------:|
 
 ## Paquetes
-| ID | ID Superheroe | Nombre Paquete | Descripción | Precio |
+| ID | ID Superheroe | Nombre Paquete | Descripción | Precio | 
 |:--:|:-------------:|:--------------:|:-----------:|:------:|
 
 ## Razas
