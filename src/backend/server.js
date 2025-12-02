@@ -21,7 +21,7 @@ app.use(session({secret: "asdasdasd",resave: false,saveUninitialized: false}));
 
 app.use("/", cuidadoresRouter);
 app.use("/users", usersRouter); // -> ruta para manejar los usuarios
-app.use("/", crud_users);
+app.use(crud_users);
 
 /*
 GET para mostrar las paginas 
