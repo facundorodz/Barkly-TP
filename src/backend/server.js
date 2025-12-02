@@ -4,6 +4,7 @@ const cuidadoresRouter = require("./routes/cuidadores.routes.js");
 const cors = require("cors");
 const path = require("path");
 const session = require("express-session");
+const crud_users = require("./services/crud_users.js");
 
 
 
@@ -18,10 +19,9 @@ app.use(express.json());
 app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
 app.use(session({secret: "asdasdasd",resave: false,saveUninitialized: false}));
 
-
 app.use("/", cuidadoresRouter);
 app.use("/users", usersRouter); // -> ruta para manejar los usuarios
-
+app.use("/", crud_users);
 
 /*
 GET para mostrar las paginas 
