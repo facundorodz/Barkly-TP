@@ -23,7 +23,33 @@ document.getElementById("btn_edit_user").addEventListener("click", async () => {
     });
 
     const data = await response.json();
+
     if (data.success) {
+        document.getElementById("profile_name").value = "";
+        document.getElementById("pass").value = "";
+        document.getElementById("name").value = "";
         alert("Usuario actualizado correctamente");
     }
 });
+
+
+document.getElementById("btn_add_dog").addEventListener("click", async () => {
+    const response = await fetch("/add_dog", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            //breed: document.getElementById("dog_breed").value,
+            dog_name: document.getElementById("dog_name").value,
+            age: document.getElementById("dog_age").value
+        })
+    });
+
+    const data = await response.json();
+
+    if (data.success) {
+        alert("Perro agregado correctamente");
+    }
+});
+

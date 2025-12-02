@@ -36,5 +36,24 @@ router.put("/edit_user", async (req, res) => {
 
 
 
+router.post("/add_dog", async (req, res) => {
+    console.log("LLEGO AL POST");
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "No estás logueado" });
+    }
+    const { dog_name, age } = req.body;
+    try {
+        await db.query(
+            "INSERT INTO perros (id_usuario, nombre, edad, id_raza) VALUES ($1,$2,$3,1)",[req.session.userId, dog_name, age]
+        );
+        console.log("Agregué un perro a:", req.session.userId);
+        return res.json({ success: true });
+
+    } catch (err) {
+        console.log("Error SQL:", err);
+        return res.status(500).json({ error: "Error al guardar el perro" });
+    }
+});
+
 
 module.exports = router;
