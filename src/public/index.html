@@ -9,7 +9,7 @@
         
         <link rel="stylesheet" href = "style.css">
         <link rel="icon" href="../../assets/images/icono_metadata.png" type="image/png">
-        <!--script src="/home.js"></script-->
+        <script src="home.js"></script>
         
     </head>
  
@@ -93,10 +93,10 @@
     </div>
         <section class="cuidadores" style="text-align:center" id="cuidadores">
             <h1>Nuestros cuidadores</h1>
-
+            <!-- Aca se imprimen los superheroes dinámicamente con sus datos -->
             <div class="row g-4" id="catalogo">
                 
-            <div class="col-md-4">
+            <!--div class="col-md-4">
                         <div class="cuidador_perfil">
                             <div class="superman">
                             <img src="../../assets/images/superman.png" class="polaroid" width="400" height="400">
@@ -119,7 +119,7 @@
                            </div>
                         </div>  
                     </div> 
-                     <!--div class="col-md-4">
+                     <div class="col-md-4">
                         <div class="cuidador_perfil">
                             <div class="wonderwoman">
                                 <img src="../../assets/images/wonderwoman.png" class="polaroid" width="400" height="400">
@@ -307,46 +307,6 @@
         <p class="card-text">© 2025 Barkly Corporation Super cuidadores de perros. Todos los derechos reservados</p>
         </div>
         </div>
-    </footer>
-
-    <script>
-        const API_URL = "http://localhost:3000/cuidadores";
-        async function cargarCatalogo() {
-        try {
-            const res = await fetch(API_URL);
-            const cuidadores = await res.json();
-            const contenedor = document.getElementById("catalogo");
-            contenedor.innerHTML = "";
-
-            cuidadores.forEach(c => {
-                contenedor.innerHTML += `
-                    <div class="col-md-4">
-                        <div class="cuidador_perfil">
-                            <img src="${c.foto_perfil  || 'https://via.placeholder.com/150'}"
-                                class="polaroid" width="400" height="400" alt="Foto de ${c.nombre}">
-                            <h3 class="card-title">${c.nombre}</h3>
-                            ${c.franquicia} <br>
-                            <hr>
-                            <ul style="text-align: left; margin: 0 auto; width: fit-content;">
-                                ${c.poderes.split(',').map(p =>
-                                `<li>${p.trim()}</li>`).join('')}
-                            </ul>
-                            <hr>
-                            <a href="prueba_crud.html?id=${c.id}"
-                                class="btn btn-danger mt-2">
-                                    Ver paquetes
-                            </a>
-                        </div>
-                    `;
-                });
-
-            } catch (error) {
-                console.error("Error cargando catálogo:", error);
-            }
-        }
-        cargarCatalogo();
-
-    </script>
-    
+    </footer>    
   </body>
 </html>
