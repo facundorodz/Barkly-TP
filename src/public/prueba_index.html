@@ -61,7 +61,15 @@
                                     <p class="card-text">
                                         <strong>Franquicia:</strong> ${c.franquicia} <br>
                                         <strong>Experiencia:</strong> ${c.experiencia} años <br>
-                                        <strong>Poderes:</strong> ${c.poderes} <br>
+                                        <strong>Poderes:</strong>
+                                        <ul style="text-align: left; margin: 0 auto; width: fit-content;">
+                                            ${c.poderes
+                                                .split(',')
+                                                .map(p => `<li>${p.trim()}</li>`)
+                                                .join('')
+                                            }
+                                        </ul>
+
                                         <strong>Paquetes ofrecidos:</strong> ${c.paquetes_ofrecidos}
                                     </p>
 

@@ -12,18 +12,19 @@ const port = 3000;
 app.use(cors());
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
-app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
+//app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
 
 app.use("/users", usersRouter); // -> ruta para manejar los usuarios
-
+app.use(express.static(path.join(__dirname, "../public")));
+//Carga la informacion del superheroe junto con sus paquetes
+app.use("/", cuidadoresRouter);
 
 /*
 GET para mostrar las paginas 
 */ 
-
 app.get("/", (req, res) => {
   //res.redirect("/index.html");
-  res.sendFile(path.join(__dirname, "../public/prueba_index.html"));
+  res.sendFile(path.join(__dirname, "../public/index.html"));
 });
 
 app.get("/registrar_cuidador", (req, res) => {
@@ -41,8 +42,6 @@ app.get("/cuidador-form", (req, res) => {
 
 app.use("/users", usersRouter);
 
-//Carga la informacion del superheroe junto con sus paquetes
-app.use("/", cuidadoresRouter);
 
 //Pagina donde se imprime la informacion del superheroe
 app.get("/prueba_crud.html", (req, res) => {

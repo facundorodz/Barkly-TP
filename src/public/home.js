@@ -1,5 +1,4 @@
 const API_URL = "http://localhost:3000/cuidadores";
-//const CUIDADOR_ID = 2;
 
 document.addEventListener("DOMContentLoaded", () => {
     const boton = document.getElementById("ver-mas-boton");
@@ -26,21 +25,39 @@ document.addEventListener("DOMContentLoaded", () => {
         boton.textContent = isHidden ? "Ver menos" : "Ver más";
     });
 });
+async function cargarCatalogo() {
+    try {
+        const res = await fetch(API);
+        const cuidadores = await res.json();
+        const contenedor = document.getElementById("catalogo");
+        contenedor.innerHTML = "";
 
-async function cargarSuperheroe() {
-  try {
-    const res = await fetch(`${API_URL}`);
-    const data = await res.json();
+        cuidadores.forEach(c => {
+            contenedor.innerHTML += `
+                <div class="col-md-4">
+                    <div class="cuidador_perfil">
+                        <img src="${c.foto_perfil || 'https://via.placeholder.com/150'}"
+                            class="foto-perfil" alt="Foto de ${c.nombre}">
+                        <h4 class="card-title">${c.nombre}</h4>
+                        <strong>Franquicia:</strong> ${c.franquicia} <br>
+                        <strong>Poderes:</strong>
+                        <ul style="text-align: left; margin: 0 auto; width: fit-content;">
+                            ${c.poderes
+                            .split(',')
+                            .map(p => `<li>${p.trim()}</li>`)
+                            .join('')
+                            }
+                        </ul>
+                        <a href="prueba_crud.html?id=${c.id}"
+                            class="btn btn-primary mt-2">
+                                Ver Perfil
+                        </a>
+                    </div>
+                `;
+            });
 
-        // Encabezado
-    document.getElementById("nombre_superheroe").textContent = data.nombre;
-    document.getElementById("foto_perfil").src = data.foto_perfil;
-
-        // Formulario
-
-    document.getElementById("poderes").innerText = data.poderes;
-
-  } catch (err) {
-    console.error("Error cargando cuidador:", err);
-  }
-}
+        } catch (error) {
+            console.error("Error cargando catálogo:", error);
+        }
+    }
+    cargarCatalogo();
