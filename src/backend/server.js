@@ -22,7 +22,8 @@ GET para mostrar las paginas
 */ 
 
 app.get("/", (req, res) => {
-  res.redirect("/index.html");
+  //res.redirect("/index.html");
+  res.sendFile(path.join(__dirname, "../public/prueba_index.html"));
 });
 
 app.get("/registrar_cuidador", (req, res) => {
