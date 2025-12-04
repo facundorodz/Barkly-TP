@@ -31,18 +31,23 @@
     </div>
     </header>
 
-    <div class="d-flex justify-content-center align-items-center vh-100">
+    <main>
+        <div class="d-flex justify-content-center align-items-center"><h1 class="texto" id="titulo">¡Añade tu fiel compañero!</h1></div>
+        <div class="d-flex justify-content-center align-items-center vh-50">
         <form id="formulario-perros">
-            <label class="etiqueta-dato-perro">Nombre del perro</label>
+            <label class="etiqueta-dato-perro texto">Nombre del perro</label>
             <input class="input-dato-perro" type="text" id="nombre-perro">
 
-            <label class="etiqueta-dato-perro">Edad del perro</label>
-            <input class="input-dato-perro" type="text" id="edad-perro">
+            <label class="etiqueta-dato-perro texto">Edad del perro</label>
+            <input class="input-dato-perro" type="number" id="edad-perro">
 
-            <label class="etiqueta-dato-perro">Raza del perro</label>
+            <label class="etiqueta-dato-perro texto">Raza del perro</label>
             <input class="input-dato-perro" type="text" id="raza-perro">
+
+            <button type="submit" class="btn btn-danger texto" id="boton-aceptar">Aceptar</button>
         </form>
     </div>
+    </main>
 
 </body>
 </html>

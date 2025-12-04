@@ -2,6 +2,12 @@
     font-family: 'Oswald', oblique;
 }
 
+body {
+    background-image: url("../../../assets/images/fondo_perro.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
 .navbar {
     background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
     position: sticky;
@@ -18,6 +24,27 @@
     margin-right: 10px;
 }
 
-.input-dato-perro, .etiqueta-dato-perro {
+#titulo {
+    padding: 25px;
+    font-size: 50px;
+}
+
+.etiqueta-dato-perro {
     display: block;
+    font-size: 25px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.input-dato-perro {
+    color:darkred;
+    width: 100%;
+    padding: 12px; 
+    font-size: 25px;
+    margin-bottom: 20px;
+}
+
+.texto {
+    color: wheat;
+    text-shadow: 2px 2px 1px darkred;
 }
