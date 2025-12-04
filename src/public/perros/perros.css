@@ -1,0 +1,19 @@
+* {
+    font-family: 'Oswald', oblique;
+}
+
+.navbar {
+    background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+    position: sticky;
+    width: 100%;
+}
+
+.navbar-brand {
+    color: #DC3545;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+#iniciar-sesion {
+    margin-right: 10px;
+}
