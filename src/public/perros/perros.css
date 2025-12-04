@@ -17,3 +17,7 @@
 #iniciar-sesion {
     margin-right: 10px;
 }
+
+.input-dato-perro, .etiqueta-dato-perro {
+    display: block;
+}
