@@ -10,7 +10,7 @@
         
         <link rel="stylesheet" href = "./perfil_usuario_estilos.css">
         <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
-        <script src="home.js" defer></script>
+        <script src="perfil_usuario.js" defer></script>
         
     </head>
 
@@ -59,10 +59,10 @@
       <div class="izquierda">
         <div class="upload">
           <div class="imagen-placeholder">
-            <img class="imagen" src="../../../assets/images/subir_imagen.png" height=100 width=100>
+            <img class="imagen" id="profilePic" src="../../../assets/images/subir_imagen.png" height=100 width=100>
             <div class="round">
-              <input type="file">
-              <i class="fa fa-camera"></i>
+              <input type="file" name="photo" id="photo" onchange="displayProfilePic()">
+              <i class="fa fa-camera" style="color: aliceblue;"></i>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@
           <div class="titulo-seccion">  
             <h2> Mis datos</h2>  
           </div>
-          <form action="" id="form-perfil">
+          <form action="" id="formPerfil">
             <div class="col-md-6">
               <label for="nombre" class="form-label">Nombre y Apellido</label>
               <input type="text" class="form-control" id="nombre" placeholder="Ej: Peter Parker">
@@ -90,8 +90,18 @@
 
             <div class="col-12">
               <label for="sobre-mi" class="form-label">Sobre mí</label>
-              <input type="text" class="form-control" id="inputAddress" placeholder=" Contános sobre vos. (500 palabras max.)" maxlength="500">
+              <input type="text" class="form-control" id="inputbio" placeholder=" Contános sobre vos. (500 palabras max.)" maxlength="500">
           </div>
+
+          <div class="col-md-6">
+              <label for="nombre" class="form-label">E-mail</label>
+              <input type="text" class="form-control" id="mail" placeholder="sanlorenzo@gmail.com">
+            </div>
+
+          <div class="col-md-6">
+              <label for="nombre" class="form-label">Contraseña</label>
+              <input type="password" class="form-control" id="contrasena" for="inputPassword3" >
+            </div>
 
         <div class="col-12">
           <label for="inputAddress" class="form-label">Dirección</label>
@@ -140,7 +150,7 @@
         </div>
 
         <div class="col-12" style="text-align: center;">
-          <button type="submit" class="btn btn-primary">Editar</button>
+          <button type="submit" id="guardar-boton" class="btn btn-danger">Guardar</button>
         </div>
       </form>
       </div>

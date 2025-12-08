@@ -20,7 +20,7 @@ body {
    
 }
 
-a {
+a, .round {
     cursor: url(../../../../assets/images/click.png), auto;
 }
 
@@ -90,19 +90,18 @@ a {
 
 .upload img {
     border-radius: 50%;
+    margin: 2px;
    
 }
 
 .upload .round {
-    bottom: 0;
-    right: 0;
-    background: #ffffff;
+    background: #b12b2b;
+    border-radius: 2px;
     height: 32px;
-    width: 32px;
-    line-height: 33px;
+    width: 100px;
+    line-height: 30px;
     text-align: center;
     overflow: hidden;
-    border-radius: 50%;
 }
 
 .upload .round input[type='file'] {
@@ -111,6 +110,7 @@ a {
     opacity: 0;
     text-align: right;
 }
+
  
 .contenedor-general {
     text-align: center;
@@ -140,7 +140,7 @@ a {
 }
 .usuario-header {
     text-align: center;
-    background: darkred;
+    background: #b12b2b;
     color: #fff;
     border-radius: 10px ;
     height: 30px;
