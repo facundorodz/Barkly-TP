@@ -1,17 +1,27 @@
 
-body {
+* {
     font-family: 'Oswald', sans-serif;
-    background-image: url(../../../assets/images/fondo_usuario.png);
+   
+}
+
+body {
+    background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 40%,  
+    rgba(0, 0, 0, 0) 100%),
+    url(../../../assets/images/fondo_usuario.png);
     background-repeat: no-repeat;
     background-size: cover;
     backdrop-filter: blur(5px);
     background-position: center;
     cursor: url(../../../assets/images/cursor_default.png), auto;
     max-width: 100%;
+   
 }
 
 a {
-    cursor: url(../../../assets/images/click.png), auto;
+    cursor: url(../../../../assets/images/click.png), auto;
 }
 
 .navbar {
@@ -60,12 +70,7 @@ a {
 
 .imagen-placeholder img {
   display: block;
-}
-
-#imagen {
-    border-radius: 50%;
-    background: #fff;
-    
+  border-radius: 50%;
 }
 
 #usuario-foto {
@@ -73,17 +78,43 @@ a {
     margin-right: 300px;
     width: 750px;
 }
+
+.info-usuario {
+    padding-left: 20px;
+}
+
+.upload {
+    width: 100px;
+    margin: auto;
+}
+
+.upload img {
+    border-radius: 50%;
+   
+}
+
+.upload .round {
+    bottom: 0;
+    right: 0;
+    background: #ffffff;
+    height: 32px;
+    width: 32px;
+    line-height: 33px;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.upload .round input[type='file'] {
+    position: absolute;
+    transform: scale(2);
+    opacity: 0;
+    text-align: right;
+}
  
-.contenedor-form {
-    background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 40%,  
-    rgba(0, 0, 0, 0) 100%);
+.contenedor-general {
     text-align: center;
     justify-content: center;
-   
-
 }
 
 .titulo-pagina {
@@ -93,7 +124,7 @@ a {
 }
 
 .header {
-    background: linear-gradient(90deg, #DC3545 0%, #ffca3a  100%);
+    background: linear-gradient(90deg, #DC3545 0%, #e96830  100%);
     box-shadow: 2px 2px 1px darkred;
     border-radius: 10px;
     padding: 30px;
@@ -103,7 +134,8 @@ a {
     margin-bottom: 40px;
     height: 120px;
     display: flex;
-    align-items: center; 
+    align-items: center;
+    height: 150px; 
 
 }
 .usuario-header {
@@ -164,6 +196,4 @@ a {
     border-radius: 20px;
     background-color: #fff;
 }
-
-
 

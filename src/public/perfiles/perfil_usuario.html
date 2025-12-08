@@ -3,9 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">   
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">  
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
         
-        <title> Mi perfil</title>
+        <title> Barkly Co</title>
         
         <link rel="stylesheet" href = "./perfil_usuario_estilos.css">
         <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
@@ -19,7 +20,7 @@
           <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="">
             <img src="../../../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
-                        Mi perfil</a>
+                        Barkly Co</a>
             <div class="buscador">
               <form class="d-flex" role="search" style="width: 550px;">
                 <input class="form-control me-2" type="search" placeholder="Buscar un superhéroe" aria-label="Search"/>
@@ -48,97 +49,103 @@
             </nav>
         </div>
 
-<div class="titulo-pagina">
-  <h1 style="text-align: center;">Mi perfil</h1>
-</div>
+  <div class="contenedor-general">
 
-<div class="header">
-  <div class="izquierda">
-    <div class="imagen-placeholder">
-      <img class="imagen" src="../../../assets/images/subir_imagen.png" height="100px" width="100px">
+    <div class="titulo-pagina">
+      <h1 style="text-align: center;">Mi perfil</h1>
     </div>
 
-    <div class="info-usuario">
-      <h2>Nombre y Apellido Usuario</h2>
-      <div class="usuario-header">
-        <p>Miembro</p>
+    <div class="header">
+      <div class="izquierda">
+        <div class="upload">
+          <div class="imagen-placeholder">
+            <img class="imagen" src="../../../assets/images/subir_imagen.png" height=100 width=100>
+            <div class="round">
+              <input type="file">
+              <i class="fa fa-camera"></i>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-
-  <div class="container">
-    <div class="formulario">  
-      <div class="titulo-seccion">  
-        <h2> Mis datos</h2>  
-      </div>
-      <form action="" id="form-perfil">
-        <div class="col-md-6">
-          <label for="nombre" class="form-label">Nombre y Apellido</label>
-          <input type="text" class="form-control" id="nombre" placeholder="Ej: Peter Parker">
         </div>
 
-        <div class="col-12">
-          <label for="inputAddress" class="form-label">Sobre mí</label>
-          <input type="text" class="form-control" id="inputAddress" placeholder=" Contános sobre vos. (500 palabras max.)" maxlength="500">
+        <div class="info-usuario">
+          <h2>Nombre y Apellido Usuario</h2>
+          <div class="usuario-header">
+            <p>Miembro</p>
+          </div>
+        </div>
       </div>
-
-      <div class="col-md-6">
-        <label for="input-apellido" class="form-label">Apellido</label>
-        <input type="text" class="form-control" id="input-apellido" placeholder="Ej: Parker">
-      </div>
-
-    <div class="col-12">
-      <label for="inputAddress" class="form-label">Dirección</label>
-      <input type="text" class="form-control" id="inputAddress" placeholder=" Ej: Avenida Rivadavia 1234">
     </div>
+
+      <div class="container">
+        <div class="formulario" style="text-align: left;">  
+          <div class="titulo-seccion">  
+            <h2> Mis datos</h2>  
+          </div>
+          <form action="" id="form-perfil">
+            <div class="col-md-6">
+              <label for="nombre" class="form-label">Nombre y Apellido</label>
+              <input type="text" class="form-control" id="nombre" placeholder="Ej: Peter Parker">
+            </div>
+
+            <div class="col-12">
+              <label for="sobre-mi" class="form-label">Sobre mí</label>
+              <input type="text" class="form-control" id="inputAddress" placeholder=" Contános sobre vos. (500 palabras max.)" maxlength="500">
+          </div>
+
+        <div class="col-12">
+          <label for="inputAddress" class="form-label">Dirección</label>
+          <input type="text" class="form-control" id="inputAddress" placeholder=" Ej: Avenida Rivadavia 1234">
+        </div>
+
+        
+
+        <div class="col-md-4">
+          <label for="inputState" class="form-label">Género</label>
+          <select id="inputState" class="form-select">
+            <option selected>Elegir...</option>
+            <option>Hombre</option>
+            <option>Mujer</option>
+            <option>Otro</option>
+          </select>
+          </form>
+        </div>
+      </div>
+      <div class="col-md-6 d-flex flex-column gap-2 derecha">
+        <div class="mis-mascotas">    
+          <h2> Mis mascotas</h2>
+          <hr>
+          <button type="button" class="btn btn-danger anadir"> Añadir mascota</button>
+        </div>
+        <div class="mis-reviews">
+            <h2>
+              Mis reseñas
+            </h2>
+            <hr>
+        </div>
+
+
+          </div>
+        </div>
+      </div>
+      </div>
+      </div>
 
      
+      
 
-    <div class="col-md-4">
-      <label for="inputState" class="form-label">Género</label>
-      <select id="inputState" class="form-select">
-        <option selected>Elegir...</option>
-        <option>Hombre</option>
-        <option>Mujer</option>
-        <option>Otro</option>
-      </select>
+
+
+      
+        </div>
+
+        <div class="col-12" style="text-align: center;">
+          <button type="submit" class="btn btn-primary">Editar</button>
+        </div>
       </form>
-    </div>
-  </div>
-  <div class="col-md-6 d-flex flex-column gap-2 derecha">
-    <div class="mis-mascotas">    
-      <h2> Mis mascotas</h2>
-      <hr>
-      <button type="button" class="btn btn-danger"> Añadir mascota</button>
-    </div>
-    <div class="mis-reviews">
-        <h2>
-          Mis reseñas
-        </h2>
-        <hr>
-    </div>
-
-
       </div>
-    </div>
-  </div>
-  </div>
-  </div>
-  
-
-
-
-   
+        </div>
   </div>
 
-    <div class="col-12" style="text-align: center;">
-      <button type="submit" class="btn btn-primary">Editar</button>
-    </div>
-  </form>
-    </div>
-    </div>
-
-    <div class="gallery">
   </body>
 </html>
