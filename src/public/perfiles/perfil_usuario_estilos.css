@@ -8,7 +8,7 @@ body {
     background-image: linear-gradient(
     to bottom,
     rgba(0, 0, 0, 1) 0%,
-    rgba(0, 0, 0, 1) 40%,  
+    rgba(0, 0, 0, 1) 20%,  
     rgba(0, 0, 0, 0) 100%),
     url(../../../assets/images/fondo_usuario.png);
     background-repeat: no-repeat;
@@ -90,16 +90,17 @@ a, .round {
 
 .upload img {
     border-radius: 50%;
-    margin: 2px;
+    text-align: center;
+    border: 3px solid #ffffff;
+    margin-bottom: 5px;
    
 }
 
 .upload .round {
     background: #b12b2b;
-    border-radius: 2px;
+    border-radius: 5px;
     height: 32px;
     width: 100px;
-    line-height: 30px;
     text-align: center;
     overflow: hidden;
 }
@@ -132,7 +133,7 @@ a, .round {
     margin-right: 100px;
     margin-top: 30px;
     margin-bottom: 40px;
-    height: 120px;
+    height: 130px;
     display: flex;
     align-items: center;
     height: 150px; 
@@ -157,6 +158,7 @@ a, .round {
     flex-direction: column;
     gap: 20px; 
     background-color: #1a1a1a; 
+    box-shadow: 2px 2px 1px darkred;
     color:antiquewhite;
     border-radius: 20px;
     padding: 40px;
@@ -181,6 +183,7 @@ a, .round {
     height: 200px;
     border-radius: 20px;
     background-color: bisque;
+    box-shadow: 2px 2px 1px darkred;
 }
 
 .anadir {
@@ -195,5 +198,9 @@ a, .round {
     height: 300px;
     border-radius: 20px;
     background-color: #fff;
+    box-shadow: 2px 2px 1px darkred;
 }
 
+#guardar-boton {
+    margin-top: 30px;
+}

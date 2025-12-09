@@ -15,9 +15,9 @@ function displayProfilePic() {
 }
 
 function submitForm() {
-    const formData = new FormData(document.getElementById('formPerfil'));
+    const formData = new FormData(document.getElementById("formPerfil"));
 
     for (const pair of formData.entries()) {
-        console.log([0] + ': ' + pair[1]);
+        console.log(pair[0] + ': ' + pair[1]);
     }
 }
