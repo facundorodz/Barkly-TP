@@ -97,6 +97,7 @@ a, .round {
 }
 
 .upload .round {
+    cursor: url(../../../assets/images/click.png), pointer;
     background: #b12b2b;
     border-radius: 5px;
     height: 32px;
@@ -126,6 +127,12 @@ a, .round {
 
 .header {
     background: linear-gradient(90deg, #DC3545 0%, #e96830  100%);
+     box-shadow: 2px 2px 1px darkred;
+    background-image: 
+        linear-gradient(to left, rgba(0,0,0,0) 0%, #DC3545 100%), 
+        url(../../../assets/images/newspaper.jpg);
+    background-size: cover;
+    background-position: right center;
     box-shadow: 2px 2px 1px darkred;
     border-radius: 10px;
     padding: 30px;
@@ -154,11 +161,14 @@ a, .round {
     gap: 20px;
 }
 
-.formulario {
+.form-container {
     flex-direction: column;
     gap: 20px; 
+     text-shadow: 2px 2px 1px rgb(26, 26, 26);
     background-color: #1a1a1a; 
     box-shadow: 2px 2px 1px darkred;
+    background-size: cover;
+    background-position: right center;
     color:antiquewhite;
     border-radius: 20px;
     padding: 40px;
@@ -177,17 +187,18 @@ a, .round {
     text-align: left;
 }
 .mis-mascotas {
-    flex: 1;
     text-align: left;
     padding: 15px;
     height: 200px;
     border-radius: 20px;
     background-color: bisque;
     box-shadow: 2px 2px 1px darkred;
+    justify-content: space-between;
+    align-items: center;
+   
 }
 
 .anadir {
-    position: relative;
     flex-direction: column;
     margin-top: auto;
 }
@@ -204,3 +215,58 @@ a, .round {
 #guardar-boton {
     margin-top: 30px;
 }
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    z-index: 10;
+    border: 1px solid #DC3545;
+    border-radius: 10px;
+    background-color: bisque;
+    width: 500px;
+    max-width: 80%;
+    /* transition: all 0.3s ease-in-out; */
+    display: flex;
+    text-align: left;
+    height: 600px;
+    flex-direction: column;
+    color:#DC3545
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+.modal-header {
+    padding: 10px, 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* background-color: #1a1a1a; */
+}
+
+.modal-header .close-button {
+    cursor: url(../../../assets/images/click.png), pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.modal .modal-body {
+    padding: 10px, 15px;
+}
+
+/* #overlay {
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0, .5);
+    pointer-events: none;
+    transition: all 0.3s ease-in-out;
+} */
