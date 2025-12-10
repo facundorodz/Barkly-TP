@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">  
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+        
+        <title> Barkly Co</title>
+        
+        <link rel="stylesheet" href = "./perfil_usuario_estilos.css">
+        <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
+        <script src="perfil_usuario.js" defer></script>
+        
+    </head>
+
+    <body>
+      <div class="navbar-container" justify-content="center" >
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="">
+            <img src="../../../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+                        Barkly Co</a>
+            <div class="buscador">
+              <form class="d-flex" role="search" style="width: 550px;">
+                <input class="form-control me-2" type="search" placeholder="Buscar un superhéroe" aria-label="Search"/>
+                <button class="btn btn-outline-danger search-btn" id="buscar-btn" type="submit">Buscar</button>
+              </form>
+            </div>
+                        <div class="collapse navbar-collapse align" id="mas-info">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#services">Servicios</a> 
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#sobre-nosotros-seccion">Sobre Nosotros</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#resenias-previas">Reseñas</a>
+                                </li>
+                            </ul>
+                                <a role="button" id="login" class="btn btn-danger" href="pages/login/login.html" >Iniciar Sesión </a>
+                                <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+  <div class="contenedor-general">
+
+    <div class="titulo-pagina">
+      <h1 style="text-align: center;">Mi perfil</h1>
+    </div>
+
+    <div class="header">
+      <div class="izquierda">
+        <div class="upload">
+          <div class="imagen-placeholder">
+            <img class="imagen" id="profilePic" src="../../../assets/images/subir_imagen.png" height=100 width=100>
+            <div class="round">
+              <input type="file" name="photo" id="photo" onchange="displayProfilePic()">
+              <i class="fa fa-camera" style="color: aliceblue;"></i>
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="info-usuario">
+          <div id="usuarioPlaceHolder">
+            <h2>Usuario</h2>
+          </div>
+          
+          <div class="usuario-header">
+            <p>Miembro</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <div class="container">
+          <div class="form-container">
+            <div action="" class="formulario" style="text-align: left;">  
+              <div class="titulo-seccion">  
+                <h2> Mis datos</h2>  
+              </div>
+              <form action="" id="formPerfil">
+              
+                <div class="col-11">
+                  <label for="nombre" class="form-label">Usuario</label>
+                  <input type="text" class="form-control" id="nickname" name="nickname">
+                </div>
+
+                <div class="col-11">
+                  <label for="nombre" class="form-label">Nombre y Apellido</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Peter Parker">
+                </div>
+
+                <div class="col-11">
+                    <label for="contrasenia" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="contrasena" for="inputPassword3" name="password" >
+                </div>
+
+                <div class="col-md-6">
+                  <label for="inputState" class="form-label">Cantidad de perros</label>
+                  <select id="inputState" class="form-select"  name="cantidad-perros">
+                    <option selected>Elegir...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>+3</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-md-6 d-flex flex-column gap-2 derecha">
+            <div class="mis-mascotas"> 
+              <div class="mascotas-header"> 
+                <h2> Mis mascotas</h2> 
+
+                <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Añadir mascota</button>
+
+               </div> 
+
+              <hr>
+
+              <div class="modal" id="modal">
+                <div class="modal-header">
+                    <h2> Nueva mascota </h2>
+                    <button data-close-button class="close-button"> &times;</button>
+                </div>
+
+                <div class="modal-body"> 
+                  <div class="modal-form">
+                    <form action="" id="formMascota">
+                      <div class="col-11">
+
+                        <label for="nombre" class="form-label">Nombre </label>
+                        <input type="text" class="form-control" id="nombre-mascota" name="nombre-mascota" placeholder="Ej: Milanesa">
+                      </div>
+
+                      <div class="col-11">
+                        <label for="inputEdad" class="form-label">Edad</label>
+                        <select id="inputEdad" class="form-select">
+                          <option selected>Elegir...</option>
+                          <option>Cachorro (0 - 1 año)</option>
+                          <option>Adulto (1 - 7 años)</option>
+                          <option>Senior (7 - 10 años)</option>
+                        </select>
+                      </div>
+
+                      <div class="col-11">
+                        <label for="raza" class="form-label">Raza</label>
+                        <select id="inputraza" name="raza">
+                          <option disabled selected>Elegí una raza</option>
+                          <option> Beagle </option>
+                          <option> Border Collie </option>
+                          <option> Bulldog Francés </option>
+                          <option> Cocker Spaniel </option>
+                          <option> Chihuahua </option>
+                          <option> Doberman </option>
+                          <option> Golden Retriever </option>
+                          <option> Gran Danés </option>
+                          <option> Husky Siberiano </option>
+                          <option> Labrador Retriever </option>
+                          <option> Mastín Inglés </option>
+                          <option> Pastor Alemán </option>
+                          <option> Pastor Australiano </option>
+                          <option> Pomerania </option>
+                          <option> Pug </option>
+                          <option> Rottweiler </option>
+                          <option> San Bernardo </option>
+                          <option> Schnauzer </option>
+                          <option> Shin Tzu </option>
+                          <option> Terranova </option>
+                          <option> Yorkshire Terrier </option>
+
+                        </select>
+                      </div>
+
+                      <button type="button" id="closeModal" class="btn btn-danger guardar-mascota" onclick="submitMascota()"> Guardar </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="mis-paquetes">
+              <h2>
+                Paquetes comprados
+              </h2>
+              <hr>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12" style="text-align: center;">
+        <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm()">Guardar</button>
+      </div>
+    </div>
+        
+
+  </body>
+</html>
