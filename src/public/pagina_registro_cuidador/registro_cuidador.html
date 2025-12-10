@@ -120,7 +120,7 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
         poderes: document.getElementById("poderes").value,
     };
 
-    const res = await fetch("http://localhost:3000/cuidadores", {
+    const res = await fetch("http://localhost:3000/registro_superheroe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(cuidador),

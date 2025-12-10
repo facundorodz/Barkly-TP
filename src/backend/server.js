@@ -27,14 +27,14 @@ app.get("/", (req, res) => {
 });
 
 app.get("/registrar_cuidador", (req, res) => {
-  res.redirect("/pagina_cuidador/pagina_cuidador.html");
+  res.redirect("/pagina_registro_cuidador/registro_cuidador.html");
 });
 
 app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
-app.get("/cuidador-form", (req, res) => {
+app.get("/usuario-form", (req, res) => {
   res.redirect("/pagina_registro_usuario/registro_usuario.html");
 });
 
