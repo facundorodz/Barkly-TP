@@ -51,5 +51,5 @@ window.addEventListener("load", () => {
 function mostrarPaquetes() {}
 
 function redirigir() {
-    window.location.href = "/posts";
+    window.location.href = "../crear_post/crear_post.html";
 }
