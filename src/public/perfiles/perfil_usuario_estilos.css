@@ -196,6 +196,14 @@ a, .round {
     align-items: center;
 }
 
+.mascotas-header {
+    display: flex;
+}
+
+.mascotas-header .anadir {
+   margin-left: auto;
+}
+
 .mascotas-lista {
     display: flex;
     flex-direction: column;
@@ -204,7 +212,7 @@ a, .round {
 }
 
 .card-mascota {
-    background: white;
+    background: #ffffff;
     border-radius: 10px;
     padding: 15px;
     box-shadow:  0px 2px 6px #1a1a1a;
@@ -254,14 +262,15 @@ a, .round {
     z-index: 10;
     border: 1px solid #DC3545;
     border-radius: 10px;
-    background-color: bisque;
+    background: linear-gradient(180deg, #dd3734 0%, #ffc3a0 100%);
     width: 400px;
     max-width: 80%;
+    box-shadow: #1a1a1a;
     display: flex;
     text-align: left;
-    height: 600px;
+    height: 400px;
     flex-direction: column;
-    color:#DC3545
+    color:beige;
 }
 
  .modal.active {
@@ -276,6 +285,9 @@ a, .round {
     align-items: center;
 }
 
+.modal-header h2 {
+    color:#000000
+}
 .modal-header .close-button {
     cursor: pointer;
     border: none;
@@ -298,6 +310,12 @@ a, .round {
     gap: 5px;    
 }
 
+.modal .guardar-mascota{
+    padding-top: 12px;
+
+}
+
 .guardar-mascotaModal {
     padding-top: 5px;
 }
+

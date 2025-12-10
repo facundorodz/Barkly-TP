@@ -71,10 +71,36 @@ function openModal(modal) {
     modal.classList.add("active")
 }
 
+const modal = document.getElementById("modal");
+const header = modal.querySelector(".modal-header");
+
+let isDragging = false;
+let offsetX = 0;
+let offsetY = 0;
+
+header.addEventListener("mousedown", e => {
+    isDragging = true;
+    offsetX = e.clientX - modal.getBoundingClientRect().left;
+    offsetY = e.clientY - modal.getBoundingClientRect().top;
+});
+
+document.addEventListener("mousemove", e => {
+    if (isDragging) {
+        modal.style.left = `${e.clientX - offsetX}px`;
+        modal.style.top = `${e.clientY - offsetY}px`;
+        modal.style.transform = "none";  
+    }
+});
+
+document.addEventListener("mouseup", () => {
+    isDragging = false;
+});
+
 function closeModal(modal) {
     if (modal == null) return
     modal.classList.remove("active")
 }
+
 ////////////////////////////
 function submitMascota() {
     const nombreMascota = document.getElementById("nombre-mascota").value;
@@ -119,10 +145,19 @@ function mostrarMascotas() {
                 <p><b>Edad:</b> ${m.edad}</p>
                 <p><b>Raza:</b> ${m.raza}</p>
             </div>
-            <button class="btn-delete" onclick="eliminarMascota(${index})">Eliminar</button>
+            <button class="btn btn-danger" onclick="eliminarMascota(${index})">Eliminar</button>
         `;
 
         lista.appendChild(card);
     });
+}
+
+function eliminarMascota(index) {
+    let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+
+    mascotas.splice(index, 1);          
+    localStorage.setItem("mascotas", JSON.stringify(mascotas));
+
+    mostrarMascotas();                   
 }
 ////////////////////////////
