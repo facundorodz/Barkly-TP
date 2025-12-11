@@ -263,3 +263,7 @@ document.getElementById("btn_add_dog").addEventListener("click", async () => {
 // espacio para eliminar mascota
 // mostrar todas tus mascotas
 // editar una mascota
+// agregar boton de perfil a el index.html
+// se podria agregar que una vez logueado no aparezcan los botones 
+// registrarse o logueate y aparezca el de editar perfil
+// terminar login y registro de superheroe cuando este bien la bd
