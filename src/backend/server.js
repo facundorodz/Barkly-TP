@@ -43,11 +43,15 @@ app.get("/crud_usuario", (req, res) => {
   res.redirect("/crud_usuarios/crud_usuarios.html");
 });
 
+app.get("/perfil_usuario", (req, res) => {
+  res.redirect("/perfiles/perfil_usuario.html");
+});
 
 
 app.get("/prueba_crud", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
 });
+
 
 
 app.use("/users", usersRouter);
