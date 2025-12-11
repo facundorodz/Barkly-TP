@@ -213,7 +213,9 @@ document.getElementById("btn_edit_user").addEventListener("click", async () => {
     const data = await response.json();
 
     if (data.success) {
-        document.getElementById("userNamePlaceholder").textContent = profile_name_input.value;
+        if(profile_name_input.value != ""){
+            document.getElementById("userNamePlaceholder").textContent = profile_name_input.value;
+        }
         document.getElementById("profile_name").value = "";
         document.getElementById("pass").value = "";
         document.getElementById("name").value = "";
