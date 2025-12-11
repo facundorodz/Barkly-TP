@@ -71,10 +71,6 @@
           <div id="usuarioPlaceHolder">
             <h2 id="userNamePlaceholder"></h2>
           </div>
-          
-          <div class="usuario-header">
-            <p>Miembro</p>
-          </div>
         </div>
       </div>
     </div>
@@ -104,6 +100,7 @@
             
                 </form>
                 <button type="button" id="btn_edit_user" class="btn btn-primary" style="margin-top: 20px;"> Actualizar usuario </button>
+                <button type="button" id="btn_delete_user" class="btn btn-primary" style="margin-top: 20px;"> Eliminar mi cuenta </button>
               </div>
           </div>
 
@@ -113,6 +110,8 @@
                 <h2> Mis mascotas</h2> 
 
                 <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Añadir mascota</button>
+                <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Editar mascota</button>
+                <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Eliminar mascota</button>
 
                </div> 
 
@@ -171,8 +170,6 @@
 
                         </select>
                       </div>
-
-                      <button type="button" id="closeModal" class="btn btn-danger guardar-mascota" onclick="submitMascota()"> Guardar </button>
                     </form>
                   </div>
                 </div>
@@ -185,10 +182,6 @@
               <hr>
           </div>
         </div>
-      </div>
-
-      <div class="col-12" style="text-align: center;">
-        <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm()">Guardar</button>
       </div>
     </div>
         

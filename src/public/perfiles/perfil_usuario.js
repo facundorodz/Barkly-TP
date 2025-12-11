@@ -33,31 +33,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-
-////////////////////////////
-
-function submitForm() {
-    const datos = {
-        nickname: document.getElementById("nickname").value,
-        nombre: document.getElementById("nombre").value,
-        password: document.getElementById("contrasena").value,
-        perros: document.getElementById("inputState").value,
-        mascotas: JSON.parse(localStorage.getItem("mascotas")) || []
-    };
-
-    localStorage.setItem("perfilUsuario", JSON.stringify(datos));
-    alert("Datos guardados correctamente");
-
-     const nickname = document.getElementById("nickname").value;
-
-    if(nickname.trim() !== ""){
-        localStorage.setItem("nickname", nickname);
-        document.getElementById("usuarioPlaceHolder").innerText = nickname;
-    }
-
-    alert("Datos guardados");
-}
-////////////////////////////
 window.addEventListener("load", () => {
     const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
     if (datosGuardados) {
@@ -68,7 +43,6 @@ window.addEventListener("load", () => {
         mostrarMascotas();
     }
 });
-////////////////////////////
 
 const openModalButtons = document.querySelectorAll("[data-modal-target]")
 const closeModalButtons = document.querySelectorAll("[data-close-button]")
@@ -118,71 +92,11 @@ document.addEventListener("mouseup", () => {
 });
 
 
-////////////////////////////
-function submitMascota() {
-    const nombreMascota = document.getElementById("nombre-mascota").value;
-    const edad = document.getElementById("inputEdad").value;
-    const raza = document.getElementById("inputraza").value;
-
-    if (!nombreMascota || !edad || !raza) {
-        alert("Complete todos los campos");
-        return;
-    }
-
-    let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-    mascotas.push({ nombre: nombreMascota, edad: edad, raza: raza });
-    localStorage.setItem("mascotas", JSON.stringify(mascotas));
-
-    mostrarMascotas();
-    document.getElementById("formMascota").reset();
-    document.querySelector("[data-close-button]").click(); 
-}
-
-function mostrarMascotas() {
-    const contenedor = document.querySelector(".mis-mascotas");
-
-    let lista = document.querySelector(".mascotas-lista");
-    if (!lista) {
-        lista = document.createElement("div");
-        lista.classList.add("mascotas-lista");
-        contenedor.appendChild(lista);
-    }
-
-    lista.innerHTML = ""; 
-
-    const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-
-    mascotas.forEach((m, index) => {
-        const card = document.createElement("div");
-        card.classList.add("card-mascota");
-
-        card.innerHTML = `
-            <div class="card-info">
-                <p><b>Nombre:</b> ${m.nombre}</p>
-                <p><b>Edad:</b> ${m.edad}</p>
-                <p><b>Raza:</b> ${m.raza}</p>
-            </div>
-            <button class="btn btn-danger" onclick="eliminarMascota(${index})">Eliminar</button>
-        `;
-
-        lista.appendChild(card);
-    });
-}
-
-function eliminarMascota(index) {
-    let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-
-    mascotas.splice(index, 1);          
-    localStorage.setItem("mascotas", JSON.stringify(mascotas));
-
-    mostrarMascotas();                   
-}
-////////////////////////////
-
 function closeModal(modal) {
     if (modal == null) return
     modal.classList.remove("active")
 }
+
 
 // para traer el nombre del usuario registrado y mostrarlo
 fetch("/user_info") 
@@ -191,7 +105,7 @@ fetch("/user_info")
       if (data.response) {
         document.getElementById("userNamePlaceholder").textContent = data.username;
       } else {
-        document.getElementById("userNamePlaceholder").textContent = "NO REGISTRADO";
+        document.getElementById("userNamePlaceholder").textContent = "";
       }
 });
 
@@ -230,7 +144,7 @@ document.getElementById("btn_delete_user").addEventListener("click", async () =>
     });
 
     if (res.redirected) {
-        window.location.href = '/login.html';
+        window.location.href = '../index.html';
     }
 });
 
@@ -263,7 +177,4 @@ document.getElementById("btn_add_dog").addEventListener("click", async () => {
 // espacio para eliminar mascota
 // mostrar todas tus mascotas
 // editar una mascota
-// agregar boton de perfil a el index.html
-// se podria agregar que una vez logueado no aparezcan los botones 
-// registrarse o logueate y aparezca el de editar perfil
 // terminar login y registro de superheroe cuando este bien la bd
