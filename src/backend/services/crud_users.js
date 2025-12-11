@@ -55,5 +55,15 @@ router.post("/add_dog", async (req, res) => {
     }
 });
 
+router.get("/user_info", (req, res) => {
+    if (!req.session.userId) {
+        return res.json({ response: false });
+    }
+    res.json({
+        response: true,
+        username: req.session.username
+    });
+});
+
 
 module.exports = router;

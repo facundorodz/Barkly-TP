@@ -184,8 +184,16 @@ function closeModal(modal) {
     modal.classList.remove("active")
 }
 
-
-
+// para traer el nombre del usuario registrado y mostrarlo
+fetch("/user_info") 
+    .then(res => res.json())
+    .then(data => {
+      if (data.response) {
+        document.getElementById("userNamePlaceholder").textContent = data.username;
+      } else {
+        document.getElementById("userNamePlaceholder").textContent = "NO REGISTRADO";
+      }
+});
 
 
 document.getElementById("btn_delete_user").addEventListener("click", async () => {
