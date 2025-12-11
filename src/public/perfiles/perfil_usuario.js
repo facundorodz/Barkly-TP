@@ -253,3 +253,13 @@ document.getElementById("btn_add_dog").addEventListener("click", async () => {
         alert("Perro agregado correctamente");
     }
 });
+
+
+// agregar boton de eliminar el perfil
+// agregar el mostrar los paquetes comprado
+// tema foto que se hace / mostrar el nombre de perfil y el nombre completo
+// boton de cambiar el usuario hacerlo lindo
+// hacer el aniadir mascota
+// espacio para eliminar mascota
+// mostrar todas tus mascotas
+// editar una mascota

@@ -49,7 +49,7 @@ router.post("/register_user", async (req, res) => {
         const result = await db.query("INSERT INTO usuarios (nombre_perfil, contraseña, nombre_completo) VALUES ($1, $2, $3) RETURNING id, nombre_perfil ",[profile_name, pass, name]);
         req.session.userId = result.rows[0].id; 
         req.session.username = result.rows[0].nombre_perfil;
-        return res.redirect("/index.html"); 
+        return res.json({ success: true }); 
     } catch(error){ 
         console.error(error);
         return res.status(500).send("Error al registrar usuario"); 

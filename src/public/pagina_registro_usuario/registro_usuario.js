@@ -5,7 +5,6 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         name: document.getElementById("nombre").value,
         profile_name: document.getElementById("perfil").value,
         pass: document.getElementById("password").value,
-        cantidad_perros: document.getElementById("perros").value
     };
 
     try {
@@ -18,6 +17,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         const data = await resp.json();
 
         if (data.success) {
+            window.location.href = "/index.html";
             alert("Registro exitoso");  
         } else {
             alert(data.error);
