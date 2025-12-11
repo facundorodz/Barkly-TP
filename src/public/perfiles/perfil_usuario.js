@@ -196,17 +196,8 @@ fetch("/user_info")
 });
 
 
-document.getElementById("btn_delete_user").addEventListener("click", async () => {
-    const res = await fetch("/delete_user", {
-        method: "DELETE"
-    });
-
-    if (res.redirected) {
-        window.location.href = '/login.html';
-    }
-});
-
 document.getElementById("btn_edit_user").addEventListener("click", async () => {
+    const profile_name_input = document.getElementById("profile_name");
     const response = await fetch("/edit_user", {
         method: "PUT",
         headers: {
@@ -222,6 +213,7 @@ document.getElementById("btn_edit_user").addEventListener("click", async () => {
     const data = await response.json();
 
     if (data.success) {
+        document.getElementById("userNamePlaceholder").textContent = profile_name_input.value;
         document.getElementById("profile_name").value = "";
         document.getElementById("pass").value = "";
         document.getElementById("name").value = "";
@@ -229,6 +221,16 @@ document.getElementById("btn_edit_user").addEventListener("click", async () => {
     }
 });
 
+
+document.getElementById("btn_delete_user").addEventListener("click", async () => {
+    const res = await fetch("/delete_user", {
+        method: "DELETE"
+    });
+
+    if (res.redirected) {
+        window.location.href = '/login.html';
+    }
+});
 
 document.getElementById("btn_add_dog").addEventListener("click", async () => {
     const response = await fetch("/add_dog", {
