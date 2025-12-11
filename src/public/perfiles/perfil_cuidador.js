@@ -30,6 +30,13 @@ function checkInputs() {
         return CHEQUEO 
     }
 
+// Chequeo para evitar que se pongan letras en el campo "experiencia"
+const experiencia = document.getElementById('experiencia')
+
+experiencia.addEventListener("input", () => {
+  experiencia.value = experiencia.value.replace(/[^0-9]/g, "")
+})
+
 function submitForm() {
     checkInputs()
     // conexión a la BD.
