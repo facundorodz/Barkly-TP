@@ -18,24 +18,57 @@
         Barkly CO.
         </a>
     </div>
-    </nav>
+</nav>
 
     <div class="d-flex justify-content-center align-items-center vh-100"> <!-- Container principal -->
-        <div class="container" id="formulario" style="width: 60rem;">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label fw-bold titulos">Título del Post</label>
-                <input type="title" class="form-control cajas-de-texto" id="exampleFormControlInput1" placeholder="ej: ¡Le enseñaré a tu perro a volar!">
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label fw-bold titulos">Descripción</label>
-                <textarea class="form-control cajas-de-texto" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label fw-bold titulos">Mi experiencia</label>
-                <textarea class="form-control cajas-de-texto" id="exampleFormControlTextarea1" rows="2" placeholder="He trabajado cuidado perros como hobbie desde los 14 años ya que..."></textarea>
-            </div>
+        <div class="container" id="formulario" style="width: 60rem;"> <!-- Los inputs (titulo, descripción y experiencia)-->
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label fw-bold titulos">Título del Post</label>
+                    <input type="title" class="form-control cajas-de-texto" id="exampleFormControlInput1" placeholder="ej: ¡Le enseñaré a tu perro a volar!">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label fw-bold titulos">Descripción</label>
+                    <textarea class="form-control cajas-de-texto" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label fw-bold titulos">Mi experiencia</label>
+                    <textarea class="form-control cajas-de-texto" id="exampleFormControlTextarea1" rows="2" placeholder="He trabajado cuidado perros como hobbie desde los 14 años ya que..."></textarea>
+                </div>
+                
+                <div class="text-center mb-3" id="contenedor-planes">
 
-        <table class="table">
+                    <!-- Template planes-->
+                    <table class="table">
+                        <thead>
+                            <tr><th>Plan Básico</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <th scope="row">Descripción</th>
+                            <td><input type="text"></td>
+                            </tr>
+
+                            <tr>
+                            <th scope="row">¿Enseñas algún poder?</th>
+                            <td><input class="form-check-input align-items-center" type="checkbox" value="" id="checkDefault"></td>
+                            </tr>
+
+                            <tr>
+                            <th scope="row">Precio</th>
+                            <td><input class="text-center"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <!-- Template planes-->
+                </div>
+                
+                <button type="button" id="boton-agregar-plan" class="btn btn-danger">Agregar Plan</button>    
+                <button type="button" id="boton-publicar" class="btn btn-danger">Publicar</button>
+        </div>
+    </div>
+
+<!--      <table class="table">
         <thead id="tabla-planes">
             <tr>
             <th scope="col">Planes</th>
@@ -83,9 +116,9 @@
 
         </tbody>
         </table>
-            <button type="button" class="btn btn-danger">Publicar</button>
         </div>
     </div>
-
+-->
+    <script src="crear_post.js"></script>
 </body>
 </html>

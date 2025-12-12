@@ -48,8 +48,13 @@ window.addEventListener("load", () => {
     }
 });
 
-function mostrarPaquetes() {}
-
-function redirigir() {
-    window.location.href = "../crear_post/crear_post.html";
+let planes = 1;
+function agregarPaquetes() {
+    if (planes == 1) {
+        crearPlanPremium();
+        planes++;
+    } else if (planes == 2) {
+        crearPlanDeluxe();
+        planes++;
+    } else { alert("No puedes tener más de 3 planes!")}
 }

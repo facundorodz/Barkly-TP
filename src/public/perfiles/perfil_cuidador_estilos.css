@@ -13,7 +13,6 @@ body {
     url(../../../assets/images/fondo_usuario.png);
     background-repeat: no-repeat;
     background-size: cover;
-    backdrop-filter: blur(5px);
     background-position: center;
     cursor: url(../../../assets/images/cursor_default.png), auto;
     max-width: 100%;
@@ -100,7 +99,6 @@ a, .round {
     opacity: 0;
     text-align: right;
 }
-
  
 .contenedor-general {
     text-align: center;
@@ -132,8 +130,8 @@ a, .round {
     display: flex;
     align-items: center;
     height: 150px; 
-
 }
+
 .usuario-header {
     text-align: center;
     background: #b12b2b;
@@ -240,4 +238,15 @@ a, .round {
 
 #guardar-boton {
     margin-top: 30px;
+}
+
+.modal-content, 
+#tablaPlan th,
+#tablaPlan td {
+    background-color: #b12b2b;
+}
+
+.modal-content input {
+    background-color: rgb(206, 81, 81);
+    color: white;
 }
