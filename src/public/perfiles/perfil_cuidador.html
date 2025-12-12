@@ -153,7 +153,7 @@
             <h5 class="modal-title">Agregar Paquetes</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" id="cuerpo-modal">
 
             <!-- Template planes -->
             <h2>Plan Básico<h2>
@@ -163,11 +163,11 @@
             <label for="">Precio</label>
             <input type="text" class="form-control w-75 mx-auto">
             <hr>
-            <button class="btn btn-danger" id="boton-agregar-paquete">Agregar otro paquete</button>
             <!-- Template planes -->
-             
+
           </div>
           <div class="modal-footer">
+            <button class="btn btn-danger" onclick="agregarPaquetes()">Agregar otro paquete</button>
             <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cancelar</button>
             <button type="button" class="btn btn-danger">Guardar cambios</button>
           </div>

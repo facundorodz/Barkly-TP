@@ -43,22 +43,30 @@ function submitForm() {
 
 let planes = 1;
 function agregarPaquetes() {
-    const botonAgregarPaquetes = document.getElementById("boton-agregar-paquete")
-    botonAgregarPaquetes.addEventListener("click", () => {
-        if (planes == 1) {
-            crearPlanPremium();
-            planes++;
-        } else if (planes == 2) {
-            crearPlanDeluxe();
-            planes++;
-        } else { alert("No puedes tener más de 3 planes!")}        
-    })
+    console.log("me aprestaste w")
+    if (planes == 1) {
+        crearPlanPremium();
+        planes++;
+    } else if (planes == 2) {
+        crearPlanDeluxe();
+        planes++;
+    } else { alert("No puedes tener más de 3 planes!")}
 }
 
 function crearPlanPremium() {
-    const modal = document.getElementsByClassName("modal-body")
-    const tituloPlan = document.createElement("h1")
-    modal.appendChild(tituloPlan);
+    const modal = document.getElementById("cuerpo-modal")
+    const planDeluxe = document.createElement("div");
+    
+    planDeluxe.innerHTML = `
+        <h2>Plan Premium</h2>
+        <hr>
+        <label>Descripción</label>
+        <input type="text" class="form-control w-75 mx-auto">
+        <label>Precio</label>
+        <input type="text" class="form-control w-75 mx-auto">
+        <hr>
+    `;
+    modal.appendChild(planDeluxe);
 }
 
 function crearPlanDeluxe() {}
