@@ -1,8 +1,3 @@
-function agregarPaquetes() {
-    window.location.href = "../crear_post/crear_post.html"
-}
-
-
 function checkInputs() {
     const inputNombreCuidador = document.getElementById('nickname').value
     const inputFranquicia = document.getElementById('franquicia').value
@@ -37,27 +32,17 @@ experiencia.addEventListener("input", () => {
   experiencia.value = experiencia.value.replace(/[^0-9]/g, "")
 })
 
-function submitForm() {
+function submitForm() { // Sube el form() de los datos de usuario.
     checkInputs()
-}
-
-let planes = 1;
-function agregarPaquetes() {
-    console.log("me aprestaste w")
-    if (planes == 1) {
-        crearPlanPremium();
-        planes++;
-    } else if (planes == 2) {
-        crearPlanDeluxe();
-        planes++;
-    } else { alert("No puedes tener más de 3 planes!")}
 }
 
 function crearPlanPremium() {
     const modal = document.getElementById("cuerpo-modal")
-    const planDeluxe = document.createElement("div");
+    const planPremium = document.createElement("div");
+    planPremium.classList.add("plan-item");
+    planPremium.setAttribute("id", "plan-premium");
     
-    planDeluxe.innerHTML = `
+    planPremium.innerHTML = `
         <h2>Plan Premium</h2>
         <hr>
         <label>Descripción</label>
@@ -66,12 +51,14 @@ function crearPlanPremium() {
         <input type="text" class="form-control w-75 mx-auto">
         <hr>
     `;
-    modal.appendChild(planDeluxe);
+    modal.appendChild(planPremium);
 }
 
 function crearPlanDeluxe() {    
-    const modal = document.getElementById("cuerpo-modal")
+    const modal = document.getElementById("cuerpo-modal");
     const planDeluxe = document.createElement("div");
+    planDeluxe.classList.add("plan-item");
+    planDeluxe.setAttribute("id", "plan-deluxe");
     
     planDeluxe.innerHTML = `
         <h2>Plan Deluxe</h2>
@@ -82,4 +69,16 @@ function crearPlanDeluxe() {
         <input type="text" class="form-control w-75 mx-auto">
         <hr>
     `;
-    modal.appendChild(planDeluxe);}
+    modal.appendChild(planDeluxe);
+}
+
+let plan_activo = "basico";
+function agregarPaquetes() {
+    if (plan_activo == "basico") {
+        crearPlanPremium();
+        plan_activo = "premium";
+    } else if (plan_activo == "premium") {
+        crearPlanDeluxe();
+        plan_activo = "deluxe";
+    } else { alert("¡No puedes tener más de 3 planes!") }
+}
