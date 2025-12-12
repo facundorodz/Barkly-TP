@@ -10,6 +10,7 @@ const port = 3000;
 
 
 app.use(cors());
+app.use('/assets', express.static('assets')); // para que el back cargue las imagenes
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
 //app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
@@ -34,8 +35,20 @@ app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
+<<<<<<< HEAD
 app.get("/usuario-form", (req, res) => {
   res.redirect("/pagina_registro_usuario/registro_usuario.html");
+=======
+
+app.use("/users", usersRouter);
+
+//Carga la informacion del superheroe junto con sus paquetes
+app.use("/", cuidadoresRouter);
+
+//Pagina donde se imprime la informacion del superheroe
+app.get("/prueba_crud.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
+>>>>>>> 745aee0a7859b57aecff5035a05b214634a727f8
 });
 
 

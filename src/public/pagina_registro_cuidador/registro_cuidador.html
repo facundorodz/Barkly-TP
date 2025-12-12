@@ -31,8 +31,18 @@
                                 <a class="nav-link active" aria-current="page" href="#about">Sobre Nosotros</a>
                                 </li>
                             </ul>
-                            <button type="button" id="iniciar-sesion" class="btn btn-danger">Iniciar Sesión</button>
-                            <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                            <a href="../login/login.html">
+                              <button type="button" id="iniciar-sesion" class="btn btn-danger">Iniciar Sesión</button>
+                            </a>
+                            <a href="../pagina_seleccion_registrar/pagina_seleccion_registro.html">
+                              <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                            </a>
+                            <a href="../login/login.html">
+                              <button type="button" id="iniciar-sesion" class="btn btn-danger">Iniciar Sesión</button>
+                            </a>
+                            <a href="../pagina_seleccion_registrar/pagina_seleccion_registro.html">
+                              <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                            </a>
                         </div>
                 </div>
             </nav>
@@ -45,47 +55,42 @@
                     <h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
                     <p>Registrate para poder ofrecer sus paquetes de servicios</p>
                 </div>
-                <form id="cuidador-form" class="cuidador-form">
+                <form id="cuidador-form" class="cuidador-form" action="/users/register_hero" method="post" >
                     <div class="cuidador-info">
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
                           <div class="control">
-                            <input id="nombre" type="text" placeholder="Nombre">
+                            <input id="nombre" type="text" placeholder="Nombre" id="profile_name" name="profile_name">
                           </div>
                         </div>
 
                         <div class="campo-franquicia">
-                          <label>Nombre Franquisia</label>
+                          <label>Nombre Franquicia</label>
+                          <label>Nombre Franquicia</label>
                           <div class="control">
-                            <input id="franquicia" class="input" type="text" placeholder="Franquicia">
+                            <input id="franquicia" class="input" type="text" placeholder="Franquicia" id="franchise_name" name="franchise_name">
                           </div>
                         </div>
 
                         <div class="campo-poderes">
                           <label>Poderes</label>
                           <div class="control">
-                            <input id="poderes" class="input" type="text">
+                            <input id="poderes" class="input" type="text" id="powers" name="powers">
                           </div>
                         </div>
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
-                        <select id="experiencia" name="experiencia">
+                        <select id="experiencia" name="experience" id="experience">
                             <option value="0">0-1 Años</option>
                             <option value="1">2-3 Años</option>
                             <option value="2">3-5 Años</option>
                             <option value="3">+5 Años</option>
                         </select>
-
-                        <label>¿Qué tipo de perros aceptas?</label>
-                        <select name="tipos-perros" multiple>
-                            <option>Cachorros</option>
-                            <option>Pequeños</option>
-                            <option>Medianos</option>
-                            <option>Grandes</option>
-                            <option>Perros con medicación</option>
-                        </select>                        
+                       
                     </div>
+
+                    
                     <!-- TÉRMINOS Y CONDICIONES -->
                     <h3 class="title-campo">Políticas y verificación</h3>
 
@@ -103,11 +108,40 @@
                     <div class="section-terms">
                         <button class="btn-success" type="submit">Registrarse</button>                        
                     </div>
-                </form>
-            </div>
-        </section>
-    </main>
+				</form>
+			</div>
+		</section>
+	</main>
+    <script>
+        document.getElementById("form-superheroe").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const datos = {
+                nombre_paquete: document.getElementById("nombre_paquete").value,
+                descripcion: document.getElementById("descripcion").value,
+                precio: document.getElementById("precio").value,
+            };
+
+            const res = await fetch("http://localhost:3000/registrar_superheroe", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(datos)
+            });
+
+            const data = await res.json();
+            alert(data.mensaje);
+        });
+
+        function redirigir_login() {
+            window.location.href = "../login/login.html";
+        }
+
+        function redirigir_register() {
+            window.location.href = "../pagina_seleccion_registrar/pagina_seleccion_registro.html";
+        }
+  </script>
 </body>
+<<<<<<< HEAD:src/public/pagina_registro_cuidador/registro_cuidador.html
 
 <script>
 document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
@@ -132,4 +166,6 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
 });
 </script>
 
+=======
+>>>>>>> 745aee0a7859b57aecff5035a05b214634a727f8:src/public/pagina_cuidador/pagina_cuidador.html
 </html>
