@@ -56,6 +56,10 @@ a, .round {
     cursor: url(../../../assets/images/click.png), pointer;
 }
 
+.btn {
+    margin-top: 20px;
+}
+
 .izquierda {
   display: flex;
   align-items: center; 
@@ -161,7 +165,7 @@ a, .round {
     border-radius: 20px;
     padding: 40px;
     width: 500px;
-    height: 550px;
+    /*height: 550px;*/
 }
 
 .derecha {

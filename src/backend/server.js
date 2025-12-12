@@ -43,8 +43,8 @@ app.use("/users", usersRouter);
 
 
 //Pagina donde se imprime la informacion del superheroe
-app.get("/prueba_crud.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
+app.get("/perfil_cuidador.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
 
 
