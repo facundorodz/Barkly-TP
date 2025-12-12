@@ -240,13 +240,19 @@ a, .round {
     margin-top: 30px;
 }
 
-.modal-content, 
-#tablaPlan th,
-#tablaPlan td {
+.modal-content {
     background-color: #b12b2b;
 }
 
 .modal-content input {
     background-color: rgb(206, 81, 81);
     color: white;
+    display: block;
+    font-size: 25px;
+}
+
+.modal-content label {
+    display: block;
+    color: white;
+    font-size: 25px;
 }
