@@ -93,3 +93,15 @@ function eliminarPaquete() {
     } else if (plan_activo == "basico") { alert("No puede eliminar el plan básico") }
     planSeleccionado.remove()
 }
+
+function cancelar() {
+    if (plan_activo == "deluxe") { // Es porque existe tanto el deluxe como el premium.
+        planDeluxe = document.getElementById("plan-deluxe");
+        planPremium = document.getElementById("plan-premium");
+        planDeluxe.remove()
+        planPremium.remove()
+    } else if (plan_activo == "premium") { // Es porque existe solo el premium.
+        planPremium = document.getElementById("plan-premium");
+        planPremium.remove()
+    } plan_activo = "basico"
+}
