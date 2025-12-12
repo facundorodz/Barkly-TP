@@ -69,4 +69,17 @@ function crearPlanPremium() {
     modal.appendChild(planDeluxe);
 }
 
-function crearPlanDeluxe() {}
+function crearPlanDeluxe() {    
+    const modal = document.getElementById("cuerpo-modal")
+    const planDeluxe = document.createElement("div");
+    
+    planDeluxe.innerHTML = `
+        <h2>Plan Deluxe</h2>
+        <hr>
+        <label>Descripción</label>
+        <input type="text" class="form-control w-75 mx-auto">
+        <label>Precio</label>
+        <input type="text" class="form-control w-75 mx-auto">
+        <hr>
+    `;
+    modal.appendChild(planDeluxe);}
