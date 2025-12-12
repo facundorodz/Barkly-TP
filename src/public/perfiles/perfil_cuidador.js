@@ -82,3 +82,14 @@ function agregarPaquetes() {
         plan_activo = "deluxe";
     } else { alert("¡No puedes tener más de 3 planes!") }
 }
+
+function eliminarPaquete() {
+    if (plan_activo == "deluxe") {
+        planSeleccionado = document.getElementById("plan-deluxe");
+        plan_activo = "premium"
+    } else if (plan_activo == "premium") {
+        planSeleccionado = document.getElementById("plan-premium");
+        plan_activo = "basico"
+    } else if (plan_activo == "basico") { alert("No puede eliminar el plan básico") }
+    planSeleccionado.remove()
+}
