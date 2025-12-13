@@ -25,12 +25,16 @@ function checkInputs() {
         return CHEQUEO 
     }
 
-// Chequeo para evitar que se pongan letras en el campo "experiencia"
-const experiencia = document.getElementById('experiencia')
+// Evito los carácteres incorrectos en los campos (inputs) que solo utilizan números (como años de experiencia ó precio)
+function evitarCaracteresIncorrectos(id_campo) {
+    const campo = document.getElementById(id_campo)
+    campo.addEventListener("input", () => {
+      campo.value = campo.value.replace(/[^0-9]/g, "")
+    });
+}
 
-experiencia.addEventListener("input", () => {
-  experiencia.value = experiencia.value.replace(/[^0-9]/g, "")
-})
+evitarCaracteresIncorrectos("experiencia")
+evitarCaracteresIncorrectos("precio-plan-basico")
 
 function submitForm() { // Sube el form() de los datos de usuario.
     checkInputs()
@@ -48,10 +52,11 @@ function crearPlanPremium() {
         <label>Descripción</label>
         <input type="text" class="form-control w-75 mx-auto">
         <label>Precio</label>
-        <input type="text" class="form-control w-75 mx-auto">
+        <input type="text" class="form-control w-75 mx-auto" id="precio-plan-premium">
         <hr>
     `;
     modal.appendChild(planPremium);
+    evitarCaracteresIncorrectos("precio-plan-premium")
 }
 
 function crearPlanDeluxe() {    
@@ -66,10 +71,11 @@ function crearPlanDeluxe() {
         <label>Descripción</label>
         <input type="text" class="form-control w-75 mx-auto">
         <label>Precio</label>
-        <input type="text" class="form-control w-75 mx-auto">
+        <input type="text" class="form-control w-75 mx-auto" id="precio-plan-deluxe">
         <hr>
     `;
     modal.appendChild(planDeluxe);
+    evitarCaracteresIncorrectos("precio-plan-deluxe")
 }
 
 let plan_activo = "basico";
