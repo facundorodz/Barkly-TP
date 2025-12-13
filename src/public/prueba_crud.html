@@ -210,6 +210,22 @@
         document.getElementById("experiencia").value = data.experiencia;
         document.getElementById("poderes").value = data.poderes;
         document.getElementById("contrasenia").value = data.contrasenia;
+        const btnLimpiarPaquete = document.getElementById("btn-limpiar-paquete");
+        const formPaquete = document.getElementById("form-paquete");
+
+
+        /*btnLimpiarPaquete.addEventListener("click", () => {
+          // Limpia todos los campos visibles
+          document.getElementById("nombre_paquete").value = "";
+
+          // Limpia el ID oculto (sale del modo edición)
+          document.getElementById("paquete_id").value = "";
+        });*/
+        document.getElementById("form-paquete").addEventListener("click", async (e) => {
+          document.getElementById("nombre_paquete").value = "";
+
+        });
+        
 
       } catch (err) {
         console.error("Error cargando cuidador:", err);

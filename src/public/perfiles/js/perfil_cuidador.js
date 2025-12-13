@@ -5,13 +5,16 @@ function checkInputs() {
     const inputExperiencia = document.getElementById('experiencia').value
     const inputContrasena = document.getElementById('contrasena').value
     const inputPaquetesOfrecidos = document.getElementById('inputState').value
-    const btnLimpiar = document.getElementById("btn-limpiar-paquete");
+    const btnLimpiarPaquete = document.getElementById("btn-limpiar-paquete");
     const formPaquete = document.getElementById("form-paquete");
 
 
-    btnLimpiar.addEventListener("click", () => {
-        // Limpia todos los inputs, selects y textareas del formulario
-        formPerfil.reset();
+    btnLimpiarPaquete.addEventListener("click", () => {
+      // Limpia todos los campos visibles
+      formPaquete.reset();
+
+      // Limpia el ID oculto (sale del modo edición)
+      document.getElementById("paquete_id").value = "";
     });
     
     const CHEQUEO = true
