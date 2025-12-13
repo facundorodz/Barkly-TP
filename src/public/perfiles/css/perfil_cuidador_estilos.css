@@ -10,17 +10,17 @@ body {
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 1) 20%,  
     rgba(0, 0, 0, 0) 100%),
-    url(../../../assets/images/fondo_usuario.png);
+    url(/assets/images/fondo_usuario.png);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    cursor: url(../../../assets/images/cursor_default.png), auto;
+    cursor: url(/assets/images/cursor_default.png), auto;
     max-width: 100%;
    
 }
 
 a, .round {
-    cursor: url(../../../../assets/images/click.png), auto;
+    cursor: url(/assets/images/click.png), auto;
 }
 
 .navbar {
@@ -52,7 +52,7 @@ a, .round {
 }
 
 .btn:hover {
-    cursor: url(../../../assets/images/click.png), pointer;
+    cursor: url(/assets/images/click.png), pointer;
 }
 
 .izquierda {
@@ -84,7 +84,7 @@ a, .round {
 }
 
 .upload .round {
-    cursor: url(../../../assets/images/click.png), pointer;
+    cursor: url(/assets/images/click.png), pointer;
     background: #b12b2b;
     border-radius: 5px;
     height: 32px;
@@ -116,7 +116,7 @@ a, .round {
      box-shadow: 2px 2px 1px darkred;
     background-image: 
         linear-gradient(to left, rgba(0,0,0,0) 0%, #DC3545 100%), 
-        url(../../../assets/images/newspaper.jpg);
+        url(/assets/images/newspaper.jpg);
     background-size: cover;
     background-position: right center;
     box-shadow: 2px 2px 1px darkred;
@@ -137,7 +137,7 @@ a, .round {
     background: #b12b2b;
     color: #fff;
     border-radius: 10px ;
-    height: 30px;
+    /*height: 30px;*/
     width: 60px;
     font-weight: 100px;
 }
@@ -159,7 +159,7 @@ a, .round {
     border-radius: 20px;
     padding: 40px;
     width: 500px;
-    height: 550px;
+    /*height: 550px;*/
 }
 
 .derecha {
@@ -227,7 +227,7 @@ a, .round {
     margin-top: auto;
 }
 
-.mis-clientes {
+.card {
     flex: 1;
     padding: 15px;
     height: 300px;
@@ -236,9 +236,6 @@ a, .round {
     box-shadow: 2px 2px 1px darkred;
 }
 
-#guardar-boton {
-    margin-top: 30px;
-}
 
 .modal-content {
     background-color: #b12b2b;

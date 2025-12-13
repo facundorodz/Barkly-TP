@@ -26,6 +26,9 @@ app.get("/", (req, res) => {
   res.redirect("/index.html");
 });
 
+
+app.use(express.static(path.join(__dirname, "../public")));
+
 app.get("/registrar_cuidador", (req, res) => {
   res.redirect("/pagina_cuidador/pagina_cuidador.html");
 });
@@ -41,19 +44,8 @@ app.use("/users", usersRouter);
 app.use("/", cuidadoresRouter);
 
 //Pagina donde se imprime la informacion del superheroe
-app.get("/prueba_crud.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
-});
-
-
-app.use("/users", usersRouter);
-
-//Carga la informacion del superheroe junto con sus paquetes
-app.use("/", cuidadoresRouter);
-
-//Pagina donde se imprime la informacion del superheroe
-app.get("/prueba_crud.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
+app.get("/perfil_cuidador.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
 
 
