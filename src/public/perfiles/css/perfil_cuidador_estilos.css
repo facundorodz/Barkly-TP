@@ -145,6 +145,7 @@ a, .round {
 .container {
     display:flex;
     gap: 20px;
+    margin-bottom: 20px;
 }
 
 .form-container {
@@ -256,4 +257,8 @@ a, .round {
 
 .modal-content h2 {
     color: wheat;
+}
+
+.text-paquetes {
+    text-align: left;
 }
