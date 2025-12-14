@@ -6,16 +6,26 @@ function checkInputs() {
     const inputContrasena = document.getElementById('contrasena').value
     const inputPaquetesOfrecidos = document.getElementById('inputState').value
     const btnLimpiarPaquete = document.getElementById("btn-limpiar-paquete");
-    const formPaquete = document.getElementById("form-paquete");
+    const paqueteIdInput = document.getElementById("paquete_id");
 
+    document.addEventListener("DOMContentLoaded", () => {
 
-    btnLimpiarPaquete.addEventListener("click", () => {
-      // Limpia todos los campos visibles
-      formPaquete.reset();
+      if (btnLimpiarPaquete && formPaquete) {
+        btnLimpiarPaquete.addEventListener("click", () => {
 
-      // Limpia el ID oculto (sale del modo edición)
-      document.getElementById("paquete_id").value = "";
+          // Limpia todos los campos visibles
+          document.getElementById("form-paquete").reset();
+          // Limpia el ID oculto (sale del modo edición)
+          if (paqueteIdInput) {
+            paqueteIdInput.value = "";
+          }
+
+          // (Opcional) feedback visual
+          console.log("Formulario de paquete limpiado");
+        });
+      }
     });
+
     
     const CHEQUEO = true
     // Chequeo general.
