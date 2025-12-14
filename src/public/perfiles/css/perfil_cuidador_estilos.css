@@ -137,7 +137,6 @@ a, .round {
     background: #b12b2b;
     color: #fff;
     border-radius: 10px ;
-    /*height: 30px;*/
     width: 60px;
     font-weight: 100px;
 }
@@ -160,7 +159,6 @@ a, .round {
     border-radius: 20px;
     padding: 40px;
     width: 500px;
-    /*height: 550px;*/
 }
 
 .derecha {
