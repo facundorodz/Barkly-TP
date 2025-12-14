@@ -28,27 +28,15 @@ app.get("/", (req, res) => {
 });
 
 app.get("/registrar_cuidador", (req, res) => {
-  res.redirect("/pagina_registro_cuidador/registro_cuidador.html");
+  res.sendFile(path.join(__dirname, "../public/pagina_registro_cuidador/registro_cuidador.html"));
 });
 
 app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
-<<<<<<< HEAD
 app.get("/usuario-form", (req, res) => {
   res.redirect("/pagina_registro_usuario/registro_usuario.html");
-=======
-
-app.use("/users", usersRouter);
-
-//Carga la informacion del superheroe junto con sus paquetes
-app.use("/", cuidadoresRouter);
-
-//Pagina donde se imprime la informacion del superheroe
-app.get("/prueba_crud.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
->>>>>>> 745aee0a7859b57aecff5035a05b214634a727f8
 });
 
 
@@ -56,7 +44,7 @@ app.use("/users", usersRouter);
 
 
 //Pagina donde se imprime la informacion del superheroe
-app.get("/perfil_cuidador.html", (req, res) => {
+app.get("/perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
 

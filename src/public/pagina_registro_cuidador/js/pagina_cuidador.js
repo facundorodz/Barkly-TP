@@ -4,9 +4,16 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     const datos = {
         profile_name: document.getElementById("profile_name").value,
         franchise_name: document.getElementById("franchise_name").value,
+        password: document.getElementById("password").value,
         powers: document.getElementById("powers").value,
         experience: document.getElementById("experience").value
+        const foto = document.getElementById("foto_perfil").files[0];
     };
+
+    if (foto) {
+        formData.append("foto_perfil", foto);
+    }
+
 
     try {
         const resp = await fetch("/users/register_hero", {

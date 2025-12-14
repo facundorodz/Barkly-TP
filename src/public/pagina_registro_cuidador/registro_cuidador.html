@@ -9,8 +9,8 @@
     
     <title>Registro Cuidador-Barkly Corporation</title>
     
-    <link rel="stylesheet" href = "./Pagina_cuidadorstyles.css">
-    <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
+    <link rel="stylesheet" href = "/pagina_registro_cuidador/css/Pagina_cuidadorstyles.css">
+    <link rel="icon" href="/assets/images/icono_metadata.png" type="image/png">
     </link>        
 </head>
 
@@ -20,7 +20,7 @@
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand d-flex align-items-center" href="#inicio"> 
-                        <img src="./assets/images/icono-rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
+                        <img src="/assets/images/icono-rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
                     </a>
                         <div class="collapse navbar-collapse align" id="mas-info">
                             <ul class="navbar-nav ms-auto">
@@ -31,15 +31,11 @@
                                 <a class="nav-link active" aria-current="page" href="#about">Sobre Nosotros</a>
                                 </li>
                             </ul>
+
                             <a href="../login/login.html">
                               <button type="button" id="iniciar-sesion" class="btn btn-danger">Iniciar Sesión</button>
                             </a>
-                            <a href="../pagina_seleccion_registrar/pagina_seleccion_registro.html">
-                              <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
-                            </a>
-                            <a href="../login/login.html">
-                              <button type="button" id="iniciar-sesion" class="btn btn-danger">Iniciar Sesión</button>
-                            </a>
+
                             <a href="../pagina_seleccion_registrar/pagina_seleccion_registro.html">
                               <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
                             </a>
@@ -64,8 +60,14 @@
                           </div>
                         </div>
 
+                        <div class="campo-contrasena">
+                          <label>Contraseña</label>
+                          <div class="control">
+                            <input type="password" id="password" type="text" id="profile_password" name="profile_password">
+                          </div>
+                        </div>
+
                         <div class="campo-franquicia">
-                          <label>Nombre Franquicia</label>
                           <label>Nombre Franquicia</label>
                           <div class="control">
                             <input id="franquicia" class="input" type="text" placeholder="Franquicia" id="franchise_name" name="franchise_name">
@@ -78,6 +80,17 @@
                             <input id="poderes" class="input" type="text" id="powers" name="powers">
                           </div>
                         </div>
+
+                        <div class="campo-foto">
+                          <label>Foto de perfil</label>
+                          <div class="control">
+                            <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*" class="input">
+                          </div>
+
+                          <!-- Preview -->
+                          <img id="preview_foto" src="" style="margin-top:10px; width:120px; display:none;">
+                        </div>
+
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
@@ -113,59 +126,29 @@
 		</section>
 	</main>
     <script>
-        document.getElementById("form-superheroe").addEventListener("submit", async (e) => {
-            e.preventDefault();
 
-            const datos = {
-                nombre_paquete: document.getElementById("nombre_paquete").value,
-                descripcion: document.getElementById("descripcion").value,
-                precio: document.getElementById("precio").value,
-            };
+        const inputFoto = document.getElementById("foto_perfil");
+        const preview = document.getElementById("preview_foto");
 
-            const res = await fetch("http://localhost:3000/registrar_superheroe", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(datos)
-            });
+        inputFoto.addEventListener("change", () => {
+          const file = inputFoto.files[0];
+          if (!file) return;
 
-            const data = await res.json();
-            alert(data.mensaje);
+          const reader = new FileReader();
+          reader.onload = () => {
+            preview.src = reader.result;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(file);
         });
 
         function redirigir_login() {
-            window.location.href = "../login/login.html";
+            window.location.href = "/login/login.html";
         }
 
         function redirigir_register() {
-            window.location.href = "../pagina_seleccion_registrar/pagina_seleccion_registro.html";
+            window.location.href = "pagina_seleccion_registrar/pagina_seleccion_registro.html";
         }
   </script>
 </body>
-<<<<<<< HEAD:src/public/pagina_registro_cuidador/registro_cuidador.html
-
-<script>
-document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const cuidador = {
-        nombre: document.getElementById("nombre").value,
-        franquicia: document.getElementById("franquicia").value,
-        experiencia: document.getElementById("experiencia").value,
-        poderes: document.getElementById("poderes").value,
-    };
-
-    const res = await fetch("http://localhost:3000/registro_superheroe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cuidador),
-    });
-
-    const data = await res.json();
-    alert(data.mensaje || "Registrado");
-    cargarCuidadores();
-});
-</script>
-
-=======
->>>>>>> 745aee0a7859b57aecff5035a05b214634a727f8:src/public/pagina_cuidador/pagina_cuidador.html
 </html>
