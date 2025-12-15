@@ -36,14 +36,3 @@ function chequearInputs() {
 function submitForm() {
     chequearInputs()
 }
-
-/*
-CREATE TABLE public.usuarios (
-    id integer NOT NULL,
-    nombre_perfil character varying(100) NOT NULL,
-    "contraseña" character varying(200) NOT NULL,
-    nombre_completo character varying(150) NOT NULL,
-    cantidad_perros integer DEFAULT 0,
-    paquetes_comprados integer DEFAULT 0
-);
-*/
