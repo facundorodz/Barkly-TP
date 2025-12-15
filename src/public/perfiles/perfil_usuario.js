@@ -37,26 +37,48 @@ document.addEventListener("DOMContentLoaded", () => {
 ////////////////////////////
 
 function submitForm() {
-    const datos = {
-        nickname: document.getElementById("nickname").value,
-        nombre: document.getElementById("nombre").value,
-        password: document.getElementById("contrasena").value,
-        perros: document.getElementById("inputState").value,
-        mascotas: JSON.parse(localStorage.getItem("mascotas")) || []
-    };
+    if (checkInputs()) {
+        const datos = {
+            nickname: document.getElementById("nickname").value,
+            nombre: document.getElementById("nombre").value,
+            password: document.getElementById("contrasena").value,
+            perros: document.getElementById("inputState").value,
+            mascotas: JSON.parse(localStorage.getItem("mascotas")) || []
+        };
 
-    localStorage.setItem("perfilUsuario", JSON.stringify(datos));
-    alert("Datos guardados correctamente");
+        localStorage.setItem("perfilUsuario", JSON.stringify(datos));
+        alert("Datos guardados correctamente");
 
-     const nickname = document.getElementById("nickname").value;
+        const nickname = document.getElementById("nickname").value;
 
-    if(nickname.trim() !== ""){
-        localStorage.setItem("nickname", nickname);
-        document.getElementById("usuarioPlaceHolder").innerText = nickname;
+        if(nickname.trim() !== ""){
+            localStorage.setItem("nickname", nickname);
+            document.getElementById("usuarioPlaceHolder").innerText = nickname;
+        }
+
+        alert("Datos guardados");
     }
-
-    alert("Datos guardados");
 }
+
+function checkInputs() {
+    let CHEQUEO = true
+    const usuario = document.getElementById("nickname").value
+    const nombre = document.getElementById("nombre").value
+    const password = document.getElementById("contrasena").value
+
+    if (!usuario || 
+        !nombre ||
+        !password) {
+            alert("Debe completar TODOS los datos")
+            CHEQUEO = false
+        }
+    else if (usuario > 100) { alert('El campo "Usuario" no puede tener más de 100 carácteres.'); CHEQUEO = false }
+    else if (nombre > 150) { alert('El campo "Nombre completo" no puede tener más de 150 carácteres.'); CHEQUEO = false }
+    else if (password > 200) { alert('El campo "Contraseña" no puede tener más de 200 carácteres.'); CHEQUEO = false }
+    
+    return CHEQUEO;
+}
+
 ////////////////////////////
 window.addEventListener("load", () => {
     const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
