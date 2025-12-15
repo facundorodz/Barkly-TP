@@ -1,0 +1,9 @@
+INSERT INTO superheroes (id, nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil) VALUES ( 2,
+  'Spider-Man',
+  'Marvel Comics',
+  5,
+  'Agilidad, fuerza sobrehumana, sentido arácnido, trepar paredes',
+  'spidey2024',
+  'https://i.ibb.co/J5bC6mQ/ironman-mask.png'
+);
+

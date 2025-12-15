@@ -62,7 +62,7 @@ router.post("/register_hero",async (req, res) => {
         if (exists.rows.length > 0) {
             return res.status(400).json("Ya existe un superheroe con ese email");
         } 
-        await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil) VALUES ($1, $2, $3, $4, $6, $7)",[profile_name, franchise_name, experience, powers, profile_password, fotoUrl]); 
+        await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil) VALUES ($1, $2, $3, $4, $5, $6)",[profile_name, franchise_name, experience, powers, profile_password, fotoUrl]); 
         //Guarda toda le informacion de los inpust excepto los paquetes ofrecidos ya que esos se van a guardar cuando el superheroes los agregue en su perfil luego de registrarse
         return res.status(200).json({ success: true }); 
     } catch(error){ 
