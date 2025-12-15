@@ -19,12 +19,12 @@ document.getElementById("form-superheroe").addEventListener("submit", async (e) 
 });
 
 function checkInputs() {
-    const inputNombreCuidador = document.getElementById("input-nombre") 
-    const inputFranquicia = document.getElementById("input-franquicia")
-    const inputPoderes = document.getElementById("input-poderes")
-    const inputExperiencia = document.getElementById("input-experiencia")
+    const inputNombreCuidador = document.getElementById("input-nombre").value
+    const inputFranquicia = document.getElementById("input-franquicia").value
+    const inputPoderes = document.getElementById("input-poderes").value
+    const inputExperiencia = document.getElementById("input-experiencia").value
     
-    const CHEQUEO = true
+    let CHEQUEO = true
     if (!inputNombreCuidador || 
         !inputFranquicia || 
         !inputPoderes || 
