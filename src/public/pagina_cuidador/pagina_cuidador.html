@@ -50,21 +50,21 @@
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
                           <div class="control">
-                            <input type="text" placeholder="Nombre">
+                            <input id="input-nombre" type="text" placeholder="Nombre">
                           </div>
                         </div>
 
                         <div class="campo-franquicia">
                           <label>Nombre de su Franquicia</label>
                           <div class="control">
-                            <input type="text" placeholder="Franquicia">
+                            <input id="input-franquicia" type="text" placeholder="Franquicia">
                           </div>
                         </div>
 
                         <div class="campo-poderes">
                           <label>Explica tu trabajo como Superheroe</label>
                           <div class="control">
-                            <input type="text" placeholder="ej. Mis poderes son ... y los uso para ...">
+                            <input id="input-poderes" type="text" placeholder="ej. Mis poderes son ... y los uso para ...">
                           </div>
                         </div>
 
@@ -77,13 +77,7 @@
                         </div>
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
-
-                        <select name="experiencia">
-                            <option value="0">0-1 Años</option>
-                            <option value="1">2-3 Años</option>
-                            <option value="2">3-5 Años</option>
-                            <option value="3">+5 Años</option>
-                        </select>
+                        <input id="input-experiencia" type="number" placeholder="Años">
 
                         <label>¿Qué tipo de perros aceptas?</label>
                         <select name="tipos-perros" multiple>
@@ -109,7 +103,7 @@
                              Me comprometo a cuidar de los animales con responsabilidad
                         </label>
                       </div>
-                    <button class="btn-success" type="submit">Registrarse</button>
+                    <button class="btn-success" type="submit" onclick="submitForm()" >Registrarse</button>
 				</form>
 			</div>
 		</section>
