@@ -1,17 +1,12 @@
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
-    const form = document.getElementById("cuidador-form");
-
-    if (form) {
-        form.reset();
-    }
 
     const datos = {
         profile_name: document.getElementById("profile_name").value,
         franchise_name: document.getElementById("franchise_name").value,
-        password: document.getElementById("password").value,
+        password: document.getElementById("profile_password").value,
         powers: document.getElementById("powers").value,
-        experience: document.getElementById("experience").value
+        experience: document.getElementById("experience").value,
         foto_perfil: document.getElementById("foto_perfil").value
     };
 
@@ -34,6 +29,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         console.error("Error en fetch:", error);
         alert("Error al conectar con el servidor");
     }
+    // Limpiar formulario
+    document.getElementById("cuidador-form").reset();
 });
 
 // resenias -> que haya un ver mas como con los superheroes
