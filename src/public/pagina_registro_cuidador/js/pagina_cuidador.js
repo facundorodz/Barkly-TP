@@ -1,5 +1,10 @@
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
+    const form = document.getElementById("cuidador-form");
+
+    if (form) {
+        form.reset();
+    }
 
     const datos = {
         profile_name: document.getElementById("profile_name").value,
@@ -7,12 +12,8 @@ document.querySelector("form").addEventListener("submit", async (e) => {
         password: document.getElementById("password").value,
         powers: document.getElementById("powers").value,
         experience: document.getElementById("experience").value
-        const foto = document.getElementById("foto_perfil").files[0];
+        foto_perfil: document.getElementById("foto_perfil").value
     };
-
-    if (foto) {
-        formData.append("foto_perfil", foto);
-    }
 
 
     try {

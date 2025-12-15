@@ -10,7 +10,7 @@
     <title>Registro Cuidador-Barkly Corporation</title>
     
     <link rel="stylesheet" href = "/pagina_registro_cuidador/css/Pagina_cuidadorstyles.css">
-    <link rel="icon" href="/assets/images/icono_metadata.png" type="image/png">
+    <link rel="icon" href = "/assets/images/icono_metadata.png" type="image/png">
     </link>        
 </head>
 
@@ -20,7 +20,7 @@
             <nav class="navbar navbar-expand-lg bg-body-tertiary">
                 <div class="container-fluid">
                     <a class="navbar-brand d-flex align-items-center" href="#inicio"> 
-                        <img src="/assets/images/icono-rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
+                        <img src="/assets/images/icono-rojo.png" type="image/png" alt="Logo Barkly CO" width="50" height="50" class="me-2"> Barkly Co.
                     </a>
                         <div class="collapse navbar-collapse align" id="mas-info">
                             <ul class="navbar-nav ms-auto">
@@ -81,16 +81,12 @@
                           </div>
                         </div>
 
-                        <div class="campo-foto">
-                          <label>Foto de perfil</label>
-                          <div class="control">
-                            <input type="file" id="foto_perfil" name="foto_perfil" accept="image/*" class="input">
-                          </div>
-
-                          <!-- Preview -->
-                          <img id="preview_foto" src="" style="margin-top:10px; width:120px; display:none;">
+                        <div class="col-11 campo-foto">
+                          <label for="foto_perfil" class="form-label">Foto de perfil (URL)</label>
+                          <input type="url" class="form-control" id="foto_perfil" name="foto_perfil">
                         </div>
 
+                        <img id="preview_foto" style="margin-top:10px; width:120px; display:none;">
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
@@ -130,16 +126,13 @@
         const inputFoto = document.getElementById("foto_perfil");
         const preview = document.getElementById("preview_foto");
 
-        inputFoto.addEventListener("change", () => {
-          const file = inputFoto.files[0];
-          if (!file) return;
-
-          const reader = new FileReader();
-          reader.onload = () => {
-            preview.src = reader.result;
+        inputFoto.addEventListener("input", () => {
+          if (inputFoto.value.trim() !== "") {
+            preview.src = inputFoto.value;
             preview.style.display = "block";
-          };
-          reader.readAsDataURL(file);
+          } else {
+            preview.style.display = "none";
+          }
         });
 
         function redirigir_login() {

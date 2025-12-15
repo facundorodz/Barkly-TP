@@ -31,6 +31,7 @@ app.get("/registrar_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/pagina_registro_cuidador/registro_cuidador.html"));
 });
 
+
 app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });

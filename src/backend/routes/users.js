@@ -5,6 +5,7 @@ const db = require("../bdd/bdd.js");
 
 
 
+
 router.post("/login_user", async (req, res) => {
     console.log("Login intento:", req.body);
     const { profile_name, pass, login_type } = req.body;
@@ -36,8 +37,9 @@ router.post("/login_user", async (req, res) => {
 });
 
 
-router.post("/register_user", async (req, res) => {
-    console.log("registro de usuario", req.body);
+router.post("/register_user",async (req, res) => {
+    console.log("registro de usuario", req.body);       
+
     const { profile_name, pass, name  } = req.body; 
       try {
         const exists = await db.query("SELECT nombre_perfil FROM usuarios WHERE nombre_perfil = $1",[req.body.profile_name]);
@@ -52,15 +54,15 @@ router.post("/register_user", async (req, res) => {
     }
 });  
 
-router.post("/register_hero", async (req, res) => {
+router.post("/register_hero",async (req, res) => {
     console.log("registro de superheroe", req.body);
-    const { profile_name, franchise_name, powers, experience } = req.body; // agregar todo lo necesario para cuando se registra para los superheroes
+    const { profile_name, franchise_name, powers, experience, profile_password, fotoUrl} = req.body; // agregar todo lo necesario para cuando se registra para los superheroes
       try {
         const exists = await db.query("SELECT nombre FROM superheroes WHERE nombre = $1",[req.body.profile_name]);
         if (exists.rows.length > 0) {
             return res.status(400).json("Ya existe un superheroe con ese email");
         } 
-        await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil) VALUES ($1, $2, $3, $4, $6, $7)",[profile_name, franchise_name, powers, experience, profile_password, profile_picture]); 
+        await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil) VALUES ($1, $2, $3, $4, $6, $7)",[profile_name, franchise_name, experience, powers, profile_password, fotoUrl]); 
         //Guarda toda le informacion de los inpust excepto los paquetes ofrecidos ya que esos se van a guardar cuando el superheroes los agregue en su perfil luego de registrarse
         return res.status(200).json({ success: true }); 
     } catch(error){ 
