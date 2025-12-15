@@ -1,4 +1,4 @@
-document.getElementById("form-superheroe").addEventListener("submit", async (e) => {
+document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
     const datos = {
@@ -18,6 +18,11 @@ document.getElementById("form-superheroe").addEventListener("submit", async (e) 
     alert(data.mensaje);
 });
 
+const experiencia = document.getElementById("input-experiencia");
+experiencia.addEventListener("input", () => {
+  experiencia.value = experiencia.value.replace(/[^0-9]/g, "");
+});
+
 function checkInputs() {
     const inputNombreCuidador = document.getElementById("input-nombre").value
     const inputFranquicia = document.getElementById("input-franquicia").value
@@ -35,6 +40,7 @@ function checkInputs() {
         // Chequeos particulares.
         else if (inputNombreCuidador.length > 120) { alert('El campo "nombre" no puede ser tan largo.'); CHEQUEO = false }
         else if (inputFranquicia.length > 100) { alert('El campo "franquicia" no puede ser tan largo.'); CHEQUEO = false }
+        else if (inputExperiencia < 0) { alert('El campo "experiencia" contiene un número MENOR a 0'); CHEQUEO = false}
         
         return CHEQUEO
 }
