@@ -23,7 +23,7 @@ router.post("/login_user", async (req, res) => {
         }
     } else if (login_type === "hero"){
         try {
-            const response_hero = await db.query("SELECT * FROM superheroes WHERE nombre_perfil = $1 ",[profile_name]
+            const response_hero = await db.query("SELECT * FROM superheroes WHERE nombre = $1 ",[profile_name]
         );
             if (response_hero.rows.length === 0) {
                 return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
