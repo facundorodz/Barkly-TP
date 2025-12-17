@@ -22,6 +22,18 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("profilePic").src = savedImage;
     }
 });
+
+////////////////////////////
+
+document.addEventListener("DOMContentLoaded", () => {
+    const nickname = localStorage.getItem("nickname");
+    if (nickname) {
+        document.getElementById("usuarioPlaceHolder").innerText = nickname;
+        document.getElementById("nickname").value = nickname;
+    }
+});
+
+
 ////////////////////////////
 
 function submitForm() {
@@ -35,6 +47,15 @@ function submitForm() {
 
     localStorage.setItem("perfilUsuario", JSON.stringify(datos));
     alert("Datos guardados correctamente");
+
+     const nickname = document.getElementById("nickname").value;
+
+    if(nickname.trim() !== ""){
+        localStorage.setItem("nickname", nickname);
+        document.getElementById("usuarioPlaceHolder").innerText = nickname;
+    }
+
+    alert("Datos guardados");
 }
 ////////////////////////////
 window.addEventListener("load", () => {
@@ -96,10 +117,6 @@ document.addEventListener("mouseup", () => {
     isDragging = false;
 });
 
-function closeModal(modal) {
-    if (modal == null) return
-    modal.classList.remove("active")
-}
 
 ////////////////////////////
 function submitMascota() {
@@ -161,3 +178,8 @@ function eliminarMascota(index) {
     mostrarMascotas();                   
 }
 ////////////////////////////
+
+function closeModal(modal) {
+    if (modal == null) return
+    modal.classList.remove("active")
+}

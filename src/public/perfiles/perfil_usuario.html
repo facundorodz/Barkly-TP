@@ -30,20 +30,19 @@
                         <div class="collapse navbar-collapse align" id="mas-info">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#services">Servicios</a> 
+                                <a class="nav-link active" aria-current="page" href="../index.html">Servicios</a> 
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
+                                <a class="nav-link active" aria-current="page" href="../index.html">Cuidadores</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#sobre-nosotros-seccion">Sobre Nosotros</a>
+                                <a class="nav-link active" aria-current="page" href="../index.html">Sobre Nosotros</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#resenias-previas">Reseñas</a>
+                                <a class="nav-link active" aria-current="page" href="../index.html">Reseñas</a>
                                 </li>
                             </ul>
-                                <a role="button" id="login" class="btn btn-danger" href="pages/login/login.html" >Iniciar Sesión </a>
-                                <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                                <a role="button" id="login" class="btn btn-danger" href="#mi-perfil" >Mi perfil </a>
                     </div>
                 </div>
             </nav>
@@ -51,7 +50,7 @@
 
   <div class="contenedor-general">
 
-    <div class="titulo-pagina">
+    <div class="titulo-pagina" id="#mi-perfil">
       <h1 style="text-align: center;">Mi perfil</h1>
     </div>
 
@@ -69,7 +68,10 @@
         </div>
 
         <div class="info-usuario">
-          <h2>Usuario</h2>
+          <div id="usuarioPlaceHolder">
+            <h2>Usuario</h2>
+          </div>
+          
           <div class="usuario-header">
             <p>Miembro</p>
           </div>
@@ -86,7 +88,7 @@
               <form action="" id="formPerfil">
               
                 <div class="col-11">
-                  <label for="nombre" id="usuarioPlaceHolder" class="form-label">Usuario</label>
+                  <label for="nombre" class="form-label">Usuario</label>
                   <input type="text" class="form-control" id="nickname" name="nickname">
                 </div>
 
