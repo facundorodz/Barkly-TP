@@ -19,16 +19,16 @@ p, h1, label, input, .texto-elegir {
 }
 
 body {
-    background-image: url("../../../assets/images/fondo_login.jpg");
+    background-image: url("../assets/images/fondo_login.jpg");
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     backdrop-filter: blur(5px);
-    cursor: url(../../../assets/images/cursor_default.png), auto;
+    cursor: url(../assets/images/cursor_default.png), auto;
 }
 
 .btn:hover {
-    cursor: url(../../../assets/images/click.png), pointer;
+    cursor: url(../assets/images/click.png), pointer;
 }
 
 #fondoLogin {

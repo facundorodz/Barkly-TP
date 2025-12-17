@@ -10,18 +10,18 @@ body {
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 1) 20%,  
     rgba(0, 0, 0, 0) 100%),
-    url(../../../assets/images/fondo_usuario.png);
+    url(../assets/images/fondo_usuario.png);
     background-repeat: no-repeat;
     background-size: cover;
     backdrop-filter: blur(5px);
     background-position: center;
-    cursor: url(../../../assets/images/cursor_default.png), auto;
+    cursor: url(../assets/images/cursor_default.png), auto;
     max-width: 100%;
    
 }
 
 a, .round {
-    cursor: url(../../../../assets/images/click.png), auto;
+    cursor: url(../assets/images/click.png), auto;
 }
 
 .navbar {
@@ -59,7 +59,7 @@ a, .round {
 }
 
 .btn:hover {
-    cursor: url(../../../assets/images/click.png), pointer;
+    cursor: url(../assets/images/click.png), pointer;
 }
 
 .izquierda {
@@ -130,7 +130,7 @@ a, .round {
      box-shadow: 2px 2px 1px darkred;
     background-image: 
         linear-gradient(to left, rgba(0,0,0,0) 0%, #DC3545 100%), 
-        url(../../../assets/images/newspaper.jpg);
+        url(../assets/images/newspaper.jpg);
     background-size: cover;
     background-position: right center;
     box-shadow: 2px 2px 1px darkred;
