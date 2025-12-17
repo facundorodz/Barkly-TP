@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = require("./routes/users.js");
-const cuidadoresRouter = require("./routes/cuidadores.routes.js");
+const cuidadoresRouter = require("./routes/cuidadores.route.js");
 const cors = require("cors");
 const path = require("path");
 
@@ -17,8 +17,7 @@ app.use(express.json());
 
 app.use("/users", usersRouter); // -> ruta para manejar los usuarios
 app.use(express.static(path.join(__dirname, "../public")));
-//Carga la informacion del superheroe junto con sus paquetes
-app.use("/", cuidadoresRouter);
+app.use("/cuidadores", cuidadoresRouter); // -> ruta para manejar cuidadores
 
 /*
 GET para mostrar las paginas 

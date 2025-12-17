@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
 
-
-
-
-
 router.post("/login_user", async (req, res) => {
     console.log("Login intento:", req.body);
     const { profile_name, pass, login_type } = req.body;

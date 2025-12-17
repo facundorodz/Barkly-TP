@@ -2,14 +2,14 @@ const API_URL = "http://localhost:3000/cuidadores";
 
 document.addEventListener("DOMContentLoaded", () => {
     const boton = document.getElementById("ver-mas-boton");
-    const contenedor = document.getElementById("mas-cuidadores");
+    const conteiner = document.getElementById("mas-cuidadores");
 
     if (!boton) {
         console.error("No se encontró el elemento #ver-mas-boton");
         return;
     }
 
-    if (!contenedor) {
+    if (!conteiner) {
         console.error("No se encontró el elemento #mas-cuidadores");
         return;
     }
@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
         e.preventDefault(); 
 
         const isHidden =
-            contenedor.style.display === "none" ||
-            contenedor.style.display === "";
+            conteiner.style.display === "none" ||
+            conteiner.style.display === "";
 
-        contenedor.style.display = isHidden ? "block" : "none";
+        conteiner.style.display = isHidden ? "block" : "none";
         boton.textContent = isHidden ? "Ver menos" : "Ver más";
     });
 });
@@ -47,9 +47,9 @@ async function cargarCatalogo() {
                             `<li>${p.trim()}</li>`).join('')}
                         </ul>
                         <hr>
-                        <a href="prueba_crud.html?id=${c.id}"
+                        <a onclick="verDetalle(${cuidador.id})">
                             class="btn btn-danger mt-2">
-                                Ver paquetes
+                                Ver cuidador
                         </a>
                     </div>
                 `;
@@ -59,3 +59,7 @@ async function cargarCatalogo() {
     }
 }
     cargarCatalogo();
+
+function verDetalle(idCuidador) {
+    window.location.href = `/pagina_detalles-cuidador/prueba_detalle-cuidador.html?id=${idCuidador}`;
+}
