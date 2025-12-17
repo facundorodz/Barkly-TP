@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">  
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"crel="stylesheet"/>
+        
+        <title> Barkly Co</title>
+        
+        <link rel="stylesheet" href = "perfiles/css/perfil_cuidador_estilos.css">
+        <link rel="icon" href="src/public/assets/images/icono_metadata.png" type="image/png">
+                
+    </head>
+
+    <body>
+      <div class="navbar-container" justify-content="center" >
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="">
+            <img src="/assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+                        Barkly Co</a>
+            <div class="buscador">
+              <form class="d-flex" role="search" style="width: 550px;">
+                <input class="form-control me-2" type="search" placeholder="Buscar un superhéroe" aria-label="Search"/>
+                <button class="btn btn-outline-danger search-btn" id="buscar-btn" type="submit">Buscar</button>
+              </form>
+            </div>
+                        <div class="collapse navbar-collapse align" id="mas-info">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#services">Servicios</a> 
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#sobre-nosotros-seccion">Sobre Nosotros</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#resenias-previas">Reseñas</a>
+                                </li>
+                            </ul>
+                                <a role="button" id="login" class="btn btn-danger" href="pages/login/login.html" >Iniciar Sesión </a>
+                                <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+  <div class="contenedor-general">
+
+    <div class="titulo-pagina">
+      <h1 style="text-align: center;">Mi perfil</h1>
+    </div>
+
+    <div class="header">
+      <div class="izquierda">
+        <div class="upload">
+          <div class="imagen-placeholder">
+            <img class="imagen" id="foto_cuidador" src="" height=100 width=100>
+            <div class="round">
+              <input type="file" name="photo" id="photo" onchange="displayProfilePic()">
+              <i class="fa fa-camera" style="color: aliceblue;"></i>
+          </div>
+        </div>
+      </div>
+        </div>
+
+        <div class="info-usuario">
+          <h2 id="nombre-superheroe-header">Usuario</h2>
+          <div class="usuario-header">
+            <p id="franquicia-header">Franquicia</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+        <div class="container">
+          <div class="form-container">
+            <div action="" class="formulario" style="text-align: left;">  
+              <div class="titulo-seccion">  
+                <h2> Mis datos</h2>  
+              </div>
+              <form action="" id="form-perfil">
+              
+                <div class="col-11">
+                  <label for="nombre" id="usuarioPlaceHolder" class="form-label">Nombre de Cuidador</label>
+                  <input type="text" class="form-control" id="nombre" name="nickname" placeholder="Ej: Hulk">
+                </div>
+
+                <div class="col-11">
+                  <label for="nombre" class="form-label">Franquicia</label>
+                  <input type="text" class="form-control" id="franquicia" name="nombre" placeholder="Ej: DC">
+                </div>
+
+                <div class="col-11">
+                  <label for="nombre" class="form-label">Poderes</label>
+                  <input type="text" class="form-control" id="poderes" name="nombre" placeholder="Ej: volar y super fuerza">
+                </div>
+ 
+                <div class="col-11">
+                  <label for="nombre" class="form-label">Experiencia</label>
+                  <input class="form-control" id="experiencia" name="nombre" placeholder="Años">
+                </div>
+
+                <div class="col-11">
+                    <label for="contrasenia" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="contrasena" for="inputPassword3" name="password" >
+                </div>
+
+                <div class="col-md-6">
+                  <label for="inputState" class="form-label">Cantidad de paquetes ofrecidos</label>
+                  <select id="inputState" class="form-select" name="cantidad-perros">
+                    <option selected>Elegir...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>3</option>
+                  </select>
+                </div>
+              </form>
+              <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-outline-danger btn-sm">
+                  Guardar cambios
+                </button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-cancelar-perfil">
+                  Deshacer cambios
+                </button>
+              </div>
+              <hr/>
+              <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-danger btn-sm" id="btn-eliminar-cuenta">
+                  Eliminar cuenta
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 d-flex flex-column gap-2 derecha">
+            <div class="mis-paquetes"> 
+              <div class="paquetes-header"> 
+                <h2> Mis Paquetes</h2> 
+                <button data-modal-target="#modal" type="b" class="btn btn-dark anadir" onclick="agregarPaquetes()">Añadir paquetes</button>
+               </div> 
+              <hr>
+
+            </div>
+          <div class="mis-clientes">
+              <h2>
+                Tus clientes
+              </h2>
+              <hr>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12" style="text-align: center;">
+        <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm()">Guardar</button>
+      </div>       
+    <script src="perfiles/js/perfil_cuidador.js" defer></script>
+
+    <!-- ================== SCRIPT ================== -->
+  <script>
+
+
+    const API_URL = "http://localhost:3000/cuidadores";
+    const CUIDADOR_ID = 1;
+
+    //FUNCIONES QUE SE EJECUNTAN EN EL NAVEGADOR Y MANDAN PETICIONES A LA BASE DE DATOS
+
+    // ===============================
+    // CARGAR DATOS DEL CUIDADOR
+    // ===============================
+    async function cargarCuidador() {
+      try {
+        const res = await fetch(`${API_URL}/${CUIDADOR_ID}`);
+        const data = await res.json();
+
+        // Encabezado
+        document.getElementById("nombre-superheroe-header").textContent = data.nombre;
+        document.getElementById("franquicia-header").textContent = data.franquicia;
+        document.getElementById("foto_cuidador").src = data.foto_cuidador;
+
+        // Formulario
+        document.getElementById("nombre").value = data.nombre;
+        document.getElementById("franquicia").value = data.franquicia;
+        document.getElementById("experiencia").value = data.experiencia;
+        document.getElementById("poderes").value = data.poderes;
+        document.getElementById("contrasena").value = data.contrasenia;
+
+      } catch (err) {
+        console.error("Error cargando cuidador:", err);
+      }
+    }
+
+    // ===============================
+    // GUARDAR CAMBIOS
+    // ===============================
+    document.getElementById("form-perfil").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const cambios = {
+        nombre: document.getElementById("nombre").value,
+        franquicia: document.getElementById("franquicia").value,
+        experiencia: Number(document.getElementById("experiencia").value),
+        poderes: document.getElementById("poderes").value,
+        contrasenia: document.getElementById("contrasena").value,
+      };
+
+      await fetch(`${API_URL}/${CUIDADOR_ID}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cambios),
+      });
+
+      alert("Datos actualizados");
+      cargarCuidador();
+    });
+
+    // ===============================
+    // ELIMINAR CUENTA
+    // ===============================
+    document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
+      if (!confirm("¿Seguro que querés eliminar este cuidador?")) return;
+
+      await fetch(`${API_URL}/${CUIDADOR_ID}`, {
+        method: "DELETE"
+      });
+
+      alert("Cuenta eliminada");
+    });
+
+
+  // ===============================
+  // CARGAR LISTA DE PAQUETES
+  // ===============================
+  async function cargarPaquetes() {
+    try {
+      const res = await fetch(`http://localhost:3000/cuidadores/${CUIDADOR_ID}/paquetes`);
+      const paquetes = await res.json();
+
+      const tbody = document.querySelector("#tabla-paquetes tbody");
+      tbody.innerHTML = "";
+
+      paquetes.forEach(p => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${p.nombre_paquete}</td>
+            <td>${p.descripcion}</td>
+            <td>$${p.precio}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary" onclick='cargarFormularioPaquete(${JSON.stringify(p)})'>Editar</button>
+              <button class="btn btn-sm btn-outline-danger" onclick="eliminarPaquete(${p.id})">Eliminar</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      // 🔥 EL CONTADOR SIEMPRE SE ACTUALIZA DESDE LA BDD
+      document.getElementById("contador-paquetes").textContent = paquetes.length;
+    } catch (error) {
+      console.error("Error cargando paquetes:", error);
+    }
+  }
+
+  function cargarFormularioPaquete(p) {
+    document.getElementById("paquete_id").value = p.id;
+    document.getElementById("nombre_paquete").value = p.nombre_paquete;
+    document.getElementById("descripcion_paquete").value = p.descripcion;
+    document.getElementById("precio_paquete").value = p.precio;
+  }
+
+
+  // ===============================
+  // Editar paquete
+  // ===============================
+  async function editarPaquete(id) {
+    const nombre = prompt("Nuevo nombre:");
+    const desc = prompt("Nueva descripción:");
+    const precio = prompt("Nuevo precio:");
+
+    await fetch(`${API_URL}/paquetes/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre_paquete: nombre,
+        descripcion: desc,
+        precio: precio
+      })
+    });
+
+    cargarPaquetes();
+  }
+
+  async function eliminarPaquete(id) {
+    if (!confirm("Eliminar paquete?")) return;
+
+    await fetch(`${API_URL}/paquetes/${id}`, { method: "DELETE" });
+
+    cargarPaquetes();
+  }
+
+    // ===============================
+    // AL CARGAR LA PÁGINA
+    // ===============================
+    cargarCuidador();
+    cargarPaquetes();
+
+    
+  </script>
+  </body>
+</html>
