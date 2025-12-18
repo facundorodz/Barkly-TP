@@ -183,3 +183,22 @@ function closeModal(modal) {
     if (modal == null) return
     modal.classList.remove("active")
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+    console.log("perfil_usuario.js cargado");
+
+    try {
+        const resp = await fetch("/users/session_info");
+
+        const data = await resp.json();
+
+        if (data.logged && data.profile_name) {
+            const contenedor = document.getElementById("usuario_place_holder");
+            contenedor.innerHTML = `<h2>${data.profile_name}</h2>`;
+        }
+    } catch (error) {
+        console.error("Error obteniendo session_info:", error);
+    }
+});
+
+
