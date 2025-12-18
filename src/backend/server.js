@@ -44,7 +44,7 @@ app.use("/users", usersRouter);
 app.use("/", cuidadoresRouter);
 
 //Pagina donde se imprime la informacion del superheroe
-app.get("/perfil_cuidador.html", (req, res) => {
+app.get("/perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
 
