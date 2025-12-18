@@ -39,8 +39,6 @@ document.querySelector("form").addEventListener("submit", async (e) => {
             alert(data.error);
         }
 
-        modal.show();
-
     } catch (error) {
         console.error("Error en fetch:", error);
         alert("Error al conectar con el servidor");

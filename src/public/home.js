@@ -58,4 +58,28 @@ async function cargarCatalogo() {
         console.error("Error cargando catálogo:", error);
     }
 }
-    cargarCatalogo();
+cargarCatalogo();
+
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const resp = await fetch("/users/session_info");
+        const data = await resp.json();
+        const authContainer = document.getElementById("auth-buttons");
+        
+        if (!authContainer){
+            return;
+        } 
+
+        if (data.logged) {
+            authContainer.innerHTML = 
+            `
+                <a role="button" class="btn btn-danger" href="/perfiles/perfil_usuario.html">
+                    Ver perfil
+                </a>
+            `;
+        }
+    } catch (error) {
+        console.error("Error al obtener session_info:", error);
+    }
+});
+

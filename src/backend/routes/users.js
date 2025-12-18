@@ -9,13 +9,13 @@ router.post("/login_user", async (req, res) => {
     const { profile_name, pass, login_type } = req.body;
     if(login_type === "user"){
         try {
-            const response_usuario = await db.query("SELECT * FROM usuarios WHERE nombre_perfil = $1 AND contraseña = $2",[profile_name, pass]
+            const response_usuario = await db.query("SELECT * FROM usuarios WHERE nombre_perfil = $1 AND contraseña = $2 ",[profile_name, pass]
         );
             if (response_usuario.rows.length === 0) {
                 return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
             }
             req.session.userId = response_usuario.rows[0].id; 
-            req.session.userName = response_usuario.rows[0].nombre_perfil;
+            req.session.username = response_usuario.rows[0].nombre_perfil;
             return res.json({ success: true, type: "user" });
         }   catch (error) {
                 console.error("Error en login:", error);
@@ -35,7 +35,10 @@ router.post("/login_user", async (req, res) => {
                 console.error("Error en login:", error);
                 return res.status(500).json({ error: "Error interno en el servidor" });
         }
+    } else {
+    return res.status(400).json({ error: "Tipo de login inválido" });
     }
+
 });
 
 
@@ -66,10 +69,8 @@ router.post("/register_hero",async (req, res) => {
         if (exists.rows.length > 0) {
             return res.status(400).json("Ya existe un superheroe con ese email");
         } 
-        await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil) VALUES ($1, $2, $3, $4, $5, $6)",[profile_name, franchise_name, experience, powers, profile_password, fotoUrl]); 
-        //Guarda toda le informacion de los inpust excepto los paquetes ofrecidos ya que esos se van a guardar cuando el superheroes los agregue en su perfil luego de registrarse
-        //return res.status(200).json({ success: true });
-        return res.redirect("/index.html"); 
+        await db.query("INSERT INTO superheroes (nombre, franquicia, experiencia, poderes ) VALUES ($1, $2, $3, $4)",[profile_name, franchise_name, powers, experience]); 
+        return res.status(200).json({ success: true }); 
     } catch(error){ 
         console.error(error);
         return res.status(500).send("Error al registrarse"); // manejar bien este error
