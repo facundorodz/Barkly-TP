@@ -270,10 +270,16 @@ async function mostrarMascotas() {
         `;
         data.mascotas.forEach(dog => {
             html += `
+            
                 <tr>
                     <td>${dog.dog_name}</td>
                     <td>${dog.dog_age}</td>
                     <td>${dog.raza}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="eliminarMascota(${dog.id})">
+                            🗑️
+                        </button>
+                    </td>
                 </tr>
             `;
         });
@@ -289,4 +295,30 @@ async function mostrarMascotas() {
     }
 }
 
+async function eliminarMascota(dog_id) {
+    const confirmar = confirm("⚠️ ¿Seguro que quieres eliminar esta mascota?");
+    if (!confirmar){
+        return;
+    } 
+    try {
+        const resp = await fetch(`/delete_dog/${dog_id}`, {
+            method: "DELETE"
+        });
+        const data = await resp.json();
+
+        if (data.success) {
+            alert("Mascota eliminada correctamente");
+            mostrarMascotas(); 
+        } else {
+            alert(data.error || "Error al eliminar mascota");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Error al eliminar mascota");
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", mostrarMascotas);
+
+
