@@ -16,7 +16,6 @@ body {
     background-position: center;
     cursor: url(../assets/images/cursor_default.png), auto;
     max-width: 100%;
-    margin: 0;
    
 }
 
@@ -104,21 +103,22 @@ a, .round {
 .nombre-cuidador {
     color:beige;
     text-shadow: 2px 2px 1px darkred;
-    margin-left: 10px;
     flex: 1;
 }
 
 .franquicia {
-    color: #ae7c7c
+    color: #ae7c7c;
+    text-align: center;
+}
+
+.box {
+    display: flex;
 }
 
 .contenedor {
     margin-top: 20px;
-    gap: 20px;
     height: auto;
     text-align: center;
-    margin-left: 220px;
-    margin-left: 220px;
     margin-bottom: 30px;
 }
 
@@ -126,12 +126,13 @@ a, .round {
     padding: 15px;
     height: auto;
     border-radius: 20px;
-    background-color: #1b1b1b;
+    background: linear-gradient(180deg,#1b1b1b 0%, #000000 100%);
     box-shadow: 2px 2px 1px rgb(221, 78, 78);
-    color:#ffffff
+    color:#ffffff;
 }
+
 .paquetes h2{
-    color:#DC3545
+    color:#DC3545;
 }
 
 .paquetes li {
@@ -140,12 +141,50 @@ a, .round {
     margin-top: 20px;
 }
 
+.poderes {
+    height: auto;
+    background-color: #1b1b1b;
+    box-shadow: 2px 2px 1px rgb(221, 78, 78);
+    color:#ffffff;
+    text-align: left;
+    border-radius: 20px;
+}
+
+.poderes h2 {
+    text-align: center;
+}
+
+.poderes li {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+
+
 #precio-header {
     font-weight: 800;
     margin-bottom: 0%;
 }
 
+#precio {
+    text-align: left;
+}
+
 .anadir {
     margin-top: auto;
     width: auto;
+}
+
+.resenias-container {
+    background: linear-gradient(180deg, #f74949 0%, #d25353 100%);
+    margin-left: 220px;
+    margin-right: 270px;
+    border-radius: 10px;
+    height: 500px;
+}
+
+.resenias-container h2{
+    padding-top: 15px;
+    color: bisque;
+    text-align: center;
 }
