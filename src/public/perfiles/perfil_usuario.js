@@ -99,6 +99,7 @@ let offsetX = 0;
 let offsetY = 0;
 
 header.addEventListener("mousedown", e => {
+    if (e.target.closest("[data-close-button]")) return; // 👈 clave
     isDragging = true;
     offsetX = e.clientX - modal.getBoundingClientRect().left;
     offsetY = e.clientY - modal.getBoundingClientRect().top;
