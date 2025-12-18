@@ -8,7 +8,7 @@
         
         <link rel="stylesheet" href = "./detalles-cuidador.css">
         <link rel="icon" href="../assets/images/icono_metadata.png" type="image/png">
-        <script src="./perfil_usuario.js" defer></script>
+        
         
     </head>
 
@@ -42,8 +42,6 @@
                             </ul>
                                 <a role="button" id="login" class="btn btn-danger" href="../login/login.html" >Iniciar Sesión </a>
                                 <button type="button" id="registrarse" class="btn btn-outline-danger" href="../pagina_seleccion_registrar/pagina_seleccion_registro.html">Registrar</button>
-                                
-
                     </div>
                 </div>
             </nav>
@@ -75,7 +73,7 @@
     </div>
     <div class="container my-4">
       <div class="contenedor row g-6 justify-content-center">
-        <div class="col-md-3">
+        <div class="col-md-3 ">
           <div class="poderes">
           <h2>Poderes</h2>
             <hr>
@@ -85,7 +83,14 @@
               <li> Poder 3</li>
               <li> Poder 4</li>
             </ul>
-            <hr>
+          </div>
+          <div class="poder">
+            <div class="clasificacion">
+              <h2>Calificación</h2>
+            </div>
+            <div class="imagen-resenia text-center mt-3">
+              <img src="../assets/images/resenia_cinco.png" height="150px" width="auto">
+            </div>
           </div>
         </div>
 
@@ -164,14 +169,30 @@
     </div>
 
 
-    <!-- <div class="resenias-container">
-      <h2> Reseñas </h2>
-      <hr>
+    <div class="resenias-container">
+      <h2> RESEÑAS </h2>
+      <div class="resenias-cuidador">
 
-      <div class="resenias-cuidador"></div>
-      <h3>Primera reseña</h1>
+        <div class="resenia-escrita">
+          <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean gravida in lacus ut imperdiet. Curabitur egestas lacus vehicula tincidunt rhoncus. Nulla bibendum nisl id convallis lobortis. Praesent non neque volutpat, posuere tellus quis, dignissim metus. Morbi tempus accumsan nulla ultrices sodales. Praesent vulputate, magna in semper semper, nisl quam porttitor lacus, nec convallis ligula dolor in sapien. Nam tincidunt semper augue, eget pretium nibh tincidunt ac. Ut lacus est, dictum sed finibus id, egestas sit amet dui."</p>
+          <div class="autor">
+            <p>-Nombre autor</p>
+          </div>
+        </div>
+      </div>
     </div>
-    </div> -->
 
+    <div class="comentario-usuario">
+      <h2> Dejá tu reseña aquí! </h2>
+      <hr>
+      <div class="resenias-usuario">
+        <textarea type="text" id="comentario"></textarea>
+      </div>
+      <div class="col-12" style="text-align: center;">
+        <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm(); emptyForm()">Enviar</button>
+      </div>
+    </div>
+  </div>
+  <script src="./detalles-cuidador.js"></script>
   </body>
 </html>
