@@ -117,38 +117,6 @@ document.addEventListener("mouseup", () => {
     isDragging = false;
 });
 
-
-function mostrarMascotas() {
-    const contenedor = document.querySelector(".mis-mascotas");
-
-    let lista = document.querySelector(".mascotas-lista");
-    if (!lista) {
-        lista = document.createElement("div");
-        lista.classList.add("mascotas-lista");
-        contenedor.appendChild(lista);
-    }
-
-    lista.innerHTML = ""; 
-
-    const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-
-    mascotas.forEach((m, index) => {
-        const card = document.createElement("div");
-        card.classList.add("card-mascota");
-
-        card.innerHTML = `
-            <div class="card-info">
-                <p><b>Nombre:</b> ${m.nombre}</p>
-                <p><b>Edad:</b> ${m.edad}</p>
-                <p><b>Raza:</b> ${m.raza}</p>
-            </div>
-            <button class="btn btn-danger" onclick="eliminarMascota(${index})">Eliminar</button>
-        `;
-
-        lista.appendChild(card);
-    });
-}
-
 function eliminarMascota(index) {
     let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
 
@@ -241,7 +209,6 @@ async function borrarCuenta() {
     }
 }
 
-// Función para enviar nueva mascota
 async function submitMascota() {
     const dog_name = document.getElementById("dog_name").value.trim();
     const age = document.getElementById("inputEdad").value;
@@ -270,7 +237,7 @@ async function submitMascota() {
             alert("Mascota agregada correctamente");
             closeModal();
             document.getElementById("formMascota").reset(); 
-
+            mostrarMascotas();
         } else {
             alert(data.error || "Error al guardar la mascota");
         }
@@ -279,3 +246,47 @@ async function submitMascota() {
         alert("Error al guardar la mascota");
     }
 }
+
+async function mostrarMascotas() {
+    try {
+        const resp = await fetch("/show_dogs");
+        const data = await resp.json();
+        const contenedor = document.querySelector(".my_dogs");
+        
+        const exists_table = contenedor.querySelector("table");
+        if (exists_table){
+            exists_table.remove();
+        } 
+        let html = `
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Raza</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+        data.mascotas.forEach(dog => {
+            html += `
+                <tr>
+                    <td>${dog.dog_name}</td>
+                    <td>${dog.dog_age}</td>
+                    <td>${dog.raza}</td>
+                </tr>
+            `;
+        });
+        html += `
+                </tbody>
+            </table>
+        `;
+        const header = contenedor.querySelector(".mascotas-header");
+        header.insertAdjacentHTML("afterend", html);
+
+    } catch (error) {
+        console.error("Error al mostrar mascotas:", error);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", mostrarMascotas);

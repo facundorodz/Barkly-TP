@@ -74,6 +74,21 @@ router.post("/add_dog", async (req, res) => {
     }
 });
 
+
+router.get("/show_dogs", async (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "No estás logueado" });
+    }
+    try {
+        const result = await db.query(`SELECT p.nombre AS dog_name, p.edad AS dog_age, r.nombre AS raza FROM perros p JOIN razas r ON p.id_raza = r.id WHERE p.id_usuario = $1`, [req.session.userId]);
+        return res.json({ mascotas: result.rows });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Error al obtener mascotas" });
+    }
+});
+
+
 router.get("/user_info", (req, res) => {
     if (!req.session.userId) {
         return res.json({ response: false });
