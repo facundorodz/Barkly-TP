@@ -52,7 +52,7 @@
   <div class="contenedor-general">
    
     <div class="header">
-        <div class="foto-cuidador col-md-4 d-flex izquierda">
+        <div class="foto-cuidador">
             <div class="foto-perfil">
                 <div class="imagen-placeholder">
                     <img class="imagen" id="profilePic" src="../assets/images/subir_imagen.png" height=100 width=100>
@@ -61,13 +61,13 @@
             </div>
         </div>
 
-        <div class="info-cuidador col-md-4 d-flex derecha">
-            <!-- <div class="nombre-cuidador" id="nombre-cuidador">
+        <div class="info-cuidador">
+            <div class="nombre-cuidador" id="nombre-cuidador">
                 <h1>Nombre cuidador</h1>
             </div>
             <div class="franquicia" id="franquicia-cuidador">
-                <h3>Franquicia</h3>
-            </div>   -->
+                <h3>Franquicia - Experiencia</h3>
+            </div>  
 
         </div>
                  
@@ -77,32 +77,65 @@
         </div>
     </div>
 
-          <div class="contenedor">
-            <div class="mis-paquetes"> 
-                <div class="paquetes-header"> 
-                <h2> Mis paquetes </h2> 
-                </div> 
+    <div class="contenedor row g-3">
 
-              <hr>
+      <div class="paquetes col-md-3">
+        <h2>Paquete 1</h2>
+        <hr>
+        <h3>Descripción:</h3>
+       <ul> 
+          <li> Actividad 1</li>
+          <li> Actividad 2</li>
+          <li> Actividad 3</li>
+          <li> Actividad 4</li>
+        </ul>
+        <hr>
 
-            <div class="paquetes col-md-6">
-                <h2>Nombre del paquete</h2>
-                <hr>
-                <h3>Descripción:</h3>
-                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel elit nec dui tristique bibendum. Nunc semper metus ut est scelerisque, at rhoncus augue pulvinar. Vivamus dapibus nec ex eu congue. Nulla non cursus tortor. Nullam vestibulum facilisis eros, tincidunt lacinia lorem tempus ac. Donec eu enim aliquam, ullamcorper arcu in, egestas ipsum. </p>
+        
+        <p class="col-md-4 d-flex" id="precio-header"> PRECIO: </p>
+        <p class="col-md-4 d-flex" id="precio"> Monto de precio </p>
 
-              <button type="button " class="btn btn-dark anadir col-md-6 flex-column d-flex"> Contratar paquete </button>
-          </div>
-           
-                </div>
-              </div>
-            </div>
-          
-        </div>
+
+        <button type="button " class="btn btn-light anadir"> Contratar paquete </button>
+      </div>
+
+      <div class="paquetes col-md-3">
+        <h2>Paquete 2</h2>
+        <hr>
+        <h3>Descripción:</h3>
+        <ul> 
+          <li> Actividad 1</li>
+          <li> Actividad 2</li>
+          <li> Actividad 3</li>
+          <li> Actividad 4</li>
+        </ul>
+        <hr>
+
+        <p class="col-md-4 d-flex" id="precio-header"> PRECIO: </p>
+        <p class="col-md-4 d-flex" id="precio"> Monto de precio </p>
+
+        <button type="button " class="btn btn-light anadir"> Contratar paquete </button>
+      </div>
+
+      <div class="paquetes col-md-3">
+        <h2>Paquete 3</h2>
+        <hr>
+        <h3>Descripción:</h3>
+        <ul> 
+          <li> Actividad 1</li>
+          <li> Actividad 2</li>
+          <li> Actividad 3</li>
+          <li> Actividad 4</li>
+        </ul>
+        <hr>
+
+        <p class="col-md-4 d-flex" id="precio-header"> PRECIO: </p>
+        <p class="col-md-4 d-flex" id="precio"> Monto de precio </p>
+
+        <button type="button " class="btn btn-light anadir"> Contratar paquete </button>
       </div>
 
     </div>
-        
-
+      
   </body>
 </html>

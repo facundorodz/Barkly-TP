@@ -16,6 +16,7 @@ body {
     background-position: center;
     cursor: url(../assets/images/cursor_default.png), auto;
     max-width: 100%;
+    margin: 0;
    
 }
 
@@ -100,15 +101,9 @@ a, .round {
     justify-content: center;
 }
 
-.informacion_cuidador {
-    display: flex;
-}
-
 .nombre-cuidador {
-    margin-top: 40px;
     color:beige;
     text-shadow: 2px 2px 1px darkred;
-    text-align: right;
     margin-left: 10px;
     flex: 1;
 }
@@ -117,59 +112,40 @@ a, .round {
     color: #ae7c7c
 }
 
-
 .contenedor {
     margin-top: 20px;
     gap: 20px;
     height: auto;
-    margin-left: 150px;
-    margin-right: 150px;
-}
-
-.derecha {
-    display: flex;
-    flex: 1;
-    gap:40px;
-    text-align: right;
-}
-
-.izquierda {
-  display: flex;
-  align-items: left; 
-  gap: 15px;
-}
-
-
-.mis-paquetes {
-    text-align: left;
-    padding: 15px;
-    height: auto;
-    max-height: none;
-    overflow: visible;
-    border-radius: 20px;
-    background-color: #db293b;
-    box-shadow: 2px 2px 1px darkred;
-    justify-content: space-between;
-    align-items: center;
-
-}
-
-.anadir {
-    flex-direction: column;
-    margin-top: auto;
+    text-align: center;
+    margin-left: 220px;
+    margin-left: 220px;
+    margin-bottom: 30px;
 }
 
 .paquetes {
-    flex: 1;
     padding: 15px;
-    height: 300px;
+    height: auto;
     border-radius: 20px;
-    background-color: #fff;
-    box-shadow: 2px 2px 1px darkred;
+    background-color: #1b1b1b;
+    box-shadow: 2px 2px 1px rgb(221, 78, 78);
+    color:#ffffff
+}
+.paquetes h2{
+    color:#DC3545
+}
+
+.paquetes li {
+    text-align: left;
+    font-weight: 300;
+    margin-top: 20px;
+}
+
+#precio-header {
+    font-weight: 800;
+    margin-bottom: 0%;
 }
 
 .anadir {
-    width: 100px;
-    margin-bottom: 20px;
-
+    margin-top: auto;
+    width: auto;
 }
