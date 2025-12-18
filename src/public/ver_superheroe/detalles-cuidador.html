@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">  
+        <title> Barkly Co</title>
+        
+        <link rel="stylesheet" href = "./detalles-cuidador.css">
+        <link rel="icon" href="../assets/images/icono_metadata.png" type="image/png">
+        <script src="./perfil_usuario.js" defer></script>
+        
+    </head>
+
+    <body>
+      <div class="navbar-container" justify-content="center" >
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+          <div class="container-fluid">
+            <a class="navbar-brand d-flex align-items-center" href="">
+            <img src="../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+                        Barkly Co</a>
+            <div class="buscador">
+              <form class="d-flex" role="search" style="width: 550px;">
+                <input class="form-control me-2" type="search" placeholder="Buscar un superhéroe" aria-label="Search"/>
+                <button class="btn btn-outline-danger search-btn" id="buscar-btn" type="submit">Buscar</button>
+              </form>
+            </div>
+                        <div class="collapse navbar-collapse align" id="mas-info">
+                            <ul class="navbar-nav ms-auto">
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="../index.html">Servicios</a> 
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="../index.html">Cuidadores</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="../index.html">Sobre Nosotros</a>
+                                </li>
+                                <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="../index.html">Reseñas</a>
+                                </li>
+                            </ul>
+                                <a role="button" id="login" class="btn btn-danger" href="../public/login/login.html" >Iniciar Sesión </a>
+                                <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                                
+
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+  <div class="contenedor-general">
+
+    <div class="nombre-cuidador" id="nombre-cuidador">
+      <h1 style="text-align: center;">Nombre cuidador</h1>
+    </div>
+    <div class="experiencia" id="experiencia-cuidador">
+         <h3>Franquicia</h3>
+    </div>   
+   
+
+    <div class="header">
+        <div class="foto-perfil">
+            <div class="imagen-placeholder">
+                <img class="imagen" id="profilePic" src="../assets/images/subir_imagen.png" height=100 width=100>
+
+              
+            </div>
+        </div>
+    </div>
+
+          <div class="contenedor">
+            <div class="mis-mascotas"> 
+                <div class="mascotas-header"> 
+                <h2> Mis paquetes </h2> 
+                </div> 
+
+              <hr>
+
+            <div class="mis-paquetes ">
+              <h2>Paquete</h2>
+              <hr>
+              <button type="button " class="btn btn-dark anadir col-md-6 flex-column d-flex"> Contratar paquete </button>
+          </div>
+            
+                  
+                </div>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+
+    </div>
+        
+
+  </body>
+</html>
