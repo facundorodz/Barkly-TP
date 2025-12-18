@@ -88,23 +88,4 @@ router.get("/session_info", (req, res) => {
 });
 
 
-
-
-
-router.delete("/delete_user", async (req, res) => {
-    if (!req.session.userId) {
-        return res.status(401).json({ error: "No autenticado" });
-    }
-    try {
-        await db.query("DELETE FROM usuarios WHERE id = $1",[req.session.userId]);
-        req.session.destroy(() => {
-            res.json({ success: true });
-        });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: "Error al borrar cuenta" });
-    }
-});
-
-
 module.exports = router;

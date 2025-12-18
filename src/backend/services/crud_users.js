@@ -6,13 +6,25 @@ const db = require("../bdd/bdd.js");
 router.delete("/delete_user", async (req, res) => {
     console.log("LLEGO AL DELETE");
     if (!req.session.userId) {
-        return res.status(401).send("No estás logueado");
+        return res.status(401).json({ error: "No estás logueado" });
     }
-    await db.query("DELETE FROM usuarios WHERE id = $1", [req.session.userId]);
-    console.log("Borre a: ", req.session.userId);
-    req.session.destroy();
-    return res.redirect("/login.html"); 
+    try {
+        await db.query("DELETE FROM perros WHERE id_usuario = $1", [req.session.userId]);
+        await db.query("DELETE FROM usuarios WHERE id = $1", [req.session.userId]);
+        console.log("Borré a:", req.session.userId);
+        req.session.destroy(err => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Error al cerrar sesión" });
+        }
+        return res.json({ success: true });
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Error al borrar usuario" });
+    }
 });
+
 
 
 router.put("/edit_user", async (req, res) => {
@@ -24,7 +36,7 @@ router.put("/edit_user", async (req, res) => {
     if (profile_name) {
         const exists = await db.query("SELECT nombre_perfil FROM usuarios WHERE nombre_perfil = $1 AND id <> $2",[profile_name, req.session.userId]);
         if (exists.rows.length > 0) {
-            console.log("DUplicado")
+            console.log("Dplicado")
             return res.status(400).json({ error: "Ya existe un Usuario con ese nombre" });
         }
     }

@@ -243,19 +243,15 @@ async function borrarCuenta() {
     const confirmar = confirm(
         "⚠️ ¿Estás seguro? Esta acción NO se puede deshacer"
     );
-
-    if (!confirmar) return;
-
+    if (!confirmar){
+        return;
+    } 
     try {
-        const resp = await fetch("/users/delete_user", {
-            method: "DELETE"
-        });
-
+        const resp = await fetch("/delete_user", { method: "DELETE" });
         const data = await resp.json();
-
         if (data.success) {
             alert("Cuenta eliminada correctamente");
-            window.location.href = "/index.html";
+            window.location.href = "/index.html"; 
         } else {
             alert(data.error);
         }
@@ -264,3 +260,4 @@ async function borrarCuenta() {
         alert("Error al borrar cuenta");
     }
 }
+
