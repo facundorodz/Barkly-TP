@@ -71,10 +71,6 @@
           <div id="user_place_holder">
             <h2></h2>
           </div>
-          
-          <div class="usuario-header">
-            <p>Miembro</p>
-          </div>
         </div>
       </div>
     </div>
@@ -131,19 +127,12 @@
                       <div class="col-11">
 
                         <label for="nombre" class="form-label">Nombre </label>
-                        <input type="text" class="form-control" id="nombre-mascota" name="nombre-mascota" placeholder="Ej: Milanesa">
+                        <input type="text" class="form-control" id="dog_name" name="dog_name" placeholder="Ej: Milanesa">
                       </div>
-
                       <div class="col-11">
-                        <label for="inputEdad" class="form-label">Edad</label>
-                        <select id="inputEdad" class="form-select">
-                          <option selected>Elegir...</option>
-                          <option>Cachorro (0 - 1 año)</option>
-                          <option>Adulto (1 - 7 años)</option>
-                          <option>Senior (7 - 10 años)</option>
-                        </select>
+                          <label for="inputEdad" class="form-label">Edad (años)</label>
+                          <input type="number" class="form-control" id="inputEdad" min="0" placeholder="Ej: 3">
                       </div>
-
                       <div class="col-11">
                         <label for="raza" class="form-label">Raza</label>
                         <select id="inputraza" name="raza">

@@ -118,26 +118,6 @@ document.addEventListener("mouseup", () => {
 });
 
 
-
-function submitMascota() {
-    const nombreMascota = document.getElementById("nombre-mascota").value;
-    const edad = document.getElementById("inputEdad").value;
-    const raza = document.getElementById("inputraza").value;
-
-    if (!nombreMascota || !edad || !raza) {
-        alert("Complete todos los campos");
-        return;
-    }
-
-    let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-    mascotas.push({ nombre: nombreMascota, edad: edad, raza: raza });
-    localStorage.setItem("mascotas", JSON.stringify(mascotas));
-
-    mostrarMascotas();
-    document.getElementById("formMascota").reset();
-    document.querySelector("[data-close-button]").click(); 
-}
-
 function mostrarMascotas() {
     const contenedor = document.querySelector(".mis-mascotas");
 
@@ -261,3 +241,41 @@ async function borrarCuenta() {
     }
 }
 
+// Función para enviar nueva mascota
+async function submitMascota() {
+    const dog_name = document.getElementById("dog_name").value.trim();
+    const age = document.getElementById("inputEdad").value;
+
+    if (!dog_name) {
+        alert("Debes ingresar el nombre de la mascota");
+        return;
+    }
+    if (age === "") {
+        alert("Debes seleccionar la edad de la mascota");
+        return;
+    }
+    const body = {
+        dog_name: dog_name,
+        age: age
+    };
+
+    try {
+        const resp = await fetch("/add_dog", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+        const data = await resp.json();
+        if (resp.ok && data.success) {
+            alert("Mascota agregada correctamente");
+            closeModal();
+            document.getElementById("formMascota").reset(); 
+
+        } else {
+            alert(data.error || "Error al guardar la mascota");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error al guardar la mascota");
+    }
+}
