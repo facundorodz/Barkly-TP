@@ -1,0 +1,262 @@
+
+* {
+    font-family: 'Oswald', sans-serif;
+   
+}
+
+body {
+    background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 1) 20%,  
+    rgba(0, 0, 0, 0) 100%),
+    url(../assets/images/fondo_usuario.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: url(../assets/images/cursor_default.png), auto;
+    max-width: 100%;
+   
+}
+
+a, .round {
+    cursor: url(../assets/images/click.png), auto;
+}
+
+.navbar {
+  background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+  position: sticky;
+  width: 100%;
+}
+
+.navbar-brand {
+    font-family: 'Oswald', oblique;
+    color:#DC3545;
+    font-size: 30px;
+    font-weight: 500;   
+}
+
+#mas-info .nav-link {
+    font-size: 19px;
+    color:rgb(220, 53, 69);
+    margin-right: 10px;
+}
+
+.buscador{
+    margin-left: 45px;
+    top: 0px;
+}
+
+[role=button] {
+  margin-right: 10px;
+}
+
+.btn:hover {
+    cursor: url(../assets/images/click.png), pointer;
+}
+
+.izquierda {
+  display: flex;
+  align-items: center; 
+  gap: 15px;
+}
+
+.imagen-placeholder img {
+  display: block;
+  border-radius: 50%;
+}
+
+.info-usuario {
+    padding-left: 20px;
+}
+
+.upload {
+    width: 100px;
+    margin: auto;
+}
+
+.upload img {
+    border-radius: 50%;
+    text-align: center;
+    border: 3px solid #ffffff;
+    margin-bottom: 5px;
+   
+}
+
+.upload .round {
+    cursor: url(../assets/images/click.png), pointer;
+    background: #b12b2b;
+    border-radius: 5px;
+    height: 32px;
+    width: 100px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.upload .round input[type='file'] {
+    position: absolute;
+    transform: scale(2);
+    opacity: 0;
+    text-align: right;
+}
+ 
+.contenedor-general {
+    text-align: center;
+    justify-content: center;
+}
+
+.titulo-pagina {
+    margin-top: 40px;
+    color:beige;
+    text-shadow: 2px 2px 1px darkred;
+}
+
+.header {
+    background: linear-gradient(90deg, #DC3545 0%, #e96830  100%);
+     box-shadow: 2px 2px 1px darkred;
+    background-image: 
+        linear-gradient(to left, rgba(0,0,0,0) 0%, #DC3545 100%), 
+        url(../assets/images/newspaper.jpg);
+    background-size: cover;
+    background-position: right center;
+    box-shadow: 2px 2px 1px darkred;
+    border-radius: 10px;
+    padding: 30px;
+    margin-left: 100px;
+    margin-right: 100px;
+    margin-top: 30px;
+    margin-bottom: 40px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    height: 150px; 
+}
+
+.usuario-header {
+    text-align: center;
+    background: #b12b2b;
+    color: #fff;
+    border-radius: 10px ;
+    height: 30px;
+    width: 60px;
+    font-weight: 100px;
+}
+
+.container {
+    display:flex;
+    gap: 20px;
+}
+
+.form-container {
+    flex-direction: column;
+    gap: 20px; 
+    text-shadow: 2px 2px 1px rgb(26, 26, 26);
+    background-color: #1a1a1a; 
+    box-shadow: 2px 2px 1px darkred;
+    background-size: cover;
+    background-position: right center;
+    color:antiquewhite;
+    border-radius: 20px;
+    padding: 40px;
+    width: 500px;
+    height: 550px;
+}
+
+.derecha {
+    display: flex;
+    flex: 1;
+    gap:40px;
+    text-align: left;
+}
+
+.mis-paquetes {
+    text-align: left;
+    padding: 15px;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+    border-radius: 20px;
+    background-color: #db293b;
+    box-shadow: 2px 2px 1px darkred;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.paquetes-header {
+    display: flex;
+}
+
+.paquetes-header .anadir {
+   margin-left: auto;
+}
+
+.mascotas-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 15px;
+}
+
+.card-mascota {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow:  0px 2px 6px #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-mascota:hover {
+    transform: scale(1.02);
+    box-shadow: #000000;
+}
+
+.card-info {
+    line-height: 1.4;
+}
+
+.card-info p {
+    margin: 0;
+    font-size: 14px;
+
+}
+
+.anadir {
+    flex-direction: column;
+    margin-top: auto;
+}
+
+.mis-clientes {
+    flex: 1;
+    padding: 15px;
+    height: 300px;
+    border-radius: 20px;
+    background-color: #fff;
+    box-shadow: 2px 2px 1px darkred;
+}
+
+#guardar-boton {
+    margin-top: 30px;
+}
+
+.modal-content {
+    background-color: #b12b2b;
+}
+
+.modal-content input {
+    background-color: rgb(206, 81, 81);
+    color: white;
+    display: block;
+    font-size: 25px;
+}
+
+.modal-content label {
+    display: block;
+    color: white;
+    font-size: 25px;
+}
+
+.modal-content h2 {
+    color: wheat;
+}

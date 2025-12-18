@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="crear_post.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../assets/images/icono_metadata.png" type="image/png">
+    <title>Crear Post</title>
+</head>
+
+<body>
+    
+    <nav class="navbar" id="navbar-negra">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#" id="texto-navbar">
+        <img src="../assets/images/icono_rojo.png" alt="Logo Barkly" width="30" height="24" class="d-inline-block align-text-top">
+        Barkly CO.
+        </a>
+    </div>
+</nav>
+
+    <div class="d-flex justify-content-center align-items-center vh-100"> <!-- Container principal -->
+        <div class="container" id="formulario" style="width: 60rem;"> <!-- Los inputs (titulo, descripción y experiencia)-->
+                <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label fw-bold titulos">Título del Post</label>
+                    <input type="title" class="form-control cajas-de-texto" id="exampleFormControlInput1" placeholder="ej: ¡Le enseñaré a tu perro a volar!">
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label fw-bold titulos">Descripción</label>
+                    <textarea class="form-control cajas-de-texto" id="exampleFormControlTextarea1" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="exampleFormControlTextarea1" class="form-label fw-bold titulos">Mi experiencia</label>
+                    <textarea class="form-control cajas-de-texto" id="exampleFormControlTextarea1" rows="2" placeholder="He trabajado cuidado perros como hobbie desde los 14 años ya que..."></textarea>
+                </div>
+                
+                <div class="text-center mb-3" id="contenedor-planes">
+
+                    <!-- Template planes-->
+                    <table class="table">
+                        <thead>
+                            <tr><th>Plan Básico</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                            <th scope="row">Descripción</th>
+                            <td><input type="text"></td>
+                            </tr>
+
+                            <tr>
+                            <th scope="row">¿Enseñas algún poder?</th>
+                            <td><input class="form-check-input align-items-center" type="checkbox" value="" id="checkDefault"></td>
+                            </tr>
+
+                            <tr>
+                            <th scope="row">Precio</th>
+                            <td><input class="text-center"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr>
+                    <!-- Template planes-->
+                </div>
+                
+                <button type="button" id="boton-agregar-plan" class="btn btn-danger">Agregar Plan</button>    
+                <button type="button" id="boton-publicar" class="btn btn-danger">Publicar</button>
+        </div>
+    </div>
+
+<!--      <table class="table">
+        <thead id="tabla-planes">
+            <tr>
+            <th scope="col">Planes</th>
+            <th scope="col">Plan Básico</th>
+            <th scope="col">Plan Premium</th>
+            <th scope="col">Plan Deluxe</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <tr>
+            <th scope="row">Descripción</th>
+            <td><input></td>
+            <td><input></td>
+            <td><input></td>
+            </tr>
+
+            <tr>
+            <th scope="row">Enseñarle un poder</th>
+            <td><input class="form-check-input align-items-center" type="checkbox" value="" id="checkDefault"></td>
+            <td><input class="form-check-input align-items-center" type="checkbox" value="" id="checkDefault"></td>
+            <td><input class="form-check-input align-items-center" type="checkbox" value="" id="checkDefault"></td>
+            </tr>
+
+            <tr>
+            <th scope="row">Servicio Nocturno</th>
+            <td><input class="form-check-input align-items-center" type="checkbox" value="" id="checkDefault"></td>
+            <td><input class="form-check-input align-items-center" type="checkbox" value="" id="checkDefault"></td>
+            <td><input class="form-check-input align-items-center" type="checkbox" value="" id="checkDefault"></td>
+            </tr>
+
+            <tr>
+            <th scope="row">Cantidad de perros que cuidas</th>
+            <td><input class="text-center"></td>
+            <td><input class="text-center"></td>
+            <td><input class="text-center"></td>
+            </tr>
+
+            <tr>
+            <th scope="row">Precio</th>
+            <td><input class="text-center"></td>
+            <td><input class="text-center"></td>
+            <td><input class="text-center"></td>
+            </tr>
+
+        </tbody>
+        </table>
+        </div>
+    </div>
+-->
+    <script src="crear_post.js"></script>
+</body>
+</html>

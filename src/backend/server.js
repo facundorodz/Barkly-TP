@@ -3,6 +3,9 @@ const usersRouter = require("./routes/users.js");
 const cuidadoresRouter = require("./routes/cuidadores.routes.js");
 const cors = require("cors");
 const path = require("path");
+const session = require("express-session");
+const crud_users = require("./services/crud_users.js");
+
 
 
 const app = express();
@@ -14,46 +17,49 @@ app.use('/assets', express.static('assets')); // para que el back cargue las ima
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
 app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
+app.use(session({secret: "asdasdasd",resave: false,saveUninitialized: false}));
 
+app.use("/", cuidadoresRouter);
 app.use("/users", usersRouter); // -> ruta para manejar los usuarios
-
+app.use(crud_users);
 
 /*
 GET para mostrar las paginas 
 */ 
-
 app.get("/", (req, res) => {
   res.redirect("/index.html");
 });
 
 app.get("/registrar_cuidador", (req, res) => {
-  res.redirect("/pagina_cuidador/pagina_cuidador.html");
+  res.sendFile(path.join(__dirname, "../public/pagina_registro_cuidador/registro_cuidador.html"));
 });
+
 
 app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
+app.get("/crud_usuario", (req, res) => {
+  res.redirect("/crud_usuarios/crud_usuarios.html");
+});
 
-app.use("/users", usersRouter);
+app.get("/perfil_usuario", (req, res) => {
+  res.redirect("/perfiles/perfil_usuario.html");
+});
 
-//Carga la informacion del superheroe junto con sus paquetes
-app.use("/", cuidadoresRouter);
 
-//Pagina donde se imprime la informacion del superheroe
-app.get("/prueba_crud.html", (req, res) => {
+app.get("/prueba_crud", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
 });
 
 
+
 app.use("/users", usersRouter);
 
-//Carga la informacion del superheroe junto con sus paquetes
-app.use("/", cuidadoresRouter);
 
 //Pagina donde se imprime la informacion del superheroe
-app.get("/prueba_crud.html", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/prueba_crud.html"));
+app.get("/perfil_cuidador", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
 
 
