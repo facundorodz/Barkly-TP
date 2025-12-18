@@ -91,6 +91,7 @@ a, .round {
     text-align: center;
     border: 3px solid #ffffff;
     margin-bottom: 5px;
+    margin-top: 30px;
    
 }
 
@@ -99,15 +100,20 @@ a, .round {
     justify-content: center;
 }
 
+.informacion_cuidador {
+    display: flex;
+}
+
 .nombre-cuidador {
     margin-top: 40px;
     color:beige;
     text-shadow: 2px 2px 1px darkred;
-    text-align: center;
+    text-align: right;
     margin-left: 10px;
+    flex: 1;
 }
 
-.experiencia {
+.franquicia {
     color: #ae7c7c
 }
 
@@ -124,10 +130,17 @@ a, .round {
     display: flex;
     flex: 1;
     gap:40px;
-    text-align: left;
+    text-align: right;
 }
 
-.mis-mascotas {
+.izquierda {
+  display: flex;
+  align-items: left; 
+  gap: 15px;
+}
+
+
+.mis-paquetes {
     text-align: left;
     padding: 15px;
     height: auto;
@@ -141,48 +154,12 @@ a, .round {
 
 }
 
-.mascotas-header .anadir {
-   margin-left: auto;
-}
-
-.mascotas-lista {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    margin-top: 15px;
-}
-
-.card-mascota {
-    background: #ffffff;
-    border-radius: 10px;
-    padding: 15px;
-    box-shadow:  0px 2px 6px #1a1a1a;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-mascota:hover {
-    transform: scale(1.02);
-    box-shadow: #000000;
-}
-
-.card-info {
-    line-height: 1.4;
-}
-
-.card-info p {
-    margin: 0;
-    font-size: 14px;
-
-}
-
 .anadir {
     flex-direction: column;
     margin-top: auto;
 }
 
-.mis-paquetes {
+.paquetes {
     flex: 1;
     padding: 15px;
     height: 300px;
@@ -193,5 +170,6 @@ a, .round {
 
 .anadir {
     width: 100px;
-    justify-content: right;
+    margin-bottom: 20px;
+
 }

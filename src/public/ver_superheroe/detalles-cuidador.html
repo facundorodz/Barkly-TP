@@ -40,8 +40,8 @@
                                 <a class="nav-link active" aria-current="page" href="../index.html">Reseñas</a>
                                 </li>
                             </ul>
-                                <a role="button" id="login" class="btn btn-danger" href="../public/login/login.html" >Iniciar Sesión </a>
-                                <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                                <a role="button" id="login" class="btn btn-danger" href="../login/login.html" >Iniciar Sesión </a>
+                                <button type="button" id="registrarse" class="btn btn-outline-danger" href="../pagina_seleccion_registrar/pagina_seleccion_registro.html">Registrar</button>
                                 
 
                     </div>
@@ -50,19 +50,27 @@
         </div>
 
   <div class="contenedor-general">
-
-    <div class="nombre-cuidador" id="nombre-cuidador">
-      <h1 style="text-align: center;">Nombre cuidador</h1>
-    </div>
-    <div class="experiencia" id="experiencia-cuidador">
-         <h3>Franquicia</h3>
-    </div>   
    
-
     <div class="header">
-        <div class="foto-perfil">
-            <div class="imagen-placeholder">
-                <img class="imagen" id="profilePic" src="../assets/images/subir_imagen.png" height=100 width=100>
+        <div class="foto-cuidador col-md-4 d-flex izquierda">
+            <div class="foto-perfil">
+                <div class="imagen-placeholder">
+                    <img class="imagen" id="profilePic" src="../assets/images/subir_imagen.png" height=100 width=100>
+                
+                </div>
+            </div>
+        </div>
+
+        <div class="info-cuidador col-md-4 d-flex derecha">
+            <!-- <div class="nombre-cuidador" id="nombre-cuidador">
+                <h1>Nombre cuidador</h1>
+            </div>
+            <div class="franquicia" id="franquicia-cuidador">
+                <h3>Franquicia</h3>
+            </div>   -->
+
+        </div>
+                 
 
               
             </div>
@@ -70,20 +78,22 @@
     </div>
 
           <div class="contenedor">
-            <div class="mis-mascotas"> 
-                <div class="mascotas-header"> 
+            <div class="mis-paquetes"> 
+                <div class="paquetes-header"> 
                 <h2> Mis paquetes </h2> 
                 </div> 
 
               <hr>
 
-            <div class="mis-paquetes ">
-              <h2>Paquete</h2>
-              <hr>
+            <div class="paquetes col-md-6">
+                <h2>Nombre del paquete</h2>
+                <hr>
+                <h3>Descripción:</h3>
+                <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel elit nec dui tristique bibendum. Nunc semper metus ut est scelerisque, at rhoncus augue pulvinar. Vivamus dapibus nec ex eu congue. Nulla non cursus tortor. Nullam vestibulum facilisis eros, tincidunt lacinia lorem tempus ac. Donec eu enim aliquam, ullamcorper arcu in, egestas ipsum. </p>
+
               <button type="button " class="btn btn-dark anadir col-md-6 flex-column d-flex"> Contratar paquete </button>
           </div>
-            
-                  
+           
                 </div>
               </div>
             </div>
