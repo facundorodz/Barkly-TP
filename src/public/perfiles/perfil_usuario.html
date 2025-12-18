@@ -9,8 +9,8 @@
         <title> Barkly Co</title>
         
         <link rel="stylesheet" href = "./perfil_usuario_estilos.css">
-        <link rel="icon" href="../../../assets/images/icono_metadata.png" type="image/png">
-        <script src="perfil_usuario.js" defer></script>
+        <link rel="icon" href="../assets/images/icono_metadata.png" type="image/png">
+        <script src="./perfil_usuario.js" defer></script>
         
     </head>
 
@@ -19,7 +19,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="">
-            <img src="../../../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+            <img src="../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
                         Barkly Co</a>
             <div class="buscador">
               <form class="d-flex" role="search" style="width: 550px;">
@@ -58,7 +58,7 @@
       <div class="izquierda">
         <div class="upload">
           <div class="imagen-placeholder">
-            <img class="imagen" id="profilePic" src="../../../assets/images/subir_imagen.png" height=100 width=100>
+            <img class="imagen" id="profilePic" src="../assets/images/subir_imagen.png" height=100 width=100>
             <div class="round">
               <input type="file" name="photo" id="photo" onchange="displayProfilePic()">
               <i class="fa fa-camera" style="color: aliceblue;"></i>
@@ -69,7 +69,11 @@
 
         <div class="info-usuario">
           <div id="usuarioPlaceHolder">
-            <h2 id="userNamePlaceholder"></h2>
+            <h2>Usuario</h2>
+          </div>
+          
+          <div class="usuario-header">
+            <p>Miembro</p>
           </div>
         </div>
       </div>
@@ -77,31 +81,38 @@
 
         <div class="container">
           <div class="form-container">
-            <div action="/perfil_usuario" class="formulario" style="text-align: left;">  
+            <div action="" class="formulario" style="text-align: left;">  
               <div class="titulo-seccion">  
-                <h2> Mis nuevos datos</h2>  
+                <h2> Mis datos</h2>  
               </div>
-                <form action="edit_user" id="formPerfil">
+              <form action="" id="formPerfil">
+              
+                <div class="col-11">
+                  <label for="nombre" class="form-label">Usuario</label>
+                  <input type="text" class="form-control" id="nickname" name="nickname">
+                </div>
 
-                  <div class="col-11">
-                    <label for="nombre" class="form-label">Usuario</label>
-                    <input type="text" class="form-control" id="profile_name" name="nickname">
-                  </div>
+                <div class="col-11">
+                  <label for="nombre" class="form-label">Nombre y Apellido</label>
+                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Peter Parker">
+                </div>
 
-                  <div class="col-11">
-                    <label for="nombre" class="form-label">Nombre completo</label>
-                    <input type="text" class="form-control" id="name" name="nombre">
-                  </div>
-
-                  <div class="col-11">
+                <div class="col-11">
                     <label for="contrasenia" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="pass" name="password">
-                  </div>
-            
-                </form>
-                <button type="button" id="btn_edit_user" class="btn btn-primary" style="margin-top: 20px;"> Actualizar usuario </button>
-                <button type="button" id="btn_delete_user" class="btn btn-primary" style="margin-top: 20px;"> Eliminar mi cuenta </button>
-              </div>
+                    <input type="password" class="form-control" id="contrasena" for="inputPassword3" name="password" >
+                </div>
+
+                <div class="col-md-6">
+                  <label for="inputState" class="form-label">Cantidad de perros</label>
+                  <select id="inputState" class="form-select"  name="cantidad-perros">
+                    <option selected>Elegir...</option>
+                    <option>1</option>
+                    <option>2</option>
+                    <option>+3</option>
+                  </select>
+                </div>
+              </form>
+            </div>
           </div>
 
           <div class="col-md-6 d-flex flex-column gap-2 derecha">
@@ -110,8 +121,6 @@
                 <h2> Mis mascotas</h2> 
 
                 <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Añadir mascota</button>
-                <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Editar mascota</button>
-                <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Eliminar mascota</button>
 
                </div> 
 
@@ -170,6 +179,8 @@
 
                         </select>
                       </div>
+
+                      <button type="button" id="closeModal" class="btn btn-danger guardar-mascota" onclick="submitMascota()"> Guardar </button>
                     </form>
                   </div>
                 </div>
@@ -182,6 +193,10 @@
               <hr>
           </div>
         </div>
+      </div>
+
+      <div class="col-12" style="text-align: center;">
+        <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm()">Guardar</button>
       </div>
     </div>
         

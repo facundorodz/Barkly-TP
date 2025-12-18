@@ -1,15 +1,15 @@
 body {
     font-family: 'Oswald', sans-serif;
-    background-image: url(../../assets/images/newspaper.jpg);
+    background-image: url(assets/images/newspaper.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    cursor: url(../../assets/images/cursor_default.png), auto;
+    cursor: url(assets/images/cursor_default.png), auto;
     max-width: 100%;
 }
 
 a {
-    cursor: url(../assets/images/click.png), auto;
+    cursor: url(assets/images/click.png), auto;
 }
 
 .navbar {
@@ -36,7 +36,7 @@ a {
 }
 
 .btn:hover {
-    cursor: url(../assets/images/click.png), pointer;
+    cursor: url(assets/images/click.png), pointer;
 }
 
 #mas-info #iniciar-sesion {

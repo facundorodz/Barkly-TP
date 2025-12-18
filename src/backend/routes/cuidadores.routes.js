@@ -4,14 +4,14 @@ const controlador = require("../services/controller.cuidadores.js");
 const paquete = require("../services/controller.paquetes.js");
 
 // CRUD CUIDADORES
-router.get("/cuidadores", controlador.obtenerCuidadores);
-router.get("/cuidadores/:id", controlador.obtenerCuidadorPorID);
-router.put("/cuidadores/:id", controlador.editarCuidador);
-router.delete("/cuidadores/:id", controlador.eliminarCuidador);
+router.get("/registro_superheroe", controlador.obtenerCuidadores);
+router.get("/registro_superheroe/:id", controlador.obtenerCuidadorPorID);
+router.put("/registro_superheroe/:id", controlador.editarCuidador);
+router.delete("/registro_superheroe/:id", controlador.eliminarCuidador);
 
 
 // PAQUETES CRUD 
-router.get("/cuidadores/:id/paquetes", paquete.obtenerPaquetesPorCuidador);
+router.get("/registro_superheroe/:id/paquetes", paquete.obtenerPaquetesPorCuidador);
 router.put("/paquetes/:id", paquete.editarPaquete);
 router.delete("/paquetes/:id", paquete.eliminarPaquete);
 

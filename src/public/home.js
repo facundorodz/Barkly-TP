@@ -1,3 +1,5 @@
+const API_URL = "http://localhost:3000/cuidadores";
+
 document.addEventListener("DOMContentLoaded", () => {
     const boton = document.getElementById("ver-mas-boton");
     const contenedor = document.getElementById("mas-cuidadores");
@@ -24,31 +26,36 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-
-document.addEventListener("DOMContentLoaded", async () => {
+async function cargarCatalogo() {
     try {
-        const response = await fetch("/users/session_info");
-        const data = await response.json();
-        const container = document.getElementById("auth-buttons");
+        const res = await fetch(API_URL);
+        const cuidadores = await res.json();
+        const contenedor = document.getElementById("catalogo");
+        contenedor.innerHTML = "";
 
-        if (data.logged) {
-            container.innerHTML = `
-                <a role="button" id="miPerfilBtn" class="btn btn-danger" href="/perfiles/perfil_usuario.html">
-                    Mi perfil
-                </a>
-            `;
-        } else {
-            container.innerHTML = `
-                <a role="button" id="login" class="btn btn-danger" href="/login/login.html">
-                    Iniciar Sesión
-                </a>
-                <a role="button" id="registrarse" class="btn btn-outline-danger" href="/pagina_seleccion_registrar/pagina_seleccion_registro.html">
-                    Registrar
-                </a>
-            `;
-        }
-    } catch (err) {
-        console.log("Error obteniendo sesión:", err);
+        cuidadores.forEach(c => {
+            contenedor.innerHTML += `
+                <div class="col-md-4">
+                    <div class="cuidador_perfil">
+                        <img src="${c.foto_perfil  || 'https://via.placeholder.com/150'}"
+                            class="polaroid" width="400" height="400" alt="Foto de ${c.nombre}">
+                        <h3 class="card-title">${c.nombre}</h3>
+                        ${c.franquicia} <br>
+                        <hr>
+                        <ul style="text-align: left; margin: 0 auto; width: fit-content;">
+                            ${c.poderes.split(',').map(p =>
+                            `<li>${p.trim()}</li>`).join('')}
+                        </ul>
+                        <hr>
+                        <a href="prueba_crud.html?id=${c.id}"
+                            class="btn btn-danger mt-2">
+                                Ver paquetes
+                        </a>
+                    </div>
+                `;
+            });
+    } catch (error) {
+        console.error("Error cargando catálogo:", error);
     }
-});
-
+}
+    cargarCatalogo();
