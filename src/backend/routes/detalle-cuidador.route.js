@@ -1,4 +1,4 @@
-router.get("/cuidadores/:id", async (req, res) => {
+router.get("/heros/:id", async (req, res) => {
   const { id } = req.params;
 
   const result = await db.query(

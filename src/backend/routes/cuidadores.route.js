@@ -7,7 +7,7 @@ const db = require("../bdd/bdd"); // conexión a PostgreSQL
 // ===============================
 // OBTENER TODOS LOS CUIDADORES
 // ===============================
-router.get("/cuidadores", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const result = await db.query(`SELECT id, nombre, franquicia, experiencia, poderes, foto_perfil FROM superheroes ORDER BY id ASC
     `);
@@ -28,7 +28,7 @@ router.get("/cuidadores", async (req, res) => {
 // OBTENER UN CUIDADOR POR ID
 // (para el botón "Ver más")
 // ===============================
-router.get("/cuidadores/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
 
   try {

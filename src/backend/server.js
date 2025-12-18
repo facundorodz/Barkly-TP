@@ -17,7 +17,7 @@ app.use(express.json());
 
 app.use("/users", usersRouter); // -> ruta para manejar los usuarios
 app.use(express.static(path.join(__dirname, "../public")));
-app.use("/cuidadores", cuidadoresRouter); // -> ruta para manejar cuidadores
+app.use("/heros", cuidadoresRouter); // -> ruta para manejar cuidadores
 
 /*
 GET para mostrar las paginas 

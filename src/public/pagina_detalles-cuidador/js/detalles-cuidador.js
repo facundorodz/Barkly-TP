@@ -8,7 +8,7 @@ if (!cuidadorId) {
 }
 
 // Llamar al backend
-fetch(`/cuidadores/${cuidadorId}`)
+fetch(`/heros/${cuidadorId}`)
   .then(res => res.json())
   .then(cuidador => {
     document.getElementById("foto").src = cuidador.foto_perfil;
