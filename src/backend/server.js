@@ -3,6 +3,9 @@ const usersRouter = require("./routes/users.js");
 const cuidadoresRouter = require("./routes/cuidadores.route.js");
 const cors = require("cors");
 const path = require("path");
+const session = require("express-session");
+const crud_users = require("./services/crud_users.js");
+
 
 
 const app = express();
@@ -13,11 +16,13 @@ app.use(cors());
 app.use('/assets', express.static('assets')); // para que el back cargue las imagenes
 app.use(express.urlencoded({ extended: true })); // para poder usar req.body
 app.use(express.json()); 
-//app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
+app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
+app.use(session({secret: "asdasdasd",resave: false,saveUninitialized: false}));
 
 app.use("/users", usersRouter); // -> ruta para manejar los usuarios
 app.use(express.static(path.join(__dirname, "../public")));
 app.use("/heros", cuidadoresRouter); // -> ruta para manejar cuidadores
+app.use(crud_users);
 
 /*
 GET para mostrar las paginas 
@@ -35,9 +40,14 @@ app.get("/login", (req, res) => {
   res.redirect("/login/login.html");
 });
 
-app.get("/usuario-form", (req, res) => {
-  res.redirect("/pagina_registro_usuario/registro_usuario.html");
+app.get("/crud_usuario", (req, res) => {
+  res.redirect("/crud_usuarios/crud_usuarios.html");
 });
+
+app.get("/perfil_usuario", (req, res) => {
+  res.redirect("/perfiles/perfil_usuario.html");
+});
+
 
 
 app.use("/users", usersRouter);

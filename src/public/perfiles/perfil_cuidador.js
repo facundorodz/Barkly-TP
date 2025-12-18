@@ -1,3 +1,71 @@
+function displayProfilePic() {
+    const input = document.getElementById("photo");
+    const file = input.files[0];
+
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const url = e.target.result;
+        document.getElementById("profilePic").src = url;
+
+        localStorage.setItem("profilePic", url);
+    };
+    reader.readAsDataURL(file);
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    const savedImage = localStorage.getItem("profilePic");
+
+    if (savedImage) {
+        document.getElementById("profilePic").src = savedImage;
+    }
+});
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const nickname = localStorage.getItem("nickname");
+    if (nickname) {
+        document.getElementById("usuarioPlaceHolder").innerText = nickname;
+        document.getElementById("nickname").value = nickname;
+    }
+});
+
+
+function submitForm() {
+    const datos = {
+        nickname: document.getElementById("nickname").value,
+        nombre: document.getElementById("nombre").value,
+        password: document.getElementById("contrasena").value,
+        perros: document.getElementById("inputState").value,
+        mascotas: JSON.parse(localStorage.getItem("mascotas")) || []
+    };
+
+    localStorage.setItem("perfilUsuario", JSON.stringify(datos));
+    alert("Datos guardados correctamente");
+
+     const nickname = document.getElementById("nickname").value;
+
+    if(nickname.trim() !== ""){
+        localStorage.setItem("nickname", nickname);
+        document.getElementById("usuarioPlaceHolder").innerText = nickname;
+    }
+
+    alert("Datos guardados");
+}
+
+window.addEventListener("load", () => {
+    const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
+    if (datosGuardados) {
+        document.getElementById("nickname").value = datosGuardados.nickname;
+        document.getElementById("nombre").value = datosGuardados.nombre;
+        document.getElementById("contrasena").value = datosGuardados.password;
+        document.getElementById("inputState").value = datosGuardados.perros;
+        mostrarMascotas();
+    }
+});
+
+
 function checkInputs() {
     const inputNombreCuidador = document.getElementById('nickname').value
     const inputFranquicia = document.getElementById('franquicia').value
@@ -95,7 +163,7 @@ function eliminarPaquete() {
 }
 
 function cancelar() {
-    if (plan_activo == "deluxe") { // Es porque existe tanto el deluxe como el premium.
+    if (plan_activo == "deluxe") { 
         planDeluxe = document.getElementById("plan-deluxe");
         planPremium = document.getElementById("plan-premium");
         planDeluxe.remove()

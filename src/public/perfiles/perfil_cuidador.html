@@ -9,9 +9,9 @@
         
         <title> Barkly Co</title>
         
-        <link rel="stylesheet" href = "perfiles/css/perfil_cuidador_estilos.css">
-        <link rel="icon" href="src/public/assets/images/icono_metadata.png" type="image/png">
-                
+        <link rel="stylesheet" href = "./perfil_cuidador_estilos.css">
+        <link rel="icon" href="../assets/images/icono_metadata.png" type="image/png">
+        <script src="./perfil_cuidador.js" defer></script>        
     </head>
 
     <body>
@@ -19,7 +19,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="">
-            <img src="/assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+            <img src="../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
                         Barkly Co</a>
             <div class="buscador">
               <form class="d-flex" role="search" style="width: 550px;">
@@ -30,16 +30,16 @@
                         <div class="collapse navbar-collapse align" id="mas-info">
                             <ul class="navbar-nav ms-auto">
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#services">Servicios</a> 
+                                <a class="nav-link active" aria-current="page" href="../index.html">Servicios</a> 
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#cuidadores">Cuidadores</a>
+                                <a class="nav-link active" aria-current="page" href="../index.html">Cuidadores</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#sobre-nosotros-seccion">Sobre Nosotros</a>
+                                <a class="nav-link active" aria-current="page" href="../index">Sobre Nosotros</a>
                                 </li>
                                 <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#resenias-previas">Reseñas</a>
+                                <a class="nav-link active" aria-current="page" href="../index.html">Reseñas</a>
                                 </li>
                             </ul>
                                 <a role="button" id="login" class="btn btn-danger" href="pages/login/login.html" >Iniciar Sesión </a>
@@ -59,7 +59,7 @@
       <div class="izquierda">
         <div class="upload">
           <div class="imagen-placeholder">
-            <img class="imagen" id="foto_cuidador" src="" height=100 width=100>
+            <img class="imagen" id="profilePic" src="../assets/images/subir_imagen.png" height=100 width=100>
             <div class="round">
               <input type="file" name="photo" id="photo" onchange="displayProfilePic()">
               <i class="fa fa-camera" style="color: aliceblue;"></i>
@@ -158,7 +158,7 @@
       <div class="col-12" style="text-align: center;">
         <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm()">Guardar</button>
       </div>       
-    <script src="perfiles/js/perfil_cuidador.js" defer></script>
+    <script src=".perfiles/js/perfil_cuidador.js" defer></script>
 
     <!-- ================== SCRIPT ================== -->
   <script>

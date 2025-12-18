@@ -3,7 +3,7 @@
 }
 
 body {
-    background-image: url("../../../assets/images/fondo-pagina_seleccion_registro.jpg");
+    background-image: url("../assets/images/fondo-pagina_seleccion_registro.jpg");
     background-repeat: no-repeat;
     background-position: center;
     backdrop-filter: blur(6px);
