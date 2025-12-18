@@ -27,17 +27,17 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener("DOMContentLoaded", () => {
     const nickname = localStorage.getItem("nickname");
     if (nickname) {
-        document.getElementById("usuarioPlaceHolder").innerText = nickname;
-        document.getElementById("nickname").value = nickname;
+        document.getElementById("user_place_holder").innerText = nickname;
+        document.getElementById("profile_name").value = nickname;
     }
 });
 
 
 function submitForm() {
     const datos = {
-        nickname: document.getElementById("nickname").value,
-        nombre: document.getElementById("nombre").value,
-        password: document.getElementById("contrasena").value,
+        nickname: document.getElementById("profile_name").value,
+        nombre: document.getElementById("name").value,
+        password: document.getElementById("pass").value,
         perros: document.getElementById("inputState").value,
         mascotas: JSON.parse(localStorage.getItem("mascotas")) || []
     };
@@ -59,9 +59,9 @@ function submitForm() {
 window.addEventListener("load", () => {
     const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
     if (datosGuardados) {
-        document.getElementById("nickname").value = datosGuardados.nickname;
-        document.getElementById("nombre").value = datosGuardados.nombre;
-        document.getElementById("contrasena").value = datosGuardados.password;
+        document.getElementById("profile_name").value = datosGuardados.nickname;
+        document.getElementById("name").value = datosGuardados.nombre;
+        document.getElementById("pass").value = datosGuardados.password;
         document.getElementById("inputState").value = datosGuardados.perros;
         mostrarMascotas();
     }
@@ -184,16 +184,14 @@ function closeModal(modal) {
     modal.classList.remove("active")
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-    console.log("perfil_usuario.js cargado");
 
+document.addEventListener("DOMContentLoaded", async () => {
     try {
         const resp = await fetch("/users/session_info");
-
         const data = await resp.json();
 
         if (data.logged && data.profile_name) {
-            const contenedor = document.getElementById("usuario_place_holder");
+            const contenedor = document.getElementById("user_place_holder");
             contenedor.innerHTML = `<h2>${data.profile_name}</h2>`;
         }
     } catch (error) {
@@ -202,3 +200,67 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 
+document.getElementById("btn_edit_user").addEventListener("click", async (e) => {
+    e.preventDefault();
+
+    const body = {};
+    const profile_name = document.getElementById("profile_name").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const pass = document.getElementById("pass").value.trim();
+
+    if (profile_name !== ""){
+        body.profile_name = profile_name;
+    } 
+    if (name !== ""){
+        body.name = name;
+    }
+    if (pass !== ""){
+        body.pass = pass;
+    } 
+    const response = await fetch("/edit_user", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    });
+    const data = await response.json();
+    if (!response.ok) { 
+        alert(data.error);
+        return;
+    }
+    if (data.success) {
+        if (body.profile_name) {
+            document.getElementById("user_place_holder").textContent = body.profile_name;
+        }
+        document.getElementById("profile_name").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("pass").value = "";
+        alert("Perfil actualizado correctamente");
+    }
+});
+
+
+async function borrarCuenta() {
+    const confirmar = confirm(
+        "⚠️ ¿Estás seguro? Esta acción NO se puede deshacer"
+    );
+
+    if (!confirmar) return;
+
+    try {
+        const resp = await fetch("/users/delete_user", {
+            method: "DELETE"
+        });
+
+        const data = await resp.json();
+
+        if (data.success) {
+            alert("Cuenta eliminada correctamente");
+            window.location.href = "/index.html";
+        } else {
+            alert(data.error);
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Error al borrar cuenta");
+    }
+}

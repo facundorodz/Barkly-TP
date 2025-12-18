@@ -21,6 +21,13 @@ router.put("/edit_user", async (req, res) => {
     if (!req.session.userId) {
         return res.status(401).json({ success: false, message: "No estás logueado" });
     }
+    if (profile_name) {
+        const exists = await db.query("SELECT nombre_perfil FROM usuarios WHERE nombre_perfil = $1 AND id <> $2",[profile_name, req.session.userId]);
+        if (exists.rows.length > 0) {
+            console.log("DUplicado")
+            return res.status(400).json({ error: "Ya existe un Usuario con ese nombre" });
+        }
+    }
 
     if (profile_name){
         await db.query("UPDATE usuarios set nombre_perfil = $1 WHERE id = $2 ", [profile_name, req.session.userId]);
@@ -34,7 +41,6 @@ router.put("/edit_user", async (req, res) => {
     console.log("Edite a: ", req.session.userId);
     return res.json({ success: true });
 });
-
 
 
 router.post("/add_dog", async (req, res) => {

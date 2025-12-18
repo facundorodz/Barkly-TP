@@ -68,7 +68,7 @@
         </div>
 
         <div class="info-usuario">
-          <div id="usuario_place_holder">
+          <div id="user_place_holder">
             <h2></h2>
           </div>
           
@@ -85,33 +85,26 @@
               <div class="titulo-seccion">  
                 <h2> Mis datos</h2>  
               </div>
-              <form action="" id="formPerfil">
-              
-                <div class="col-11">
-                  <label for="nombre" class="form-label">Usuario</label>
-                  <input type="text" class="form-control" id="nickname" name="nickname">
-                </div>
+                <form id="formPerfil">
 
-                <div class="col-11">
-                  <label for="nombre" class="form-label">Nombre y Apellido</label>
-                  <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ej: Peter Parker">
-                </div>
+                  <div class="col-11">
+                    <label class="form-label">Usuario</label>
+                    <input type="text" class="form-control" id="profile_name">
+                  </div>
 
-                <div class="col-11">
-                    <label for="contrasenia" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="contrasena" for="inputPassword3" name="password" >
-                </div>
+                  <div class="col-11">
+                    <label class="form-label">Nombre y Apellido</label>
+                    <input type="text" class="form-control" id="name">
+                  </div>
 
-                <div class="col-md-6">
-                  <label for="inputState" class="form-label">Cantidad de perros</label>
-                  <select id="inputState" class="form-select"  name="cantidad-perros">
-                    <option selected>Elegir...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>+3</option>
-                  </select>
-                </div>
-              </form>
+                  <div class="col-11">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="pass">
+                  </div>
+
+               <button type="button" id="btn_edit_user" class="btn btn-outline-danger">Editar perfil</button>
+                  <button type="button" class="btn btn-outline-danger" onclick="borrarCuenta()">Borrar cuenta</button>
+                </form>
             </div>
           </div>
 
@@ -196,7 +189,7 @@
       </div>
 
       <div class="col-12" style="text-align: center;">
-        <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm()">Guardar</button>
+
       </div>
     </div>
         
