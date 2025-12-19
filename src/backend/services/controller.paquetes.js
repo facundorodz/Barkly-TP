@@ -101,8 +101,8 @@ exports.editarPaquete = async (req, res) => {
   }
 };
 
-<<<<<<< HEAD
-=======
+/*<<<<<<< HEAD
+=======*/
 // Eliminar paquete
 exports.eliminarPaquete = async (req, res) => {
   try {
@@ -134,7 +134,7 @@ exports.eliminarPaquete = async (req, res) => {
   }
 };
 
->>>>>>> main
+/*>>>>>>> main*/
 // ===============================
 // SUMAR 1 A paquetes_ofrecidos
 // ===============================
