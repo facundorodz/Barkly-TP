@@ -23,7 +23,6 @@ La navbar está en todas las páginas. Cuenta con, de izquieda a derecha, el log
 ### index.html
 Esta es la página principal de **Barkly Co.**, es la que brinda información a usuarios nuevos sobre nuestros servicios, quienes somos, nuestros cuidadores y algunas reseñas destacadas.
 ![imagen del index.html](src/public/assets/images_readme/index.jpg)
-**// imagen de nuestros cuidadores**
 ![imagen de la sección de "sobre nosotros" del index](src/public/assets/images_readme/index-sobre-nosotros.png)
 ![imagen de la sección de "reseñas" del index](src/public/assets/images_readme/index-resenias.png)
 
@@ -59,14 +58,36 @@ En la página de **perfil-usuario.html**, tenemos el apartado de edición del pe
 ---
 
 # ¿Cómo levantar la página?
-## Backend
+
+## Con Make
+### Backend
 Para levantar el backend escribiremos la siguiente linea.
 ```
 make run-backend
 ```
-## Frontend
+### Frontend
 Para levantar el frontend, nos iremos a nuestro navegador favorito, al siguiente enlace:
 ```
 https://localhost:3000/
 ```
 **Después de haber levantado el backend.**
+
+---
+
+## Con Docker
+### Para levantar todo junto.
+```
+docker-compose up -d --build 
+```
+
+### Para levantar por separado.
+```
+docker-compose up backend 
+docker-compose up frontend
+docker-compose up postgres
+```
+
+### Para detener la página
+```
+docker-compose down
+```
