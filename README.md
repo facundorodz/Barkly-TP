@@ -11,28 +11,22 @@ Como cliente podrás elegir entre todos los superheroes que se postulen. La pág
 
 Como superheroe podes ofrecer (¡y mostrarle al mundo!) tus servicios como cuidador y entrenador de perros.
 
-# Entidades
-## Usuarios
-| ID | Nombre Perfil | Contraseña | Nombre Completo | Cantidad de Perros | Paquetes Comprados |
-|:--:|:-------------:|:----------:|:---------------:|:------------------:|:------------------:|
+#
+---
+## Imágenes de Barkly Co.
+---
+#
 
-## Superheroes
-| ID | Nombre | Franquicia | Experiencia | Poderes | Paquetes Ofrecidos |
-|:--:|:------:|:----------:|:-----------:|:-------:|:------------------:|
-
-## Perros
-| ID | ID Usuario | ID Entrenador | Nombre | Edad | Raza |
-|:--:|:----------:|:-------------:|:------:|:----:|:----:|
-
-# Tablas
-## Reseñas
-| ID | ID Usuario | ID Superheroe | ID Perro | Calificación | Comentario |
-|:--:|:----------:|:-------------:|:--------:|:------------:|:----------:|
-
-## Paquetes
-| ID | ID Superheroe | Nombre Paquete | Descripción | Precio | Cupos Disponibles |
-|:--:|:-------------:|:--------------:|:-----------:|:------:|:-----------------:|
-
-## Razas
-| ID | Nombre | Tamaño | Temperamento | Fortaleza | Velocidad | Color Predominante |
-|:--:|:------:|:------:|:------------:|:---------:|:---------:|:------------------:|
+# ¿Cómo levantar la página?
+# Backend
+Para levantar el backend escribiremos la siguiente linea.
+```
+make run-backend
+```
+# Frontend
+**¡Después de levantar el backend!** \
+Para levantar el frontend, nos iremos a nuestro navegador favorito, al siguiente enlace:
+```
+https://localhost:3000/
+```
+Después de haber levantado el backend.
