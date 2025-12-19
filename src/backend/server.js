@@ -6,22 +6,23 @@ const path = require("path");
 const session = require("express-session");
 const crud_users = require("./services/crud_users.js");
 
-
 const app = express();
 const port = 3000;
 
-
 app.use(cors());
-app.use('/assets', express.static('assets')); // para que el back cargue las imagenes
-app.use(express.static("src/public")); // nos muestra todo lo de la carpeta public desde ese punto en adelante -> sirve para poder cambiar de paginas por ejemplo
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.use(session({secret: "asdasdasd",resave: false,saveUninitialized: false}));
 
-app.use("/users", usersRouter); // -> ruta para manejar los usuarios
 app.use(express.static(path.join(__dirname, "../public")));
-app.use("/heros", cuidadoresRouter); // -> ruta para manejar cuidadores
+
+app.use("/assets",express.static(path.join(__dirname, "../public/assets")));
+
+app.use("/users", usersRouter);
+app.use("/heros", cuidadoresRouter);
 app.use(crud_users);
-app.use(express.json({ limit: "15mb" }));
-app.use(express.urlencoded({ extended: true, limit: "15mb" }));
 
 /*
 GET para mostrar las paginas 
