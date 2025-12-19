@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modal.addEventListener("shown.bs.modal", () => {
     document.getElementById("contenedor-paquetes").innerHTML = "";
-    agregarOtroPaquete();              // crea el primero
-    actualizarEstadoBotonAgregar();    // controla el límite
+    agregarOtroPaquete();              
+    actualizarEstadoBotonAgregar();    
   });
 
 });

@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
-
+const upload = require("../multer/multer.js");
 
 
 router.post("/login_user", async (req, res) => {
@@ -40,7 +40,7 @@ router.post("/login_user", async (req, res) => {
     }
 });
 
-const upload = require("../multer/multer.js");
+
 
 
 router.post("/register_user", upload.single("profile_photo"), async (req, res) => {

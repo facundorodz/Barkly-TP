@@ -19,6 +19,6 @@ module.exports = pool;
 /* como levantar la BD -> 
 
 1- docker compose up -d  -> levanto docker
-2- docker exec -it barkly-postgres psql -U postgres -d barkly para usar la bd y hacer query
+2- docker exec -it barkly-postgres psql -U postgres -d barkly para usar la bd y hacer querys
 
 */

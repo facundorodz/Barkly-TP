@@ -1,28 +1,4 @@
 
-function displayProfilePic() {
-    const input = document.getElementById("photo");
-    const file = input.files[0];
-
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const url = e.target.result;
-        document.getElementById("profilePic").src = url;
-
-        localStorage.setItem("profilePic", url);
-    };
-    reader.readAsDataURL(file);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const savedImage = localStorage.getItem("profilePic");
-
-    if (savedImage) {
-        document.getElementById("profilePic").src = savedImage;
-    }
-});
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const nickname = localStorage.getItem("nickname");
@@ -31,43 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("profile_name").value = nickname;
     }
 });
-
-
-function submitForm() {
-    const datos = {
-        nickname: document.getElementById("profile_name").value,
-        nombre: document.getElementById("name").value,
-        password: document.getElementById("pass").value,
-        perros: document.getElementById("inputState").value,
-        mascotas: JSON.parse(localStorage.getItem("mascotas")) || []
-    };
-
-    localStorage.setItem("perfilUsuario", JSON.stringify(datos));
-    alert("Datos guardados correctamente");
-
-     const nickname = document.getElementById("nickname").value;
-
-    if(nickname.trim() !== ""){
-        localStorage.setItem("nickname", nickname);
-        document.getElementById("usuarioPlaceHolder").innerText = nickname;
-    }
-
-    alert("Datos guardados");
-}
-
-
-window.addEventListener("load", () => {
-    const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
-    if (datosGuardados) {
-        document.getElementById("profile_name").value = datosGuardados.nickname;
-        document.getElementById("name").value = datosGuardados.nombre;
-        document.getElementById("pass").value = datosGuardados.password;
-        document.getElementById("inputState").value = datosGuardados.perros;
-        mostrarMascotas();
-    }
-});
-
-
 
 const openModalButtons = document.querySelectorAll("[data-modal-target]")
 const closeModalButtons = document.querySelectorAll("[data-close-button]")
@@ -99,7 +38,9 @@ let offsetX = 0;
 let offsetY = 0;
 
 header.addEventListener("mousedown", e => {
-    if (e.target.closest("[data-close-button]")) return; // 👈 clave
+    if (e.target.closest("[data-close-button]")){
+        return;
+    } 
     isDragging = true;
     offsetX = e.clientX - modal.getBoundingClientRect().left;
     offsetY = e.clientY - modal.getBoundingClientRect().top;
@@ -117,36 +58,10 @@ document.addEventListener("mouseup", () => {
     isDragging = false;
 });
 
-function eliminarMascota(index) {
-    let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-
-    mascotas.splice(index, 1);          
-    localStorage.setItem("mascotas", JSON.stringify(mascotas));
-
-    mostrarMascotas();                   
-}
-
-
 function closeModal(modal) {
     if (modal == null) return
     modal.classList.remove("active")
 }
-
-
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const resp = await fetch("/users/session_info");
-        const data = await resp.json();
-
-        if (data.logged && data.profile_name) {
-            const contenedor = document.getElementById("user_place_holder");
-            contenedor.innerHTML = `<h2>${data.profile_name}</h2>`;
-        }
-    } catch (error) {
-        console.error("Error obteniendo session_info:", error);
-    }
-});
-
 
 document.getElementById("btn_edit_user").addEventListener("click", async (e) => {
     e.preventDefault();
@@ -209,7 +124,7 @@ async function borrarCuenta() {
     }
 }
 
-async function submitMascota() {
+async function agregar_mascota() {
     const dog_name = document.getElementById("dog_name").value.trim();
     const age = document.getElementById("inputEdad").value;
 
@@ -237,9 +152,9 @@ async function submitMascota() {
             alert("Mascota agregada correctamente");
             closeModal();
             document.getElementById("formMascota").reset(); 
-            mostrarMascotas();
+            mostrar_mascotas();
         } else {
-            alert(data.error || "Error al guardar la mascota");
+            alert("Error al guardar la mascota");
         }
     } catch (error) {
         console.error("Error:", error);
@@ -247,7 +162,7 @@ async function submitMascota() {
     }
 }
 
-async function mostrarMascotas() {
+async function mostrar_mascotas() {
     try {
         const resp = await fetch("/show_dogs");
         const data = await resp.json();
@@ -276,7 +191,7 @@ async function mostrarMascotas() {
                     <td>${dog.dog_age}</td>
                     <td>${dog.raza}</td>
                     <td>
-                        <button class="btn btn-sm btn-danger" onclick="eliminarMascota(${dog.id})">
+                        <button class="btn btn-sm btn-danger" onclick="eliminar_mascota(${dog.id})">
                             🗑️
                         </button>
                     </td>
@@ -288,14 +203,14 @@ async function mostrarMascotas() {
             </table>
         `;
         const header = contenedor.querySelector(".mascotas-header");
-        header.insertAdjacentHTML("afterend", html);
+        header.insertAdjacentHTML("afterend", html); // inserta en alguna posicion (afterend -> seria despues del elemento) alguna cadena de codigo html
 
     } catch (error) {
         console.error("Error al mostrar mascotas:", error);
     }
 }
 
-async function eliminarMascota(dog_id) {
+async function eliminar_mascota(dog_id) {
     const confirmar = confirm("⚠️ ¿Seguro que quieres eliminar esta mascota?");
     if (!confirmar){
         return;
@@ -308,9 +223,9 @@ async function eliminarMascota(dog_id) {
 
         if (data.success) {
             alert("Mascota eliminada correctamente");
-            mostrarMascotas(); 
+            mostrar_mascotas(); 
         } else {
-            alert(data.error || "Error al eliminar mascota");
+            alert("Error al eliminar mascota");
         }
     } catch (error) {
         console.error(error);
@@ -318,52 +233,9 @@ async function eliminarMascota(dog_id) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const resp = await fetch("/show_photo");
-        const data = await resp.json();
-
-        const img = document.getElementById("profile_photo");
-
-        if (data.profile_photo) {
-            img.src = data.profile_photo;
-        } else {
-            img.src = "/assets/images/subir_imagen.png";
-        }
-    } catch (err) {
-        console.error("Error cargando foto de perfil", err);
-    }
-});
-
-document.getElementById("photo").addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-
-    const formData = new FormData();
-    formData.append("profile_photo", file);
-
-    try {
-        const resp = await fetch("/update_profile_photo", {
-            method: "POST",
-            body: formData
-        });
-
-        const data = await resp.json();
-
-        if (data.success) {
-            document.getElementById("profile_photo").src =
-                data.profile_photo + "?t=" + Date.now();
-        } else {
-            alert("Error al guardar la imagen");
-        }
-    } catch (err) {
-        console.error("Error al subir la foto", err);
-    }
-});
 
 
 
-
-
-document.addEventListener("DOMContentLoaded", mostrarMascotas);
+document.addEventListener("DOMContentLoaded", mostrar_mascotas);
 
 
