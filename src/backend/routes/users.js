@@ -21,18 +21,18 @@ router.post("/login_user", async (req, res) => {
                 console.error("Error en login:", error);
                 return res.status(500).json({ error: "Error interno en el servidor" });
         }
+
     } else if (login_type === "hero"){
         try {
-            const response_hero = await db.query("SELECT * FROM superheroes WHERE nombre_perfil = $1 RETURNING id, nombre_perfil",[profile_name]
+            const response_hero = await db.query("SELECT * FROM superheroes WHERE nombre = $1 ",[profile_name]
         );
             if (response_hero.rows.length === 0) {
                 return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
             }
-            const cuidador = result.rows[0];
-
+            const cuidador = response_hero.rows[0];
             req.session.userId = response_hero.rows[0].id; 
             req.session.username = response_hero.rows[0].nombre_perfil;
-            return res.json({success: true, cuidadorId: cuidador.id, nombre: cuidador.nombre});
+            return res.json({success: true, type: "hero", cuidador: {id: cuidador.id,nombre: cuidador.nombre}});
         }   catch (error) {
                 console.error("Error en login:", error);
                 return res.status(500).json({ error: "Error interno en el servidor" });

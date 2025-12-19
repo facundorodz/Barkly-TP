@@ -19,11 +19,9 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
             method: "POST",
             body: formData
         });
-
         const data = await resp.json();
-
         if (data.success) {
-            window.location.href = "/index.html";
+            window.location.href = "/ver_superheroe/detalles-cuidador.html";
         } else {
             alert(data.error);
         }

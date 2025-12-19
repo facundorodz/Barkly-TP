@@ -32,7 +32,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
             } 
             else if (data.type === "hero") {
                 localStorage.setItem("hero", JSON.stringify(data.cuidador));
-                window.location.href = "/index_hero.html";
+                window.location.href = "/ver_superheroe/detalles-cuidador.html";
             }
 
         } else {

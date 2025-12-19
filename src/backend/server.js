@@ -9,6 +9,7 @@ const crud_users = require("./services/crud_users.js");
 const app = express();
 const port = 3000;
 
+
 app.use(cors());
 
 app.use(express.json());
@@ -61,6 +62,7 @@ app.use("/users", usersRouter);
 app.get("/perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
+
 
 
 app.listen(port, () => {
