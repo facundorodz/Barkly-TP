@@ -296,6 +296,11 @@ async function guardarPaquete() {
     cargarPaquetes();
   }
 
+  const btnGuardarEditado = document.getElementById("guardar-boton");
+  btnGuardarEditado.addEventListener("click", (e) => {
+    e.preventDefault();
+    guardarPaqueteFormulario();
+  });
 
   async function guardarPaqueteFormulario() {
 
@@ -304,7 +309,6 @@ async function guardarPaquete() {
     const descripcionInput = document.getElementById("descripcion_paquete");
     const precioInput = document.getElementById("precio_paquete");
 
-    // 🔒 Validación DOM
     if (!paqueteIdInput || !nombreInput || !descripcionInput || !precioInput) {
       alert("Error interno: inputs no encontrados");
       return;
@@ -315,7 +319,6 @@ async function guardarPaquete() {
     const descripcion = descripcionInput.value.trim();
     const precio = Number(precioInput.value);
 
-    // 🔒 Validaciones de datos
     if (!paqueteId) {
       alert("No hay paquete seleccionado para editar");
       return;
@@ -332,7 +335,7 @@ async function guardarPaquete() {
     }
 
     try {
-      const res = await fetch(`paquetes/${paqueteId}`, {
+      const res = await fetch(`http://localhost:3000/paquetes/${paqueteId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -344,7 +347,7 @@ async function guardarPaquete() {
 
       if (!res.ok) throw new Error("Error al editar paquete");
 
-      // 🔄 Limpieza y recarga
+      // limpiar formulario
       paqueteIdInput.value = "";
       nombreInput.value = "";
       descripcionInput.value = "";
