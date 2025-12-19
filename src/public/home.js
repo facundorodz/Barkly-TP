@@ -34,8 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (error) {
             console.error("Error cargando catálogo:", error);
         }
-    })
-    .catch(err => console.error("Error cargando cuidadores:", err));
+    }).catch(err => console.error("Error cargando cuidadores:", err));
 
 
 
@@ -68,54 +67,8 @@ function verDetalle(id) {
     return;
   }
 
-  window.location.href = `/pagina_detalles-cuidador/prueba_detalle-cuidador.html?id=${id}`;
+  window.location.href = `/pagina_detalles-cuidador/detalles-cuidador.html?id=${id}`;
 }
-
-
-/*async function cargarCatalogo() {
-    try {
-        const res = await fetch(API_URL);
-        const cuidadores = await res.json();
-        const contenedor = document.getElementById("catalogo");
-        contenedor.innerHTML = "";
-
-        cuidadores.forEach(c => {
-            contenedor.innerHTML += `
-                <div class="col-md-4">
-                    <div class="cuidador_perfil">
-                        <img src="${c.foto_perfil  || 'https://via.placeholder.com/150'}"
-                            class="polaroid" width="400" height="400" alt="Foto de ${c.nombre}">
-                        <h3 class="card-title">${c.nombre}</h3>
-                        ${c.franquicia} <br>
-                        <hr>
-                        <ul style="text-align: left; margin: 0 auto; width: fit-content;">
-                            ${c.poderes.split(',').map(p =>
-                            `<li>${p.trim()}</li>`).join('')}
-                        </ul>
-                        <hr>
-                        <a onclick="verDetalle(${cuidadores.id})"
-                            class="btn btn-danger mt-2">
-                                Ver cuidador
-                        </a>
-                    </div>
-                `;
-            });
-    } catch (error) {
-        console.error("Error cargando catálogo:", error);
-    }
-}
-    cargarCatalogo();
-
-function verDetalle(idCuidador) {
-
-    if (!id) {
-        console.error("ID de cuidador inválido:", id);
-        return;
-    }
-    window.location.href = `/pagina_detalles-cuidador/prueba_detalle-cuidador.html?id=${idCuidador}`;
-}*/
-
-
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
