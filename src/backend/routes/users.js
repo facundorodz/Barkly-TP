@@ -40,17 +40,21 @@ router.post("/login_user", async (req, res) => {
     }
 });
 
+const upload = require("../multer/multer.js");
 
-router.post("/register_user",async (req, res) => {
+
+router.post("/register_user", upload.single("profile_photo"), async (req, res) => {
     console.log("registro de usuario", req.body);       
 
-    const { profile_name, pass, name  } = req.body; 
+    const { profile_name, pass, name } = req.body; 
+    const profile_photo = req.file?.filename;
+
       try {
         const exists = await db.query("SELECT nombre_perfil FROM usuarios WHERE nombre_perfil = $1",[req.body.profile_name]);
         if (exists.rows.length > 0) { // acceder con rows.length porque devuelve un objeto la consutl
             return res.status(400).json({ error: "Ya existe un usuario con ese nombre de perfil" });
         } 
-        const result = await db.query("INSERT INTO usuarios (nombre_perfil, contraseña, nombre_completo) VALUES ($1, $2, $3) RETURNING id, nombre_perfil ",[profile_name, pass, name]);
+        const result = await db.query("INSERT INTO usuarios (nombre_perfil, contraseña, nombre_completo, foto_perfil) VALUES ($1, $2, $3, $4) RETURNING id, nombre_perfil ",[profile_name, pass, name,profile_photo]);
         req.session.userId = result.rows[0].id; 
         req.session.username = result.rows[0].nombre_perfil;
         return res.json({ success: true }); 
@@ -59,6 +63,7 @@ router.post("/register_user",async (req, res) => {
         return res.status(500).send("Error al registrar usuario"); 
     }
 });  
+
 
 router.post("/register_hero",async (req, res) => {
     console.log("registro de superheroe", req.body);
