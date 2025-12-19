@@ -78,16 +78,6 @@ router.post("/register_hero",async (req, res) => {
     }
 });
 
-router.get("/session_info", (req, res) => {
-    if (req.session.userId) {
-        return res.json({
-            logged: true,
-            profile_name: req.session.username
-        });
-    }
-
-    return res.json({ logged: false });
-});
 
 
 module.exports = router;
