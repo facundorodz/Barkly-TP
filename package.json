@@ -1,12 +1,11 @@
 {
   "name": "barkly-tp",
   "version": "1.0.0",
-  "type":"module",
-  "description": "## Descripción Una página que permite contratar superheroes que se postulan como cuidadores/entrenadores de perros, donde el usuario puede acceder al catalogo completo, con el fin de encontrar el cuidador ideal para su perro. Al momento de la elección, el usuario cuenta con un servicio de reseñas para evaluar el desempeño del superheroe calificado por anteriores clientes. Los superheroes tienen distintas caracteristicas y experiencia, que determinan la relación con el perro del cliente. Los clientes pueden contratar tantos cuidadores como cantidad de perros. Los superheroes venden distintos paquetes, los cuales son determinados por sus cualidades y la cantidad de actividades que pueda ofrecer, deben ofrecer minimo 1 y como maximo 3.",
+  "description": "",
   "main": "src/backend/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/backend/server.js",
+    "start": "nodemon src/backend/server.js",
     "dev": "nodemon src/backend/server.js"
   },
   "repository": {
@@ -21,14 +20,12 @@
   },
   "homepage": "https://github.com/facundorodz/Barkly-TP#readme",
   "dependencies": {
-    "express": "^5.1.0"
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "pg": "^8.16.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
   }
-  
 }
-
-
-
-

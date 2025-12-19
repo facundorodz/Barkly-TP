@@ -14,8 +14,11 @@ Como superheroe podes ofrecer (¡y mostrarle al mundo!) tus servicios como cuida
 #
 ---
 ## Imágenes de Barkly Co.
----
+![image](src/public/assets/images_readme/index.jpg)
+![alt text](src/public/assets/images_readme/login.jpg)
+![alt text](src/public/assets/images_readme/registro-cuidador.jpg)
 #
+---
 
 # ¿Cómo levantar la página?
 # Backend

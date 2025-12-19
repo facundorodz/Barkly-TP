@@ -1,0 +1,46 @@
+* {
+    font-family: 'Oswald', sans-serif;
+}
+
+body {
+    background-image: url("../assets/images/fondo-pagina_seleccion_registro.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    backdrop-filter: blur(6px);
+}
+
+.card-option {
+    transition: transform 0.2s ease;
+    cursor: pointer;
+    background-color: #DC3545;
+}
+
+.card-option:hover {
+    transform: scale(1.05);
+}
+
+.icon-circle {
+    width: 80px;
+    height: 80px;
+    background: #eaf1ff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 40px;
+}
+
+h2, h4 {
+    font-weight: bold;
+    color: wheat;
+    text-shadow: 2px 2px 1px darkred;
+}
+
+.imagen-icono {
+    width: 50px;
+}
+
+.descripcion-boton {
+    color: lightgoldenrodyellow;
+}

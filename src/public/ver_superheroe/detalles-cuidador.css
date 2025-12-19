@@ -1,0 +1,258 @@
+
+* {
+    font-family: 'Oswald', sans-serif;
+   
+}
+
+body {
+    background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(0, 0, 0, 0) 100%),
+    url(../assets/images/fondo_ver_superheroe.png);
+    background-repeat: no-repeat;
+    background-size: cover;
+    backdrop-filter: blur(5px);
+    background-position: center;
+    cursor: url(../assets/images/cursor_default.png), auto;
+    max-width: 100%;
+   
+}
+
+a, .round {
+    cursor: url(../assets/images/click.png), auto;
+}
+
+.navbar {
+  background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+  position: sticky;
+  width: 100%;
+}
+
+.navbar-brand {
+    font-family: 'Oswald', oblique;
+    color:#DC3545;
+    font-size: 30px;
+    font-weight: 500;
+    
+}
+
+#mas-info #iniciar-sesion {
+    margin-right: 10px;
+}
+
+#mas-info .nav-link {
+    font-size: 19px;
+    color:rgb(220, 53, 69);
+    margin-right: 10px;
+}
+
+.buscador{
+    margin-left: 45px;
+    top: 0px;
+}
+
+[role=button] {
+  margin-right: 10px;
+}
+
+.btn:hover {
+    cursor: url(../assets/images/click.png), pointer;
+}
+
+.izquierda {
+  display: flex;
+  align-items: center; 
+  gap: 15px;
+}
+
+.imagen-placeholder img {
+  display: block;
+  border-radius: 50%;
+}
+
+#usuario-foto {
+    margin-left: 375px;
+    margin-right: 300px;
+    width: 750px;
+}
+
+.info-usuario {
+    padding-left: 20px;
+}
+
+.foto-perfil {
+    width: 100px;
+    margin: auto;
+}
+
+#profilePic {
+    border-radius: 50%;
+    text-align: center;
+    border: 3px solid #ffffff;
+    margin-bottom: 5px;
+    margin-top: 30px;
+   
+}
+
+.contenedor-general {
+    text-align: center;
+    justify-content: center;
+}
+
+.nombre-cuidador {
+    color:beige;
+    text-shadow: 2px 2px 1px darkred;
+    flex: 1;
+}
+
+.franquicia {
+    color: #ae7c7c;
+    text-align: center;
+}
+
+.box {
+    display: flex;
+}
+
+.contenedor {
+    margin-top: 20px;
+    height: auto;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.paquetes {
+    padding: 15px;
+    height: auto;
+    border-radius: 20px;
+    background: linear-gradient(180deg,#1b1b1b 0%, #000000 100%);
+    box-shadow: 2px 2px 1px rgb(221, 78, 78);
+    color:#ffffff;
+}
+
+.paquetes h2{
+    color:#DC3545;
+}
+
+.paquetes li {
+    text-align: left;
+    font-weight: 300;
+    margin-top: 20px;
+}
+
+.poderes {
+    height: 200px;
+    background: linear-gradient(180deg, #3c0b0b 0%,  #0f0f0f 100%) ;
+    color:#ffffff;
+    text-align: left;
+    border-radius: 20px;
+    box-shadow: 2px 2px 1px rgb(221, 78, 78);
+
+}
+.poderes h2 {
+    text-align:center;
+}
+
+.poderes li {
+    font-size: 20px;
+    font-weight: 300;
+}
+
+.poder {
+    background: linear-gradient(180deg,#222222 0%, #000000 100%);
+    border-radius: 20px;
+    height:200px;
+    box-shadow: 2px 2px 1px rgb(221, 78, 78);
+    text-align: center;
+}
+.imagen-resenia {
+    margin-bottom: 1000px;
+}
+
+.clasificacion h2 {
+    margin-top: 20px;
+    color: rgb(209, 50, 60);
+}
+
+#precio-header {
+    font-weight: 800;
+    margin-bottom: 0%;
+}
+
+#precio {
+    text-align: left;
+}
+
+.anadir {
+    margin-top: auto;
+    width: auto;
+}
+
+.resenias-container {
+    height: 400px;
+}
+
+.resenias-container h2{
+    padding-top: 30px;
+    color: bisque;
+    text-shadow: 2px 2px 1px darkred;
+    text-align: center;
+    margin: auto;
+    margin-bottom: 30px;
+}
+
+
+.resenias-cuidador {
+    background: #7e1b1b ;
+    width: 1100px;
+    text-align: center;
+    margin: auto;
+    border-radius: 20px;
+    height: auto;
+    color: #fdfdfd;
+    
+}
+
+.resenia-escrita p{
+    padding-top:30px;
+    text-align: center;
+    font-style: italic;
+    margin-left: 30px;
+    margin-right: 30px;
+    font-weight: 300;
+    font-size: 23px;
+    margin-top:40px;
+    padding-bottom: 0%;
+}
+
+.autor p{
+    font-style: normal;
+    font-weight: 600;
+    padding-bottom: 30px;
+    font-size: 20px;
+    padding-top: 0%;
+}
+.comentario-usuario {
+    margin-bottom: 30px;
+    border-radius: 20px;
+    margin-left: 150px;
+    margin-right: 150px;
+    text-align: center;
+    min-height: 400px;
+
+}
+.comentario-usuario h2{
+    color: rgb(248, 222, 209);
+    text-shadow: 2px 2px 1px darkred;
+    padding-top: 10px;
+
+}
+
+.comentario-usuario textarea{
+    width: 1100px;
+    border-radius: 20px;
+    border-color: #222222;
+    min-height: 200px;
+    margin-bottom: 10px;
+}

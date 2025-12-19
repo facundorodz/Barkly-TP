@@ -1,0 +1,136 @@
+/*Es solamente de prueba, luego se reemplazara con el original*/
+body {
+  font-family: "Oswald", Arial, sans-serif;
+  background-color: #f4f6f8;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+/* ===============================
+   HEADER DEL CUIDADOR
+   =============================== */
+
+#foto {
+  display: block;
+  margin: 0 auto 20px auto;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #dc3545;
+}
+
+#nombre {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+  color: #212529;
+}
+
+.info-basica {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.info-basica span {
+  display: inline-block;
+  margin: 0 10px;
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+/* ===============================
+   SECCIONES
+   =============================== */
+
+.seccion {
+  margin-top: 30px;
+}
+
+.seccion h3 {
+  font-size: 1.4rem;
+  border-left: 5px solid #dc3545;
+  padding-left: 10px;
+  margin-bottom: 15px;
+  color: #212529;
+}
+
+/* ===============================
+   LISTA DE PODERES
+   =============================== */
+
+#lista-poderes {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+}
+
+#lista-poderes li {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 10px 15px;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+}
+
+#lista-poderes li::before {
+  content: "⚡";
+  margin-right: 8px;
+  color: #dc3545;
+}
+
+/* ===============================
+   BOTONES
+   =============================== */
+
+.acciones {
+  margin-top: 40px;
+  text-align: center;
+}
+
+.acciones a {
+  text-decoration: none;
+  padding: 10px 25px;
+  border-radius: 30px;
+  background-color: #dc3545;
+  color: #fff;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.acciones a:hover {
+  background-color: #b02a37;
+}
+
+/* ===============================
+   RESPONSIVE
+   =============================== */
+
+@media (max-width: 600px) {
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  #nombre {
+    font-size: 1.8rem;
+  }
+
+  #foto {
+    width: 140px;
+    height: 140px;
+  }
+}

@@ -1,0 +1,349 @@
+
+body {
+    font-family: 'Oswald', sans-serif;
+    background-image: url(../assets/images/newspaper.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    cursor: url(../assets/images/cursor_default.png), auto;
+    max-width: 100%;
+}
+
+a {
+    cursor: url(../assets/images/click.png), auto;
+}
+
+.navbar {
+  background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
+  position: sticky;
+  width: 100%;
+}
+
+.navbar-brand {
+    font-family: 'Oswald', oblique;
+    color:#DC3545;
+    font-size: 30px;
+    font-weight: 500;
+    
+}
+
+.buscador{
+    margin-left: 45px;
+    top: 0px;
+}
+
+[role=button] {
+  margin-right: 10px;
+}
+
+.btn:hover {
+    cursor: url(../assets/images/click.png), pointer;
+}
+
+#mas-info #iniciar-sesion {
+    margin-right: 10px;
+}
+
+#mas-info .nav-link {
+    font-size: 19px;
+    color:rgb(220, 53, 69);
+    margin-right: 10px;
+}
+
+.eslogan {
+    height:600px;
+    background: linear-gradient(180deg, #040000 0%, #a02424 100%);
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+}
+
+.eslogan1 {
+    font-size: 100px;
+    font-weight: 700;
+    line-height: 0.9;
+}
+ 
+.eslogan2 {
+    font-size: 40px;
+    font-weight: 300;
+    line-height: 0.6;
+}
+
+.servicios {
+    height: 400px;
+    color: #590101;
+    margin-top: 40px;
+
+}
+
+.servicios h1 {
+    -webkit-text-stroke: 1px #f9c8ac;
+    font-weight: 600;
+}
+.domicilio {
+    background-color: #590101; 
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;      
+    width: 80%;               
+    color: #ffffff;           
+}
+
+.domicilio p {
+    margin: 0px;
+}
+
+.paseo {
+    background-color: #590101;
+    padding-top: 5px;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                    
+    color: #ffffff;   
+    height: 200px;
+    width: 400px;        
+}
+
+.entrenamiento {
+    background-color: #590101;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                 
+    color: #ffffff;   
+    height: 200px;
+    width: 400px;       
+}
+
+.entrenamiento p {
+    margin: 0px;
+}
+
+.cuidadores {
+
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: 100%;
+    height: 100%;
+    flex-wrap: wrap;
+   
+    background: linear-gradient(180deg, #a02424 0%, #000000 100%);
+    color:#ffffff;
+    background-color: #040000;
+
+}
+
+.cuidadores h1 {
+    margin-top: 40px;
+}
+.cuidadores h3 {
+    color: #ffffff;
+}
+
+.cuidadores p{
+    color: #ffffff;
+}
+
+ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+li {
+   list-style-position: inside;
+}
+
+.polaroid {
+    box-shadow: #000000;
+    transform: rotate(-5deg);
+}
+
+hr {
+    width: 300px;
+    margin: auto;
+    height: 4px;
+    padding-top: 4px;
+}
+
+
+
+.cuidador_perfil {
+    width: 100%;
+    padding: 20px;
+    box-shadow: 0px 0px 10px #ffc6a0;
+}
+
+.mas-cuidadores{ 
+    width: 100%;
+    flex-basis: 100%;
+    min-width: 100%;
+    min-height: auto;
+
+}
+
+.ver-mas-boton {
+    margin-bottom: 40px;
+    display: inline-block;   
+    width: auto;             
+    padding: 10px 20px;     
+    font-size: 16px;
+    width: 150px;
+    height: 50px;
+    display: inline-block;
+}
+
+#sobre-nosotros-titulo {
+    font-weight: 300px;
+    padding-top: 100px;
+    font-size: 40px;
+
+}
+
+.sobre-barkly{
+
+    background: linear-gradient(180deg, #000000 40%, #808694 100%);
+    color:#ffffff;
+    height: 700px;
+    
+}
+
+.sobre-barkly h1 {
+    padding-top: 100px;
+    color: #ffffff ;
+}
+
+.sobre-nosotros hr {
+    margin-bottom: 40px;
+}
+.sobre-nosotros p {
+    font-size: 21px;
+    font-weight:300;
+    margin-top: 20px;
+    justify-content: left;
+}
+
+.sobre-nosotros h3 {
+    margin-top: 40px;
+}
+
+.img-container {
+    display: flex;
+    justify-content: right;
+    border-radius: 30px;
+}
+
+.hopecore{
+    border-radius: 50%;
+    padding-left: 100px;
+    object-fit: cover;
+    padding-top: 20px;
+    overflow: hidden;
+    display: block;
+    width: 1000px;                
+    height: 400px;
+}
+.resenias-container {
+    padding: 2px;
+    position: relative;
+    overflow: hidden;
+    height: 600px;
+    
+}
+
+.resenias-container h1 {
+    -webkit-text-stroke: 1px #f9c8ac;
+    color: #590101;
+    font-weight: 800px;
+    font-size: 50px;
+    padding-top: 30px;
+}
+
+.primera-resenia {
+    background-color: #7e1b1b; 
+    padding: 20px;          
+    margin: 20px auto;     
+    border-radius: 15px;      
+    width: 80%;               
+    color: #ffffff; 
+    height: 150px; 
+    width: 500;         
+}
+
+.primera-resenia h3 {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.primera-resenia p {
+    font-size: 20px;
+}
+
+
+.segunda-resenia {
+    background-color: #7e1b1b;
+    padding-top: 5px;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                    
+    color: #ffffff; 
+    height: 150px; 
+    width: 600px;   
+       
+}
+
+.segunda-resenia h3 {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.segunda-resenia p {
+    font-size: 20px;
+}
+
+
+.tercera-resenia {
+    background-color: #7e1b1b;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                 
+    color: #ffffff;   
+    height: 150px; 
+    width: 600px;        
+}
+
+.tercera-resenia h3 {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.tercera-resenia p {
+    font-size: 20px;
+}
+
+
+.cuarta-resenia {
+    background-color: #7e1b1b;
+    padding: 20px;           
+    margin: 20px auto;     
+    border-radius: 15px;                 
+    color: #ffffff;   
+    height: 200px;
+    width: 400px;       
+}
+
+.cuarta-resenia h3 {
+    font-style: italic;
+    font-weight: 200;
+}
+
+.cuarta-resenia p {
+    font-size: 20px;
+}
+.card-body{
+    background-color: #2b1010;
+    color:#ffffff;
+    height: 55px;
+}
