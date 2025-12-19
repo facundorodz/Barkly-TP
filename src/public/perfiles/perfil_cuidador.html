@@ -9,10 +9,9 @@
         
         <title> Barkly Co</title>
         
-
         <link rel="stylesheet" href="/perfiles/css/perfil_cuidador_estilos.css">
         <link rel="icon" href="/assets/images/icono_metadata.png" type="image/png">
-
+              
     </head>
 
     <body>
@@ -93,7 +92,7 @@
               
                 <div class="col-11">
                   <label for="nombre" id="usuarioPlaceHolder" class="form-label">Nombre de Cuidador</label>
-                  <input type="text" class="form-control" id="nombre" name="nickname" placeholder="Ej: Hulk">
+                  <input type="text" class="form-control" id="nickname" name="nickname" placeholder="Ej: Hulk">
                 </div>
 
                 <div class="col-11">
@@ -212,7 +211,7 @@
       <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">Agregar Paquetes</h5>
+            <h5 class="modal-title" id="btn-agregar-paquete">Agregar Paquetes</h5>
             <button type="button" class="btn-close borrar" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
           <div class="modal-body" id="cuerpo-modal">
@@ -222,7 +221,7 @@
                 <h5 class="titulo-paquete">Paquete</h5>
 
                 <label class="form-label">Nombre del paquete</label>
-                <select class="form-select nombre-paquete" id="nombre_paquete_modal">
+                <select class="form-select" id="nombre_paquete_modal">
                   <option value="">Seleccionar</option>
                   <option value="Paquete Estándar">Paquete Estándar</option>
                   <option value="Paquete Premium">Paquete Premium</option>
@@ -230,10 +229,10 @@
                 </select>
 
                 <label class="form-label mt-2">Descripción</label>
-                <input type="text" class="form-control descripcion-paquete" id="descripcion_paquete_modal">
+                <input type="text" class="form-control" id="descripcion_paquete_modal">
 
                 <label class="form-label mt-2">Precio</label>
-                <input type="number" min="1" class="form-control precio-paquete" id="precio_paquete_modal">
+                <input type="number" min="1" class="form-control" id="precio_paquete_modal">
               </div>
             </div>
 
