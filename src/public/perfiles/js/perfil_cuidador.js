@@ -57,8 +57,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   modal.addEventListener("shown.bs.modal", () => {
     document.getElementById("contenedor-paquetes").innerHTML = "";
-    agregarOtroPaquete();              // crea el primero
-    actualizarEstadoBotonAgregar();    // controla el límite
+    agregarOtroPaquete();              
+    actualizarEstadoBotonAgregar();    
   });
 
 });
@@ -83,9 +83,9 @@ function agregarOtroPaquete() {
     <label class="form-label">Nombre del paquete</label>
     <select class="form-select nombre-paquete">
       <option value="">Seleccionar</option>
-      <option value="Estándar">Estándar</option>
-      <option value="Premium">Premium</option>
-      <option value="Deluxe">Deluxe</option>
+      <option value="Paquete Estándar">Paquete Estándar</option>
+      <option value="Paquete Premium">Paquete Premium</option>
+      <option value="Paquete Deluxe">Paquete Deluxe</option>
     </select>
 
     <label class="form-label mt-2">Descripción</label>
@@ -189,24 +189,37 @@ const CUIDADOR_ID = 2;
     // ===============================
     // ELIMINAR CUENTA
     // ===============================
-    document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
-      if (!confirm("¿Seguro que querés eliminar este cuidador?")) return;
+document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
+    const confirmar = confirm(
+        "⚠️ ¿Estás seguro? Esta acción NO se puede deshacer"
+    );
+    if (!confirmar){
+        return;
+    } 
+    try {
+        const resp = await fetch("/heros/cuidadores/session", { method: "DELETE" });
+        const data = await resp.json();
+        if (data.success) {
+            alert("Cuenta eliminada correctamente");
+            window.location.href = "/index.html"; 
+        } else {
+            alert(data.error);
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Error al borrar cuenta");
+    }
+});
 
-      await fetch(`${API_URL}/${CUIDADOR_ID}`, {
-        method: "DELETE"
-      });
-
-      alert("Cuenta eliminada");
-    });
 
 const btnGuardar = document.getElementById("btn-guardar-paquete");
 btnGuardar.addEventListener("click", guardarPaquete);
 
 
 
-  // ===============================
-  // CREA NUEVOS PAQUETES
-  // ===============================
+  // ====================================
+  // CREA NUEVOS PAQUETES DESDE EL MODAL
+  // ====================================
 
 async function guardarPaquete() {
 
@@ -225,7 +238,7 @@ async function guardarPaquete() {
     return;
   }
 
-  const nombre_paquete = inputNombre.textContent.trim();
+  const nombre_paquete = inputNombre.value.trim();
   const descripcion = inputDescripcion.value.trim();
   const precio = Number(inputPrecio.value);
 
@@ -312,7 +325,6 @@ async function guardarPaquete() {
         `;
       });
 
-      // 🔥 EL CONTADOR SIEMPRE SE ACTUALIZA DESDE LA BDD
       document.getElementById("contador-paquetes").textContent = paquetes.length;
     } catch (error) {
       console.error("Error cargando paquetes:", error);
@@ -371,7 +383,6 @@ async function guardarPaquete() {
     const descripcionInput = document.getElementById("descripcion_paquete");
     const precioInput = document.getElementById("precio_paquete");
 
-    // 🔒 Validación DOM
     if (!paqueteIdInput || !nombreSelect || !descripcionInput || !precioInput) {
       alert("Error interno: formulario incompleto");
       return;
@@ -382,7 +393,6 @@ async function guardarPaquete() {
     const descripcion = descripcionInput.value.trim();
     const precio = Number(precioInput.value);
 
-    // 🔒 Validaciones de datos
     if (!paqueteId) {
       alert("No hay paquete seleccionado para editar");
       return;
@@ -419,7 +429,6 @@ async function guardarPaquete() {
 
       if (!res.ok) throw new Error("Error al editar paquete");
 
-      // 🔄 Limpieza del formulario
       paqueteIdInput.value = "";
       nombreSelect.value = "";
       descripcionInput.value = "";

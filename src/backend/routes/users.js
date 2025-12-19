@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
-
+const upload = require("../multer/multer.js");
 
 
 router.post("/login_user", async (req, res) => {
@@ -40,7 +40,7 @@ router.post("/login_user", async (req, res) => {
     }
 });
 
-const upload = require("../multer/multer.js");
+
 
 
 router.post("/register_user", upload.single("profile_photo"), async (req, res) => {
@@ -82,6 +82,7 @@ router.post("/register_hero",upload.single("foto_perfil"),async (req, res) => {
         console.error(error);
         return res.status(500).json({ error: "Error al registrarse" });
     }
+    
 });
 
 

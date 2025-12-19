@@ -24,15 +24,14 @@ app.use("/assets",express.static(path.join(__dirname, "../public/assets")));
 
 app.use("/users", usersRouter);
 app.use("/heros", cuidadoresRouter);
+app.use("/", cuidadoresRouter);
 app.use(crud_users);
 
 
-/*
-GET para mostrar las paginas 
-*/ 
 app.get("/", (req, res) => {
   res.redirect("/index.html");
 });
+
 
 
 app.get("/registrar_cuidador", (req, res) => {
@@ -49,21 +48,14 @@ app.get("/crud_usuario", (req, res) => {
 });
 
 
-//Carga la informacion del superheroe junto con sus paquetes
-app.use("/", cuidadoresRouter);
-
 app.get("/perfil_usuario", (req, res) => {
   res.redirect("/perfiles/perfil_usuario.html");
 });
 
-app.use("/users", usersRouter);
 
-//Pagina donde se imprime la informacion del superheroe
 app.get("/perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
-
-
 
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en http://localhost:${port}`);

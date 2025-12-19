@@ -70,6 +70,7 @@ function verDetalle(id) {
   window.location.href = `/pagina_detalles-cuidador/detalles-cuidador.html?id=${id}`;
 }
 
+
 document.addEventListener("DOMContentLoaded", async () => {
     try {
         const resp = await fetch("/users/session_info");
