@@ -83,9 +83,9 @@ function agregarOtroPaquete() {
     <label class="form-label">Nombre del paquete</label>
     <select class="form-select nombre-paquete">
       <option value="">Seleccionar</option>
-      <option value="Estándar">Estándar</option>
-      <option value="Premium">Premium</option>
-      <option value="Deluxe">Deluxe</option>
+      <option value="Paquete Estándar">Paquete Estándar</option>
+      <option value="Paquete Premium">Paquete Premium</option>
+      <option value="Paquete Deluxe">Paquete Deluxe</option>
     </select>
 
     <label class="form-label mt-2">Descripción</label>
@@ -217,9 +217,9 @@ btnGuardar.addEventListener("click", guardarPaquete);
 
 
 
-  // ===============================
-  // CREA NUEVOS PAQUETES
-  // ===============================
+  // ====================================
+  // CREA NUEVOS PAQUETES DESDE EL MODAL
+  // ====================================
 
 async function guardarPaquete() {
 
