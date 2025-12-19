@@ -104,7 +104,7 @@ router.get("/show_dogs", async (req, res) => {
 });
 
 router.delete("/delete_dog/:id", async (req, res) => {
-    const dog_id = req.params.id;  // paso el id por url, entonces recibo con params, no entendi el porque pero llegana undefined a traves de json
+    const dog_id = req.params.id;  // paso el id por url, entonces recibo con params, no entendi bien porque llegan undefined a traves de json
     console.log("Llegue al delete, id del perro", dog_id);
     if (!req.session.userId) {
         return res.status(401).json({ error: "No estás logueado" });
@@ -117,36 +117,6 @@ router.delete("/delete_dog/:id", async (req, res) => {
         return res.status(500).json({ error: "Error al borrar perro" });
     }
 });
-
-
-router.post("/update_profile_photo", upload.single("profile_photo"), async (req, res) => {
-        try {
-            if (!req.session.userId) {
-                return res.status(401).json({ error: "No estas loguado" });
-            }
-            const photo = `/assets/images/${req.file.filename}`;
-            await db.query("UPDATE usuarios SET foto_perfil = $1 WHERE id = $2",[photo, req.session.userId]);
-            res.json({ success: true, profile_photo: photo });
-        } catch (err) {
-            console.error(err);
-            res.status(500).json({ error: "Error al actualizar foto" });
-        }
-    }
-);
-
-router.get("/show_photo", async (req, res) => {
-    try {
-        if (!req.session.userId) {
-            return res.status(401).json({ error: "No logueado" });
-        }
-        const result = await db.query("SELECT foto_perfil FROM usuarios WHERE id = $1",[req.session.userId]);
-        res.json(result.rows[0]);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: "Error obteniendo usuario" });
-    }
-});
-
 
 router.get("/user_info", (req, res) => {
     if (!req.session.userId) {

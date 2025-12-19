@@ -124,7 +124,7 @@ async function borrarCuenta() {
     }
 }
 
-async function submitMascota() {
+async function agregar_mascota() {
     const dog_name = document.getElementById("dog_name").value.trim();
     const age = document.getElementById("inputEdad").value;
 
@@ -152,9 +152,9 @@ async function submitMascota() {
             alert("Mascota agregada correctamente");
             closeModal();
             document.getElementById("formMascota").reset(); 
-            mostrarMascotas();
+            mostrar_mascotas();
         } else {
-            alert(data.error || "Error al guardar la mascota");
+            alert("Error al guardar la mascota");
         }
     } catch (error) {
         console.error("Error:", error);
@@ -162,7 +162,7 @@ async function submitMascota() {
     }
 }
 
-async function mostrarMascotas() {
+async function mostrar_mascotas() {
     try {
         const resp = await fetch("/show_dogs");
         const data = await resp.json();
@@ -191,7 +191,7 @@ async function mostrarMascotas() {
                     <td>${dog.dog_age}</td>
                     <td>${dog.raza}</td>
                     <td>
-                        <button class="btn btn-sm btn-danger" onclick="eliminarMascota(${dog.id})">
+                        <button class="btn btn-sm btn-danger" onclick="eliminar_mascota(${dog.id})">
                             🗑️
                         </button>
                     </td>
@@ -203,14 +203,14 @@ async function mostrarMascotas() {
             </table>
         `;
         const header = contenedor.querySelector(".mascotas-header");
-        header.insertAdjacentHTML("afterend", html);
+        header.insertAdjacentHTML("afterend", html); // inserta en alguna posicion (afterend -> seria despues del elemento) alguna cadena de codigo html
 
     } catch (error) {
         console.error("Error al mostrar mascotas:", error);
     }
 }
 
-async function eliminarMascota(dog_id) {
+async function eliminar_mascota(dog_id) {
     const confirmar = confirm("⚠️ ¿Seguro que quieres eliminar esta mascota?");
     if (!confirmar){
         return;
@@ -223,9 +223,9 @@ async function eliminarMascota(dog_id) {
 
         if (data.success) {
             alert("Mascota eliminada correctamente");
-            mostrarMascotas(); 
+            mostrar_mascotas(); 
         } else {
-            alert(data.error || "Error al eliminar mascota");
+            alert("Error al eliminar mascota");
         }
     } catch (error) {
         console.error(error);
@@ -233,52 +233,9 @@ async function eliminarMascota(dog_id) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const resp = await fetch("/show_photo");
-        const data = await resp.json();
-
-        const img = document.getElementById("profile_photo");
-
-        if (data.profile_photo) {
-            img.src = data.profile_photo;
-        } else {
-            img.src = "/assets/images/subir_imagen.png";
-        }
-    } catch (err) {
-        console.error("Error cargando foto de perfil", err);
-    }
-});
-
-document.getElementById("photo").addEventListener("change", async (e) => {
-    const file = e.target.files[0];
-
-    const formData = new FormData();
-    formData.append("profile_photo", file);
-
-    try {
-        const resp = await fetch("/update_profile_photo", {
-            method: "POST",
-            body: formData
-        });
-
-        const data = await resp.json();
-
-        if (data.success) {
-            document.getElementById("profile_photo").src =
-                data.profile_photo + "?t=" + Date.now();
-        } else {
-            alert("Error al guardar la imagen");
-        }
-    } catch (err) {
-        console.error("Error al subir la foto", err);
-    }
-});
 
 
 
-
-
-document.addEventListener("DOMContentLoaded", mostrarMascotas);
+document.addEventListener("DOMContentLoaded", mostrar_mascotas);
 
 
