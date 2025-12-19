@@ -52,17 +52,66 @@ document.addEventListener("DOMContentLoaded", () => {
   btnCancelar.addEventListener("click", cancelar);
 });
 
+document.addEventListener("DOMContentLoaded", () => {
 
-/*function eliminarPaquete() {
-    if (plan_activo == "deluxe") {
-        planSeleccionado = document.getElementById("plan-deluxe");
-        plan_activo = "premium"
-    } else if (plan_activo == "premium") {
-        planSeleccionado = document.getElementById("plan-premium");
-        plan_activo = "basico"
-    } else if (plan_activo == "basico") { alert("No puede eliminar el plan básico") }
-    planSeleccionado.remove()
-}*/
+  const modal = document.getElementById("modalPaquetes");
+
+  modal.addEventListener("shown.bs.modal", () => {
+    document.getElementById("contenedor-paquetes").innerHTML = "";
+    agregarOtroPaquete();              // crea el primero
+    actualizarEstadoBotonAgregar();    // controla el límite
+  });
+
+});
+
+const LIMITE_PAQUETES = 3;
+
+function agregarOtroPaquete() {
+  const contenedor = document.getElementById("contenedor-paquetes");
+  const paquetesActuales = contenedor.querySelectorAll(".paquete-item");
+
+  if (paquetesActuales.length >= LIMITE_PAQUETES) {
+    alert("Solo podés crear hasta 3 paquetes como máximo");
+    return;
+  }
+
+  const div = document.createElement("div");
+  div.classList.add("paquete-item", "border", "rounded", "p-3", "mb-3");
+
+  div.innerHTML = `
+    <h5 class="titulo-paquete">Paquete</h5>
+
+    <label class="form-label">Nombre del paquete</label>
+    <select class="form-select nombre-paquete">
+      <option value="">Seleccionar</option>
+      <option value="Estándar">Estándar</option>
+      <option value="Premium">Premium</option>
+      <option value="Deluxe">Deluxe</option>
+    </select>
+
+    <label class="form-label mt-2">Descripción</label>
+    <input type="text" class="form-control descripcion-paquete">
+
+    <label class="form-label mt-2">Precio</label>
+    <input type="number" min="1" class="form-control precio-paquete">
+  `;
+
+  contenedor.appendChild(div);
+  actualizarEstadoBotonAgregar();
+
+}
+
+function actualizarEstadoBotonAgregar() {
+  const contenedor = document.getElementById("contenedor-paquetes");
+  const btnAgregar = document.getElementById("btn-agregar-paquete");
+
+  const cantidad = contenedor.querySelectorAll(".paquete-item").length;
+
+  btnAgregar.disabled = cantidad >= LIMITE_PAQUETES;
+}
+
+
+
 
 function cancelar() {
     const inputDescripcion = document.getElementById("descripcion_paquete_modal");
@@ -71,6 +120,9 @@ function cancelar() {
     // Limpiar campos si existen
     if (inputDescripcion) inputDescripcion.value = "";
     if (inputPrecio) inputPrecio.value = "";
+
+    agregarOtroPaquete();
+    actualizarEstadoBotonAgregar();
 
     // Cerrar modal
     const modalEl = document.getElementById("modalPaquetes");
@@ -162,6 +214,12 @@ async function guardarPaquete() {
   const inputNombre = document.getElementById("nombre_paquete_modal");
   const inputDescripcion = document.getElementById("descripcion_paquete_modal");
   const inputPrecio = document.getElementById("precio_paquete_modal");
+  const paquetes = document.querySelectorAll(".paquete-item");
+
+  if (paquetes.length > LIMITE_PAQUETES) {
+    alert("No podés guardar más de 3 paquetes");
+    return;
+  }
 
   if (!inputDescripcion || !inputPrecio) {
     alert("Error interno: inputs no encontrados");
@@ -302,29 +360,41 @@ async function guardarPaquete() {
     guardarPaqueteFormulario();
   });
 
+
+  // ===================================
+  // GUARDA LOS CAMBIOS DE LOS PAQUETES
+  // ===================================
+
   async function guardarPaqueteFormulario() {
 
     const paqueteIdInput = document.getElementById("paquete_id");
-    const nombreInput = document.getElementById("nombre_paquete");
+    const nombreSelect = document.getElementById("nombre_paquete");
     const descripcionInput = document.getElementById("descripcion_paquete");
     const precioInput = document.getElementById("precio_paquete");
 
-    if (!paqueteIdInput || !nombreInput || !descripcionInput || !precioInput) {
-      alert("Error interno: inputs no encontrados");
+    // 🔒 Validación DOM
+    if (!paqueteIdInput || !nombreSelect || !descripcionInput || !precioInput) {
+      alert("Error interno: formulario incompleto");
       return;
     }
 
     const paqueteId = paqueteIdInput.value;
-    const nombre_paquete = nombreInput.value.trim();
+    const nombre_paquete = nombreSelect.value;
     const descripcion = descripcionInput.value.trim();
     const precio = Number(precioInput.value);
 
+    // 🔒 Validaciones de datos
     if (!paqueteId) {
       alert("No hay paquete seleccionado para editar");
       return;
     }
 
-    if (!nombre_paquete || !descripcion || !precio) {
+    if (!nombre_paquete) {
+      alert("Seleccioná un tipo de paquete");
+      return;
+    }
+
+    if (!descripcion || !precio) {
       alert("Completá todos los campos");
       return;
     }
@@ -335,21 +405,24 @@ async function guardarPaquete() {
     }
 
     try {
-      const res = await fetch(`http://localhost:3000/paquetes/${paqueteId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre_paquete,
-          descripcion,
-          precio
-        })
-      });
+      const res = await fetch(
+        `http://localhost:3000/paquetes/${paqueteId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nombre_paquete,
+            descripcion,
+            precio
+          })
+        }
+      );
 
       if (!res.ok) throw new Error("Error al editar paquete");
 
-      // limpiar formulario
+      // 🔄 Limpieza del formulario
       paqueteIdInput.value = "";
-      nombreInput.value = "";
+      nombreSelect.value = "";
       descripcionInput.value = "";
       precioInput.value = "";
 
@@ -363,6 +436,7 @@ async function guardarPaquete() {
       alert("No se pudo editar el paquete");
     }
 }
+
 
 
 

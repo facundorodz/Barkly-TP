@@ -171,7 +171,12 @@
                   <div class="row g-3">
                     <div class="col-md-4">
                       <label for="nombre_paquete" class="form-label">Nombre del paquete</label>
-                      <input type="text" class="form-control" id="nombre_paquete" placeholder="Ej: Estándar / Premium / Deluxe" required />
+                      <select class="form-select" id="nombre_paquete" required>
+                        <option value="">Seleccionar paquete</option>
+                        <option value="Estándar">Paquete Estándar</option>
+                        <option value="Premium">Paquete Premium</option>
+                        <option value="Deluxe">Paquete Deluxe</option>
+                      </select>
                     </div>
 
                     <div class="col-md-4">
@@ -209,16 +214,35 @@
             <button type="button" class="btn-close borrar" data-bs-dismiss="modal" aria-label="Cerrar"></button>
           </div>
           <div class="modal-body" id="cuerpo-modal">
+            <div id="contenedor-paquetes">
+              <!-- Paquete base -->
+              <div class="paquete-item border rounded p-3 mb-3">
+                <h5 class="titulo-paquete">Paquete</h5>
 
-            <button class="btn btn-danger" onclick="agregarPaquetes()">Agregar otro paquete</button>
+                <label class="form-label">Nombre del paquete</label>
+                <select class="form-select nombre-paquete">
+                  <option value="">Seleccionar</option>
+                  <option value="Estándar">Estándar</option>
+                  <option value="Premium">Premium</option>
+                  <option value="Deluxe">Deluxe</option>
+                </select>
+
+                <label class="form-label mt-2">Descripción</label>
+                <input type="text" class="form-control descripcion-paquete">
+
+                <label class="form-label mt-2">Precio</label>
+                <input type="number" min="1" class="form-control precio-paquete">
+              </div>
+            </div>
+
+            <button class="btn btn-danger" onclick="agregarOtroPaquete()">Agregar otro paquete</button>
 
             <!-- Template planes -->
-            <h2 id="nombre_paquete_modal">Plan Básico<h2>
+            <!--h2 id="nombre_paquete_modal">Paquete Estandar<h2>
             <label for="descripcion_paquete_modal">Descripción</label>
             <input type="text" id="descripcion_paquete_modal" class="form-control w-75 mx-auto">
             <label for="precio_paquete_modal">Precio</label>
-            <input type="text" id="precio_paquete_modal" class="form-control w-75 mx-auto">
-            <hr>
+            <input type="text" id="precio_paquete_modal" class="form-control w-75 mx-auto"-->
             <!-- Template planes -->
 
           </div>
