@@ -82,6 +82,7 @@ router.post("/register_hero",upload.single("foto_perfil"),async (req, res) => {
         console.error(error);
         return res.status(500).json({ error: "Error al registrarse" });
     }
+    
 });
 
 
