@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
-
+const multer = require("multer");
+const path = require("path");
 
 
 router.delete("/delete_user", async (req, res) => {
@@ -103,6 +104,48 @@ router.delete("/delete_dog/:id", async (req, res) => {
         return res.status(500).json({ error: "Error al borrar perro" });
     }
 });
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, "../../public/assets/images"));
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        cb(null, `user_${req.session.userId}${ext}`);
+    }
+});
+
+const upload = multer({ storage });
+
+router.post("/update_profile_photo", upload.single("profile_photo"), async (req, res) => {
+        try {
+            if (!req.session.userId) {
+                return res.status(401).json({ error: "No estas loguado" });
+            }
+            const photo = `/assets/images/${req.file.filename}`;
+            await db.query("UPDATE usuarios SET foto_perfil = $1 WHERE id = $2",[photo, req.session.userId]);
+            res.json({ success: true, profile_photo: photo });
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ error: "Error al actualizar foto" });
+        }
+    }
+);
+
+router.get("/show_photo", async (req, res) => {
+    try {
+        if (!req.session.userId) {
+            return res.status(401).json({ error: "No logueado" });
+        }
+        const result = await db.query("SELECT foto_perfil FROM usuarios WHERE id = $1",[req.session.userId]);
+        res.json(result.rows[0]);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Error obteniendo usuario" });
+    }
+});
+
 
 router.get("/user_info", (req, res) => {
     if (!req.session.userId) {
