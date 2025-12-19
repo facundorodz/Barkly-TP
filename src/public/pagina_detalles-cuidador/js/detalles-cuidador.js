@@ -44,12 +44,12 @@ function emptyForm () {
 
 }
 
-document.getElementById("mi-formulario").addEventListener("submit", function (e) {
+/*document.getElementById("mi-formulario").addEventListener("submit", function (e) {
     e.preventDefault(); 
 
     submitForm();   
     emptyForm();  
-});
+});*/
 
 
 const API_URL = "http://localhost:3000";
@@ -57,25 +57,41 @@ const API_URL = "http://localhost:3000";
 // ===============================
 // OBTENER ID DESDE URL
 // ===============================
-const params = new URLSearchParams(window.location.search);
-const cuidadorId = params.get("id");
+//const CUIDADOR_ID = obtenerIdCuidador();
 
+document.addEventListener("DOMContentLoaded", () => {
+  const params = new URLSearchParams(window.location.search);
+  const cuidadorId = params.get("id");
 
-const CUIDADOR_ID = obtenerIdCuidador();
+  if (!cuidadorId) {
+    alert("ID de cuidador no encontrado");
+    return;
+  }
 
-if (!CUIDADOR_ID) {
-  alert("ID de cuidador no encontrado");
-  window.location.href = "/index.html";
-}
+  cargarCuidador(cuidadorId);
+});
+async function cargarCuidador(id) {
+  try {
+    const res = await fetch(`${API_URL}/cuidadores/${id}`);
 
-// Llamar al backend
-fetch(`/heros/${cuidadorId}`).then(res => res.json()).then(cuidador => {
-    document.getElementById("profilePic").src = cuidador.foto_perfil;
+    if (!res.ok) {
+      throw new Error("No se pudo obtener el cuidador");
+    }
+
+    const cuidador = await res.json();
+
+    // Imagen
+    document.getElementById("profilePic").src =
+      cuidador.foto_perfil || "/assets/images/default-profile.png";
+
+    // Nombre
     document.getElementById("nombre-cuidador").textContent = cuidador.nombre;
-    document.getElementById("franquicia-cuidador").textContent = cuidador.franquicia;
-    document.getElementById("experiencia").textContent = cuidador.experiencia;
 
-    // Poderes como lista
+    // Franquicia + experiencia
+    document.getElementById("franquicia-cuidador").textContent.textContent =
+      `${cuidador.franquicia} - ${cuidador.experiencia} años`;
+
+    // Poderes
     const lista = document.getElementById("lista-poderes");
     lista.innerHTML = "";
 
@@ -84,19 +100,20 @@ fetch(`/heros/${cuidadorId}`).then(res => res.json()).then(cuidador => {
       li.textContent = poder.trim();
       lista.appendChild(li);
     });
-  })
-  .catch(() => {
+
+  } catch (error) {
+    console.error(error);
     alert("Error al cargar el cuidador");
-    window.location.href = "/index.html";
-  });
+  }
+}
 
 
 // ===============================
 // CARGAR PAQUETES
 // ===============================
-async function cargarPaquetes() {
+async function cargarPaquetes(id) {
   try {
-    const res = await fetch(`${API_URL}/cuidadores/${CUIDADOR_ID}/paquetes`);
+    const res = await fetch(`${API_URL}/cuidadores/${cuidadorId}/paquetes`);
     if (!res.ok) throw new Error("Error al cargar paquetes");
 
     const paquetes = await res.json();
