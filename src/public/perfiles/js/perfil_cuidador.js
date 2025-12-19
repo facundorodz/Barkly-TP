@@ -238,7 +238,7 @@ async function guardarPaquete() {
     return;
   }
 
-  const nombre_paquete = inputNombre.textContent.trim();
+  const nombre_paquete = inputNombre.value.trim();
   const descripcion = inputDescripcion.value.trim();
   const precio = Number(inputPrecio.value);
 
