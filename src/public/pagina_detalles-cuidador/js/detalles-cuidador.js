@@ -52,46 +52,31 @@ function emptyForm () {
 });*/
 
 
-const API_URL = "http://localhost:3000";
+
 
 // ===============================
 // OBTENER ID DESDE URL
 // ===============================
-//const CUIDADOR_ID = obtenerIdCuidador();
 
-document.addEventListener("DOMContentLoaded", () => {
-  const params = new URLSearchParams(window.location.search);
-  const cuidadorId = params.get("id");
+const params = new URLSearchParams(window.location.search);
+const cuidadorId = params.get("id");
+const API_URL = "http://localhost:3000/cuidadores";
 
-  if (!cuidadorId) {
-    alert("ID de cuidador no encontrado");
-    return;
-  }
+if (!cuidadorId) {
+  alert("Cuidador no encontrado");
+  window.location.href = "/index.html";
+}
 
-  cargarCuidador(cuidadorId);
-});
-async function cargarCuidador(id) {
-  try {
-    const res = await fetch(`${API_URL}/cuidadores/${id}`);
-
-    if (!res.ok) {
-      throw new Error("No se pudo obtener el cuidador");
-    }
-
-    const cuidador = await res.json();
-
-    // Imagen
-    document.getElementById("profilePic").src =
-      cuidador.foto_perfil || "/assets/images/default-profile.png";
-
-    // Nombre
+// Llamar al backend
+fetch(`${API_URL}/${cuidadorId}`)
+  .then(res => res.json())
+  .then(cuidador => {
+    document.getElementById("profilePic").src = cuidador.foto_perfil;
     document.getElementById("nombre-cuidador").textContent = cuidador.nombre;
-
-    // Franquicia + experiencia
     document.getElementById("franquicia-cuidador").textContent.textContent =
       `${cuidador.franquicia} - ${cuidador.experiencia} años`;
 
-    // Poderes
+    // Poderes como lista
     const lista = document.getElementById("lista-poderes");
     lista.innerHTML = "";
 
@@ -100,23 +85,24 @@ async function cargarCuidador(id) {
       li.textContent = poder.trim();
       lista.appendChild(li);
     });
-
-  } catch (error) {
-    console.error(error);
+  })
+  .catch(() => {
     alert("Error al cargar el cuidador");
-  }
-}
+    window.location.href = "/index.html";
+  });
 
 
 // ===============================
-// CARGAR PAQUETES
+// CARGAR PAQUETES (aun no anda)
 // ===============================
-async function cargarPaquetes(id) {
+/*async function cargarPaquetes(id) {
   try {
-    const res = await fetch(`${API_URL}/cuidadores/${cuidadorId}/paquetes`);
+    const res = await fetch(`${API_URL}/cuidadores/${CUIDADOR_ID}/paquetes`);
     if (!res.ok) throw new Error("Error al cargar paquetes");
 
     const paquetes = await res.json();
+
+    console.log("Paquetes recibidos:", paquetes);
     const contenedor = document.getElementById("lista-paquetes");
     contenedor.innerHTML = "";
 
@@ -161,15 +147,8 @@ async function cargarPaquetes(id) {
     console.error(error);
     alert("No se pudieron cargar los paquetes");
   }
-}
+}*/
 
-// ===============================
-// INIT
-// ===============================
-document.addEventListener("DOMContentLoaded", () => {
-  cargarCuidador();
-  cargarPaquetes();
-});
 
 
         
