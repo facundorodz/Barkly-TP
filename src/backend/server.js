@@ -1,6 +1,6 @@
 const express = require("express");
 const usersRouter = require("./routes/users.js");
-const cuidadoresRouter = require("./routes/cuidadores.route.js");
+const cuidadoresRouter = require("./routes/cuidadores_routes.js");
 const cors = require("cors");
 const path = require("path");
 const session = require("express-session");
