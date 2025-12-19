@@ -10,19 +10,18 @@ body {
     rgba(0, 0, 0, 1) 0%,
     rgba(0, 0, 0, 1) 20%,  
     rgba(0, 0, 0, 0) 100%),
-    url(../../../assets/images/fondo_usuario.png);
+    url(/assets/images/fondo_usuario.png);
     background-repeat: no-repeat;
     background-size: cover;
-    backdrop-filter: blur(5px);
     background-position: center;
-    cursor: url(../../../assets/images/cursor_default.png), auto;
+    cursor: url(/assets/images/cursor_default.png), auto;
     max-width: 100%;
    
 }
 
 a, .round {
-    cursor: url(../../../../assets/images/click.png), auto;
-}
+    cursor: url(/assets/images/click.png), auto;
+
 
 .navbar {
   background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
@@ -53,11 +52,7 @@ a, .round {
 }
 
 .btn:hover {
-    cursor: url(../../../assets/images/click.png), pointer;
-}
-
-.btn {
-    margin-top: 20px;
+    cursor: url(/assets/images/click.png), pointer;
 }
 
 .izquierda {
@@ -89,7 +84,7 @@ a, .round {
 }
 
 .upload .round {
-    cursor: url(../../../assets/images/click.png), pointer;
+    cursor: url(/assets/images/click.png), pointer;
     background: #b12b2b;
     border-radius: 5px;
     height: 32px;
@@ -105,7 +100,6 @@ a, .round {
     text-align: right;
 }
 
- 
 .contenedor-general {
     text-align: center;
     justify-content: center;
@@ -119,10 +113,10 @@ a, .round {
 
 .header {
     background: linear-gradient(90deg, #DC3545 0%, #e96830  100%);
-     box-shadow: 2px 2px 1px darkred;
+    box-shadow: 2px 2px 1px darkred;
     background-image: 
-        linear-gradient(to left, rgba(0,0,0,0) 0%, #DC3545 100%), 
-        url(../../../assets/images/newspaper.jpg);
+        linear-gradient(to left, rgba(0,0,0,0) 0%, #DC3545 100%),
+        url(/assets/images/newspaper.jpg);
     background-size: cover;
     background-position: right center;
     box-shadow: 2px 2px 1px darkred;
@@ -138,12 +132,12 @@ a, .round {
     height: 150px; 
 
 }
+
 .usuario-header {
     text-align: center;
     background: #b12b2b;
     color: #fff;
     border-radius: 10px ;
-    height: 30px;
     width: 60px;
     font-weight: 100px;
 }
@@ -151,6 +145,8 @@ a, .round {
 .container {
     display:flex;
     gap: 20px;
+    margin-bottom: 20px;
+
 }
 
 .form-container {
@@ -165,7 +161,6 @@ a, .round {
     border-radius: 20px;
     padding: 40px;
     width: 500px;
-    /*height: 550px;*/
 }
 
 .derecha {
@@ -233,6 +228,7 @@ a, .round {
     margin-top: auto;
 }
 
+
 .mis-clientes {
     flex: 1;
     padding: 15px;
@@ -242,6 +238,27 @@ a, .round {
     box-shadow: 2px 2px 1px darkred;
 }
 
-#guardar-boton {
-    margin-top: 30px;
+.modal-content {
+    background-color: #b12b2b;
+}
+
+.modal-content input {
+    background-color: rgb(206, 81, 81);
+    color: white;
+    display: block;
+    font-size: 25px;
+}
+
+.modal-content label {
+    display: block;
+    color: white;
+    font-size: 25px;
+}
+
+.modal-content h2 {
+    color: wheat;
+}
+
+.text-paquetes {
+    text-align: left;
 }

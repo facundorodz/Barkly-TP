@@ -1,4 +1,5 @@
-const pool = require("../bdd/bdd.js");
+
+const pool = require("../bdd/bdd");
 
 //FUNCIONES QUE SE ENCARGAN DE COMUNICARSE CON POSTGRES Y ENVIAN DATOS AL FRONT
 
@@ -6,15 +7,80 @@ const pool = require("../bdd/bdd.js");
 exports.obtenerPaquetesPorCuidador = async (req, res) => {
   try {
     const { id } = req.params;
+
     const result = await pool.query(
-      "SELECT * FROM paquetes WHERE id_superheroe= $1 ORDER BY id DESC",
+      "SELECT * FROM paquetes WHERE id_superheroe = $1 ORDER BY id DESC",
       [id]
     );
+
     res.json(result.rows);
-  } catch (err) {
+  } catch (error) {
     res.status(500).json({ error: "Error al obtener paquetes" });
   }
 };
+
+// Crear paquete
+exports.crearPaquete = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { nombre_paquete, descripcion, precio } = req.body;
+
+    if (!nombre_paquete || !descripcion || !precio) {
+      return res.status(400).json({ error: "Datos incompletos" });
+    }
+
+    const result = await pool.query(
+      `INSERT INTO paquetes (id_superheroe, nombre_paquete, descripcion, precio)
+       VALUES ($1, $2, $3, $4)
+       RETURNING *`,
+      [id, nombre_paquete, descripcion, precio]
+    );
+
+    // sumar contador
+    await pool.query(
+      `UPDATE superheroes
+       SET paquetes_ofrecidos = paquetes_ofrecidos + 1
+       WHERE id = $1`,
+      [id]
+    );
+
+    res.status(201).json(result.rows[0]);
+  } catch (error) {
+    console.error("ERROR SQL:", err);
+    res.status(500).json({ error: "Error al crear paquete" });
+  }
+};
+
+// Eliminar paquete
+exports.eliminarPaquete = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const paquete = await pool.query(
+      "SELECT id_superheroe FROM paquetes WHERE id = $1",
+      [id]
+    );
+
+    if (paquete.rows.length === 0) {
+      return res.status(404).json({ error: "Paquete no encontrado" });
+    }
+
+    await pool.query("DELETE FROM paquetes WHERE id = $1", [id]);
+
+    await pool.query(
+      `UPDATE superheroes
+       SET paquetes_ofrecidos = paquetes_ofrecidos - 1
+       WHERE id = $1`,
+      [paquete.rows[0].id_superheroe]
+    );
+
+    res.json({ mensaje: "Paquete eliminado" });
+  } catch (error) {
+    res.status(500).json({ error: "Error al eliminar paquete" });
+  }
+};
+
+
 
 // Editar paquete
 exports.editarPaquete = async (req, res) => {
@@ -35,6 +101,8 @@ exports.editarPaquete = async (req, res) => {
   }
 };
 
+<<<<<<< HEAD
+=======
 // Eliminar paquete
 exports.eliminarPaquete = async (req, res) => {
   try {
@@ -66,6 +134,7 @@ exports.eliminarPaquete = async (req, res) => {
   }
 };
 
+>>>>>>> main
 // ===============================
 // SUMAR 1 A paquetes_ofrecidos
 // ===============================

@@ -31,6 +31,9 @@ app.get("/", (req, res) => {
   res.redirect("/index.html");
 });
 
+
+app.use(express.static(path.join(__dirname, "../public")));
+
 app.get("/registrar_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/pagina_registro_cuidador/registro_cuidador.html"));
 });
@@ -44,14 +47,15 @@ app.get("/crud_usuario", (req, res) => {
   res.redirect("/crud_usuarios/crud_usuarios.html");
 });
 
+
+//Carga la informacion del superheroe junto con sus paquetes
+app.use("/", cuidadoresRouter);
+
 app.get("/perfil_usuario", (req, res) => {
   res.redirect("/perfiles/perfil_usuario.html");
 });
 
-
-
 app.use("/users", usersRouter);
-
 
 //Pagina donde se imprime la informacion del superheroe
 app.get("/perfil_cuidador", (req, res) => {

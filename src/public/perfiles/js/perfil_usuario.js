@@ -14,7 +14,7 @@ function displayProfilePic() {
     };
     reader.readAsDataURL(file);
 }
-////////////////////////////
+
 document.addEventListener("DOMContentLoaded", () => {
     const savedImage = localStorage.getItem("profilePic");
 
@@ -22,7 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("profilePic").src = savedImage;
     }
 });
-////////////////////////////
 
 function submitForm() {
     const datos = {
@@ -37,6 +36,7 @@ function submitForm() {
     alert("Datos guardados correctamente");
 }
 ////////////////////////////
+
 window.addEventListener("load", () => {
     const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
     if (datosGuardados) {
@@ -47,7 +47,9 @@ window.addEventListener("load", () => {
         mostrarMascotas();
     }
 });
+
 ////////////////////////////
+
 
 const openModalButtons = document.querySelectorAll("[data-modal-target]")
 const closeModalButtons = document.querySelectorAll("[data-close-button]")
@@ -96,12 +98,9 @@ document.addEventListener("mouseup", () => {
     isDragging = false;
 });
 
-function closeModal(modal) {
-    if (modal == null) return
-    modal.classList.remove("active")
-}
 
 ////////////////////////////
+
 function submitMascota() {
     const nombreMascota = document.getElementById("nombre-mascota").value;
     const edad = document.getElementById("inputEdad").value;
@@ -160,4 +159,4 @@ function eliminarMascota(index) {
 
     mostrarMascotas();                   
 }
-////////////////////////////
+
