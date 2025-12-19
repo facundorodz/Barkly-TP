@@ -1,8 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
-const multer = require("multer");
 const path = require("path");
+const multer = require("multer");
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, "../../public/assets/images"));
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        cb(null, `user_${req.session.userId}${ext}`);
+    }
+});
+
+const upload = multer({ storage });
 
 
 router.delete("/delete_user", async (req, res) => {
@@ -105,18 +118,6 @@ router.delete("/delete_dog/:id", async (req, res) => {
     }
 });
 
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../../public/assets/images"));
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        cb(null, `user_${req.session.userId}${ext}`);
-    }
-});
-
-const upload = multer({ storage });
 
 router.post("/update_profile_photo", upload.single("profile_photo"), async (req, res) => {
         try {

@@ -1,28 +1,4 @@
 
-function displayProfilePic() {
-    const input = document.getElementById("photo");
-    const file = input.files[0];
-
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const url = e.target.result;
-        document.getElementById("profilePic").src = url;
-
-        localStorage.setItem("profilePic", url);
-    };
-    reader.readAsDataURL(file);
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-    const savedImage = localStorage.getItem("profilePic");
-
-    if (savedImage) {
-        document.getElementById("profilePic").src = savedImage;
-    }
-});
-
 
 document.addEventListener("DOMContentLoaded", () => {
     const nickname = localStorage.getItem("nickname");
@@ -31,43 +7,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("profile_name").value = nickname;
     }
 });
-
-
-function submitForm() {
-    const datos = {
-        nickname: document.getElementById("profile_name").value,
-        nombre: document.getElementById("name").value,
-        password: document.getElementById("pass").value,
-        perros: document.getElementById("inputState").value,
-        mascotas: JSON.parse(localStorage.getItem("mascotas")) || []
-    };
-
-    localStorage.setItem("perfilUsuario", JSON.stringify(datos));
-    alert("Datos guardados correctamente");
-
-     const nickname = document.getElementById("nickname").value;
-
-    if(nickname.trim() !== ""){
-        localStorage.setItem("nickname", nickname);
-        document.getElementById("usuarioPlaceHolder").innerText = nickname;
-    }
-
-    alert("Datos guardados");
-}
-
-
-window.addEventListener("load", () => {
-    const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
-    if (datosGuardados) {
-        document.getElementById("profile_name").value = datosGuardados.nickname;
-        document.getElementById("name").value = datosGuardados.nombre;
-        document.getElementById("pass").value = datosGuardados.password;
-        document.getElementById("inputState").value = datosGuardados.perros;
-        mostrarMascotas();
-    }
-});
-
-
 
 const openModalButtons = document.querySelectorAll("[data-modal-target]")
 const closeModalButtons = document.querySelectorAll("[data-close-button]")
@@ -99,7 +38,9 @@ let offsetX = 0;
 let offsetY = 0;
 
 header.addEventListener("mousedown", e => {
-    if (e.target.closest("[data-close-button]")) return; // 👈 clave
+    if (e.target.closest("[data-close-button]")){
+        return;
+    } 
     isDragging = true;
     offsetX = e.clientX - modal.getBoundingClientRect().left;
     offsetY = e.clientY - modal.getBoundingClientRect().top;
@@ -117,36 +58,10 @@ document.addEventListener("mouseup", () => {
     isDragging = false;
 });
 
-function eliminarMascota(index) {
-    let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-
-    mascotas.splice(index, 1);          
-    localStorage.setItem("mascotas", JSON.stringify(mascotas));
-
-    mostrarMascotas();                   
-}
-
-
 function closeModal(modal) {
     if (modal == null) return
     modal.classList.remove("active")
 }
-
-
-document.addEventListener("DOMContentLoaded", async () => {
-    try {
-        const resp = await fetch("/users/session_info");
-        const data = await resp.json();
-
-        if (data.logged && data.profile_name) {
-            const contenedor = document.getElementById("user_place_holder");
-            contenedor.innerHTML = `<h2>${data.profile_name}</h2>`;
-        }
-    } catch (error) {
-        console.error("Error obteniendo session_info:", error);
-    }
-});
-
 
 document.getElementById("btn_edit_user").addEventListener("click", async (e) => {
     e.preventDefault();
