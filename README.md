@@ -17,7 +17,8 @@ Como superheroe podes ofrecer (¡y mostrarle al mundo!) tus servicios como cuida
 ### Navbar
 La navbar está en todas las páginas. Cuenta con, de izquieda a derecha, el logo de **Barkly Co.**, una barra de búsqueda junto al botón para buscar, y botones de redireccionamiento (Servicios, cuidadores, sobre nosotros y reseñas). Además de los botones de Inicio de Sesión y registrar que van cambiando si el usuario está logueado (segunda imágen) o no (primera imágen)
 ![imagen de la navbar](src/public/assets/images_readme/navbar.png)
-**// acá iría la imágen de la navbar con la sesión iniciada.**
+
+![imagen de la navbar con sesion iniciada](src/public/assets/images_readme/navbar-con-sesion.png)
 
 ### index.html
 Esta es la página principal de **Barkly Co.**, es la que brinda información a usuarios nuevos sobre nuestros servicios, quienes somos, nuestros cuidadores y algunas reseñas destacadas.
