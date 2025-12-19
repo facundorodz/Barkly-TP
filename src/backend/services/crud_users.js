@@ -1,18 +1,45 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
+const path = require("path");
+const multer = require("multer");
+
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, path.join(__dirname, "../../public/assets/images"));
+    },
+    filename: (req, file, cb) => {
+        const ext = path.extname(file.originalname);
+        cb(null, `user_${req.session.userId}${ext}`);
+    }
+});
+
+const upload = multer({ storage });
 
 
 router.delete("/delete_user", async (req, res) => {
     console.log("LLEGO AL DELETE");
     if (!req.session.userId) {
-        return res.status(401).send("No estás logueado");
+        return res.status(401).json({ error: "No estás logueado" });
     }
-    await db.query("DELETE FROM usuarios WHERE id = $1", [req.session.userId]);
-    console.log("Borre a: ", req.session.userId);
-    req.session.destroy();
-    return res.redirect("/login.html"); 
+    try {
+        await db.query("DELETE FROM perros WHERE id_usuario = $1", [req.session.userId]);
+        await db.query("DELETE FROM usuarios WHERE id = $1", [req.session.userId]);
+        console.log("Borré a:", req.session.userId);
+        req.session.destroy(err => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Error al cerrar sesión" });
+        }
+        return res.json({ success: true });
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Error al borrar usuario" });
+    }
 });
+
 
 
 router.put("/edit_user", async (req, res) => {
@@ -20,6 +47,13 @@ router.put("/edit_user", async (req, res) => {
     const { profile_name, pass, name } = req.body;
     if (!req.session.userId) {
         return res.status(401).json({ success: false, message: "No estás logueado" });
+    }
+    if (profile_name) {
+        const exists = await db.query("SELECT nombre_perfil FROM usuarios WHERE nombre_perfil = $1 AND id <> $2",[profile_name, req.session.userId]);
+        if (exists.rows.length > 0) {
+            console.log("Dplicado")
+            return res.status(400).json({ error: "Ya existe un Usuario con ese nombre" });
+        }
     }
 
     if (profile_name){
@@ -34,7 +68,6 @@ router.put("/edit_user", async (req, res) => {
     console.log("Edite a: ", req.session.userId);
     return res.json({ success: true });
 });
-
 
 
 router.post("/add_dog", async (req, res) => {
@@ -53,6 +86,35 @@ router.post("/add_dog", async (req, res) => {
     } catch (err) {
         console.log("Error SQL:", err);
         return res.status(500).json({ error: "Error al guardar el perro" });
+    }
+});
+
+
+router.get("/show_dogs", async (req, res) => {
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "No estás logueado" });
+    }
+    try {
+        const result = await db.query(`SELECT p.id, p.nombre AS dog_name, p.edad AS dog_age, r.nombre AS raza FROM perros p JOIN razas r ON p.id_raza = r.id WHERE p.id_usuario = $1`, [req.session.userId]);
+        return res.json({ mascotas: result.rows });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Error al obtener mascotas" });
+    }
+});
+
+router.delete("/delete_dog/:id", async (req, res) => {
+    const dog_id = req.params.id;  // paso el id por url, entonces recibo con params, no entendi bien porque llegan undefined a traves de json
+    console.log("Llegue al delete, id del perro", dog_id);
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "No estás logueado" });
+    }
+    try {
+        await db.query("DELETE FROM perros WHERE id = $1 AND id_usuario = $2", [dog_id,req.session.userId]);
+        return res.json({ success: true });
+    } catch (error) {
+        console.error("Error al borrar perro:", error);
+        return res.status(500).json({ error: "Error al borrar perro" });
     }
 });
 

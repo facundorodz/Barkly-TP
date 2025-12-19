@@ -8,9 +8,7 @@ document.getElementById("btnradio2").addEventListener("change", () => {
 
 
 document.querySelector("form").addEventListener("submit", async (e) => {
-    e.preventDefault();
-    localStorage.setItem("cuidadorLogueado", JSON.stringify(data.cuidador));
-
+    e.preventDefault()
 
     const datos = {
         profile_name: document.getElementById("profile_name").value,
@@ -34,14 +32,12 @@ document.querySelector("form").addEventListener("submit", async (e) => {
             } 
             else if (data.type === "hero") {
                 localStorage.setItem("hero", JSON.stringify(data.cuidador));
-                window.location.href = "/index_hero.html";
+                window.location.href = "/perfiles/perfil_cuidador.html";
             }
 
         } else {
             alert(data.error);
         }
-
-        modal.show();
 
     } catch (error) {
         console.error("Error en fetch:", error);

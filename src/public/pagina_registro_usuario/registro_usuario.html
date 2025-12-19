@@ -55,7 +55,7 @@
 					<h1>Se parte de este gran mundo y encuentra el tu supercuidador ideal</h1>
 					<p>Rápido, seguro y completamente gratis.</p>
 				</div>
-				<form id="cuidador-form" class="cuidador-form" action="/users/register_user" method="post">
+				<form method="post" action="/users/register_user" enctype="multipart/form-data">
                     <div class="cuidador-info">
                         <div class="campo-nombre">
                           <label>Nombre Completo</label>
@@ -77,11 +77,14 @@
                             <input id="password" name="pass" type="password">
                           </div>
                         </div>
+                        <div class="campo-foto">
+                        <label>Foto de perfil</label>
+                         <input type="file" name="profile_photo" id="profile_photo" required>
+                      </div>
 
                         </div>                  
                     </div>
-                    
-                    <!-- TÉRMINOS Y CONDICIONES -->
+                  
                     <h3 class="title-campo">Políticas y verificación</h3>
 
                     <div class="section-terms mb-3 checkbox-y-texto">

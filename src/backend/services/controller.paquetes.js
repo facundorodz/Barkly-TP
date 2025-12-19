@@ -100,6 +100,7 @@ exports.editarPaquete = async (req, res) => {
     res.status(500).json({ error: "Error al editar paquete" });
   }
 };
+
 // Eliminar paquete
 exports.eliminarPaquete = async (req, res) => {
   try {

@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous"> 
     
     <title>Registro Cuidador-Barkly Corporation</title>
-    
     <link rel="stylesheet" href = "/pagina_registro_cuidador/css/Pagina_cuidadorstyles.css">
     <link rel="icon" href = "/assets/images/icono_metadata.png" type="image/png">
     </link>        
@@ -47,46 +46,46 @@
                     <h1>Conviertete en uno de nuestros agentes como Supercuidador de perros</h1>
                     <p>Registrate para poder ofrecer sus paquetes de servicios</p>
                 </div>
-                <form id="cuidador-form" class="cuidador-form" action="/users/register_hero" method="post" >
+                <form id="cuidador-form" class="cuidador-form">
                     <div class="cuidador-info">
                         <div class="campo-nombre">
                           <label>Nombre de superheroe</label>
                           <div class="control">
-                            <input id="nombre" type="text" placeholder="Nombre" id="profile_name" name="profile_name">
+                            <input type="text" placeholder="Nombre" id="profile_name" name="profile_name">
                           </div>
                         </div>
 
                         <div class="campo-contrasena">
                           <label>Contraseña</label>
                           <div class="control">
-                            <input type="password" id="password" type="text" id="profile_password" name="profile_password">
+                            <input type="password" id="password" type="text" name="profile_password">
                           </div>
                         </div>
 
                         <div class="campo-franquicia">
                           <label>Nombre Franquicia</label>
                           <div class="control">
-                            <input id="franquicia" class="input" type="text" placeholder="Franquicia" id="franchise_name" name="franchise_name">
+                            <input class="input" type="text" placeholder="Franquicia" id="franchise_name" name="franchise_name">
                           </div>
                         </div>
 
                         <div class="campo-poderes">
                           <label>Poderes</label>
                           <div class="control">
-                            <input id="poderes" class="input" type="text" id="powers" name="powers">
+                            <input class="input" type="text" id="powers" name="powers">
                           </div>
                         </div>
 
-                        <div class="col-11 campo-foto">
-                          <label for="foto_perfil" class="form-label">Foto de perfil (URL)</label>
-                          <input type="url" class="form-control" id="foto_perfil" name="foto_perfil">
-                        </div>
-
-                        <img id="preview_foto" style="margin-top:10px; width:120px; display:none;">
+                      <div class="col-11 campo-foto">
+                        <label for="foto_perfil" class="form-label">Foto de perfil</label>
+                        <input type="file" class="form-control" id="foto_perfil" name="foto_perfil" accept="image/*">
+                      </div>
+                      <img 
+                        id="preview_foto" style="margin-top:10px; width:120px; display:none; border-radius:8px;">
 
                         <h3 class="title-campo">Experiencia como cuidador</h3>
 
-                        <select id="experiencia" name="experience" id="experience">
+                        <select name="experience" id="experience">
                             <option value="0">0-1 Años</option>
                             <option value="1">2-3 Años</option>
                             <option value="2">3-5 Años</option>
@@ -114,30 +113,10 @@
 				</form>
 			</div>
 		</section>
-	</main>
 
-    <script>
+  </main>
 
-        const inputFoto = document.getElementById("foto_perfil");
-        const preview = document.getElementById("preview_foto");
-
-        inputFoto.addEventListener("input", () => {
-          if (inputFoto.value.trim() !== "") {
-            preview.src = inputFoto.value;
-            preview.style.display = "block";
-          } else {
-            preview.style.display = "none";
-          }
-        });
-
-        function redirigir_login() {
-            window.location.href = "/login/login.html";
-        }
-
-        function redirigir_register() {
-            window.location.href = "pagina_seleccion_registrar/pagina_seleccion_registro.html";
-        }
-  </script>
 
 </body>
+<script src="registro_cuidador.js" defer></script>
 </html>

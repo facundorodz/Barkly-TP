@@ -1,31 +1,38 @@
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    const datos = {
-        name: document.getElementById("nombre").value,
-        profile_name: document.getElementById("perfil").value,
-        pass: document.getElementById("password").value,
-    };
+    const fotoInput = document.getElementById("profile_photo");
+
+    if (!fotoInput.files.length) {
+        alert("Debes subir una foto");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", document.getElementById("nombre").value);
+    formData.append("profile_name", document.getElementById("perfil").value);
+    formData.append("pass", document.getElementById("password").value);
+    formData.append("profile_photo", fotoInput.files[0]);
 
     try {
         const resp = await fetch("/users/register_user", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(datos)
+            body: formData
         });
 
         const data = await resp.json();
 
         if (data.success) {
+            alert("Registro exitoso");
             window.location.href = "/index.html";
-            alert("Registro exitoso");  
         } else {
             alert(data.error);
         }
 
     } catch (error) {
-        console.error("Error en fetch:", error);
+        console.error(error);
         alert("Error al conectar con el servidor");
     }
 });
+
 

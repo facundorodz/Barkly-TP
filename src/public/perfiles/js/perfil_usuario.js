@@ -1,55 +1,12 @@
 
-function displayProfilePic() {
-    const input = document.getElementById("photo");
-    const file = input.files[0];
-
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        const url = e.target.result;
-        document.getElementById("profilePic").src = url;
-
-        localStorage.setItem("profilePic", url);
-    };
-    reader.readAsDataURL(file);
-}
 
 document.addEventListener("DOMContentLoaded", () => {
-    const savedImage = localStorage.getItem("profilePic");
-
-    if (savedImage) {
-        document.getElementById("profilePic").src = savedImage;
+    const nickname = localStorage.getItem("nickname");
+    if (nickname) {
+        document.getElementById("user_place_holder").innerText = nickname;
+        document.getElementById("profile_name").value = nickname;
     }
 });
-
-function submitForm() {
-    const datos = {
-        nickname: document.getElementById("nickname").value,
-        nombre: document.getElementById("nombre").value,
-        password: document.getElementById("contrasena").value,
-        perros: document.getElementById("inputState").value,
-        mascotas: JSON.parse(localStorage.getItem("mascotas")) || []
-    };
-
-    localStorage.setItem("perfilUsuario", JSON.stringify(datos));
-    alert("Datos guardados correctamente");
-}
-////////////////////////////
-
-window.addEventListener("load", () => {
-    const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
-    if (datosGuardados) {
-        document.getElementById("nickname").value = datosGuardados.nickname;
-        document.getElementById("nombre").value = datosGuardados.nombre;
-        document.getElementById("contrasena").value = datosGuardados.password;
-        document.getElementById("inputState").value = datosGuardados.perros;
-        mostrarMascotas();
-    }
-});
-
-////////////////////////////
-
 
 const openModalButtons = document.querySelectorAll("[data-modal-target]")
 const closeModalButtons = document.querySelectorAll("[data-close-button]")
@@ -81,6 +38,9 @@ let offsetX = 0;
 let offsetY = 0;
 
 header.addEventListener("mousedown", e => {
+    if (e.target.closest("[data-close-button]")){
+        return;
+    } 
     isDragging = true;
     offsetX = e.clientX - modal.getBoundingClientRect().left;
     offsetY = e.clientY - modal.getBoundingClientRect().top;
@@ -98,65 +58,184 @@ document.addEventListener("mouseup", () => {
     isDragging = false;
 });
 
+function closeModal(modal) {
+    if (modal == null) return
+    modal.classList.remove("active")
+}
 
-////////////////////////////
+document.getElementById("btn_edit_user").addEventListener("click", async (e) => {
+    e.preventDefault();
 
-function submitMascota() {
-    const nombreMascota = document.getElementById("nombre-mascota").value;
-    const edad = document.getElementById("inputEdad").value;
-    const raza = document.getElementById("inputraza").value;
+    const body = {};
+    const profile_name = document.getElementById("profile_name").value.trim();
+    const name = document.getElementById("name").value.trim();
+    const pass = document.getElementById("pass").value.trim();
 
-    if (!nombreMascota || !edad || !raza) {
-        alert("Complete todos los campos");
+    if (profile_name !== ""){
+        body.profile_name = profile_name;
+    } 
+    if (name !== ""){
+        body.name = name;
+    }
+    if (pass !== ""){
+        body.pass = pass;
+    } 
+    const response = await fetch("/edit_user", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+    });
+    const data = await response.json();
+    if (!response.ok) { 
+        alert(data.error);
         return;
     }
-
-    let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
-    mascotas.push({ nombre: nombreMascota, edad: edad, raza: raza });
-    localStorage.setItem("mascotas", JSON.stringify(mascotas));
-
-    mostrarMascotas();
-    document.getElementById("formMascota").reset();
-    document.querySelector("[data-close-button]").click(); 
-}
-
-function mostrarMascotas() {
-    const contenedor = document.querySelector(".mis-mascotas");
-
-    let lista = document.querySelector(".mascotas-lista");
-    if (!lista) {
-        lista = document.createElement("div");
-        lista.classList.add("mascotas-lista");
-        contenedor.appendChild(lista);
+    if (data.success) {
+        if (body.profile_name) {
+            document.getElementById("user_place_holder").textContent = body.profile_name;
+        }
+        document.getElementById("profile_name").value = "";
+        document.getElementById("name").value = "";
+        document.getElementById("pass").value = "";
+        alert("Perfil actualizado correctamente");
     }
+});
 
-    lista.innerHTML = ""; 
 
-    const mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+async function borrarCuenta() {
+    const confirmar = confirm(
+        "⚠️ ¿Estás seguro? Esta acción NO se puede deshacer"
+    );
+    if (!confirmar){
+        return;
+    } 
+    try {
+        const resp = await fetch("/delete_user", { method: "DELETE" });
+        const data = await resp.json();
+        if (data.success) {
+            alert("Cuenta eliminada correctamente");
+            window.location.href = "/index.html"; 
+        } else {
+            alert(data.error);
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Error al borrar cuenta");
+    }
+}
 
-    mascotas.forEach((m, index) => {
-        const card = document.createElement("div");
-        card.classList.add("card-mascota");
+async function agregar_mascota() {
+    const dog_name = document.getElementById("dog_name").value.trim();
+    const age = document.getElementById("inputEdad").value;
 
-        card.innerHTML = `
-            <div class="card-info">
-                <p><b>Nombre:</b> ${m.nombre}</p>
-                <p><b>Edad:</b> ${m.edad}</p>
-                <p><b>Raza:</b> ${m.raza}</p>
-            </div>
-            <button class="btn btn-danger" onclick="eliminarMascota(${index})">Eliminar</button>
+    if (!dog_name) {
+        alert("Debes ingresar el nombre de la mascota");
+        return;
+    }
+    if (age === "") {
+        alert("Debes seleccionar la edad de la mascota");
+        return;
+    }
+    const body = {
+        dog_name: dog_name,
+        age: age
+    };
+
+    try {
+        const resp = await fetch("/add_dog", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body)
+        });
+        const data = await resp.json();
+        if (resp.ok && data.success) {
+            alert("Mascota agregada correctamente");
+            closeModal();
+            document.getElementById("formMascota").reset(); 
+            mostrar_mascotas();
+        } else {
+            alert("Error al guardar la mascota");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Error al guardar la mascota");
+    }
+}
+
+async function mostrar_mascotas() {
+    try {
+        const resp = await fetch("/show_dogs");
+        const data = await resp.json();
+        const contenedor = document.querySelector(".my_dogs");
+        
+        const exists_table = contenedor.querySelector("table");
+        if (exists_table){
+            exists_table.remove();
+        } 
+        let html = `
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Edad</th>
+                        <th>Raza</th>
+                    </tr>
+                </thead>
+                <tbody>
         `;
+        data.mascotas.forEach(dog => {
+            html += `
+            
+                <tr>
+                    <td>${dog.dog_name}</td>
+                    <td>${dog.dog_age}</td>
+                    <td>${dog.raza}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="eliminar_mascota(${dog.id})">
+                            🗑️
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        html += `
+                </tbody>
+            </table>
+        `;
+        const header = contenedor.querySelector(".mascotas-header");
+        header.insertAdjacentHTML("afterend", html); // inserta en alguna posicion (afterend -> seria despues del elemento) alguna cadena de codigo html
 
-        lista.appendChild(card);
-    });
+    } catch (error) {
+        console.error("Error al mostrar mascotas:", error);
+    }
 }
 
-function eliminarMascota(index) {
-    let mascotas = JSON.parse(localStorage.getItem("mascotas")) || [];
+async function eliminar_mascota(dog_id) {
+    const confirmar = confirm("⚠️ ¿Seguro que quieres eliminar esta mascota?");
+    if (!confirmar){
+        return;
+    } 
+    try {
+        const resp = await fetch(`/delete_dog/${dog_id}`, {
+            method: "DELETE"
+        });
+        const data = await resp.json();
 
-    mascotas.splice(index, 1);          
-    localStorage.setItem("mascotas", JSON.stringify(mascotas));
-
-    mostrarMascotas();                   
+        if (data.success) {
+            alert("Mascota eliminada correctamente");
+            mostrar_mascotas(); 
+        } else {
+            alert("Error al eliminar mascota");
+        }
+    } catch (error) {
+        console.error(error);
+        alert("Error al eliminar mascota");
+    }
 }
+
+
+
+
+document.addEventListener("DOMContentLoaded", mostrar_mascotas);
+
 
