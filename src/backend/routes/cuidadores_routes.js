@@ -7,7 +7,8 @@ const paquete = require("../services/controller.paquetes.js");
 router.get("/cuidadores", controlador.obtenerCuidadores);
 router.get("/cuidadores/:id", controlador.obtenerCuidadorPorID);
 router.put("/cuidadores/:id", controlador.editarCuidador);
-router.delete("/cuidadores/:id", controlador.eliminarCuidador);
+router.delete("/cuidadores/session", controlador.eliminarCuidador);
+
 
 
 // PAQUETES CRUD 

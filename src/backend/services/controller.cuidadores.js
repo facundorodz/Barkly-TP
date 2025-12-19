@@ -1,5 +1,6 @@
 const pool = require("../bdd/bdd.js");
-
+const express = require("express");
+const router = express.Router();
 
 // Obtener todos
 exports.obtenerCuidadores = async (req, res) => {
@@ -54,16 +55,23 @@ exports.editarCuidador = async (req, res) => {
 
 // Eliminar cuidador
 exports.eliminarCuidador = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    await pool.query("DELETE FROM paquetes WHERE id_cuidador = $1", [id]); 
-    
-    await pool.query( "DELETE FROM superheroes WHERE id = $1", [id]);
-
-    res.json({ mensaje: "Cuidador eliminado" });
-
-  } catch (err) {
-    res.status(500).json({ error: "Error al eliminar cuidador" });
-  }
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "No estás logueado" });
+    }
+    try {
+        await pool.query("DELETE FROM paquetes WHERE id_superheroe = $1", [req.session.userId]); 
+    await pool.query( "DELETE FROM superheroes WHERE id = $1", [req.session.userId]);
+        console.log("Borré a:", req.session.userId);
+        req.session.destroy(err => {
+        if (err) {
+            console.error(err);
+            return res.status(500).json({ error: "Error al cerrar sesión" });
+        }
+        return res.json({ success: true });
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({ error: "Error al borrar usuario" });
+    }
 };
+
