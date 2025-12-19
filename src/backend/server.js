@@ -20,9 +20,11 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 app.use("/assets",express.static(path.join(__dirname, "../public/assets")));
 
+
 app.use("/users", usersRouter);
 app.use("/heros", cuidadoresRouter);
 app.use(crud_users);
+
 
 /*
 GET para mostrar las paginas 

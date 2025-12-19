@@ -11,6 +11,7 @@ exports.obtenerCuidadores = async (req, res) => {
   }
 };
 
+
 // Obtener uno por ID
 exports.obtenerCuidadorPorID = async (req, res) => {
   try {
