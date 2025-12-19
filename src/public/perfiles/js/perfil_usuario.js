@@ -14,7 +14,7 @@ function displayProfilePic() {
     };
     reader.readAsDataURL(file);
 }
-////////////////////////////
+
 document.addEventListener("DOMContentLoaded", () => {
     const savedImage = localStorage.getItem("profilePic");
 
@@ -22,19 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("profilePic").src = savedImage;
     }
 });
-
-////////////////////////////
-
-document.addEventListener("DOMContentLoaded", () => {
-    const nickname = localStorage.getItem("nickname");
-    if (nickname) {
-        document.getElementById("usuarioPlaceHolder").innerText = nickname;
-        document.getElementById("nickname").value = nickname;
-    }
-});
-
-
-////////////////////////////
 
 function submitForm() {
     const datos = {
@@ -47,17 +34,9 @@ function submitForm() {
 
     localStorage.setItem("perfilUsuario", JSON.stringify(datos));
     alert("Datos guardados correctamente");
-
-     const nickname = document.getElementById("nickname").value;
-
-    if(nickname.trim() !== ""){
-        localStorage.setItem("nickname", nickname);
-        document.getElementById("usuarioPlaceHolder").innerText = nickname;
-    }
-
-    alert("Datos guardados");
 }
 ////////////////////////////
+
 window.addEventListener("load", () => {
     const datosGuardados = JSON.parse(localStorage.getItem("perfilUsuario"));
     if (datosGuardados) {
@@ -68,7 +47,9 @@ window.addEventListener("load", () => {
         mostrarMascotas();
     }
 });
+
 ////////////////////////////
+
 
 const openModalButtons = document.querySelectorAll("[data-modal-target]")
 const closeModalButtons = document.querySelectorAll("[data-close-button]")
@@ -119,6 +100,7 @@ document.addEventListener("mouseup", () => {
 
 
 ////////////////////////////
+
 function submitMascota() {
     const nombreMascota = document.getElementById("nombre-mascota").value;
     const edad = document.getElementById("inputEdad").value;
@@ -177,9 +159,4 @@ function eliminarMascota(index) {
 
     mostrarMascotas();                   
 }
-////////////////////////////
 
-function closeModal(modal) {
-    if (modal == null) return
-    modal.classList.remove("active")
-}

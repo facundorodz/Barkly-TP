@@ -33,6 +33,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
                 window.location.href = "/index.html";
             } 
             else if (data.type === "hero") {
+                localStorage.setItem("hero", JSON.stringify(data.cuidador));
                 window.location.href = "/index_hero.html";
             }
 
@@ -40,10 +41,17 @@ document.querySelector("form").addEventListener("submit", async (e) => {
             alert(data.error);
         }
 
+        modal.show();
+
     } catch (error) {
         console.error("Error en fetch:", error);
         alert("Error al conectar con el servidor");
     }
 });
+
+function logout() {
+  localStorage.removeItem("cuidador");
+  window.location.href = "/login/login.html";
+}
 
 

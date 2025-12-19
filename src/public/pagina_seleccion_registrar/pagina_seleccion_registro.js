@@ -3,5 +3,5 @@ function redirigir_usuario() {
 }
 
 function redirigir_cuidador() {
-    window.location.href = "../pagina_cuidador/pagina_cuidador.html";
+    window.location.href = "../pagina_registro_cuidador/registro_cuidador.html";
 }

@@ -32,7 +32,6 @@ function checkInputs() {
   return CHEQUEO;
 }
 
-
 // Chequeo para evitar que se pongan letras en el campo "experiencia"
 const experiencia = document.getElementById('experiencia')
 

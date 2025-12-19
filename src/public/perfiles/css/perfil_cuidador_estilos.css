@@ -21,7 +21,7 @@ body {
 
 a, .round {
     cursor: url(/assets/images/click.png), auto;
-}
+
 
 .navbar {
   background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
@@ -99,7 +99,7 @@ a, .round {
     opacity: 0;
     text-align: right;
 }
- 
+
 .contenedor-general {
     text-align: center;
     justify-content: center;
@@ -113,9 +113,9 @@ a, .round {
 
 .header {
     background: linear-gradient(90deg, #DC3545 0%, #e96830  100%);
-     box-shadow: 2px 2px 1px darkred;
+    box-shadow: 2px 2px 1px darkred;
     background-image: 
-        linear-gradient(to left, rgba(0,0,0,0) 0%, #DC3545 100%), 
+        linear-gradient(to left, rgba(0,0,0,0) 0%, #DC3545 100%),
         url(/assets/images/newspaper.jpg);
     background-size: cover;
     background-position: right center;
@@ -130,6 +130,7 @@ a, .round {
     display: flex;
     align-items: center;
     height: 150px; 
+
 }
 
 .usuario-header {
@@ -145,6 +146,7 @@ a, .round {
     display:flex;
     gap: 20px;
     margin-bottom: 20px;
+
 }
 
 .form-container {
@@ -226,7 +228,8 @@ a, .round {
     margin-top: auto;
 }
 
-.card {
+
+.mis-clientes {
     flex: 1;
     padding: 15px;
     height: 300px;
@@ -234,7 +237,6 @@ a, .round {
     background-color: #fff;
     box-shadow: 2px 2px 1px darkred;
 }
-
 
 .modal-content {
     background-color: #b12b2b;
