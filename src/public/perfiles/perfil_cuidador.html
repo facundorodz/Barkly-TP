@@ -175,9 +175,9 @@
                       <label for="nombre_paquete" class="form-label">Nombre del paquete</label>
                       <select class="form-select" id="nombre_paquete" required>
                         <option value="">Seleccionar paquete</option>
-                        <option value="Estándar">Paquete Estándar</option>
-                        <option value="Premium">Paquete Premium</option>
-                        <option value="Deluxe">Paquete Deluxe</option>
+                        <option value="Paquete Estándar">Paquete Estándar</option>
+                        <option value="Paquete Premium">Paquete Premium</option>
+                        <option value="Paquete Deluxe">Paquete Deluxe</option>
                       </select>
                     </div>
 
@@ -222,18 +222,18 @@
                 <h5 class="titulo-paquete">Paquete</h5>
 
                 <label class="form-label">Nombre del paquete</label>
-                <select class="form-select nombre-paquete">
+                <select class="form-select nombre-paquete" id="nombre_paquete_modal">
                   <option value="">Seleccionar</option>
-                  <option value="Estándar">Estándar</option>
-                  <option value="Premium">Premium</option>
-                  <option value="Deluxe">Deluxe</option>
+                  <option value="Paquete Estándar">Paquete Estándar</option>
+                  <option value="Paquete Premium">Paquete Premium</option>
+                  <option value="Paquete Deluxe">Paquete Deluxe</option>
                 </select>
 
                 <label class="form-label mt-2">Descripción</label>
-                <input type="text" class="form-control descripcion-paquete">
+                <input type="text" class="form-control descripcion-paquete" id="descripcion_paquete_modal">
 
                 <label class="form-label mt-2">Precio</label>
-                <input type="number" min="1" class="form-control precio-paquete">
+                <input type="number" min="1" class="form-control precio-paquete" id="precio_paquete_modal">
               </div>
             </div>
 
