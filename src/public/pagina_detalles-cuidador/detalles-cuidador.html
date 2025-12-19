@@ -6,7 +6,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">  
         <title> Barkly Co</title>
         
-        <link rel="stylesheet" href = "ver_superheroe/css/detalles-cuidador.css">
+        <link rel="stylesheet" href = "/pagina_detalles-cuidador/css/detalles-cuidador.css">
         <link rel="icon" href="/assets/images/icono_metadata.png" type="image/png">
         
         
@@ -17,7 +17,7 @@
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
             <a class="navbar-brand d-flex align-items-center" href="">
-            <img src="../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+            <img src="/assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
                         Barkly Co</a>
             <div class="buscador">
               <form class="d-flex" role="search" style="width: 550px;">
@@ -77,12 +77,7 @@
           <div class="poderes">
           <h2>Poderes</h2>
             <hr>
-          <ul> 
-              <li> Poder 1</li>
-              <li> Poder 2</li>
-              <li> Poder 3</li>
-              <li> Poder 4</li>
-            </ul>
+          <ul id="lista-poderes"></ul>
           </div>
           <div class="poder">
             <div class="clasificacion">
@@ -97,9 +92,9 @@
         <div class="col-md-3">
           <div class="paquetes">
 
-            <h2>Paquete 1</h2>
+            <h2 id="nombre-paquete">Paquete 1</h2>
             <hr>
-            <h3>Descripción:</h3>
+            <h3 id="descripcion-paquete">Descripción:</h3>
             <ul> 
               <li> Actividad 1</li>
               <li> Actividad 2</li>
@@ -193,6 +188,6 @@
       </div>
     </div>
   </div>
-  <script src="./detalles-cuidador.js"></script>
+  <script src="pagina_detalles-cuidador/js/detalles-cuidador.js"></script>
   </body>
 </html>

@@ -70,9 +70,9 @@ if (!CUIDADOR_ID) {
 
 // Llamar al backend
 fetch(`/heros/${cuidadorId}`).then(res => res.json()).then(cuidador => {
-    document.getElementById("foto").src = cuidador.foto_perfil;
-    document.getElementById("nombre").textContent = cuidador.nombre;
-    document.getElementById("franquicia").textContent = cuidador.franquicia;
+    document.getElementById("profilePic").src = cuidador.foto_perfil;
+    document.getElementById("nombre-cuidador").textContent = cuidador.nombre;
+    document.getElementById("franquicia-cuidador").textContent = cuidador.franquicia;
     document.getElementById("experiencia").textContent = cuidador.experiencia;
 
     // Poderes como lista
@@ -114,15 +114,27 @@ async function cargarPaquetes() {
 
     paquetes.forEach(p => {
       contenedor.innerHTML += `
-        <div class="col-md-4">
-          <div class="card h-100">
-            <div class="card-body">
-              <h5 class="card-title">${p.nombre_paquete}</h5>
-              <p class="card-text">${p.descripcion}</p>
+        <div class="col-md-3">
+          <div class="paquetes">
+
+            <h2 id="nombre-paquete">${p.nombre_paquete}</h2>
+            <hr>
+            <h3 id="descripcion-paquete">${p.descripcion}</h3>
+            <ul> 
+              <li> Actividad 1</li>
+              <li> Actividad 2</li>
+              <li> Actividad 3</li>
+              <li> Actividad 4</li>
+            </ul>
+
+            <hr>
+
+            <div class="row">
+              <p class="col-md-4 d-flex" id="precio-header"> PRECIO: </p>
+              <p class="col-md-4 d-flex" id="precio">$${p.precio}</p>
             </div>
-            <div class="card-footer text-end">
-              <strong>$${p.precio}</strong>
-            </div>
+
+            <button type="button" class="btn btn-light anadir"> Contratar paquete </button>
           </div>
         </div>
       `;
