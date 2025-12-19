@@ -28,9 +28,11 @@ router.post("/login_user", async (req, res) => {
             if (response_hero.rows.length === 0) {
                 return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
             }
+            const cuidador = result.rows[0];
+
             req.session.userId = response_hero.rows[0].id; 
             req.session.username = response_hero.rows[0].nombre_perfil;
-            return res.json({ success: true, type: "hero" });
+            return res.json({success: true, cuidadorId: cuidador.id, nombre: cuidador.nombre});
         }   catch (error) {
                 console.error("Error en login:", error);
                 return res.status(500).json({ error: "Error interno en el servidor" });
