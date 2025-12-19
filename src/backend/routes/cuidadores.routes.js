@@ -12,7 +12,10 @@ router.delete("/cuidadores/:id", controlador.eliminarCuidador);
 
 // PAQUETES CRUD 
 router.get("/cuidadores/:id/paquetes", paquete.obtenerPaquetesPorCuidador);
+router.post("/cuidadores/:id/paquetes", paquete.crearPaquete);
 router.put("/paquetes/:id", paquete.editarPaquete);
 router.delete("/paquetes/:id", paquete.eliminarPaquete);
 
 module.exports = router;
+
+

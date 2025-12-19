@@ -41,8 +41,7 @@
                                 <a class="nav-link active" aria-current="page" href="#resenias-previas">Reseñas</a>
                                 </li>
                             </ul>
-                                <a role="button" id="login" class="btn btn-danger" href="pages/login/login.html" >Iniciar Sesión </a>
-                                <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                                <a role="button" id="login" class="btn btn-danger" href="pages/login/login.html" > Mi Perfil </a>
                     </div>
                 </div>
             </nav>
@@ -188,7 +187,7 @@
 
                   <div class="mt-3 d-flex justify-content-between">
                     <div>
-                      <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm()">Guardar paquete</button>
+                      <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="guardarPaqueteFormulario()">Guardar Cambios</button>
                       <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-limpiar-paquete">
                         Cancelar
                       </button>
@@ -212,22 +211,20 @@
           <div class="modal-body" id="cuerpo-modal">
 
             <button class="btn btn-danger" onclick="agregarPaquetes()">Agregar otro paquete</button>
-            <button class="btn btn-danger" onclick="eliminarPaquete()">Eliminar paquete</button>
 
             <!-- Template planes -->
-            <h2>Plan Básico<h2>
-            <hr>
-            <label for="">Descripción</label>
-            <input type="text" class="form-control w-75 mx-auto">
-            <label for="">Precio</label>
-            <input type="text" class="form-control w-75 mx-auto" id="precio-plan-basico">
+            <h2 id="nombre_paquete_modal">Plan Básico<h2>
+            <label for="descripcion_paquete_modal">Descripción</label>
+            <input type="text" id="descripcion_paquete_modal" class="form-control w-75 mx-auto">
+            <label for="precio_paquete_modal">Precio</label>
+            <input type="text" id="precio_paquete_modal" class="form-control w-75 mx-auto">
             <hr>
             <!-- Template planes -->
 
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-dark borrar" data-bs-dismiss="modal" onclick="cancelar()">Cancelar</button>
-            <button type="button" class="btn btn-danger borrar">Guardar cambios</button>
+            <button type="button" class="btn btn-dark borrar" data-bs-dismiss="modal" id="btn-cancelar-paquete">Cancelar</button>
+            <button type="button" class="btn btn-danger borrar" type="submit" id="btn-guardar-paquete">Guardar paquete</button>
           </div>
         </div>
       </div>

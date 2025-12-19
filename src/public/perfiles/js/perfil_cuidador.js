@@ -1,50 +1,37 @@
 function checkInputs() {
-    const inputNombreCuidador = document.getElementById('nickname').value
-    const inputFranquicia = document.getElementById('franquicia').value
-    const inputPoderes = document.getElementById('poderes').value
-    const inputExperiencia = document.getElementById('experiencia').value
-    const inputContrasena = document.getElementById('contrasena').value
-    const inputPaquetesOfrecidos = document.getElementById('inputState').value
-    const btnLimpiarPaquete = document.getElementById("btn-limpiar-paquete");
-    const paqueteIdInput = document.getElementById("paquete_id");
+  const inputNombreCuidador = document.getElementById('nickname').value.trim();
+  const inputFranquicia = document.getElementById('franquicia').value.trim();
+  const inputPoderes = document.getElementById('poderes').value.trim();
+  const inputExperiencia = document.getElementById('experiencia').value;
+  const inputContrasena = document.getElementById('contrasena').value.trim();
+  const inputPaquetesOfrecidos = document.getElementById('inputState')?.value;
 
-    document.addEventListener("DOMContentLoaded", () => {
+  let CHEQUEO = true;
 
-      if (btnLimpiarPaquete && formPaquete) {
-        btnLimpiarPaquete.addEventListener("click", () => {
+  if (
+    !inputNombreCuidador ||
+    !inputFranquicia ||
+    !inputPoderes ||
+    !inputExperiencia ||
+    !inputContrasena ||
+    inputPaquetesOfrecidos === 'Elegir...'
+  ) {
+    alert('Debe añadir TODOS los datos.');
+    CHEQUEO = false;
+  } else if (inputNombreCuidador.length > 120) {
+    alert('El campo "nombre" es demasiado largo.');
+    CHEQUEO = false;
+  } else if (inputFranquicia.length > 100) {
+    alert('El campo "franquicia" es demasiado largo.');
+    CHEQUEO = false;
+  } else if (Number(inputExperiencia) <= 0) {
+    alert('La experiencia debe ser mayor a 0.');
+    CHEQUEO = false;
+  }
 
-          // Limpia todos los campos visibles
-          document.getElementById("form-paquete").reset();
-          // Limpia el ID oculto (sale del modo edición)
-          if (paqueteIdInput) {
-            paqueteIdInput.value = "";
-          }
+  return CHEQUEO;
+}
 
-          // (Opcional) feedback visual
-          console.log("Formulario de paquete limpiado");
-        });
-      }
-    });
-
-    
-    const CHEQUEO = true
-    // Chequeo general.
-    if (!inputNombreCuidador || 
-        !inputFranquicia || 
-        !inputPoderes || 
-        !inputExperiencia || 
-        !inputContrasena || 
-        inputPaquetesOfrecidos == 'Elegir...') {
-            alert('Debe añadir TODOS los datos.')
-            CHEQUEO = false
-        }
-        // Chequeos particulares.
-        else if (inputNombreCuidador.length > 120) { alert('El campo "nombre" no puede ser tan largo.'); CHEQUEO = false }
-        else if (inputFranquicia.length > 100) { alert('El campo "franquicia" no puede ser tan largo.'); CHEQUEO = false }
-        else if (inputExperiencia <= 0) { alert('El campo "experiencia" contiene un valor 0 o menor.'); CHEQUEO = false }
-        
-        return CHEQUEO 
-    }
 
 // Chequeo para evitar que se pongan letras en el campo "experiencia"
 const experiencia = document.getElementById('experiencia')
@@ -57,54 +44,16 @@ function submitForm() { // Sube el form() de los datos de usuario.
     checkInputs()
 }
 
-function crearPlanPremium() {
-    const modal = document.getElementById("cuerpo-modal")
-    const planPremium = document.createElement("div");
-    planPremium.classList.add("plan-item");
-    planPremium.setAttribute("id", "plan-premium");
-    
-    planPremium.innerHTML = `
-        <h2>Plan Premium</h2>
-        <hr>
-        <label>Descripción</label>
-        <input type="text" class="form-control w-75 mx-auto">
-        <label>Precio</label>
-        <input type="text" class="form-control w-75 mx-auto">
-        <hr>
-    `;
-    modal.appendChild(planPremium);
-}
+document.addEventListener("DOMContentLoaded", () => {
 
-function crearPlanDeluxe() {    
-    const modal = document.getElementById("cuerpo-modal");
-    const planDeluxe = document.createElement("div");
-    planDeluxe.classList.add("plan-item");
-    planDeluxe.setAttribute("id", "plan-deluxe");
-    
-    planDeluxe.innerHTML = `
-        <h2>Plan Deluxe</h2>
-        <hr>
-        <label>Descripción</label>
-        <input type="text" class="form-control w-75 mx-auto">
-        <label>Precio</label>
-        <input type="text" class="form-control w-75 mx-auto">
-        <hr>
-    `;
-    modal.appendChild(planDeluxe);
-}
+  const btnCancelar = document.getElementById("btn-cancelar-paquete");
+  if (!btnCancelar) return;
 
-let plan_activo = "basico";
-function agregarPaquetes() {
-    if (plan_activo == "basico") {
-        crearPlanPremium();
-        plan_activo = "premium";
-    } else if (plan_activo == "premium") {
-        crearPlanDeluxe();
-        plan_activo = "deluxe";
-    } else { alert("¡No puedes tener más de 3 planes!") }
-}
+  btnCancelar.addEventListener("click", cancelar);
+});
 
-function eliminarPaquete() {
+
+/*function eliminarPaquete() {
     if (plan_activo == "deluxe") {
         planSeleccionado = document.getElementById("plan-deluxe");
         plan_activo = "premium"
@@ -113,19 +62,24 @@ function eliminarPaquete() {
         plan_activo = "basico"
     } else if (plan_activo == "basico") { alert("No puede eliminar el plan básico") }
     planSeleccionado.remove()
-}
+}*/
 
 function cancelar() {
-    if (plan_activo == "deluxe") { // Es porque existe tanto el deluxe como el premium.
-        planDeluxe = document.getElementById("plan-deluxe");
-        planPremium = document.getElementById("plan-premium");
-        planDeluxe.remove()
-        planPremium.remove()
-    } else if (plan_activo == "premium") { // Es porque existe solo el premium.
-        planPremium = document.getElementById("plan-premium");
-        planPremium.remove()
-    } plan_activo = "basico"
+    const inputDescripcion = document.getElementById("descripcion_paquete_modal");
+    const inputPrecio = document.getElementById("precio_paquete");
+
+    // Limpiar campos si existen
+    if (inputDescripcion) inputDescripcion.value = "";
+    if (inputPrecio) inputPrecio.value = "";
+
+    // Cerrar modal
+    const modalEl = document.getElementById("modalPaquetes");
+    const modal = bootstrap.Modal.getInstance(modalEl);
+    if (modal) modal.hide();
+
+    console.log("Registro de paquete cancelado");
 }
+
 
 
 const API_URL = "http://localhost:3000/cuidadores";
@@ -194,13 +148,94 @@ const CUIDADOR_ID = 2;
       alert("Cuenta eliminada");
     });
 
+const btnGuardar = document.getElementById("btn-guardar-paquete");
+btnGuardar.addEventListener("click", guardarPaquete);
+
+
+
+  // ===============================
+  // CREA NUEVOS PAQUETES
+  // ===============================
+
+async function guardarPaquete() {
+
+  const inputNombre = document.getElementById("nombre_paquete_modal");
+  const inputDescripcion = document.getElementById("descripcion_paquete_modal");
+  const inputPrecio = document.getElementById("precio_paquete_modal");
+
+  if (!inputDescripcion || !inputPrecio) {
+    alert("Error interno: inputs no encontrados");
+    return;
+  }
+
+  const nombre_paquete = inputNombre.textContent.trim();
+  const descripcion = inputDescripcion.value.trim();
+  const precio = Number(inputPrecio.value);
+
+  if (!descripcion || !precio) {
+    alert("Completá todos los campos");
+    return;
+  }
+
+  if (precio <= 0) {
+    alert("El precio debe ser mayor a 0");
+    return;
+  }
+
+  try {
+    const res = await fetch(`${API_URL}/${CUIDADOR_ID}/paquetes`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre_paquete,
+        descripcion,
+        precio
+      })
+    });
+
+    if (!res.ok) throw new Error("Error al guardar paquete");
+
+    inputDescripcion.value = "";
+    inputPrecio.value = "";
+
+    cargarPaquetes();
+    alert("Paquete guardado correctamente");
+
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo guardar el paquete");
+  }
+}
+
+
+
+  // ===============================
+  // FUNCIONES AUXILIARES
+  // ===============================
+  function limpiarInputs() {
+    inputDescripcion.value = "";
+    inputPrecio.value = "";
+  }
+
+  document.getElementById("btn-limpiar-paquete").addEventListener("click", limpiarFormularioPaquete);
+
+  function limpiarFormularioPaquete() {
+
+    document.getElementById("paquete_id").value = "";
+    document.getElementById("nombre_paquete").value = "";
+    document.getElementById("descripcion_paquete").value = "";
+    document.getElementById("precio_paquete").value = "";
+
+    document.querySelector(".card-header h5").textContent = "Editar paquete";
+  }
+
 
   // ===============================
   // CARGAR LISTA DE PAQUETES
   // ===============================
   async function cargarPaquetes() {
     try {
-      const res = await fetch(`http://localhost:3000/cuidadores/${CUIDADOR_ID}/paquetes`);
+      const res = await fetch(`${API_URL}/${CUIDADOR_ID}/paquetes`);
       const paquetes = await res.json();
 
       const tbody = document.querySelector("#tabla-paquetes tbody");
@@ -229,9 +264,14 @@ const CUIDADOR_ID = 2;
 
   function cargarFormularioPaquete(p) {
     document.getElementById("paquete_id").value = p.id;
+
+    // Cargar datos en el formulario inferior
     document.getElementById("nombre_paquete").value = p.nombre_paquete;
     document.getElementById("descripcion_paquete").value = p.descripcion;
     document.getElementById("precio_paquete").value = p.precio;
+
+    // Feedback visual opcional
+    document.querySelector(".card-header h5").textContent = "Editar paquete";
   }
 
 
@@ -256,16 +296,103 @@ const CUIDADOR_ID = 2;
     cargarPaquetes();
   }
 
-  async function eliminarPaquete(id) {
-    if (!confirm("Eliminar paquete?")) return;
 
-    await fetch(`${API_URL}/paquetes/${id}`, { method: "DELETE" });
+  async function guardarPaqueteFormulario() {
+
+    const paqueteIdInput = document.getElementById("paquete_id");
+    const nombreInput = document.getElementById("nombre_paquete");
+    const descripcionInput = document.getElementById("descripcion_paquete");
+    const precioInput = document.getElementById("precio_paquete");
+
+    // 🔒 Validación DOM
+    if (!paqueteIdInput || !nombreInput || !descripcionInput || !precioInput) {
+      alert("Error interno: inputs no encontrados");
+      return;
+    }
+
+    const paqueteId = paqueteIdInput.value;
+    const nombre_paquete = nombreInput.value.trim();
+    const descripcion = descripcionInput.value.trim();
+    const precio = Number(precioInput.value);
+
+    // 🔒 Validaciones de datos
+    if (!paqueteId) {
+      alert("No hay paquete seleccionado para editar");
+      return;
+    }
+
+    if (!nombre_paquete || !descripcion || !precio) {
+      alert("Completá todos los campos");
+      return;
+    }
+
+    if (precio <= 0) {
+      alert("El precio debe ser mayor a 0");
+      return;
+    }
+
+    try {
+      const res = await fetch(`paquetes/${paqueteId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nombre_paquete,
+          descripcion,
+          precio
+        })
+      });
+
+      if (!res.ok) throw new Error("Error al editar paquete");
+
+      // 🔄 Limpieza y recarga
+      paqueteIdInput.value = "";
+      nombreInput.value = "";
+      descripcionInput.value = "";
+      precioInput.value = "";
+
+      document.querySelector(".card-header h5").textContent = "Editar paquete";
+
+      cargarPaquetes();
+      alert("Paquete actualizado correctamente");
+
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo editar el paquete");
+    }
+}
+
+
+
+async function eliminarPaquete(id) {
+  if (!id) {
+    alert("ID de paquete inválido");
+    return;
+  }
+
+  if (!confirm("¿Eliminar paquete?")) return;
+
+  try {
+    const res = await fetch(
+      `${API_URL}/paquetes/${id}`,
+      { method: "DELETE" }
+    );
+
+    if (!res.ok) {
+      throw new Error("Error al eliminar paquete");
+    }
 
     cargarPaquetes();
+
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo eliminar el paquete");
   }
+}
 
     // ===============================
     // AL CARGAR LA PÁGINA
     // ===============================
+  document.addEventListener("DOMContentLoaded", () => {
     cargarCuidador();
     cargarPaquetes();
+  });

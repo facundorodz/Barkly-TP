@@ -68,13 +68,15 @@ router.post("/register_hero", async (req, res) => {
     }
 });
 
-/*router.post("/register_paquetes", async (req, res) => {
+/*router.post("/cuidadores/:id/paquetes", async (req, res) => {
     console.log("registro de paquetes", req.body);
-    const { name, pass } = req.body; // agregar todo lo necesario para cuando se registra para los paquetes
+    const { id } = req.params;
+    const { nombre_paquete, descripcion, precio } = req.body; // agregar todo lo necesario para cuando se registra para los paquetes
       try {
         const exists = await db.query("SELECT * FROM paquetes WHERE name = $1",[req.body.name]);
-        await db.query("INSERT INTO paquetes (nombre_paquete, descripcion, precio) VALUES ($1, $2, $3)",[name, pass]); // agregar todo lo necesario al insertar un paquete
-        return res.redirect("/index.html"); // redireccionar a la pagina que quiero
+        await db.query("INSERT INTO paquetes (id_cuidador,nombre_paquete, descripcion, precio) VALUES ($1, $2, $3, $4)",[id, nombre_paquete, descripcion, precio]); // agregar todo lo necesario al insertar un paquete
+        res.status(201).json({ success: true });
+        //return res.redirect("/index.html"); // redireccionar a la pagina que quiero
     } catch(error){ 
         console.error(error);
         return res.status(400).send("Error al registrar los paquetes"); // manejar bien este error

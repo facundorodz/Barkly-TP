@@ -9,6 +9,8 @@ document.getElementById("btnradio2").addEventListener("change", () => {
 
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
+    localStorage.setItem("cuidadorLogueado", JSON.stringify(data.cuidador));
+
 
     const datos = {
         profile_name: document.getElementById("profile_name").value,
