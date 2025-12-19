@@ -1,0 +1,5 @@
+FROM node:22.16-bullseye
+WORKDIR /app
+RUN npm install -g http-server
+EXPOSE 8000
+CMD ["http-server", "/app", "-p", "8000", "--cors"]
