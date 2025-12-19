@@ -37,6 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .catch(err => console.error("Error cargando cuidadores:", err));
 
+
+
+
     if (!boton) {
         console.error("No se encontró el elemento #ver-mas-boton");
         return;
@@ -67,6 +70,7 @@ function verDetalle(id) {
 
   window.location.href = `/pagina_detalles-cuidador/prueba_detalle-cuidador.html?id=${id}`;
 }
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
