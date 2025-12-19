@@ -7,6 +7,7 @@ const db = require("../bdd/bdd"); // conexión a PostgreSQL
 // ===============================
 // OBTENER TODOS LOS CUIDADORES
 // ===============================
+/*
 router.get("/", async (req, res) => {
   try {
     const result = await db.query(`SELECT id, nombre, franquicia, experiencia, poderes, foto_perfil FROM superheroes ORDER BY id ASC
@@ -22,7 +23,7 @@ router.get("/", async (req, res) => {
     });
   }
 });
-
+*/
 
 // ===============================
 // OBTENER UN CUIDADOR POR ID
