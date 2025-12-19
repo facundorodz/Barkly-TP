@@ -1,32 +1,55 @@
-// Obtener ID desde la URL
-const params = new URLSearchParams(window.location.search);
-const cuidadorId = params.get("id");
+function submitForm() {
+    const comentario = document.getElementById("comentario").value.trim();
 
-if (!cuidadorId) {
-  alert("Cuidador no encontrado");
-  window.location.href = "/index.html";
+    if (comentario === "") {
+        alert("El comentario no puede estar vacío");
+        return;
+    }
+
+    const datos = {
+        comentario: comentario
+    };
+
+    console.log(datos);
 }
 
-// Llamar al backend
-fetch(`/heros/${cuidadorId}`)
-  .then(res => res.json())
-  .then(cuidador => {
-    document.getElementById("foto").src = cuidador.foto_perfil;
-    document.getElementById("nombre").textContent = cuidador.nombre;
-    document.getElementById("franquicia").textContent = cuidador.franquicia;
-    document.getElementById("experiencia").textContent = cuidador.experiencia;
+function submitForm() {
+    const comentario = document.getElementById("comentario").value.trim();
 
-    // Poderes como lista
-    const lista = document.getElementById("lista-poderes");
-    lista.innerHTML = "";
+    if (comentario === "") {
+        alert("El comentario no puede estar vacío");
+        return;
+    }
 
-    cuidador.poderes.split(",").forEach(poder => {
-      const li = document.createElement("li");
-      li.textContent = poder.trim();
-      lista.appendChild(li);
-    });
-  })
-  .catch(() => {
-    alert("Error al cargar el cuidador");
-    window.location.href = "/index.html";
-  });
+    const datos = {
+        comentario: comentario
+    };
+
+    console.log(datos);
+
+    if(comentario.trim() !== ""){
+        localStorage.setItem("comentario", comentario);
+    }
+
+    alert("Datos guardados");
+}
+
+function emptyForm () {
+
+        const comentario = document.getElementById("comentario").value.trim();
+        
+        if (comentario) {
+            document.getElementById("comentario").value = ""
+        }
+
+}
+
+document.getElementById("mi-formulario").addEventListener("submit", function (e) {
+    e.preventDefault(); 
+
+    submitForm();   
+    emptyForm();  
+});
+
+
+        
