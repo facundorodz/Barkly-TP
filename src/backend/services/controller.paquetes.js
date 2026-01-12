@@ -37,12 +37,7 @@ exports.crearPaquete = async (req, res) => {
     );
 
     // sumar contador
-    await pool.query(
-      `UPDATE superheroes
-       SET paquetes_ofrecidos = paquetes_ofrecidos + 1
-       WHERE id = $1`,
-      [id]
-    );
+    await pool.query(`UPDATE superheroes SET paquetes_ofrecidos = paquetes_ofrecidos + 1 WHERE id = $1`,[id]);
 
     res.status(201).json(result.rows[0]);
   } catch (error) {

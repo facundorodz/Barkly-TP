@@ -24,7 +24,7 @@ app.use("/assets",express.static(path.join(__dirname, "../public/assets")));
 
 app.use("/users", usersRouter);
 app.use("/heros", cuidadoresRouter);
-app.use("/", cuidadoresRouter);
+//app.use("/", cuidadoresRouter);
 app.use(crud_users);
 
 
@@ -56,6 +56,11 @@ app.get("/perfil_usuario", (req, res) => {
 app.get("/perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
+
+app.get("/prueba_perfil_cuidador", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/perfiles/prueba_perfil_cuidador.html"));
+});
+
 
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en http://localhost:${port}`);
