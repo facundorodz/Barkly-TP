@@ -5,9 +5,9 @@
   // CONFIG
   // =========================
   const API_BASE = "http://localhost:3000";
-  const API_CUIDADORES = `${API_BASE}/cuidadores`;
-  const API_PAQUETES = `${API_BASE}/paquetes`;
   const CUIDADOR_ID = 2;
+  const API_CUIDADORES = `${API_BASE}/cuidadores`;
+  const API_PAQUETES = `${API_BASE}/${CUIDADOR_ID}/paquetes`;
 
   // ID del cuidador desde login
   // En tu login guardá: localStorage.setItem("cuidadores_id", data.id)
