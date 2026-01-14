@@ -23,8 +23,8 @@ app.use("/assets",express.static(path.join(__dirname, "../public/assets")));
 
 
 app.use("/users", usersRouter);
-app.use("/heros", cuidadoresRouter);
-//app.use("/", cuidadoresRouter);
+//app.use("/heros", cuidadoresRouter);
+app.use("/", cuidadoresRouter);
 app.use(crud_users);
 
 

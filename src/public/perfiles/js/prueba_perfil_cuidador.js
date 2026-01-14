@@ -7,7 +7,7 @@
   const API_BASE = "http://localhost:3000";
   const CUIDADOR_ID = 2;
   const API_CUIDADORES = `${API_BASE}/cuidadores`;
-  const API_PAQUETES = `${API_BASE}/${CUIDADOR_ID}/paquetes`;
+  const API_PAQUETES = `${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`;
 
   // ID del cuidador desde login
   // En tu login guardá: localStorage.setItem("cuidadores_id", data.id)
@@ -195,35 +195,31 @@ document.addEventListener("DOMContentLoaded", () => {
   // =========================
   async function cargarPaquetes() {
     try {
-      const paquetes = await apiJson(`${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`);
+      const res = await fetch(`${API_PAQUETES}`);
+      if (!res.ok) throw new Error("No se pudieron obtener los paquetes");
 
-      paquetesCache = Array.isArray(paquetes) ? paquetes : [];
-      const tbody = $("#tabla-paquetes tbody");
+      const paquetes = await res.json();
+
+      const tbody = document.querySelector("#tabla-paquetes tbody");
       tbody.innerHTML = "";
 
-      paquetesCache.forEach((p) => {
+      paquetes.forEach((p) => {
         tbody.innerHTML += `
           <tr>
-            <td>${escapeHtml(p.nombre_paquete || "")}</td>
-            <td>${escapeHtml(p.descripcion || "")}</td>
-            <td>$${Number(p.precio || 0)}</td>
+            <td>${p.nombre_paquete}</td>
+            <td>${p.descripcion}</td>
+            <td>$${p.precio}</td>
             <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary" data-action="editar" data-id="${p.id}">
-                Editar
-              </button>
-              <button class="btn btn-sm btn-outline-danger" data-action="eliminar" data-id="${p.id}">
-                Eliminar
-              </button>
+              <button class="btn btn-sm btn-outline-primary" data-action="edit" data-id="${p.id}">Editar</button>
+              <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${p.id}">Eliminar</button>
             </td>
           </tr>
         `;
       });
 
-      setText("contador-paquetes", paquetesCache.length);
-      actualizarEstadoBotonAgregar();
-    } catch (err) {
-      console.error("Error cargando paquetes:", err);
-      alert("Error al cargar paquetes");
+      document.getElementById("contador-paquetes").textContent = paquetes.length;
+    } catch (error) {
+      console.error("Error cargando paquetes:", error);
     }
   }
 
@@ -236,191 +232,224 @@ document.addEventListener("DOMContentLoaded", () => {
       .replaceAll("'", "&#039;");
   }
 
-  // =========================
-  // PAQUETES - MODAL CREAR (hasta 3)
-  // =========================
+  // ===============================
+  // MODAL: CREAR HASTA 3 PAQUETES
+  // ===============================
   function actualizarEstadoBotonAgregar() {
-    const btnAbrir = $("#btn-abrir-modal-paquete");
-    const max = 3;
-    const count = paquetesCache.length;
+    const btnAbrir = $("btn-abrir-modal-paquete");
+    const btnAgregarOtro = $("btn-agregar-otro-paquete");
 
-    if (!btnAbrir) return;
+    const totalActual = paquetesCache.length;
 
-    if (count >= max) {
-      btnAbrir.disabled = true;
-      btnAbrir.textContent = "Límite alcanzado";
-    } else {
-      btnAbrir.disabled = false;
-      btnAbrir.textContent = "Añadir paquete";
+    // Si ya tiene 3 en total, deshabilito abrir modal
+    if (btnAbrir) btnAbrir.disabled = totalActual >= 3;
+
+    // Dentro del modal, el "Agregar otro" depende de los items del modal y el total en BDD
+    if (btnAgregarOtro) {
+      const maxModalPermitido = Math.max(0, 3 - totalActual);
+      btnAgregarOtro.disabled = modalCount >= maxModalPermitido;
     }
   }
 
-  function resetModalPaquetes() {
-    const cont = $("#contenedor-paquetes-modal");
-    cont.innerHTML = `
-      <div class="border rounded p-3 mb-3 paquete-modal-item" data-index="1">
-        <h2 class="h5 mb-3" id="nombre_paquete_modal_1">Plan Básico</h2>
+  function resetModal() {
+    // deja 1 item y limpia inputs
+    const cont = $("contenedor-paquetes-modal");
+    if (!cont) return;
 
-        <label class="form-label">Descripción</label>
-        <input type="text" class="form-control mb-2" id="descripcion_paquete_modal_1" />
+    const items = cont.querySelectorAll(".paquete-modal-item");
+    items.forEach((it, idx) => {
+      if (idx === 0) {
+        it.querySelector("input[type='text']").value = "";
+        it.querySelector("input[type='number']").value = "";
+      } else {
+        it.remove();
+      }
+    });
 
-        <label class="form-label">Precio</label>
-        <input type="number" min="0" class="form-control" id="precio_paquete_modal_1" />
-      </div>
-    `;
+    modalCount = 1;
+    actualizarEstadoBotonAgregar();
   }
 
-  function agregarOtroPaqueteEnModal() {
-    const cont = $("#contenedor-paquetes-modal");
-    const items = cont.querySelectorAll(".paquete-modal-item");
-    const max = 3;
+  function agregarOtroPaqueteModal() {
+    const cont = $("contenedor-paquetes-modal");
+    if (!cont) return;
 
-    if (items.length >= max) {
-      alert("No podés agregar más de 3 paquetes.");
+    const totalActual = paquetesCache.length;
+    const maxModalPermitido = Math.max(0, 3 - totalActual);
+
+    if (modalCount >= maxModalPermitido) {
+      alert("No podés agregar más paquetes (máximo 3 en total).");
       return;
     }
 
-    const nextIndex = items.length + 1;
-    const nombrePorIndex = nextIndex === 2 ? "Plan Premium" : "Plan Deluxe";
+    modalCount += 1;
 
     const div = document.createElement("div");
     div.className = "border rounded p-3 mb-3 paquete-modal-item";
-    div.dataset.index = String(nextIndex);
+    div.dataset.index = String(modalCount);
+
+    // Título predeterminado por orden
+    const titulo =
+      modalCount === 1 ? "Plan Básico" :
+      modalCount === 2 ? "Plan Premium" :
+      "Plan Deluxe";
 
     div.innerHTML = `
-      <h2 class="h5 mb-3" id="nombre_paquete_modal_${nextIndex}">${nombrePorIndex}</h2>
+      <h2 class="h5 mb-3">${titulo}</h2>
 
       <label class="form-label">Descripción</label>
-      <input type="text" class="form-control mb-2" id="descripcion_paquete_modal_${nextIndex}" />
+      <input type="text" class="form-control mb-2" />
 
       <label class="form-label">Precio</label>
-      <input type="number" min="0" class="form-control" id="precio_paquete_modal_${nextIndex}" />
+      <input type="number" min="0" class="form-control" />
     `;
 
     cont.appendChild(div);
+    actualizarEstadoBotonAgregar();
   }
 
-  async function guardarPaqueteDesdeModal() {
-    const nombreEl = document.getElementById("nombre_paquete_modal");
-    const descEl = document.getElementById("descripcion_paquete_modal");
-    const precioEl = document.getElementById("precio_paquete_modal");
+  async function guardarPaquetesModal() {
+    const cont = $("contenedor-paquetes-modal");
+    if (!cont) return;
 
-    if (!nombreEl || !descEl || !precioEl) {
-      console.error("Inputs del modal no encontrados");
-      return;
+    const items = [...cont.querySelectorAll(".paquete-modal-item")];
+
+    // Armar payloads
+    const nuevos = [];
+    for (const it of items) {
+      const h2 = it.querySelector("h2");
+      const titulo = (h2?.textContent || "Paquete").trim();
+
+      const inputs = it.querySelectorAll("input");
+      const descripcion = (inputs[0]?.value || "").trim();
+      const precio = Number(inputs[1]?.value || 0);
+
+      if (!descripcion || !precio || precio <= 0) {
+        return alert("Completá descripción y precio válido en todos los paquetes del modal.");
+      }
+
+      nuevos.push({ nombre_paquete: titulo, descripcion, precio });
     }
 
-    const nombre_paquete = nombreEl.textContent.trim();
-    const descripcion = descEl.value.trim();
-    const precio = Number(precioEl.value);
-
-    const res = await fetch(`/cuidadores/${CUIDADOR_ID}/paquetes`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ nombre_paquete, descripcion, precio })
-    });
-
-    if (!res.ok) {
-      const txt = await res.text();
-      throw new Error(`Fallo POST: ${res.status} - ${txt}`);
+    // Chequear límite total (existentes + nuevos)
+    if (paquetesCache.length + nuevos.length > 3) {
+      return alert("Excede el máximo de 3 paquetes en total.");
     }
 
-    // limpiar + recargar
-    descEl.value = "";
-    precioEl.value = "";
-    await cargarPaquetes();
+    try {
+      // Crear uno por uno (simple y claro)
+      for (const pkg of nuevos) {
+        const res = await fetch(`${API_PAQUETES}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(pkg)
+        });
+
+        if (!res.ok) {
+          const txt = await res.text().catch(() => "");
+          throw new Error(`Error al crear paquete: ${txt}`);
+        }
+      }
+
+      await cargarPaquetes();
+
+      // Cerrar y resetear modal
+      const modal = getModalInstance();
+      modal.hide();
+      resetModal();
+
+      alert("Paquetes creados correctamente");
+
+    } catch (err) {
+      console.error(err);
+      alert("No se pudieron guardar los paquetes");
+    }
   }
 
-  function cancelarModalPaquetes() {
-    resetModalPaquetes();
-    const modalEl = $("#modalPaquetes");
-    const modal = bootstrap.Modal.getInstance(modalEl);
-    modal?.hide();
+  function cancelarModal() {
+    const modal = getModalInstance();
+    modal.hide();
+    resetModal();
   }
 
-  // =========================
-  // PAQUETES - EDICIÓN DESDE FORMULARIO INFERIOR
-  // =========================
+  // ===============================
+  // EDICION (FORMULARIO INFERIOR)
+  // ===============================
+  function cargarEnFormularioEdicion(p) {
+    setValue("paquete_id", p.id);
+    setValue("precio_paquete", p.precio);
+    setValue("descripcion_paquete", p.descripcion);
+
+    const sel = $("nombre_paquete_select");
+    if (sel) sel.value = p.nombre_paquete ?? "";
+
+    setText("titulo-edicion", `Editando paquete #${p.id}`);
+  }
+
   function limpiarFormularioEdicion() {
     setValue("paquete_id", "");
-    setValue("nombre_paquete_select", "");
-    setValue("descripcion_paquete", "");
     setValue("precio_paquete", "");
-    setText("titulo-edicion", "Editar paquete");
-  }
+    setValue("descripcion_paquete", "");
 
-  function cargarEnFormularioEdicion(paquete) {
-    setValue("paquete_id", paquete.id);
-    setValue("nombre_paquete_select", paquete.nombre_paquete || "");
-    setValue("descripcion_paquete", paquete.descripcion || "");
-    setValue("precio_paquete", paquete.precio ?? "");
-    setText("titulo-edicion", `Editando paquete #${paquete.id}`);
-    window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    const sel = $("nombre_paquete_select");
+    if (sel) sel.value = "";
+
+    setText("titulo-edicion", "Editar paquete");
   }
 
   async function guardarEdicionPaquete(e) {
     e.preventDefault();
 
-    const paqueteId = $("#paquete_id").value;
-    const nombre = $("#nombre_paquete_select").value;
-    const descripcion = $("#descripcion_paquete").value.trim();
-    const precio = Number($("#precio_paquete").value);
+    const paqueteId = Number($("paquete_id")?.value);
+    const nombre_paquete = $("nombre_paquete_select")?.value?.trim();
+    const descripcion = $("descripcion_paquete")?.value?.trim();
+    const precio = Number($("precio_paquete")?.value);
 
-    if (!paqueteId) {
-      alert("No hay paquete seleccionado para editar");
-      return;
-    }
-    if (!nombre || !descripcion || !precio || precio <= 0) {
-      alert("Completá todos los campos correctamente (incluye nombre).");
-      return;
-    }
+    if (!paqueteId) return alert("No hay paquete seleccionado para editar");
+    if (!nombre_paquete) return alert("Seleccioná un nombre de paquete");
+    if (!descripcion) return alert("Completá la descripción");
+    if (!precio || precio <= 0) return alert("El precio debe ser mayor a 0");
 
     try {
-      await apiJson(`${API_PAQUETES}/${paqueteId}`, {
+      const res = await fetch(`${API_PAQUETES}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre_paquete: nombre,
-          descripcion,
-          precio,
-        }),
+        body: JSON.stringify({ nombre_paquete, descripcion, precio })
       });
 
-      alert("Paquete actualizado");
-      limpiarFormularioEdicion();
+      if (!res.ok) throw new Error("Error al editar paquete");
+
       await cargarPaquetes();
+      limpiarFormularioEdicion();
+      alert("Paquete actualizado correctamente");
+
     } catch (err) {
       console.error(err);
       alert("No se pudo editar el paquete");
     }
   }
 
-  async function eliminarPaquetePorId(id) {
+  async function eliminarPaqueteSeleccionado() {
+    const paqueteId = Number($("paquete_id")?.value);
+    if (!paqueteId) return alert("No hay paquete seleccionado");
+    await eliminarPaquete(paqueteId);
+    limpiarFormularioEdicion();
+  }
+
+  async function eliminarPaquete(id) {
     if (!confirm("¿Eliminar paquete?")) return;
 
     try {
-      await apiJson(`${API_PAQUETES}/${id}`, { method: "DELETE" });
+      const res = await fetch(`${API_PAQUETES}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Error al eliminar paquete");
+
       await cargarPaquetes();
 
-      // si justo estabas editando ese id, limpiar
-      if ($("#paquete_id").value === String(id)) {
-        limpiarFormularioEdicion();
-      }
     } catch (err) {
       console.error(err);
       alert("No se pudo eliminar el paquete");
     }
   }
-
-  async function eliminarPaqueteSeleccionado() {
-    const id = $("#paquete_id").value;
-    if (!id) {
-      alert("No hay paquete seleccionado");
-      return;
-    }
-    await eliminarPaquetePorId(id);
-  }
-
   // =========================
   // EVENTS
   // =========================
@@ -440,11 +469,6 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "/index.html";
     });
 
-    // modal
-    $("#btn-agregar-otro-paquete")?.addEventListener("click", agregarOtroPaqueteEnModal);
-    $("#btn-guardar-paquete")?.addEventListener("click", guardarPaquetesDesdeModal);
-    $("#btn-cancelar-paquete")?.addEventListener("click", cancelarModalPaquetes);
-
     // al abrir modal, reset
     const modalEl = $("#modalPaquetes");
     modalEl?.addEventListener("shown.bs.modal", () => {
@@ -452,32 +476,39 @@ document.addEventListener("DOMContentLoaded", () => {
       resetModalPaquetes();
     });
 
-    // edición inferior
-    $("#form-paquete-edicion")?.addEventListener("submit", guardarEdicionPaquete);
-    $("#btn-limpiar-paquete")?.addEventListener("click", limpiarFormularioEdicion);
-    $("#btn-eliminar-paquete-seleccionado")?.addEventListener("click", eliminarPaqueteSeleccionado);
+      // Tabla: edit/delete
+    const tbody = document.querySelector("#tabla-paquetes tbody");
+    if (tbody) tbody.addEventListener("click", onTablaClick);
 
-    // acciones en la tabla (delegación)
-    $("#tabla-paquetes")?.addEventListener("click", (e) => {
-      const btn = e.target.closest("button");
-      if (!btn) return;
+    // Form edición
+    const formEdicion = $("form-paquete-edicion");
+    if (formEdicion) formEdicion.addEventListener("submit", guardarEdicionPaquete);
 
-      const action = btn.dataset.action;
-      const id = btn.dataset.id ? Number(btn.dataset.id) : null;
+    const btnLimpiar = $("btn-limpiar-paquete");
+    if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFormularioEdicion);
 
-      if (!action || !id) return;
+    const btnEliminarSel = $("btn-eliminar-paquete-seleccionado");
+    if (btnEliminarSel) btnEliminarSel.addEventListener("click", eliminarPaqueteSeleccionado);
 
-      if (action === "editar") {
-        const paquete = paquetesCache.find((p) => Number(p.id) === id);
-        if (!paquete) return;
-        cargarEnFormularioEdicion(paquete);
-      }
+    // Modal
+    const btnAgregarOtro = $("btn-agregar-otro-paquete");
+    if (btnAgregarOtro) btnAgregarOtro.addEventListener("click", agregarOtroPaqueteModal);
 
-      if (action === "eliminar") {
-        eliminarPaquetePorId(id);
-      }
-    });
-  }
+    const btnGuardarModal = $("btn-guardar-paquete");
+    if (btnGuardarModal) btnGuardarModal.addEventListener("click", guardarPaquetesModal);
+
+    const btnCancelarModal = $("btn-cancelar-paquete");
+    if (btnCancelarModal) btnCancelarModal.addEventListener("click", cancelarModal);
+    }
+
+      // Cada vez que abrís el modal, resetea y recalcula límite
+    const modalEl = $("modalPaquetes");
+    if (modalEl) {
+      modalEl.addEventListener("shown.bs.modal", () => {
+        resetModal();
+      });
+    }
+
 
   // =========================
   // INIT
@@ -495,4 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await cargarCuidador();
     await cargarPaquetes();
   });*/
+  document.addEventListener("DOMContentLoaded", () => {
+    cargarPaquetes();
+  });
 })();
