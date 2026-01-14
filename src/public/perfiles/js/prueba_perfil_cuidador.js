@@ -138,10 +138,6 @@
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  cargarCuidador();
-});
-
   // =========================
   // GUARDAR PERFIL
   // =========================
@@ -188,48 +184,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(err);
       alert("No se pudo eliminar la cuenta");
     }
-  }
-
-  // =========================
-  // PAQUETES - LISTAR
-  // =========================
-  async function cargarPaquetes() {
-    try {
-      const res = await fetch(`${API_PAQUETES}`);
-      if (!res.ok) throw new Error("No se pudieron obtener los paquetes");
-
-      const paquetes = await res.json();
-
-      const tbody = document.querySelector("#tabla-paquetes tbody");
-      tbody.innerHTML = "";
-
-      paquetes.forEach((p) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${p.nombre_paquete}</td>
-            <td>${p.descripcion}</td>
-            <td>$${p.precio}</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary" data-action="edit" data-id="${p.id}">Editar</button>
-              <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${p.id}">Eliminar</button>
-            </td>
-          </tr>
-        `;
-      });
-
-      document.getElementById("contador-paquetes").textContent = paquetes.length;
-    } catch (error) {
-      console.error("Error cargando paquetes:", error);
-    }
-  }
-
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
   }
 
   // ===============================
@@ -372,10 +326,196 @@ document.addEventListener("DOMContentLoaded", () => {
     resetModal();
   }
 
+  // =========================
+  // PAQUETES - LISTAR
+  // =========================
+  async function cargarPaquetes() {
+    try {
+      const res = await fetch(`${API_PAQUETES}`);
+      if (!res.ok) throw new Error("No se pudieron obtener los paquetes");
+
+      const paquetes = await res.json();
+
+      const tbody = document.querySelector("#tabla-paquetes tbody");
+      tbody.innerHTML = "";
+
+      paquetes.forEach((p) => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${p.nombre_paquete}</td>
+            <td>${p.descripcion}</td>
+            <td>$${p.precio}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary" onclick='cargarFormularioPaquete(${JSON.stringify(p)})'>Editar</button>
+              <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${p.id}">Eliminar</button>
+            </td>
+          </tr>
+        `;
+      });
+
+      document.getElementById("contador-paquetes").textContent = paquetes.length;
+    } catch (error) {
+      console.error("Error cargando paquetes:", error);
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function cargarFormularioPaquete(p) {
+    document.getElementById("paquete_id").value = p.id;
+
+    // Cargar datos en el formulario inferior
+    document.getElementById("nombre_paquete").value = p.nombre_paquete;
+    document.getElementById("descripcion_paquete").value = p.descripcion;
+    document.getElementById("precio_paquete").value = p.precio;
+
+    // Feedback visual opcional
+    document.querySelector(".card-header h5").textContent = "Editar paquete";
+  }
+
+
+  // ===============================
+  // Editar paquete
+  // ===============================
+  async function editarPaquete(id) {
+    const nombre = prompt("Nuevo nombre:");
+    const desc = prompt("Nueva descripción:");
+    const precio = prompt("Nuevo precio:");
+
+    await fetch(`${API_URL}/paquetes/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nombre_paquete: nombre,
+        descripcion: desc,
+        precio: precio
+      })
+    });
+
+    cargarPaquetes();
+  }
+
+  const btnGuardarEditado = document.getElementById("guardar-boton");
+  btnGuardarEditado.addEventListener("click", (e) => {
+    e.preventDefault();
+    guardarPaqueteFormulario();
+  });
+
+
+  // ===================================
+  // GUARDA LOS CAMBIOS DE LOS PAQUETES
+  // ===================================
+
+  async function guardarPaqueteFormulario() {
+
+    const paqueteIdInput = document.getElementById("paquete_id");
+    const nombreSelect = document.getElementById("nombre_paquete");
+    const descripcionInput = document.getElementById("descripcion_paquete");
+    const precioInput = document.getElementById("precio_paquete");
+
+    if (!paqueteIdInput || !nombreSelect || !descripcionInput || !precioInput) {
+      alert("Error interno: formulario incompleto");
+      return;
+    }
+
+    const paqueteId = paqueteIdInput.value;
+    const nombre_paquete = nombreSelect.value;
+    const descripcion = descripcionInput.value.trim();
+    const precio = Number(precioInput.value);
+
+    if (!paqueteId) {
+      alert("No hay paquete seleccionado para editar");
+      return;
+    }
+
+    if (!nombre_paquete) {
+      alert("Seleccioná un tipo de paquete");
+      return;
+    }
+
+    if (!descripcion || !precio) {
+      alert("Completá todos los campos");
+      return;
+    }
+
+    if (precio <= 0) {
+      alert("El precio debe ser mayor a 0");
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `http://localhost:3000/paquetes/${paqueteId}`,
+        {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            nombre_paquete,
+            descripcion,
+            precio
+          })
+        }
+      );
+
+      if (!res.ok) throw new Error("Error al editar paquete");
+
+      paqueteIdInput.value = "";
+      nombreSelect.value = "";
+      descripcionInput.value = "";
+      precioInput.value = "";
+
+      document.querySelector(".card-header h5").textContent = "Editar paquete";
+
+      cargarPaquetes();
+      alert("Paquete actualizado correctamente");
+
+    } catch (error) {
+      console.error(error);
+      alert("No se pudo editar el paquete");
+    }
+}
+
+
+
+
+async function eliminarPaquete(id) {
+  if (!id) {
+    alert("ID de paquete inválido");
+    return;
+  }
+
+  if (!confirm("¿Eliminar paquete?")) return;
+
+  try {
+    const res = await fetch(
+      `${API_URL}/paquetes/${id}`,
+      { method: "DELETE" }
+    );
+
+    if (!res.ok) {
+      throw new Error("Error al eliminar paquete");
+    }
+
+    cargarPaquetes();
+
+  } catch (error) {
+    console.error(error);
+    alert("No se pudo eliminar el paquete");
+  }
+}
+
+
   // ===============================
   // EDICION (FORMULARIO INFERIOR)
   // ===============================
-  function cargarEnFormularioEdicion(p) {
+  /*function cargarFormularioPaquete(p) {
     setValue("paquete_id", p.id);
     setValue("precio_paquete", p.precio);
     setValue("descripcion_paquete", p.descripcion);
@@ -384,6 +524,20 @@ document.addEventListener("DOMContentLoaded", () => {
     if (sel) sel.value = p.nombre_paquete ?? "";
 
     setText("titulo-edicion", `Editando paquete #${p.id}`);
+  }*/
+
+  /*function cargarFormularioPaquete(p) {
+    document.getElementById("paquete_id").value = p.id;
+
+    // Cargar datos en el formulario inferior
+    document.getElementById("nombre_paquete").value = p.nombre_paquete;
+    document.getElementById("descripcion_paquete").value = p.descripcion;
+    document.getElementById("precio_paquete").value = p.precio;
+    const sel = $("nombre_paquete_select");
+    if (sel) sel.value = p.nombre_paquete ?? "";
+
+    // Feedback visual opcional
+    document.querySelector(".card-header h5").textContent = "Editar paquete";
   }
 
   function limpiarFormularioEdicion() {
@@ -449,11 +603,11 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(err);
       alert("No se pudo eliminar el paquete");
     }
-  }
+  }*/
   // =========================
   // EVENTS
   // =========================
-  function bindEvents() {
+  /*function bindEvents() {
     // experiencia solo números
     const exp = $("#experiencia");
     if (exp) onlyNumbersInput(exp);
@@ -507,7 +661,7 @@ document.addEventListener("DOMContentLoaded", () => {
       modalEl.addEventListener("shown.bs.modal", () => {
         resetModal();
       });
-    }
+    }*/
 
 
   // =========================
@@ -527,6 +681,7 @@ document.addEventListener("DOMContentLoaded", () => {
     await cargarPaquetes();
   });*/
   document.addEventListener("DOMContentLoaded", () => {
+    cargarCuidador();
     cargarPaquetes();
   });
 })();
