@@ -46,46 +46,15 @@ exports.crearPaquete = async (req, res) => {
   }
 };
 
-// Eliminar paquete
-exports.eliminarPaquete = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const paquete = await pool.query(
-      "SELECT id_superheroe FROM paquetes WHERE id = $1",
-      [id]
-    );
-
-    if (paquete.rows.length === 0) {
-      return res.status(404).json({ error: "Paquete no encontrado" });
-    }
-
-    await pool.query("DELETE FROM paquetes WHERE id = $1", [id]);
-
-    await pool.query(
-      `UPDATE superheroes
-       SET paquetes_ofrecidos = paquetes_ofrecidos - 1
-       WHERE id = $1`,
-      [paquete.rows[0].id_superheroe]
-    );
-
-    res.json({ mensaje: "Paquete eliminado" });
-  } catch (error) {
-    res.status(500).json({ error: "Error al eliminar paquete" });
-  }
-};
-
-
-
 // Editar paquete
 exports.editarPaquete = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { id} = req.params;
     const { nombre_paquete, descripcion, precio } = req.body;
 
     const result = await pool.query(
       `UPDATE paquetes SET nombre_paquete=$1, descripcion=$2, precio=$3
-       WHERE id=$4 RETURNING *`,
+       WHERE id=$0 AND id_superheroe=$1 RETURNING *`,
       [nombre_paquete, descripcion, precio, id]
     );
 

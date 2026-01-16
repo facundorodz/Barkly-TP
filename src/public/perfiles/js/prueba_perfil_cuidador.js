@@ -325,361 +325,183 @@
     modal.hide();
     resetModal();
   }
+    
 
-  // =========================
-  // PAQUETES - LISTAR
-  // =========================
-  async function cargarPaquetes() {
-    try {
+    // ===============================
+    // Cargar paquetes y render tabla
+    // ===============================
+    async function cargarPaquetes() {
       const res = await fetch(`${API_PAQUETES}`);
-      if (!res.ok) throw new Error("No se pudieron obtener los paquetes");
+      if (!res.ok) throw new Error("No se pudieron cargar paquetes");
 
-      const paquetes = await res.json();
+      paquetesCache = await res.json();
+      renderTablaPaquetes(paquetesCache);
 
+      const contador = document.getElementById("contador-paquetes");
+      if (contador) contador.textContent = paquetesCache.length;
+    }
+
+    function renderTablaPaquetes(lista) {
       const tbody = document.querySelector("#tabla-paquetes tbody");
+      if (!tbody) return;
+
       tbody.innerHTML = "";
 
-      paquetes.forEach((p) => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${p.nombre_paquete}</td>
-            <td>${p.descripcion}</td>
-            <td>$${p.precio}</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary" onclick='cargarFormularioPaquete(${JSON.stringify(p)})'>Editar</button>
-              <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${p.id}">Eliminar</button>
-            </td>
-          </tr>
+      if (!lista.length) {
+        tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No hay paquetes</td></tr>`;
+        return;
+      }
+
+      for (const p of lista) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${p.nombre_paquete ?? ""}</td>
+          <td>${p.descripcion ?? ""}</td>
+          <td>$${p.precio ?? ""}</td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-outline-primary" data-action="edit" data-id="${p.id}">
+              Editar
+            </button>
+            <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${p.id}">
+              Eliminar
+            </button>
+          </td>
         `;
-      });
-
-      document.getElementById("contador-paquetes").textContent = paquetes.length;
-    } catch (error) {
-      console.error("Error cargando paquetes:", error);
-    }
-  }
-
-  function escapeHtml(str) {
-    return String(str)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function cargarFormularioPaquete(p) {
-    document.getElementById("paquete_id").value = p.id;
-
-    // Cargar datos en el formulario inferior
-    document.getElementById("nombre_paquete").value = p.nombre_paquete;
-    document.getElementById("descripcion_paquete").value = p.descripcion;
-    document.getElementById("precio_paquete").value = p.precio;
-
-    // Feedback visual opcional
-    document.querySelector(".card-header h5").textContent = "Editar paquete";
-  }
-
-
-  // ===============================
-  // Editar paquete
-  // ===============================
-  async function editarPaquete(id) {
-    const nombre = prompt("Nuevo nombre:");
-    const desc = prompt("Nueva descripción:");
-    const precio = prompt("Nuevo precio:");
-
-    await fetch(`${API_URL}/paquetes/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nombre_paquete: nombre,
-        descripcion: desc,
-        precio: precio
-      })
-    });
-
-    cargarPaquetes();
-  }
-
-  const btnGuardarEditado = document.getElementById("guardar-boton");
-  btnGuardarEditado.addEventListener("click", (e) => {
-    e.preventDefault();
-    guardarPaqueteFormulario();
-  });
-
-
-  // ===================================
-  // GUARDA LOS CAMBIOS DE LOS PAQUETES
-  // ===================================
-
-  async function guardarPaqueteFormulario() {
-
-    const paqueteIdInput = document.getElementById("paquete_id");
-    const nombreSelect = document.getElementById("nombre_paquete");
-    const descripcionInput = document.getElementById("descripcion_paquete");
-    const precioInput = document.getElementById("precio_paquete");
-
-    if (!paqueteIdInput || !nombreSelect || !descripcionInput || !precioInput) {
-      alert("Error interno: formulario incompleto");
-      return;
+        tbody.appendChild(tr);
+      }
     }
 
-    const paqueteId = paqueteIdInput.value;
-    const nombre_paquete = nombreSelect.value;
-    const descripcion = descripcionInput.value.trim();
-    const precio = Number(precioInput.value);
+    // =====================================
+    // Tabla: Editar/Eliminar (delegación)
+    // =====================================
+    function onTablaPaquetesClick(e) {
+      const btn = e.target.closest("button[data-action]");
+      if (!btn) return;
 
-    if (!paqueteId) {
-      alert("No hay paquete seleccionado para editar");
-      return;
+      const action = btn.dataset.action;
+      const id = Number(btn.dataset.id);
+      if (!id) return;
+
+      if (action === "edit") {
+        const paquete = paquetesCache.find(p => Number(p.id) === id);
+        if (!paquete) return alert("No se encontró el paquete");
+        cargarPaqueteEnFormulario(paquete);
+      }
+
+      if (action === "delete") {
+        eliminarPaquete(id);
+      }
     }
 
-    if (!nombre_paquete) {
-      alert("Seleccioná un tipo de paquete");
-      return;
+    // ===============================
+    // Formulario inferior: cargar
+    // ===============================
+    function cargarPaqueteEnFormulario(p) {
+      document.getElementById("paquete_id").value = p.id;
+
+      // Select (nombre)
+      const sel = document.getElementById("nombre_paquete_select");
+      if (sel) sel.value = p.nombre_paquete ?? "";
+
+      // Inputs
+      document.getElementById("descripcion_paquete").value = p.descripcion ?? "";
+      document.getElementById("precio_paquete").value = p.precio ?? "";
     }
 
-    if (!descripcion || !precio) {
-      alert("Completá todos los campos");
-      return;
-    }
+    // ===============================
+    // Formulario inferior: guardar edición
+    // ===============================
+    async function guardarEdicionPaquete(e) {
+      e.preventDefault();
 
-    if (precio <= 0) {
-      alert("El precio debe ser mayor a 0");
-      return;
-    }
+      const paqueteId = Number(document.getElementById("paquete_id").value);
+      const nombre = document.getElementById("nombre_paquete_select").value.trim();
+      const descripcion = document.getElementById("descripcion_paquete").value.trim();
+      const precio = Number(document.getElementById("precio_paquete").value);
 
-    try {
-      const res = await fetch(
-        `http://localhost:3000/paquetes/${paqueteId}`,
-        {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            nombre_paquete,
-            descripcion,
-            precio
-          })
-        }
-      );
+      if (!paqueteId) return alert("Seleccioná un paquete desde la tabla para editar");
+      if (!nombre || nombre === "Elegir...") return alert("Seleccioná un nombre de paquete");
+      if (!descripcion) return alert("Completá la descripción");
+      if (!precio || precio <= 0) return alert("El precio debe ser mayor a 0");
 
-      if (!res.ok) throw new Error("Error al editar paquete");
-
-      paqueteIdInput.value = "";
-      nombreSelect.value = "";
-      descripcionInput.value = "";
-      precioInput.value = "";
-
-      document.querySelector(".card-header h5").textContent = "Editar paquete";
-
-      cargarPaquetes();
-      alert("Paquete actualizado correctamente");
-
-    } catch (error) {
-      console.error(error);
-      alert("No se pudo editar el paquete");
-    }
-}
-
-
-
-
-async function eliminarPaquete(id) {
-  if (!id) {
-    alert("ID de paquete inválido");
-    return;
-  }
-
-  if (!confirm("¿Eliminar paquete?")) return;
-
-  try {
-    const res = await fetch(
-      `${API_URL}/paquetes/${id}`,
-      { method: "DELETE" }
-    );
-
-    if (!res.ok) {
-      throw new Error("Error al eliminar paquete");
-    }
-
-    cargarPaquetes();
-
-  } catch (error) {
-    console.error(error);
-    alert("No se pudo eliminar el paquete");
-  }
-}
-
-
-  // ===============================
-  // EDICION (FORMULARIO INFERIOR)
-  // ===============================
-  /*function cargarFormularioPaquete(p) {
-    setValue("paquete_id", p.id);
-    setValue("precio_paquete", p.precio);
-    setValue("descripcion_paquete", p.descripcion);
-
-    const sel = $("nombre_paquete_select");
-    if (sel) sel.value = p.nombre_paquete ?? "";
-
-    setText("titulo-edicion", `Editando paquete #${p.id}`);
-  }*/
-
-  /*function cargarFormularioPaquete(p) {
-    document.getElementById("paquete_id").value = p.id;
-
-    // Cargar datos en el formulario inferior
-    document.getElementById("nombre_paquete").value = p.nombre_paquete;
-    document.getElementById("descripcion_paquete").value = p.descripcion;
-    document.getElementById("precio_paquete").value = p.precio;
-    const sel = $("nombre_paquete_select");
-    if (sel) sel.value = p.nombre_paquete ?? "";
-
-    // Feedback visual opcional
-    document.querySelector(".card-header h5").textContent = "Editar paquete";
-  }
-
-  function limpiarFormularioEdicion() {
-    setValue("paquete_id", "");
-    setValue("precio_paquete", "");
-    setValue("descripcion_paquete", "");
-
-    const sel = $("nombre_paquete_select");
-    if (sel) sel.value = "";
-
-    setText("titulo-edicion", "Editar paquete");
-  }
-
-  async function guardarEdicionPaquete(e) {
-    e.preventDefault();
-
-    const paqueteId = Number($("paquete_id")?.value);
-    const nombre_paquete = $("nombre_paquete_select")?.value?.trim();
-    const descripcion = $("descripcion_paquete")?.value?.trim();
-    const precio = Number($("precio_paquete")?.value);
-
-    if (!paqueteId) return alert("No hay paquete seleccionado para editar");
-    if (!nombre_paquete) return alert("Seleccioná un nombre de paquete");
-    if (!descripcion) return alert("Completá la descripción");
-    if (!precio || precio <= 0) return alert("El precio debe ser mayor a 0");
-
-    try {
-      const res = await fetch(`${API_PAQUETES}`, {
+      const res = await fetch(`${API_PAQUETES}/${paqueteId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre_paquete, descripcion, precio })
+        body: JSON.stringify({
+          nombre_paquete: nombre,
+          descripcion,
+          precio
+        })
       });
 
-      if (!res.ok) throw new Error("Error al editar paquete");
+      if (!res.ok) {
+        const txt = await res.text().catch(() => "");
+        console.error("PUT error:", txt);
+        return alert("Error al editar paquete");
+      }
 
+      // refrescar y limpiar
       await cargarPaquetes();
       limpiarFormularioEdicion();
-      alert("Paquete actualizado correctamente");
-
-    } catch (err) {
-      console.error(err);
-      alert("No se pudo editar el paquete");
+      alert("Paquete actualizado");
     }
-  }
 
-  async function eliminarPaqueteSeleccionado() {
-    const paqueteId = Number($("paquete_id")?.value);
-    if (!paqueteId) return alert("No hay paquete seleccionado");
-    await eliminarPaquete(paqueteId);
-    limpiarFormularioEdicion();
-  }
+    // ===============================
+    // Formulario inferior: cancelar
+    // ===============================
+    function limpiarFormularioEdicion() {
+      document.getElementById("paquete_id").value = "";
+      document.getElementById("nombre_paquete_select").value = "";
+      document.getElementById("descripcion_paquete").value = "";
+      document.getElementById("precio_paquete").value = "";
+    }
 
-  async function eliminarPaquete(id) {
-    if (!confirm("¿Eliminar paquete?")) return;
+    // ===============================
+    // Eliminar desde tabla
+    // ===============================
+    async function eliminarPaquete(id) {
+      if (!confirm("¿Eliminar paquete?")) return;
 
-    try {
-      const res = await fetch(`${API_PAQUETES}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Error al eliminar paquete");
+      const res = await fetch(`${API_PAQUETES}/${id}`, {
+        method: "DELETE"
+      });
+
+      if (!res.ok) {
+        const txt = await res.text().catch(() => "");
+        console.error("DELETE error:", txt);
+        return alert("No se pudo eliminar el paquete");
+      }
 
       await cargarPaquetes();
 
-    } catch (err) {
-      console.error(err);
-      alert("No se pudo eliminar el paquete");
+      // Si estabas editando ese paquete, limpiá el formulario
+      const paqueteIdActual = Number(document.getElementById("paquete_id").value);
+      if (paqueteIdActual === id) limpiarFormularioEdicion();
     }
-  }*/
-  // =========================
-  // EVENTS
-  // =========================
-  /*function bindEvents() {
-    // experiencia solo números
-    const exp = $("#experiencia");
-    if (exp) onlyNumbersInput(exp);
 
-    // perfil
-    $("#form-perfil")?.addEventListener("submit", guardarPerfil);
-    $("#btn-eliminar-cuenta")?.addEventListener("click", eliminarCuenta);
-    $("#btn-cancelar-perfil")?.addEventListener("click", cargarCuidador);
+    // ===============================
+    // INIT
+    // ===============================
+    document.addEventListener("DOMContentLoaded", async () => {
+      // tabla
+      const tbody = document.querySelector("#tabla-paquetes tbody");
+      if (tbody) tbody.addEventListener("click", onTablaPaquetesClick);
 
-    // logout
-    $("#btn-logout")?.addEventListener("click", () => {
-      localStorage.removeItem("cuidadores_id");
-      window.location.href = "/index.html";
+      // form edición
+      const form = document.getElementById("form-edicion-paquete");
+      if (form) form.addEventListener("submit", guardarEdicionPaquete);
+
+      const btnCancelar = document.getElementById("btn-cancelar-edicion");
+      if (btnCancelar) btnCancelar.addEventListener("click", limpiarFormularioEdicion);
+
+      // carga inicial
+      try {
+        await cargarPaquetes();
+      } catch (err) {
+        console.error(err);
+        alert("Error cargando paquetes");
+      }
     });
-
-    // al abrir modal, reset
-    const modalEl = $("#modalPaquetes");
-    modalEl?.addEventListener("shown.bs.modal", () => {
-      // asegurar DOM listo + evitar residuos de pruebas
-      resetModalPaquetes();
-    });
-
-      // Tabla: edit/delete
-    const tbody = document.querySelector("#tabla-paquetes tbody");
-    if (tbody) tbody.addEventListener("click", onTablaClick);
-
-    // Form edición
-    const formEdicion = $("form-paquete-edicion");
-    if (formEdicion) formEdicion.addEventListener("submit", guardarEdicionPaquete);
-
-    const btnLimpiar = $("btn-limpiar-paquete");
-    if (btnLimpiar) btnLimpiar.addEventListener("click", limpiarFormularioEdicion);
-
-    const btnEliminarSel = $("btn-eliminar-paquete-seleccionado");
-    if (btnEliminarSel) btnEliminarSel.addEventListener("click", eliminarPaqueteSeleccionado);
-
-    // Modal
-    const btnAgregarOtro = $("btn-agregar-otro-paquete");
-    if (btnAgregarOtro) btnAgregarOtro.addEventListener("click", agregarOtroPaqueteModal);
-
-    const btnGuardarModal = $("btn-guardar-paquete");
-    if (btnGuardarModal) btnGuardarModal.addEventListener("click", guardarPaquetesModal);
-
-    const btnCancelarModal = $("btn-cancelar-paquete");
-    if (btnCancelarModal) btnCancelarModal.addEventListener("click", cancelarModal);
-    }
-
-      // Cada vez que abrís el modal, resetea y recalcula límite
-    const modalEl = $("modalPaquetes");
-    if (modalEl) {
-      modalEl.addEventListener("shown.bs.modal", () => {
-        resetModal();
-      });
-    }*/
-
-
-  // =========================
-  // INIT
-  // =========================
-  /*document.addEventListener("DOMContentLoaded", async () => {
-    CUIDADOR_ID = getCuidadorIdDesdeLogin();
-
-    if (!CUIDADOR_ID) {
-      alert("No hay sesión iniciada. Iniciá sesión para ver tu perfil.");
-      window.location.href = "/login/login.html";
-      return;
-    }
-
-    bindEvents();
-    await cargarCuidador();
-    await cargarPaquetes();
-  });*/
   document.addEventListener("DOMContentLoaded", () => {
     cargarCuidador();
     cargarPaquetes();
