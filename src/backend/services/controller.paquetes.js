@@ -104,22 +104,25 @@ exports.eliminarPaquete = async (req, res) => {
   }
 };*/
 
-exports.obtenerPaquetesPorCuidador = async (req, res) => {
-  const { id } = req.params; // id del cuidador
-
+exports.obtenerPaquetePorCuidador = async (req, res) => {
   try {
+    const { id, paqueteId } = req.params;
+
     const result = await pool.query(
-      `SELECT id, id_superheroe, nombre_paquete, descripcion, precio
+      `SELECT *
        FROM paquetes
-       WHERE id_superheroe = $1
-       ORDER BY id ASC`,
-      [id]
+       WHERE id = $1 AND id_superheroe = $2`,
+      [paqueteId, id]
     );
 
-    return res.json(result.rows);
-  } catch (error) {
-    console.error("Error al obtener paquetes:", error);
-    return res.status(500).json({ error: "Error al obtener paquetes" });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Paquete no encontrado para este cuidador" });
+    }
+
+    return res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Error al obtener el paquete" });
   }
 };
 
@@ -159,63 +162,54 @@ exports.crearPaquete = async (req, res) => {
    PUT /paquetes/:id
    Edita un paquete por su id
 ================================ */
-exports.editarPaquete = async (req, res) => {
-  const { id } = req.params; // id del paquete
-  const { nombre_paquete, descripcion, precio } = req.body;
-
-  if (!nombre_paquete || !descripcion || precio === undefined || precio === null) {
-    return res.status(400).json({ error: "Datos incompletos" });
-  }
-
-  const precioNum = Number(precio);
-  if (Number.isNaN(precioNum) || precioNum <= 0) {
-    return res.status(400).json({ error: "Precio inválido" });
-  }
-
+exports.editarPaquetePorCuidador = async (req, res) => {
   try {
+    const { id, paqueteId } = req.params;
+    const { nombre_paquete, descripcion, precio } = req.body;
+
     const result = await pool.query(
       `UPDATE paquetes
        SET nombre_paquete = $1,
            descripcion = $2,
            precio = $3
-       WHERE id = $4
-       RETURNING id, id_superheroe, nombre_paquete, descripcion, precio`,
-      [nombre_paquete, descripcion, precioNum, id]
+       WHERE id = $4 AND id_superheroe = $5
+       RETURNING *`,
+      [nombre_paquete, descripcion, precio, paqueteId, id]
     );
 
-    if (result.rowCount === 0) {
-      return res.status(404).json({ error: "Paquete no encontrado" });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "No se pudo editar el paquete" });
     }
 
-    return res.json(result.rows[0]);
+    res.json(result.rows[0]);
   } catch (error) {
-    console.error("Error al editar paquete:", error);
-    return res.status(500).json({ error: "Error al editar paquete" });
+    console.error(error);
+    res.status(500).json({ error: "Error al editar paquete" });
   }
 };
-
 /* ===============================
    DELETE /paquetes/:id
    Elimina un paquete por su id
 ================================ */
-exports.eliminarPaquete = async (req, res) => {
-  const { id } = req.params; // id del paquete
-
+exports.eliminarPaquetePorCuidador = async (req, res) => {
   try {
+    const { id, paqueteId } = req.params;
+
     const result = await pool.query(
       `DELETE FROM paquetes
-       WHERE id = $1`,
-      [id]
+       WHERE id = $1 AND id_superheroe = $2
+       RETURNING *`,
+      [paqueteId, id]
     );
 
-    if (result.rowCount === 0) {
-      return res.status(404).json({ error: "Paquete no encontrado" });
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: "Paquete no encontrado o no pertenece al cuidador" });
     }
 
-    return res.json({ message: "Paquete eliminado correctamente" });
+    res.json({ mensaje: "Paquete eliminado correctamente" });
   } catch (error) {
-    console.error("Error al eliminar paquete:", error);
-    return res.status(500).json({ error: "Error al eliminar paquete" });
+    console.error(error);
+    res.status(500).json({ error: "Error al eliminar paquete" });
   }
 };
 

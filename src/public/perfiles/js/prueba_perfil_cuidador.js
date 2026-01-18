@@ -6,6 +6,7 @@
   // =========================
   const API_BASE = "http://localhost:3000";
   const CUIDADOR_ID = 2;
+  //const PAQUETE_ID = 20;
   const API_CUIDADORES = `${API_BASE}/cuidadores`;
   const API_PAQUETES = `${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`;
 
@@ -331,7 +332,7 @@
     // Cargar paquetes y render tabla
     // ===============================
     async function cargarPaquetes() {
-      const res = await fetch(`${API_PAQUETES}`);
+      const res = await fetch(`${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`);
       if (!res.ok) throw new Error("No se pudieron cargar paquetes");
 
       paquetesCache = await res.json();
