@@ -6,7 +6,6 @@
   // =========================
   const API_BASE = "http://localhost:3000";
   const CUIDADOR_ID = 2;
-  //const PAQUETE_ID = 20;
   const API_CUIDADORES = `${API_BASE}/cuidadores`;
   const API_PAQUETES = `${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`;
 
@@ -385,6 +384,7 @@
 
       if (action === "edit") {
         const paquete = paquetesCache.find(p => Number(p.id) === id);
+        console.log("Id paquete a editar: ", id);
         if (!paquete) return alert("No se encontró el paquete");
         cargarPaqueteEnFormulario(paquete);
       }
@@ -428,11 +428,7 @@
       const res = await fetch(`${API_PAQUETES}/${paqueteId}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          nombre_paquete: nombre,
-          descripcion,
-          precio
-        })
+        body: JSON.stringify({ nombre_paquete, descripcion, precio})
       });
 
       if (!res.ok) {
@@ -445,6 +441,45 @@
       await cargarPaquetes();
       limpiarFormularioEdicion();
       alert("Paquete actualizado");
+    }
+
+    async function guardarEdicionPaquete(e) {
+      e.preventDefault();
+
+      const paqueteId = $("paquete_id")?.value;
+      const nombre_paquete = $("nombre_paquete_select")?.value?.trim() || "";
+      const descripcion = $("descripcion_paquete")?.value?.trim() || "";
+      const precio = Number($("precio_paquete")?.value ?? 0);
+
+      if (!paqueteId) {
+        toast("No hay paquete seleccionado para editar");
+        return;
+      }
+      if (!nombre_paquete || !descripcion || !precio) {
+        toast("Completá todos los campos del formulario de edición");
+        return;
+      }
+      if (precio <= 0) {
+        toast("El precio debe ser mayor a 0");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_PAQUETES}/${paqueteId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre_paquete, descripcion, precio })
+        });
+
+        if (!res.ok) throw new Error("Error al editar paquete");
+        // refrescar y limpiar
+        await cargarPaquetes();
+        limpiarFormularioEdicion();
+        alert("Paquete actualizado");
+      } catch (err) {
+        console.error(err);
+        toast("No se pudo editar el paquete");
+      }
     }
 
     // ===============================

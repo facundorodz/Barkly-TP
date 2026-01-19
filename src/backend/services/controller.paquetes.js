@@ -48,7 +48,10 @@ exports.crearPaquete = async (req, res) => {
     res.status(500).json({ error: "Error al crear paquete" });
   }
 };
-
+/* ===============================
+   POST /cuidadores/:id/paquetes
+   Crea un paquete para ese cuidador
+================================ 
 // Editar paquete
 exports.editarPaquete = async (req, res) => {
   try {
@@ -104,6 +107,36 @@ exports.eliminarPaquete = async (req, res) => {
   }
 };*/
 
+/* =====================================================
+   OBTENER TODOS LOS PAQUETES DE UN CUIDADOR
+   GET /cuidadores/:id/paquetes
+===================================================== */
+
+exports.obtenerPaquetesPorCuidador = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await pool.query(
+      `SELECT *
+       FROM paquetes
+       WHERE id_superheroe = $1
+       ORDER BY id ASC`,
+      [id]
+    );
+
+    res.json(result.rows);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Error al obtener paquetes" });
+  }
+};
+
+
+/* =====================================================
+   OBTENER UN PAQUETE ESPECÍFICO DE UN CUIDADOR
+   GET /cuidadores/:id/paquetes/:paqueteId
+===================================================== */
+
 exports.obtenerPaquetePorCuidador = async (req, res) => {
   try {
     const { id, paqueteId } = req.params;
@@ -158,10 +191,10 @@ exports.crearPaquete = async (req, res) => {
   }
 };
 
-/* ===============================
-   PUT /paquetes/:id
-   Edita un paquete por su id
-================================ */
+/* =====================================================
+   EDITAR PAQUETE (SOLO SI PERTENECE AL CUIDADOR)
+   PUT /cuidadores/:id/paquetes/:paqueteId
+===================================================== */
 exports.editarPaquetePorCuidador = async (req, res) => {
   try {
     const { id, paqueteId } = req.params;
@@ -169,12 +202,12 @@ exports.editarPaquetePorCuidador = async (req, res) => {
 
     const result = await pool.query(
       `UPDATE paquetes
-       SET nombre_paquete = $1,
-           descripcion = $2,
-           precio = $3
-       WHERE id = $4 AND id_superheroe = $5
+       SET nombre_paquete = $3,
+           descripcion = $4,
+           precio = $5
+       WHERE id = $1 AND id_superheroe = $2
        RETURNING *`,
-      [nombre_paquete, descripcion, precio, paqueteId, id]
+      [paqueteId, id, nombre_paquete, descripcion, precio]
     );
 
     if (result.rows.length === 0) {
