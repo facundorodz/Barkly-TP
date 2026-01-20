@@ -189,27 +189,27 @@ const CUIDADOR_ID = 2;
     // ===============================
     // ELIMINAR CUENTA
     // ===============================
-document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
-    const confirmar = confirm(
-        "⚠️ ¿Estás seguro? Esta acción NO se puede deshacer"
-    );
-    if (!confirmar){
-        return;
-    } 
-    try {
-        const resp = await fetch("/heros/cuidadores/session", { method: "DELETE" });
-        const data = await resp.json();
-        if (data.success) {
-            alert("Cuenta eliminada correctamente");
-            window.location.href = "/index.html"; 
-        } else {
-            alert(data.error);
-        }
-    } catch (error) {
-        console.error(error);
-        alert("Error al borrar cuenta");
-    }
-});
+  document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
+      const confirmar = confirm(
+          "⚠️ ¿Estás seguro? Esta acción NO se puede deshacer"
+      );
+      if (!confirmar){
+          return;
+      } 
+      try {
+          const resp = await fetch("/heros/cuidadores/session", { method: "DELETE" });
+          const data = await resp.json();
+          if (data.success) {
+              alert("Cuenta eliminada correctamente");
+              window.location.href = "/index.html"; 
+          } else {
+              alert(data.error);
+          }
+      } catch (error) {
+          console.error(error);
+          alert("Error al borrar cuenta");
+      }
+  });
 
 
 const btnGuardar = document.getElementById("btn-guardar-paquete");
@@ -415,7 +415,7 @@ async function guardarPaquete() {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/paquetes/${paqueteId}`,
+        `http://localhost:3000/cuidadores/${CUIDADOR_ID}/paquetes/${paqueteId}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

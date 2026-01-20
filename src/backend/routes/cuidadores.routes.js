@@ -26,6 +26,7 @@ router.get("/cuidadores/:id/paquetes", paquete.obtenerPaquetesPorCuidador);
 router.post("/cuidadores/:id/paquetes", paquete.crearPaquete);
 router.get("/cuidadores/:id/paquetes/:paqueteId", paquete.obtenerPaquetePorCuidador);
 router.put("/cuidadores/:id/paquetes/:paqueteId", paquete.editarPaquetePorCuidador);
+//router.put("paquetes/:id", paquete.editarPaquetePorCuidador);
 router.delete("/cuidadores/:id/paquetes/:paqueteId", paquete.eliminarPaquetePorCuidador);
 
 

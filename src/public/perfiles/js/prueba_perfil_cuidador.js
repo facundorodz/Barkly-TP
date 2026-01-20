@@ -407,49 +407,30 @@
       // Inputs
       document.getElementById("descripcion_paquete").value = p.descripcion ?? "";
       document.getElementById("precio_paquete").value = p.precio ?? "";
+      document.querySelector(".card-header h5").textContent = "Editando paquete";
     }
 
     // ===============================
     // Formulario inferior: guardar edición
     // ===============================
+
     async function guardarEdicionPaquete(e) {
       e.preventDefault();
 
-      const paqueteId = Number(document.getElementById("paquete_id").value);
-      const nombre = document.getElementById("nombre_paquete_select").value.trim();
-      const descripcion = document.getElementById("descripcion_paquete").value.trim();
-      const precio = Number(document.getElementById("precio_paquete").value);
+      const paqueteIdInput = document.getElementById("paquete_id");
+      const nombreSelect = document.getElementById("nombre_paquete_select");
+      const descripcionInput = document.getElementById("descripcion_paquete");
+      const precioInput = document.getElementById("precio_paquete");
 
-      if (!paqueteId) return alert("Seleccioná un paquete desde la tabla para editar");
-      if (!nombre || nombre === "Elegir...") return alert("Seleccioná un nombre de paquete");
-      if (!descripcion) return alert("Completá la descripción");
-      if (!precio || precio <= 0) return alert("El precio debe ser mayor a 0");
-
-      const res = await fetch(`${API_PAQUETES}/${paqueteId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nombre_paquete, descripcion, precio})
-      });
-
-      if (!res.ok) {
-        const txt = await res.text().catch(() => "");
-        console.error("PUT error:", txt);
-        return alert("Error al editar paquete");
+      if (!paqueteIdInput || !nombreSelect || !descripcionInput || !precioInput) {
+        alert("Error interno: formulario incompleto");
+        return;
       }
 
-      // refrescar y limpiar
-      await cargarPaquetes();
-      limpiarFormularioEdicion();
-      alert("Paquete actualizado");
-    }
-
-    async function guardarEdicionPaquete(e) {
-      e.preventDefault();
-
-      const paqueteId = $("paquete_id")?.value;
-      const nombre_paquete = $("nombre_paquete_select")?.value?.trim() || "";
-      const descripcion = $("descripcion_paquete")?.value?.trim() || "";
-      const precio = Number($("precio_paquete")?.value ?? 0);
+      const paqueteId = paqueteIdInput.value;
+      const nombre_paquete = nombreSelect.value;
+      const descripcion = descripcionInput.value.trim();
+      const precio = Number(precioInput.value);
 
       if (!paqueteId) {
         toast("No hay paquete seleccionado para editar");
@@ -481,6 +462,55 @@
         toast("No se pudo editar el paquete");
       }
     }
+
+
+    /*async function guardarPaqueteFormulario() {
+      const paqueteId = document.getElementById("paquete_id")?.value;
+      const nombre_paquete = document.getElementById("nombre_paquete")?.value.trim();
+      const descripcion = document.getElementById("descripcion_paquete")?.value.trim();
+      const precio = Number(document.getElementById("precio_paquete")?.value);
+
+      if (!paqueteId) {
+        alert("No hay paquete seleccionado para editar. Tocá 'Editar' en la tabla.");
+        return;
+      }
+
+      if (!nombre_paquete || !descripcion || !precio) {
+        alert("Completá todos los campos.");
+        return;
+      }
+
+      if (precio <= 0) {
+        alert("El precio debe ser mayor a 0.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_PAQUETES}/${paqueteId}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ nombre_paquete, descripcion, precio }),
+        });
+
+        // Si el back devuelve HTML de error (Cannot PUT...), esto te lo hace visible:
+        const text = await res.text();
+        if (!res.ok) {
+          console.error("Respuesta server:", text);
+          throw new Error("Error al editar paquete");
+        }
+
+        // Si el back responde JSON, podés parsear:
+        // const actualizado = JSON.parse(text);
+
+        limpiarFormularioEdicion();
+        await cargarPaquetes();
+        alert("Paquete actualizado correctamente.");
+
+      } catch (error) {
+        console.error(error);
+        alert("No se pudo editar el paquete. Revisá consola y Network.");
+      }
+    }*/
 
     // ===============================
     // Formulario inferior: cancelar
@@ -515,6 +545,29 @@
       if (paqueteIdActual === id) limpiarFormularioEdicion();
     }
 
+    function bindEvents() {
+      // ---------- FORMULARIO DE EDICIÓN ----------
+      const formEditar = document.getElementById("form-paquete-edicion");
+      if (formEditar) {
+        formEditar.addEventListener("submit", (e) => {
+          e.preventDefault();
+          guardarEdicionPaquete();
+        });
+      }
+
+      // ---------- BOTÓN GUARDAR DEL MODAL ----------
+      const btnGuardarModal = document.getElementById("btn-guardar-paquete");
+      if (btnGuardarModal) {
+        btnGuardarModal.addEventListener("click", guardarPaquetesModal);
+      }
+
+      // ---------- BOTÓN CANCELAR DEL MODAL ----------
+      const btnCancelarModal = document.getElementById("btn-cancelar-paquete");
+      if (btnCancelarModal) {
+        btnCancelarModal.addEventListener("click", resetModal);
+      }
+    }
+
     // ===============================
     // INIT
     // ===============================
@@ -532,14 +585,17 @@
 
       // carga inicial
       try {
+        await cargarCuidador();
         await cargarPaquetes();
+        bindEvents();
       } catch (err) {
         console.error(err);
         alert("Error cargando paquetes");
       }
     });
-  document.addEventListener("DOMContentLoaded", () => {
+  /*document.addEventListener("DOMContentLoaded", () => {
     cargarCuidador();
     cargarPaquetes();
-  });
+  });*/
+
 })();

@@ -58,11 +58,6 @@ exports.editarPaquete = async (req, res) => {
     const { id} = req.params;
     const { nombre_paquete, descripcion, precio } = req.body;
 
-    const result = await pool.query(
-      `UPDATE paquetes SET nombre_paquete=$1, descripcion=$2, precio=$3
-       WHERE id=$4 RETURNING *`,
-      [nombre_paquete, descripcion, precio, id]
-    );
 
    const result = await pool.query(
       `UPDATE paquetes SET nombre_paquete=$1, descripcion=$2, precio=$3
@@ -195,7 +190,7 @@ exports.crearPaquete = async (req, res) => {
    EDITAR PAQUETE (SOLO SI PERTENECE AL CUIDADOR)
    PUT /cuidadores/:id/paquetes/:paqueteId
 ===================================================== */
-exports.editarPaquetePorCuidador = async (req, res) => {
+/*exports.editarPaquetePorCuidador = async (req, res) => {
   try {
     const { id, paqueteId } = req.params;
     const { nombre_paquete, descripcion, precio } = req.body;
@@ -217,6 +212,25 @@ exports.editarPaquetePorCuidador = async (req, res) => {
     res.json(result.rows[0]);
   } catch (error) {
     console.error(error);
+    res.status(500).json({ error: "Error al editar paquete" });
+  }
+};*/
+
+exports.editarPaquetePorCuidador = async (req, res) => {
+  try {
+    const { id} = req.params;
+    const { nombre_paquete, descripcion, precio } = req.body;
+
+   const result = await pool.query(
+      `UPDATE paquetes SET nombre_paquete=$1, descripcion=$2, precio=$3
+       WHERE id=$1
+       RETURNING *`,
+      [id, nombre_paquete, descripcion, precio]
+    );
+
+    res.json(result.rows[0]);
+
+  } catch (err) {
     res.status(500).json({ error: "Error al editar paquete" });
   }
 };
