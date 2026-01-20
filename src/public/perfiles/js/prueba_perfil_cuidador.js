@@ -414,7 +414,7 @@
     // Formulario inferior: guardar edición
     // ===============================
 
-    async function guardarEdicionPaquete(e) {
+    /*async function guardarEdicionPaquete(e) {
       e.preventDefault();
 
       const paqueteIdInput = document.getElementById("paquete_id");
@@ -432,7 +432,7 @@
       const descripcion = descripcionInput.value.trim();
       const precio = Number(precioInput.value);
 
-      if (!paqueteId) {
+      /*if (!paqueteId) {
         toast("No hay paquete seleccionado para editar");
         return;
       }
@@ -443,9 +443,9 @@
       if (precio <= 0) {
         toast("El precio debe ser mayor a 0");
         return;
-      }
+      }*/
 
-      try {
+     /* try {
         const res = await fetch(`${API_PAQUETES}/${paqueteId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -459,58 +459,11 @@
         alert("Paquete actualizado");
       } catch (err) {
         console.error(err);
-        toast("No se pudo editar el paquete");
-      }
-    }
-
-
-    /*async function guardarPaqueteFormulario() {
-      const paqueteId = document.getElementById("paquete_id")?.value;
-      const nombre_paquete = document.getElementById("nombre_paquete")?.value.trim();
-      const descripcion = document.getElementById("descripcion_paquete")?.value.trim();
-      const precio = Number(document.getElementById("precio_paquete")?.value);
-
-      if (!paqueteId) {
-        alert("No hay paquete seleccionado para editar. Tocá 'Editar' en la tabla.");
-        return;
-      }
-
-      if (!nombre_paquete || !descripcion || !precio) {
-        alert("Completá todos los campos.");
-        return;
-      }
-
-      if (precio <= 0) {
-        alert("El precio debe ser mayor a 0.");
-        return;
-      }
-
-      try {
-        const res = await fetch(`${API_PAQUETES}/${paqueteId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nombre_paquete, descripcion, precio }),
-        });
-
-        // Si el back devuelve HTML de error (Cannot PUT...), esto te lo hace visible:
-        const text = await res.text();
-        if (!res.ok) {
-          console.error("Respuesta server:", text);
-          throw new Error("Error al editar paquete");
-        }
-
-        // Si el back responde JSON, podés parsear:
-        // const actualizado = JSON.parse(text);
-
-        limpiarFormularioEdicion();
-        await cargarPaquetes();
-        alert("Paquete actualizado correctamente.");
-
-      } catch (error) {
-        console.error(error);
-        alert("No se pudo editar el paquete. Revisá consola y Network.");
+        //toast("No se pudo editar el paquete");
       }
     }*/
+
+
 
     // ===============================
     // Formulario inferior: cancelar
@@ -545,14 +498,31 @@
       if (paqueteIdActual === id) limpiarFormularioEdicion();
     }
 
+    document.getElementById("form-paquete-edicion").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const cambios = {
+          paqueteIdInput = document.getElementById("paquete_id").value,
+          nombreSelect = document.getElementById("nombre_paquete_select").value,
+          descripcionInput = document.getElementById("descripcion_paquete").value,
+          precioInput = Number.getElementById("precio_paquete").value,
+      };
+
+      await fetch(`${API_PAQUETES}/${paqueteIdInput}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(cambios),
+      });
+
+      alert("Datos actualizados");
+      cargarPaquetes();
+    });
+
     function bindEvents() {
       // ---------- FORMULARIO DE EDICIÓN ----------
       const formEditar = document.getElementById("form-paquete-edicion");
       if (formEditar) {
-        formEditar.addEventListener("submit", (e) => {
-          e.preventDefault();
-          guardarEdicionPaquete();
-        });
+        formEditar.addEventListener("submit", guardarEdicionPaquete);
       }
 
       // ---------- BOTÓN GUARDAR DEL MODAL ----------
