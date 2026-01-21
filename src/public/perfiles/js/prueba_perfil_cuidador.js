@@ -1,571 +1,385 @@
-(() => {
-  "use strict";
 
-  // =========================
-  // CONFIG
-  // =========================
-  const API_BASE = "http://localhost:3000";
-  const CUIDADOR_ID = 2;
-  const API_CUIDADORES = `${API_BASE}/cuidadores`;
-  const API_PAQUETES = `${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`;
+// ==========================
+    // CONFIG
+    // ==========================
+    const API_BASE = "http://localhost:3000";
+    const CUIDADOR_ID = 2;
+    const API_CUIDADORES = `${API_BASE}/cuidadores`;
+    const API_PAQUETES = `${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`;
 
-  // ID del cuidador desde login
-  // En tu login guardá: localStorage.setItem("cuidadores_id", data.id)
-  /*function getCuidadorIdDesdeLogin() {
-    const id = localStorage.getItem("cuidadores_id");
-    return id ? Number(id) : null;
-  }
+    // ID del cuidador: se espera que el login lo guarde así.
+    // Ej: localStorage.setItem("id_cuidador", "1");
+    const cuidadorId = localStorage.getItem("id_cuidador");
 
-  let CUIDADOR_ID = null;*/
-  let paquetesCache = []; // cache de paquetes actuales
+    // ==========================
+    // HELPERS
+    // ==========================
+    function setEstado(tipo, mensaje) {
+      const area = document.getElementById("estadoArea");
+      if (!mensaje) { area.innerHTML = ""; return; }
 
-  // =========================
-  // DOM HELPERS
-  // =========================
-  const $ = (sel) => document.querySelector(sel);
+      const clase =
+        tipo === "ok" ? "alert-success" :
+        tipo === "warn" ? "alert-warning" :
+        "alert-danger";
 
-  function setText(id, value) {
-    const el = document.getElementById(id);
-    if (el) el.textContent = value ?? "";
-  }
-
-  function setValue(id, value) {
-    const el = document.getElementById(id);
-    if (el) el.value = value ?? "";
-  }
-
-  function onlyNumbersInput(el) {
-    el.addEventListener("input", () => {
-      el.value = el.value.replace(/[^0-9]/g, "");
-    });
-  }
-
-  // =========================
-  // PERFIL - VALIDACIONES BÁSICAS
-  // =========================
-  function checkInputsPerfil() {
-    const nickname = $("#nickname")?.value?.trim();
-    const franquicia = $("#franquicia")?.value?.trim();
-    const poderes = $("#poderes")?.value?.trim();
-    const experiencia = $("#experiencia")?.value;
-    const contrasena = $("#contrasena")?.value?.trim();
-
-    let ok = true;
-
-    if (!nickname || !franquicia || !poderes || !experiencia || !contrasena) {
-      alert("Debe añadir TODOS los datos.");
-      ok = false;
-    } else if (nickname.length > 120) {
-      alert('El campo "nombre" es demasiado largo.');
-      ok = false;
-    } else if (franquicia.length > 100) {
-      alert('El campo "franquicia" es demasiado largo.');
-      ok = false;
-    } else if (Number(experiencia) <= 0) {
-      alert("La experiencia debe ser mayor a 0.");
-      ok = false;
+      area.innerHTML = `<div class="alert ${clase} mb-0" role="alert">${mensaje}</div>`;
     }
 
-    return ok;
-  }
-
-  // =========================
-  // API CALLS
-  // =========================
-  async function apiJson(url, options = {}) {
-    const res = await fetch(url, options);
-    const contentType = res.headers.get("content-type") || "";
-    const isJson = contentType.includes("application/json");
-
-    // Si el backend devuelve HTML de error, esto evita JSON.parse error
-    const body = isJson ? await res.json() : await res.text();
-
-    if (!res.ok) {
-      const message = isJson ? (body?.error || JSON.stringify(body)) : body;
-      throw new Error(message || `HTTP ${res.status}`);
+    function money(v) {
+      if (v === undefined || v === null || v === "") return "—";
+      return `$${v}`;
     }
 
-    return body;
-  }
-
-  // =========================
-  // CARGAR CUIDADOR
-  // =========================
-  async function cargarCuidador() {
-  try {
-    const res = await fetch(`${API_CUIDADORES}/${CUIDADOR_ID}`);
-
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}));
-      throw new Error(err.error || "No se pudo obtener el cuidador");
+    async function fetchJSON(url, options) {
+      const res = await fetch(url, options);
+      if (!res.ok) {
+        const text = await res.text().catch(() => "");
+        throw new Error(`HTTP ${res.status} - ${text || "Error en respuesta"}`);
+      }
+      // algunas rutas pueden responder sin json; intentamos parsear
+      const ct = res.headers.get("content-type") || "";
+      if (ct.includes("application/json")) return res.json();
+      return null;
     }
 
-    const data = await res.json();
+    function resetFormPaquete() {
+      document.getElementById("paquete_id").value = "";
+      document.getElementById("nombre_paquete").value = "";
+      document.getElementById("descripcion").value = "";
+      document.getElementById("precio").value = "";
 
-    // Header
-    const nombreHeader = document.getElementById("nombre-superheroe-header");
-    const franquiciaHeader = document.getElementById("franquicia-header");
-    const profilePic = document.getElementById("profilePic");
-
-    if (nombreHeader) nombreHeader.textContent = data.nombre ?? "";
-    if (franquiciaHeader) franquiciaHeader.textContent = data.franquicia ?? "";
-
-    if (profilePic) {
-      profilePic.src = data.foto_perfil || "https://via.placeholder.com/150";
-      profilePic.alt = `Foto de ${data.nombre || "cuidador"}`;
+      document.getElementById("tituloFormPaquete").textContent = "Agregar paquete";
+      document.getElementById("modoFormPaquete").textContent = "Modo: Crear";
+      document.getElementById("btnGuardarPaquete").textContent = "Guardar";
     }
 
-    // Form inputs
-    const nickname = document.getElementById("nickname");
-    const franquicia = document.getElementById("franquicia");
-    const experiencia = document.getElementById("experiencia");
-    const poderes = document.getElementById("poderes");
-    const contrasena = document.getElementById("contrasena");
+    function fillFormPaquete(p) {
+      document.getElementById("paquete_id").value = p.id;
+      document.getElementById("nombre_paquete").value = p.nombre_paquete ?? "";
+      document.getElementById("descripcion").value = p.descripcion ?? "";
+      document.getElementById("precio").value = p.precio ?? "";
 
-    if (nickname) nickname.value = data.nombre ?? "";
-    if (franquicia) franquicia.value = data.franquicia ?? "";
-    if (experiencia) experiencia.value = data.experiencia ?? "";
-    if (poderes) poderes.value = data.poderes ?? "";
-    if (contrasena) contrasena.value = data.contrasenia ?? "";
+      document.getElementById("tituloFormPaquete").textContent = "Editar paquete";
+      document.getElementById("modoFormPaquete").textContent = `Modo: Editar (ID ${p.id})`;
+      document.getElementById("btnGuardarPaquete").textContent = "Actualizar";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
+    }
 
-    // contador (si lo guardás en tabla superheroes)
-    const contador = document.getElementById("contador-paquetes");
-    if (contador) contador.textContent = data.paquetes_ofrecidos ?? 0;
+    // ==========================
+    // RENDER
+    // ==========================
+    function renderCuidador(c) {
+      document.getElementById("badgeId").textContent = `ID: ${c.id ?? "—"}`;
 
-  } catch (err) {
-    console.error("Error cargando cuidador:", err);
-    alert("No se pudo cargar la información del cuidador. Revisá consola.");
-  }
-}
+      document.getElementById("nombre").value = c.nombre ?? "";
+      document.getElementById("franquicia").value = c.franquicia ?? "";
+      document.getElementById("experiencia").value = (c.experiencia ?? "");
+      document.getElementById("poderes").value = c.poderes ?? "";
+      document.getElementById("foto_perfil").value = c.foto_perfil ?? "";
 
-  // =========================
-  // GUARDAR PERFIL
-  // =========================
-  async function guardarPerfil(e) {
-    e.preventDefault();
+      document.getElementById("nombreHeader").textContent = c.nombre ?? "Perfil del cuidador";
+      document.getElementById("franquiciaHeader").textContent = c.franquicia ?? "Sin franquicia";
+      document.getElementById("experienciaHeader").textContent = (c.experiencia ?? "—");
+      document.getElementById("poderesHeader").textContent = (c.poderes ?? "—");
 
-    if (!checkInputsPerfil()) return;
+      if (c.foto_perfil) document.getElementById("avatar").src = c.foto_perfil;
+    }
 
-    const cambios = {
-      nombre: $("#nickname").value.trim(),
-      franquicia: $("#franquicia").value.trim(),
-      experiencia: Number($("#experiencia").value),
-      poderes: $("#poderes").value.trim(),
-      contrasenia: $("#contrasena").value.trim(),
-    };
+    function renderPaquetes(paquetes) {
+      const tbody = document.getElementById("tbodyPaquetes");
+      const nota = document.getElementById("notaPaquetes");
+      tbody.innerHTML = "";
 
-    try {
-      await apiJson(`${API_CUIDADORES}/${CUIDADOR_ID}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cambios),
+      document.getElementById("contadorPaquetes").textContent = paquetes.length;
+
+      if (!paquetes.length) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="4" class="text-center muted py-4">
+              No hay paquetes cargados todavía.
+            </td>
+          </tr>
+        `;
+        nota.textContent = "Podés agregar paquetes desde el formulario de abajo.";
+        return;
+      }
+
+      paquetes.forEach(p => {
+        tbody.innerHTML += `
+          <tr>
+            <td class="fw-semibold">${p.nombre_paquete ?? "—"}</td>
+            <td class="text-break">${p.descripcion ?? "—"}</td>
+            <td class="text-end">${money(p.precio)}</td>
+            <td class="text-center">
+              <button class="btn btn-sm btn-outline-primary me-1" data-action="edit" data-id="${p.id}">Editar</button>
+              <button class="btn btn-sm btn-outline-danger" data-action="del" data-id="${p.id}">Eliminar</button>
+            </td>
+          </tr>
+        `;
       });
 
-      alert("Datos actualizados");
-      await cargarCuidador();
-    } catch (err) {
-      console.error(err);
-      alert("No se pudo actualizar el perfil");
+      nota.textContent = "Tip: usá “Editar” para cargar el paquete en el formulario y luego “Actualizar”.";
     }
-  }
 
-  // =========================
-  // ELIMINAR CUENTA
-  // =========================
-  async function eliminarCuenta() {
-    if (!confirm("¿Seguro que querés eliminar este cuidador?")) return;
+    // ==========================
+    // LOAD
+    // ==========================
+    async function cargarTodo() {
+      if (!CUIDADOR_ID) {
+        setEstado("warn", "No hay sesión activa de cuidador. Iniciá sesión para ver tu perfil.");
+        document.getElementById("notaSesion").textContent =
+          'Falta "id_cuidador" en localStorage. Guardalo al iniciar sesión.';
+        // Dejar tabla vacía
+        renderPaquetes([]);
+        return;
+      }
 
-    try {
-      await apiJson(`${API_CUIDADORES}/${CUIDADOR_ID}`, { method: "DELETE" });
-      alert("Cuenta eliminada");
-      localStorage.removeItem("cuidadores_id");
-      window.location.href = "/index.html";
-    } catch (err) {
-      console.error(err);
-      alert("No se pudo eliminar la cuenta");
+      setEstado("ok", "Cargando perfil y paquetes...");
+
+      try {
+        const cuidador = await fetchJSON(`${API_CUIDADORES}/${CUIDADOR_ID}`);
+        if (!cuidador || !cuidador.id) {
+          setEstado("warn", "El cuidador no está registrado. Verificá tu ID o registrate.");
+          return;
+        }
+        renderCuidador(cuidador);
+
+        const paquetes = await fetchJSON(`${API_PAQUETES}`);
+        paquetesCache = Array.isArray(paquetes) ? paquetes : [];
+        renderPaquetes(paquetesCache);
+        actualizarUIAgregarPaquete();
+
+        setEstado("", "");
+      } catch (err) {
+        console.error(err);
+        setEstado("error", "No se pudo cargar. Verificá que el backend esté corriendo y que las rutas existan.");
+      }
     }
-  }
 
-  // ===============================
-  // MODAL: CREAR HASTA 3 PAQUETES
-  // ===============================
-  function actualizarEstadoBotonAgregar() {
-    const btnAbrir = $("btn-abrir-modal-paquete");
-    const btnAgregarOtro = $("btn-agregar-otro-paquete");
+    // ==========================
+    // PERFIL: UPDATE / DELETE
+    // ==========================
+    document.getElementById("formPerfil").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!CUIDADOR_ID) return;
 
-    const totalActual = paquetesCache.length;
+      const body = {
+        nombre: document.getElementById("nombre").value.trim(),
+        franquicia: document.getElementById("franquicia").value.trim(),
+        experiencia: Number(document.getElementById("experiencia").value || 0),
+        poderes: document.getElementById("poderes").value.trim(),
+        foto_perfil: document.getElementById("foto_perfil").value.trim()
+      };
 
-    // Si ya tiene 3 en total, deshabilito abrir modal
-    if (btnAbrir) btnAbrir.disabled = totalActual >= 3;
-
-    // Dentro del modal, el "Agregar otro" depende de los items del modal y el total en BDD
-    if (btnAgregarOtro) {
-      const maxModalPermitido = Math.max(0, 3 - totalActual);
-      btnAgregarOtro.disabled = modalCount >= maxModalPermitido;
-    }
-  }
-
-  function resetModal() {
-    // deja 1 item y limpia inputs
-    const cont = $("contenedor-paquetes-modal");
-    if (!cont) return;
-
-    const items = cont.querySelectorAll(".paquete-modal-item");
-    items.forEach((it, idx) => {
-      if (idx === 0) {
-        it.querySelector("input[type='text']").value = "";
-        it.querySelector("input[type='number']").value = "";
-      } else {
-        it.remove();
+      try {
+        setEstado("ok", "Guardando cambios del perfil...");
+        await fetchJSON(`${API_CUIDADORES}/${CUIDADOR_ID}`, {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+        setEstado("ok", "Perfil actualizado correctamente.");
+        await cargarTodo();
+      } catch (err) {
+        console.error(err);
+        setEstado("error", "No se pudo actualizar el perfil. Revisá el backend y la consola.");
       }
     });
 
-    modalCount = 1;
-    actualizarEstadoBotonAgregar();
-  }
+    document.getElementById("btnRecargar").addEventListener("click", () => {
+      cargarTodo();
+    });
 
-  function agregarOtroPaqueteModal() {
-    const cont = $("contenedor-paquetes-modal");
-    if (!cont) return;
+    document.getElementById("btnEliminarCuenta").addEventListener("click", async () => {
+      if (!CUIDADOR_ID) return;
+      const ok = confirm("¿Seguro que querés eliminar tu cuenta? Esto eliminará tu perfil.");
+      if (!ok) return;
 
-    const totalActual = paquetesCache.length;
-    const maxModalPermitido = Math.max(0, 3 - totalActual);
+      try {
+        setEstado("ok", "Eliminando cuenta...");
+        await fetchJSON(`${API_CUIDADORES}/${CUIDADOR_ID}`, { method: "DELETE" });
+        setEstado("ok", "Cuenta eliminada.");
+        localStorage.removeItem("id_cuidador");
+        renderPaquetes([]);
+      } catch (err) {
+        console.error(err);
+        setEstado("error", "No se pudo eliminar la cuenta. Verificá que tu backend tenga DELETE /cuidadores/:id.");
+      }
+    });
 
-    if (modalCount >= maxModalPermitido) {
-      alert("No podés agregar más paquetes (máximo 3 en total).");
-      return;
-    }
+    // ==========================
+    // MODAL: CREAR PAQUETE (POST)
+    // ==========================
 
-    modalCount += 1;
-
-    const div = document.createElement("div");
-    div.className = "border rounded p-3 mb-3 paquete-modal-item";
-    div.dataset.index = String(modalCount);
-
-    // Título predeterminado por orden
-    const titulo =
-      modalCount === 1 ? "Plan Básico" :
-      modalCount === 2 ? "Plan Premium" :
-      "Plan Deluxe";
-
-    div.innerHTML = `
-      <h2 class="h5 mb-3">${titulo}</h2>
-
-      <label class="form-label">Descripción</label>
-      <input type="text" class="form-control mb-2" />
-
-      <label class="form-label">Precio</label>
-      <input type="number" min="0" class="form-control" />
-    `;
-
-    cont.appendChild(div);
-    actualizarEstadoBotonAgregar();
-  }
-
-  async function guardarPaquetesModal() {
-    const cont = $("contenedor-paquetes-modal");
-    if (!cont) return;
-
-    const items = [...cont.querySelectorAll(".paquete-modal-item")];
-
-    // Armar payloads
-    const nuevos = [];
-    for (const it of items) {
-      const h2 = it.querySelector("h2");
-      const titulo = (h2?.textContent || "Paquete").trim();
-
-      const inputs = it.querySelectorAll("input");
-      const descripcion = (inputs[0]?.value || "").trim();
-      const precio = Number(inputs[1]?.value || 0);
-
-      if (!descripcion || !precio || precio <= 0) {
-        return alert("Completá descripción y precio válido en todos los paquetes del modal.");
+    let paquetesCache = []; // lista actual de paquetes del cuidador
+    document.getElementById("formPaqueteModal").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!CUIDADOR_ID) {
+        setEstado("warn", "No hay sesión de cuidador. Iniciá sesión.");
+        return;
       }
 
-      nuevos.push({ nombre_paquete: titulo, descripcion, precio });
-    }
+      const maximo = 3;
 
-    // Chequear límite total (existentes + nuevos)
-    if (paquetesCache.length + nuevos.length > 3) {
-      return alert("Excede el máximo de 3 paquetes en total.");
-    }
+      // 1) Validación máximo
+      if (paquetesCache.length >= maximo) {
+        setEstado("warn", "Ya alcanzaste el máximo de 3 paquetes.");
+        return;
+      }
 
-    try {
-      // Crear uno por uno (simple y claro)
-      for (const pkg of nuevos) {
-        const res = await fetch(`${API_PAQUETES}`, {
+      const nombreSeleccionado = document.getElementById("m_nombre_paquete").value.trim();
+
+      // 2) (Opcional pero recomendado) Evitar duplicados por nombre
+      const yaExiste = paquetesCache.some(p =>
+        String(p.nombre_paquete || "").toLowerCase() === nombreSeleccionado.toLowerCase()
+      );
+      if (yaExiste) {
+        setEstado("warn", `Ya tenés creado el paquete "${nombreSeleccionado}". Elegí otro.`);
+        return;
+      }
+
+      const payload = {
+        nombre_paquete: nombreSeleccionado,
+        descripcion: document.getElementById("m_descripcion").value.trim(),
+        precio: Number(document.getElementById("m_precio").value || 0),
+      };
+
+      try {
+        setEstado("ok", "Creando paquete...");
+        await fetchJSON(`${API_PAQUETES}`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(pkg)
+          body: JSON.stringify(payload),
         });
 
-        if (!res.ok) {
-          const txt = await res.text().catch(() => "");
-          throw new Error(`Error al crear paquete: ${txt}`);
+        // limpiar inputs del modal
+        document.getElementById("formPaqueteModal").reset();
+
+        // cerrar modal
+        const modalEl = document.getElementById("modalAgregarPaquete");
+        const modal = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+        modal.hide();
+
+        setEstado("ok", "Paquete agregado correctamente.");
+        await cargarTodo(); // recarga paquetesCache + tabla + contador + botón
+      } catch (err) {
+        console.error(err);
+        setEstado("error", "No se pudo agregar el paquete. Verificá el backend (POST /cuidadores/:id/paquetes).");
+      }
+    });
+
+    document.getElementById("btnAbrirModalPaquete")?.addEventListener("click", (e) => {
+      if (paquetesCache.length >= 3) {
+        e.preventDefault();
+        setEstado("warn", "Ya alcanzaste el máximo de 3 paquetes.");
+      }
+    });
+
+    function actualizarUIAgregarPaquete() {
+      const btn = document.getElementById("btnAbrirModalPaquete");
+      if (!btn) return;
+
+      const maximo = 3;
+      const cantidad = paquetesCache.length;
+
+      if (cantidad >= maximo) {
+        btn.disabled = true;
+        btn.textContent = "Máximo de 3 paquetes";
+      } else {
+        btn.disabled = false;
+        btn.textContent = "+ Agregar paquete";
+      }
+    }
+
+    // ==========================
+    // PAQUETES: CREATE / UPDATE
+    // ==========================
+    document.getElementById("formPaquete").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      if (!CUIDADOR_ID) return;
+
+      const paqueteId = document.getElementById("paquete_id").value.trim();
+      const payload = {
+        // tu backend puede esperar nombre_paquete/descripcion/precio
+        nombre_paquete: document.getElementById("nombre_paquete").value.trim(),
+        descripcion: document.getElementById("descripcion").value.trim(),
+        precio: Number(document.getElementById("precio").value || 0)
+      };
+
+      try {
+        if (!paqueteId) {
+          // CREAR
+          setEstado("ok", "Creando paquete...");
+          await fetchJSON(`${API_PAQUETES}/${paqueteId}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          setEstado("ok", "Paquete creado.");
+        } else {
+          // ACTUALIZAR
+          setEstado("ok", "Actualizando paquete...");
+          await fetchJSON(`${API_PAQUETES}/${paqueteId}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload)
+          });
+          setEstado("ok", "Paquete actualizado.");
+        }
+
+        resetFormPaquete();
+        await cargarTodo();
+      } catch (err) {
+        console.error(err);
+        setEstado("error", "No se pudo guardar el paquete. Revisá el backend (POST/PUT) y la consola.");
+      }
+    });
+
+    document.getElementById("btnLimpiarPaquete").addEventListener("click", () => {
+      resetFormPaquete();
+    });
+
+    // ==========================
+    // PAQUETES: EDIT / DELETE (delegación)
+    // ==========================
+    document.getElementById("tbodyPaquetes").addEventListener("click", async (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+
+      const action = btn.getAttribute("data-action");
+      const id = btn.getAttribute("data-id");
+      if (!action || !id) return;
+
+      if (action === "edit") {
+        // Buscar paquete en la tabla (recargando desde API para mayor consistencia)
+        try {
+          const paquetes = await fetchJSON(`${API_PAQUETES}`);
+          const p = (Array.isArray(paquetes) ? paquetes : []).find(x => String(x.id) === String(id));
+          if (p) fillFormPaquete(p);
+        } catch (err) {
+          console.error(err);
+          setEstado("error", "No se pudo cargar el paquete para edición.");
         }
       }
 
-      await cargarPaquetes();
+      if (action === "del") {
+        const ok = confirm("¿Eliminar este paquete?");
+        if (!ok) return;
 
-      // Cerrar y resetear modal
-      const modal = getModalInstance();
-      modal.hide();
-      resetModal();
-
-      alert("Paquetes creados correctamente");
-
-    } catch (err) {
-      console.error(err);
-      alert("No se pudieron guardar los paquetes");
-    }
-  }
-
-  function cancelarModal() {
-    const modal = getModalInstance();
-    modal.hide();
-    resetModal();
-  }
-    
-
-    // ===============================
-    // Cargar paquetes y render tabla
-    // ===============================
-    async function cargarPaquetes() {
-      const res = await fetch(`${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`);
-      if (!res.ok) throw new Error("No se pudieron cargar paquetes");
-
-      paquetesCache = await res.json();
-      renderTablaPaquetes(paquetesCache);
-
-      const contador = document.getElementById("contador-paquetes");
-      if (contador) contador.textContent = paquetesCache.length;
-    }
-
-    function renderTablaPaquetes(lista) {
-      const tbody = document.querySelector("#tabla-paquetes tbody");
-      if (!tbody) return;
-
-      tbody.innerHTML = "";
-
-      if (!lista.length) {
-        tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No hay paquetes</td></tr>`;
-        return;
+        try {
+          setEstado("ok", "Eliminando paquete...");
+          await fetchJSON(`${API_PAQUETES}/${id}`, { method: "DELETE" });
+          setEstado("ok", "Paquete eliminado.");
+          resetFormPaquete();
+          await cargarTodo();
+        } catch (err) {
+          console.error(err);
+          setEstado("error", "No se pudo eliminar el paquete. Verificá tu backend (DELETE /paquetes/:id).");
+        }
       }
-
-      for (const p of lista) {
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td>${p.nombre_paquete ?? ""}</td>
-          <td>${p.descripcion ?? ""}</td>
-          <td>$${p.precio ?? ""}</td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-outline-primary" data-action="edit" data-id="${p.id}">
-              Editar
-            </button>
-            <button class="btn btn-sm btn-outline-danger" data-action="delete" data-id="${p.id}">
-              Eliminar
-            </button>
-          </td>
-        `;
-        tbody.appendChild(tr);
-      }
-    }
-
-    // =====================================
-    // Tabla: Editar/Eliminar (delegación)
-    // =====================================
-    function onTablaPaquetesClick(e) {
-      const btn = e.target.closest("button[data-action]");
-      if (!btn) return;
-
-      const action = btn.dataset.action;
-      const id = Number(btn.dataset.id);
-      if (!id) return;
-
-      if (action === "edit") {
-        const paquete = paquetesCache.find(p => Number(p.id) === id);
-        console.log("Id paquete a editar: ", id);
-        if (!paquete) return alert("No se encontró el paquete");
-        cargarPaqueteEnFormulario(paquete);
-      }
-
-      if (action === "delete") {
-        eliminarPaquete(id);
-      }
-    }
-
-    // ===============================
-    // Formulario inferior: cargar
-    // ===============================
-    function cargarPaqueteEnFormulario(p) {
-      document.getElementById("paquete_id").value = p.id;
-
-      // Select (nombre)
-      const sel = document.getElementById("nombre_paquete_select");
-      if (sel) sel.value = p.nombre_paquete ?? "";
-
-      // Inputs
-      document.getElementById("descripcion_paquete").value = p.descripcion ?? "";
-      document.getElementById("precio_paquete").value = p.precio ?? "";
-      document.querySelector(".card-header h5").textContent = "Editando paquete";
-    }
-
-    // ===============================
-    // Formulario inferior: guardar edición
-    // ===============================
-
-    /*async function guardarEdicionPaquete(e) {
-      e.preventDefault();
-
-      const paqueteIdInput = document.getElementById("paquete_id");
-      const nombreSelect = document.getElementById("nombre_paquete_select");
-      const descripcionInput = document.getElementById("descripcion_paquete");
-      const precioInput = document.getElementById("precio_paquete");
-
-      if (!paqueteIdInput || !nombreSelect || !descripcionInput || !precioInput) {
-        alert("Error interno: formulario incompleto");
-        return;
-      }
-
-      const paqueteId = paqueteIdInput.value;
-      const nombre_paquete = nombreSelect.value;
-      const descripcion = descripcionInput.value.trim();
-      const precio = Number(precioInput.value);
-
-      /*if (!paqueteId) {
-        toast("No hay paquete seleccionado para editar");
-        return;
-      }
-      if (!nombre_paquete || !descripcion || !precio) {
-        toast("Completá todos los campos del formulario de edición");
-        return;
-      }
-      if (precio <= 0) {
-        toast("El precio debe ser mayor a 0");
-        return;
-      }*/
-
-     /* try {
-        const res = await fetch(`${API_PAQUETES}/${paqueteId}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ nombre_paquete, descripcion, precio })
-        });
-
-        if (!res.ok) throw new Error("Error al editar paquete");
-        // refrescar y limpiar
-        await cargarPaquetes();
-        limpiarFormularioEdicion();
-        alert("Paquete actualizado");
-      } catch (err) {
-        console.error(err);
-        //toast("No se pudo editar el paquete");
-      }
-    }*/
-
-
-
-    // ===============================
-    // Formulario inferior: cancelar
-    // ===============================
-    function limpiarFormularioEdicion() {
-      document.getElementById("paquete_id").value = "";
-      document.getElementById("nombre_paquete_select").value = "";
-      document.getElementById("descripcion_paquete").value = "";
-      document.getElementById("precio_paquete").value = "";
-    }
-
-    // ===============================
-    // Eliminar desde tabla
-    // ===============================
-    async function eliminarPaquete(id) {
-      if (!confirm("¿Eliminar paquete?")) return;
-
-      const res = await fetch(`${API_PAQUETES}/${id}`, {
-        method: "DELETE"
-      });
-
-      if (!res.ok) {
-        const txt = await res.text().catch(() => "");
-        console.error("DELETE error:", txt);
-        return alert("No se pudo eliminar el paquete");
-      }
-
-      await cargarPaquetes();
-
-      // Si estabas editando ese paquete, limpiá el formulario
-      const paqueteIdActual = Number(document.getElementById("paquete_id").value);
-      if (paqueteIdActual === id) limpiarFormularioEdicion();
-    }
-
-    document.getElementById("form-paquete-edicion").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const cambios = {
-          paqueteIdInput = document.getElementById("paquete_id").value,
-          nombreSelect = document.getElementById("nombre_paquete_select").value,
-          descripcionInput = document.getElementById("descripcion_paquete").value,
-          precioInput = Number.getElementById("precio_paquete").value,
-      };
-
-      await fetch(`${API_PAQUETES}/${paqueteIdInput}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cambios),
-      });
-
-      alert("Datos actualizados");
-      cargarPaquetes();
     });
 
-    function bindEvents() {
-      // ---------- FORMULARIO DE EDICIÓN ----------
-      const formEditar = document.getElementById("form-paquete-edicion");
-      if (formEditar) {
-        formEditar.addEventListener("submit", guardarEdicionPaquete);
-      }
-
-      // ---------- BOTÓN GUARDAR DEL MODAL ----------
-      const btnGuardarModal = document.getElementById("btn-guardar-paquete");
-      if (btnGuardarModal) {
-        btnGuardarModal.addEventListener("click", guardarPaquetesModal);
-      }
-
-      // ---------- BOTÓN CANCELAR DEL MODAL ----------
-      const btnCancelarModal = document.getElementById("btn-cancelar-paquete");
-      if (btnCancelarModal) {
-        btnCancelarModal.addEventListener("click", resetModal);
-      }
-    }
-
-    // ===============================
     // INIT
-    // ===============================
-    document.addEventListener("DOMContentLoaded", async () => {
-      // tabla
-      const tbody = document.querySelector("#tabla-paquetes tbody");
-      if (tbody) tbody.addEventListener("click", onTablaPaquetesClick);
-
-      // form edición
-      const form = document.getElementById("form-edicion-paquete");
-      if (form) form.addEventListener("submit", guardarEdicionPaquete);
-
-      const btnCancelar = document.getElementById("btn-cancelar-edicion");
-      if (btnCancelar) btnCancelar.addEventListener("click", limpiarFormularioEdicion);
-
-      // carga inicial
-      try {
-        await cargarCuidador();
-        await cargarPaquetes();
-        bindEvents();
-      } catch (err) {
-        console.error(err);
-        alert("Error cargando paquetes");
-      }
-    });
-  /*document.addEventListener("DOMContentLoaded", () => {
-    cargarCuidador();
-    cargarPaquetes();
-  });*/
-
-})();
+    resetFormPaquete();
+    cargarTodo();

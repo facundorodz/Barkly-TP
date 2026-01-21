@@ -294,7 +294,6 @@ async function restarPaquete(id_superheroe) {
 }
 
 */
-const pool = require("../bdd/bdd.js");
 
 // ===============================
 // GET /cuidadores/:id/paquetes
