@@ -57,10 +57,6 @@ app.get("/perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
 });
 
-app.get("/prueba_perfil_cuidador", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/perfiles/prueba_perfil_cuidador.html"));
-});
-
 
 app.listen(port, () => {
   console.log(`Servidor backend corriendo en http://localhost:${port}`);
