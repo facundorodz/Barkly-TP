@@ -76,6 +76,17 @@
       document.getElementById("franquicia").value = c.franquicia ?? "";
       document.getElementById("experiencia").value = (c.experiencia ?? "");
       document.getElementById("poderes").value = c.poderes ?? "";
+      document.getElementById("contrasenia").value = c.contrasenia ?? "";
+      const togglePassword = document.getElementById("togglePassword");
+      const passwordInput = document.getElementById("contrasenia");
+
+      if (togglePassword && passwordInput) {
+        togglePassword.addEventListener("click", () => {
+          const isPassword = passwordInput.type === "password";
+          passwordInput.type = isPassword ? "text" : "password";
+          togglePassword.textContent = isPassword ? "🙈" : "👁";
+        });
+      }
       document.getElementById("foto_perfil").value = c.foto_perfil ?? "";
 
       document.getElementById("nombreHeader").textContent = c.nombre ?? "Perfil del cuidador";
@@ -169,6 +180,7 @@
         franquicia: document.getElementById("franquicia").value.trim(),
         experiencia: Number(document.getElementById("experiencia").value || 0),
         poderes: document.getElementById("poderes").value.trim(),
+        contrasenia: document.getElementById("contrasenia").value.trim(),
         foto_perfil: document.getElementById("foto_perfil").value.trim()
       };
 
