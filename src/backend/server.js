@@ -25,7 +25,6 @@ app.use("/assets",express.static(path.join(__dirname, "../public/assets")));
 
 
 app.use("/users", usersRouter);
-app.use("/heros", cuidadoresRouter);
 app.use("/", cuidadoresRouter);
 app.use(crud_users);
 
@@ -54,6 +53,9 @@ app.get("/perfil_usuario", (req, res) => {
   res.redirect("/perfiles/perfil_usuario.html");
 });
 
+app.get("/detalles_cuidador", (req, res) => {
+  res.redirect("/pagina_detalles-cuidador/prueba_detalle-cuidador.html");
+});
 
 app.get("/perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));
