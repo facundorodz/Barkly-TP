@@ -1,8 +1,9 @@
 # Dependencias
 node_modules/
 
+# /// Lo subo solo en este commit ///
 # Archivos de entorno
-.env
+#.env
 
 # Logs
 npm-debug.log*
