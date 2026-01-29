@@ -6,7 +6,7 @@
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">  
         <title> Barkly Co</title>
         
-        <link rel="stylesheet" href = "/ver_superheroe/css/detalles-cuidador.css">
+        <link rel="stylesheet" href = "/pagina_detalles-cuidador/css/detalles-cuidador.css">
         <link rel="icon" href="/assets/images/icono_metadata.png" type="image/png">
         
         
@@ -47,126 +47,48 @@
             </nav>
         </div>
 
-  <div class="contenedor-general">
-   
-    <div class="header">
-        <div class="foto-cuidador">
-            <div class="foto-perfil">
-                <div class="imagen-placeholder">
+    <body>
+      <div class="wrap">
+
+        <div class="header">
+            <div class="foto-cuidador">
+              <div class="foto-perfil">
+                  <div class="imagen-placeholder">
                     <img class="imagen" id="profilePic" src="" height=100 width=100>
                 
+                  </div>
+              </div>
+            </div>
+          <h1 id="cuidadorNombre">Nombre cuidador</h1>
+          <p><span id="cuidadorFranquicia">Franquicia</span> - <span id="cuidadorExperiencia">Experiencia</span></p>
+        </div>
+
+        <div class="grid">
+          <!-- Columna izquierda -->
+          <div class="side">
+            <div class="poderes">
+              <h3 class="card-title" style="color: var(--text);">Poderes</h3>
+              <div class="divider"></div>
+              <ul id="listaPoderes"></ul>
+              <!--div id="poderesFallback" class="list-poderes" style="padding-left:0; list-style:none;"></div-->
+              <div class="card" style="margin-top: 50px;">
+                <h3 class="card-title">Calificación</h3>
+                <div class="divider"></div>
+                <div class="bones" id="calificacionBones">
+                  <!-- se llena por JS -->
                 </div>
+              </div>
             </div>
-        </div>
-
-        <div class="info-cuidador">
-            <div class="nombre-cuidador" id="nombre-cuidador">
-                <h1>Nombre cuidador</h1>
-            </div>
-            <div class="franquicia" id="franquicia-cuidador">
-                <h3>Franquicia - Experiencia</h3>
-            </div>  
-
-        </div> 
-            </div>
-        </div>
-    </div>
-    <div class="container my-4">
-      <div class="contenedor row g-6 justify-content-center">
-        <div class="col-md-3 ">
-          <div class="poderes">
-          <h2>Poderes</h2>
-            <hr>
-          <ul> 
-              <li> Poder 1</li>
-              <li> Poder 2</li>
-              <li> Poder 3</li>
-              <li> Poder 4</li>
-            </ul>
           </div>
-          <div class="poder">
-            <div class="clasificacion">
-              <h2>Calificación</h2>
-            </div>
-            <div class="imagen-resenia text-center mt-3">
-              <img src="/assets/images/resenia_cinco.png" height="150px" width="auto">
-            </div>
+
+          <!-- Paquetes -->
+          <div class="cards" id="packsGrid">
+            <!-- cards dinámicas -->
           </div>
         </div>
 
-        <div class="col-md-3">
-          <div class="paquetes">
-
-            <h2>Paquete 1</h2>
-            <hr>
-            <h3>Descripción:</h3>
-            <ul> 
-              <li> Actividad 1</li>
-              <li> Actividad 2</li>
-              <li> Actividad 3</li>
-              <li> Actividad 4</li>
-            </ul>
-
-            <hr>
-
-            <div class="row">
-              <p class="col-md-4 d-flex" id="precio-header"> PRECIO: </p>
-              <p class="col-md-4 d-flex" id="precio"> $Precio </p>
-            </div>
-
-            <button type="button" class="btn btn-light anadir"> Contratar paquete </button>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="paquetes">
-
-            <h2>Paquete 2</h2>
-            <hr>
-            <h3>Descripción:</h3>
-            <ul> 
-              <li> Actividad 1</li>
-              <li> Actividad 2</li>
-              <li> Actividad 3</li>
-              <li> Actividad 4</li>
-            </ul>
-
-            <hr>
-            <div class="row">
-              <p class="col-md-4 d-flex" id="precio-header"> PRECIO: </p>
-              <p class="col-md-4 d-flex" id="precio"> $Precio </p>
-            </div>
-            
-
-            <button type="button" class="btn btn-light anadir"> Contratar paquete </button>
-          </div>
-        </div>
-
-        <div class="col-md-3">
-          <div class="paquetes">
-
-            <h2>Paquete 3</h2>
-            <hr>
-            <h3>Descripción:</h3>
-            <ul> 
-              <li> Actividad 1</li>
-              <li> Actividad 2</li>
-              <li> Actividad 3</li>
-              <li> Actividad 4</li>
-            </ul>
-
-            <hr>
-
-            <div class="row">
-              <p class="col-md-4 d-flex" id="precio-header"> PRECIO: </p>
-              <p class="col-md-4 d-flex" id="precio"> $Precio </p>
-            </div>
-
-            <button type="button" class="btn btn-light anadir"> Contratar paquete </button>
-          </div>
-        </div>
       </div>
-    </div>
+    </body>
 
 
     <div class="resenias-container">
@@ -189,10 +111,10 @@
         <textarea type="text" id="comentario"></textarea>
       </div>
       <div class="col-12" style="text-align: center;">
-        <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm(); emptyForm()">Enviar</button>
+        <button type="submit" id="guardar-boton" id="btnEnviarResenia"  class="btn btn-danger" onclick="submitForm(); emptyForm()">Enviar</button>
       </div>
     </div>
   </div>
-  <script src="/ver_superheroe/js/detalles-cuidador.js"></script>
+  <script src="/pagina_detalles-cuidador/js/detalles-cuidador.js"></script>
   </body>
 </html>

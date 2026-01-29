@@ -54,7 +54,7 @@ app.get("/perfil_usuario", (req, res) => {
 });
 
 app.get("/detalles_cuidador", (req, res) => {
-  res.redirect("/pagina_detalles-cuidador/prueba_detalle-cuidador.html");
+  res.redirect("/pagina_detalles-cuidador/detalles-cuidador.html");
 });
 
 app.get("/perfil_cuidador", (req, res) => {
