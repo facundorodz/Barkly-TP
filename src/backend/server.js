@@ -7,6 +7,8 @@ const cors = require("cors");
 const path = require("path");
 const session = require("express-session");
 const crud_users = require("./services/crud_users.js");
+const reseniasRoutes = require("./routes/resenias_routes.js");
+
 
 const app = express();
 const port = 3000;
@@ -27,6 +29,7 @@ app.use("/assets",express.static(path.join(__dirname, "../public/assets")));
 app.use("/users", usersRouter);
 app.use("/", cuidadoresRouter);
 app.use(crud_users);
+app.use("/resenias", reseniasRoutes);
 
 
 app.get("/", (req, res) => {
@@ -53,9 +56,6 @@ app.get("/perfil_usuario", (req, res) => {
   res.redirect("/perfiles/perfil_usuario.html");
 });
 
-app.get("/detalles_cuidador", (req, res) => {
-  res.redirect("/pagina_detalles-cuidador/detalles-cuidador.html");
-});
 
 app.get("/perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/perfil_cuidador.html"));

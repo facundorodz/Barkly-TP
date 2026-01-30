@@ -448,6 +448,15 @@ a, .round {
       transform: translate(-50%,-50%);
     }
 
+
+    .star{
+        cursor:pointer;
+        color: rgba(233,233,233,.35);
+        transition: transform .12s ease, color .12s ease;
+    }
+    .star:hover{ transform: translateY(-1px); }
+    .star.active{ color: #ffc107; } /* dorado */
+
     /* Responsive */
     @media (max-width: 1100px){
       .cards{ grid-template-columns: 1fr; }

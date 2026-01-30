@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const { crearResenia } = require("../controllers/resenias.controller");
+const { crearResenia, obtenerPromedio } = require("../services/controller.resenias.js");
 
-// POST /api/resenias
+// guardar reseña
 router.post("/", crearResenia);
+
+// obtener promedio de un cuidador
+router.get("/promedio/:id_superheroe", obtenerPromedio);
 
 module.exports = router;

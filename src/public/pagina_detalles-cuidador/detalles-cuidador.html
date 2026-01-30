@@ -104,7 +104,7 @@
       </div>
     </div>
 
-    <div class="comentario-usuario">
+    <!--div class="comentario-usuario">
       <h2> Dejá tu reseña aquí! </h2>
       <hr>
       <div class="resenias-usuario">
@@ -113,8 +113,51 @@
       <div class="col-12" style="text-align: center;">
         <button type="submit" id="guardar-boton" id="btnEnviarResenia"  class="btn btn-danger" onclick="submitForm(); emptyForm()">Enviar</button>
       </div>
+    </div-->
+
+    <div class="card card-accent">
+    <h3 class="card-title">Reseñas</h3>
+    <div class="divider"></div>
+
+    <p class="pack-sub" style="text-align:left; margin-bottom:10px;">
+      Dejá una reseña del servicio
+    </p>
+
+    <!-- Estrellas -->
+    <div id="starsBox" style="display:flex; gap:6px; font-size:28px; user-select:none;">
+      <span class="star" data-value="1">☆</span>
+      <span class="star" data-value="2">☆</span>
+      <span class="star" data-value="3">☆</span>
+      <span class="star" data-value="4">☆</span>
+      <span class="star" data-value="5">☆</span>
     </div>
-  </div>
+
+    <div class="divider"></div>
+
+    <textarea
+      id="reviewText"
+      rows="3"
+      placeholder="Escribí una reseña breve..."
+      style="
+        resize:none;
+        border-radius:10px;
+        border:1px solid rgba(255,255,255,.18);
+        background: rgba(0,0,0,.35);
+        color: var(--text);
+        padding:10px;
+        margin: 30px;
+        outline:none;
+      "
+    ></textarea>
+
+    <button id="btnSendReview" class="btn" style="width:160px; margin-top:12px;">
+      Enviar reseña
+    </button>
+
+    <div id="reviewMsg" style="margin-top:10px; color: var(--muted); font-size:13px;"></div>
+
+    <!-- (Opcional) listado -->
+    <div id="reviewsList" style="margin-top:14px;"></div>
   <script src="/pagina_detalles-cuidador/js/detalles-cuidador.js"></script>
   </body>
 </html>

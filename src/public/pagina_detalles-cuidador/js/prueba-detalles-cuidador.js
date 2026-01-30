@@ -137,6 +137,154 @@ async function cargarCuidadorYPaquetes() {
   });
 }
 
+/* =========================
+   RESEÑAS (mismo estilo)
+========================= */
+
+let rating = 0;
+
+function paintStars(value) {
+  document.querySelectorAll(".star").forEach(s => {
+    const v = Number(s.dataset.value);
+    s.textContent = v <= value ? "★" : "☆";
+    s.classList.toggle("active", v <= value);
+  });
+}
+
+function initStars() {
+  const stars = document.querySelectorAll(".star");
+  stars.forEach(star => {
+    const v = Number(star.dataset.value);
+
+    // hover izq -> der
+    star.addEventListener("mouseenter", () => paintStars(v));
+    star.addEventListener("mouseleave", () => paintStars(rating));
+
+    // click fija calificación
+    star.addEventListener("click", () => {
+      rating = v;
+      paintStars(rating);
+    });
+  });
+
+  paintStars(0);
+}
+
+async function enviarResenia() {
+  const msg = document.getElementById("reviewMsg");
+  const text = document.getElementById("reviewText").value.trim();
+
+  if (!idCuidador) {
+    msg.textContent = "Falta el id del cuidador.";
+    return;
+  }
+  if (rating < 1 || rating > 5) {
+    msg.textContent = "Seleccioná una calificación (1 a 5).";
+    return;
+  }
+  if (text.length < 5) {
+    msg.textContent = "La reseña es muy corta (mínimo 5 caracteres).";
+    return;
+  }
+
+  msg.textContent = "Enviando reseña...";
+
+  // Si tenés login: id_usuario en localStorage (opcional)
+  const idUsuario = localStorage.getItem("id_usuario");
+
+  const payload = {
+    id_superheroe: Number(idCuidador),
+    id_usuario: idUsuario ? Number(idUsuario) : null,
+    calificacion: rating,
+    comentario: text
+  };
+
+  try {
+    const res = await fetch(`${API}/resenias`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) {
+      const t = await res.text().catch(() => "");
+      throw new Error(`HTTP ${res.status} ${t}`);
+    }
+
+    msg.textContent = "¡Gracias! Reseña guardada ✅";
+    document.getElementById("reviewText").value = "";
+    rating = 0;
+    paintStars(0);
+
+    // (Opcional) recargar listado
+    await cargarResenias();
+
+  } catch (err) {
+    console.error(err);
+    msg.textContent = "No se pudo guardar la reseña. Revisá el endpoint /api/resenias.";
+  }
+}
+
+/* =========================
+   (Opcional) LISTAR RESEÑAS
+   Requiere: GET /api/resenias/superheroe/:id
+========================= */
+
+/*async function cargarResenias() {
+  const cont = document.getElementById("reviewsList");
+  if (!cont) return;
+
+  // Si todavía no tenés este endpoint, dejalo comentado o mostrará vacío.
+  // Endpoint sugerido: GET /api/resenias/superheroe/:id
+  try {
+    const res = await fetch(`${API}/resenias/superheroe/${idCuidador}`);
+    if (!res.ok) return;
+
+    const data = await res.json();
+    if (!Array.isArray(data) || data.length === 0) {
+      cont.innerHTML = `<div style="color:var(--muted); font-size:12px;">Sin reseñas todavía.</div>`;
+      return;
+    }
+
+    cont.innerHTML = data.slice(0, 5).map(r => {
+      const stars = "★★★★★".slice(0, r.calificacion) + "☆☆☆☆☆".slice(0, 5 - r.calificacion);
+      const comentario = (r.comentario || "").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+      return `
+        <div style="
+          border:1px solid rgba(255,255,255,.12);
+          border-radius:12px;
+          padding:10px;
+          margin-top:10px;
+          background: rgba(0,0,0,.25);
+        ">
+          <div style="display:flex; justify-content:space-between; gap:10px;">
+            <div style="color:#ffc107; font-size:14px;">${stars}</div>
+            <div style="color:var(--muted); font-size:12px;">${r.fecha ? new Date(r.fecha).toLocaleDateString() : ""}</div>
+          </div>
+          <div style="color:var(--text); font-size:13px; margin-top:6px;">${comentario}</div>
+        </div>
+      `;
+    }).join("");
+
+  } catch (err) {
+    // si no existe endpoint, no molestamos
+    cont.innerHTML = "";
+  }
+}/
+
+/* =========================
+   HOOKS (inicialización)
+========================= */
+document.addEventListener("DOMContentLoaded", () => {
+  initStars();
+
+  const btn = document.getElementById("btnSendReview");
+  if (btn) btn.addEventListener("click", enviarResenia);
+
+  // opcional
+  //cargarResenias();
+});
+
 // init
 cargarCuidadorYPaquetes().catch(err => {
   console.error(err);
