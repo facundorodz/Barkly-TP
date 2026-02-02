@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require("express");
 const usersRouter = require("./routes/users.js");
 const cuidadoresRouter = require("./routes/cuidadores_routes.js");
@@ -5,6 +7,8 @@ const cors = require("cors");
 const path = require("path");
 const session = require("express-session");
 const crud_users = require("./services/crud_users.js");
+const reseniasRoutes = require("./routes/resenias_routes.js");
+
 
 const app = express();
 const port = 3000;
@@ -23,9 +27,9 @@ app.use("/assets",express.static(path.join(__dirname, "../public/assets")));
 
 
 app.use("/users", usersRouter);
-app.use("/heros", cuidadoresRouter);
 app.use("/", cuidadoresRouter);
 app.use(crud_users);
+app.use("/resenias", reseniasRoutes);
 
 
 app.get("/", (req, res) => {

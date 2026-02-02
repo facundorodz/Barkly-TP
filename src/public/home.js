@@ -68,7 +68,7 @@ function verDetalle(id) {
     return;
   }
 
-  window.location.href = `/pagina_detalles-cuidador/prueba_detalle-cuidador.html?id=${id}`;
+  window.location.href = `/pagina_detalles-cuidador/detalles-cuidador.html?id=${id}`;
 }
 
 
