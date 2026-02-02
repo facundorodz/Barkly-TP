@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 catalogo.innerHTML += `
                     <div class="col-md-4">
                         <div class="cuidador_perfil">
-                            <img src="${c.foto_perfil  || 'https://via.placeholder.com/150'}"
-                                class="polaroid" width="400" height="400" alt="Foto de ${c.nombre}">
+                            <img src="${c.foto_perfil}"
+                                class="polaroid" width="200" height="200" alt="Foto de ${c.nombre}">
                             <h3 class="card-title">${c.nombre}</h3>
                             ${c.franquicia} <br>
                             <hr>

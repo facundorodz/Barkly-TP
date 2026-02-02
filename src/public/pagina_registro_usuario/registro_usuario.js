@@ -1,10 +1,20 @@
 document.querySelector("form").addEventListener("submit", async (e) => {
     e.preventDefault();
 
+    const body = {
+        name: document.getElementById("nombre").value,
+        profile_name: document.getElementById("perfil").value,
+        pass: document.getElementById("password").value,
+        profile_photo: document.getElementById("profile_photo").value
+    };
+
     try {
         const resp = await fetch("/users/register_user", {
             method: "POST",
-            body: formData
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
         });
 
         const data = await resp.json();
