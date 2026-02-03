@@ -2,20 +2,7 @@ const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
 const path = require("path");
-const multer = require("multer");
 
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, path.join(__dirname, "../../public/assets/images"));
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        cb(null, `user_${req.session.userId}${ext}`);
-    }
-});
-
-const upload = multer({ storage });
 
 
 router.delete("/delete_user", async (req, res) => {

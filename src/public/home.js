@@ -38,8 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     .catch(err => console.error("Error cargando cuidadores:", err));
 
 
-
-
     if (!boton) {
         console.error("No se encontró el elemento #ver-mas-boton");
         return;
