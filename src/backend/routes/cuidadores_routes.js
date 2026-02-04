@@ -4,7 +4,7 @@ const controlador = require("../services/controller.cuidadores.js");
 const paquete = require("../services/controller.paquetes.js");
 
 // CRUD CUIDADORES
-router.get("/cuidadores", controlador.obtenerCuidadores);
+router.get("/", controlador.obtenerCuidadores);
 router.get("/cuidadores/:id", controlador.obtenerCuidadorPorID);
 router.put("/cuidadores/:id", controlador.editarCuidador);
 router.delete("/cuidadores/session", controlador.eliminarCuidador);

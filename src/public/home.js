@@ -1,10 +1,8 @@
-const API_URL = "http://localhost:3000/cuidadores";
-
 document.addEventListener("DOMContentLoaded", () => {
     const boton = document.getElementById("ver-mas-boton");
     const conteiner = document.getElementById("mas-cuidadores");
 
-    fetch("/cuidadores").then(res => res.json()).then(cuidadores => {
+    fetch("http://localhost:8080/api/cuidadores").then(res => res.json()).then(cuidadores => {
         const catalogo = document.getElementById("catalogo");
         catalogo.innerHTML = "";
 
