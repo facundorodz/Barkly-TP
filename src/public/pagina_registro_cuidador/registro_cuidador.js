@@ -1,24 +1,22 @@
-
 document.getElementById("cuidador-form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formData = new FormData();
-  formData.append("profile_name", document.getElementById("profile_name").value);
-  formData.append("franchise_name", document.getElementById("franchise_name").value);
-  formData.append("password", document.getElementById("password").value);
-  formData.append("powers", document.getElementById("powers").value);
-  formData.append("experience", document.getElementById("experience").value);
-
-  const photo = document.getElementById("foto_perfil");
-  if (photo.files.length > 0) {
-    formData.append("foto_perfil", photo.files[0]);
-  }
+  const body = {
+    profile_name: document.getElementById("profile_name").value,
+    franchise_name: document.getElementById("franchise_name").value,
+    password: document.getElementById("password").value,
+    powers: document.getElementById("powers").value,
+    experience: document.getElementById("experience").value
+  };
 
   try {
     const resp = await fetch("http://localhost:8080/api/users/register_hero", {
       method: "POST",
       credentials: "include",
-      body: formData
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
     });
 
     const data = await resp.json();
@@ -28,6 +26,7 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
     } else {
       alert(data.error);
     }
+
   } catch (error) {
     console.error(error);
     alert("Error al conectar con el servidor");

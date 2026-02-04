@@ -72,22 +72,23 @@ function verDetalle(id) {
 
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const resp = await fetch("/users/session_info");
+        const resp = await fetch("http://localhost:8080/api/users/user_info", {
+            credentials: "include"
+        });
+
         const data = await resp.json();
         const container = document.getElementById("buttons");
-        
-        if (!container){
-            return;
-        } 
 
-        if (data.logged) {
-            container.innerHTML = 
-            `
+        if (!container) return;
+
+        if (data.response) {
+            container.innerHTML = `
                 <a role="button" class="btn btn-danger" href="/perfiles/perfil_usuario.html">
                     Ver perfil
                 </a>
             `;
         }
+
     } catch (error) {
         console.error("Error al obtener session_info:", error);
     }

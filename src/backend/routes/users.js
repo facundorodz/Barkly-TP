@@ -5,7 +5,8 @@ const db = require("../bdd/bdd.js");
 
 router.post("/register_user", async (req, res) => {
   const { profile_name, pass, name } = req.body;
-  const profile_photo = req.file?.filename;
+  const profile_photo = null;
+
 
   try {
     const exists = await db.query(
@@ -38,7 +39,7 @@ router.post("/register_user", async (req, res) => {
 
 router.post("/register_hero", async (req, res) => {
   const { profile_name, franchise_name, powers, experience, password } = req.body;
-  const photo = req.file?.filename;
+  const photo = null;
 
   try {
     const exists = await db.query(
@@ -120,17 +121,14 @@ router.post("/login", async (req, res) => {
   }
 });
 
-router.get("/session_info", (req, res) => {
-  if (req.session.userId) {
-    return res.json({
-      logged: true,
-      userId: req.session.userId,
-      username: req.session.username,
-      role: req.session.role
+router.get("/user_info", (req, res) => {
+    if (!req.session.userId) {
+        return res.json({ response: false });
+    }
+    res.json({
+        response: true,
+        username: req.session.username
     });
-  }
-
-  return res.json({ logged: false });
 });
 
 
