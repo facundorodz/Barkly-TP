@@ -94,45 +94,6 @@ const aplicarFiltroNombre = () => {
   renderCatalogo(filtrados);
 };
 
-  /*const aplicarFiltroNombre = () => {
-  if (!input) return;
-
-  const q = normalizar(input.value).trim();
-
-  // Si no hay búsqueda, render normal
-  if (!q) {
-    renderCatalogo(cuidadoresCache);
-    return;
-  }
-
-  // Scroll al catálogo (enfoque de navegación)
-  if (catalogo) catalogo.scrollIntoView({ behavior: "smooth", block: "start" });
-
-  // Filtrado
-  const filtrados = cuidadoresCache.filter((c) =>
-    normalizar(c.nombre).includes(q)
-  );
-
-  // Renderiza todos (no solo filtrados) para poder desenfocar/ enfocar
-  // Si preferís que se oculten los que no matchean, decime y lo ajusto.
-  renderCatalogo(cuidadoresCache);
-
-  // Aplicar enfoque visual
-  const items = document.querySelectorAll(".cuidador_item");
-  items.forEach((el) => {
-    const id = Number(el.dataset.id);
-    const match = filtrados.some((c) => Number(c.id) === id);
-
-    el.classList.toggle("cuidador_enfocado", match);
-    el.classList.toggle("cuidador_desenfocado", !match);
-  });
-
-  // Si no hubo matches, mostrás un mensajito (opcional)
-  if (filtrados.length === 0) {
-    console.log("No se encontraron coincidencias");
-  }
-};*/
-
   // ===== 1) Cargar cuidadores =====
   const cargarCuidadores = async () => {
     try {

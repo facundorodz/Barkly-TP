@@ -37,19 +37,23 @@ exports.obtenerCuidadorPorID = async (req, res) => {
 exports.editarCuidador = async (req, res) => {
   try {
     const { id } = req.params;
-    const { nombre, franquicia, experiencia, poderes } = req.body;
+    const { nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil } = req.body;
 
     const result = await pool.query(
       `UPDATE superheroes
-       SET nombre = $1, franquicia = $2, experiencia = $3, poderes = $4, contrasenia = $5, foto_perfil = $6
-       WHERE id = $7 RETURNING *`,
-      [nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil, id]
+       SET nombre = $2, franquicia = $3, experiencia = $4, poderes = $5, contrasenia = $6, foto_perfil = $7
+       WHERE id = $1 RETURNING *`,
+      [id, nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil]
     );
 
     res.json({ mensaje: "Actualizado correctamente", cuidador: result.rows[0] });
 
-  } catch (err) {
+  } /*catch (err) {
     res.status(500).json({ error: "Error al editar cuidador" });
+  }*/
+  catch (err) {
+    console.error("EDITAR CUIDADOR ERROR:", err);
+    res.status(500).json({ error: "Error al editar cuidador", detail: err.message });
   }
 };
 
