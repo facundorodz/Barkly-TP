@@ -1,8 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
-const upload = require("../multer/multer.js");
-
 
 router.post("/login_user", async (req, res) => {
     console.log("Login intento:", req.body);
@@ -40,14 +38,9 @@ router.post("/login_user", async (req, res) => {
     }
 });
 
-
-
-
-router.post("/register_user", upload.single("profile_photo"), async (req, res) => {
+router.post("/register_user", async (req, res) => {
+    const { profile_name, pass, name, profile_photo } = req.body;
     console.log("registro de usuario", req.body);       
-
-    const { profile_name, pass, name } = req.body; 
-    const profile_photo = req.file?.filename;
 
       try {
         const exists = await db.query("SELECT nombre_perfil FROM usuarios WHERE nombre_perfil = $1",[req.body.profile_name]);
@@ -65,17 +58,16 @@ router.post("/register_user", upload.single("profile_photo"), async (req, res) =
 });  
 
 
-router.post("/register_hero",upload.single("foto_perfil"),async (req, res) => {
-    const {profile_name,franchise_name,powers,experience,password} = req.body;
-    const photo = req.file?.filename;
-
+router.post("/register_hero", async (req, res) => {
+    const {profile_name,franchise_name,powers,experience,password, profile_photo} = req.body;
+    
     try {
         const exists = await db.query("SELECT nombre FROM superheroes WHERE nombre = $1",[profile_name]);
         if (exists.rows.length > 0) {
             return res.status(400).json({ error: "Ya existe un superhéroe con ese nombre" });
         }
 
-        await db.query(`INSERT INTO superheroes (nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil) VALUES ($1, $2, $3, $4, $5, $6)`,[profile_name, franchise_name, experience, powers, password, photo]);
+        await db.query(`INSERT INTO superheroes (nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil) VALUES ($1, $2, $3, $4, $5, $6)`,[profile_name, franchise_name, experience, powers, password, profile_photo]);
         return res.json({ success: true });
 
     } catch (error) {
