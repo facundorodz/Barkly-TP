@@ -6,6 +6,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const boton = document.getElementById("ver-mas-boton");
   const conteiner = document.getElementById("mas-cuidadores");
   const catalogo = document.getElementById("catalogo");
+  const navbar = document.querySelector(".navbar");
+  const offset = navbar.offsetTop;
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > offset) {
+    navbar.classList.add("navbar-fixed");
+  } else {
+    navbar.classList.remove("navbar-fixed");
+  }
+});
 
   let cuidadoresCache = []; // guardo lista completa para filtrar
 
@@ -32,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
       
       catalogo.innerHTML += `
         <div class="col-md-4">
-          <div class="cuidador_perfil">
+          <div class="cuidador_perfil cuidador_item">
             <img
               src="${c.foto_perfil || "https://via.placeholder.com/150"}"
               class="polaroid"
@@ -60,21 +70,68 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  const aplicarFiltroNombre = () => {
-    if (!input) return;
+const aplicarFiltroNombre = () => {
+  if (!input) return;
 
-    const q = normalizar(input.value).trim();
-    if (!q) {
-      renderCatalogo(cuidadoresCache);
-      return;
-    }
+  const q = normalizar(input.value).trim();
 
-    const filtrados = cuidadoresCache.filter((c) =>
-      normalizar(c.nombre).includes(q)
-    );
+  // Si no hay texto, mostrar todo el catálogo
+  if (!q) {
+    renderCatalogo(cuidadoresCache);
+    return;
+  }
 
-    renderCatalogo(filtrados);
-  };
+  // Filtrar SOLO coincidencias
+  const filtrados = cuidadoresCache.filter((c) =>
+    normalizar(c.nombre).includes(q)
+  );
+
+  
+  // Scroll al catálogo (enfoque de navegación)
+  if (catalogo) catalogo.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // Renderizar únicamente los resultados coincidentes
+  renderCatalogo(filtrados);
+};
+
+  /*const aplicarFiltroNombre = () => {
+  if (!input) return;
+
+  const q = normalizar(input.value).trim();
+
+  // Si no hay búsqueda, render normal
+  if (!q) {
+    renderCatalogo(cuidadoresCache);
+    return;
+  }
+
+  // Scroll al catálogo (enfoque de navegación)
+  if (catalogo) catalogo.scrollIntoView({ behavior: "smooth", block: "start" });
+
+  // Filtrado
+  const filtrados = cuidadoresCache.filter((c) =>
+    normalizar(c.nombre).includes(q)
+  );
+
+  // Renderiza todos (no solo filtrados) para poder desenfocar/ enfocar
+  // Si preferís que se oculten los que no matchean, decime y lo ajusto.
+  renderCatalogo(cuidadoresCache);
+
+  // Aplicar enfoque visual
+  const items = document.querySelectorAll(".cuidador_item");
+  items.forEach((el) => {
+    const id = Number(el.dataset.id);
+    const match = filtrados.some((c) => Number(c.id) === id);
+
+    el.classList.toggle("cuidador_enfocado", match);
+    el.classList.toggle("cuidador_desenfocado", !match);
+  });
+
+  // Si no hubo matches, mostrás un mensajito (opcional)
+  if (filtrados.length === 0) {
+    console.log("No se encontraron coincidencias");
+  }
+};*/
 
   // ===== 1) Cargar cuidadores =====
   const cargarCuidadores = async () => {
