@@ -5,15 +5,15 @@ const paquete = require("../services/controller.paquetes.js");
 
 // CRUD CUIDADORES
 router.get("/", controlador.obtenerCuidadores);
-router.get("/cuidadores/:id", controlador.obtenerCuidadorPorID);
-router.put("/cuidadores/:id", controlador.editarCuidador);
-router.delete("/cuidadores/session", controlador.eliminarCuidador);
+router.get("/:id", controlador.obtenerCuidadorPorID);
+router.put("/:id", controlador.editarCuidador);
+router.delete("/session", controlador.eliminarCuidador);
 
 
 
 // PAQUETES CRUD 
-router.get("/cuidadores/:id/paquetes", paquete.obtenerPaquetesPorCuidador);
-router.post("/cuidadores/:id/paquetes", paquete.crearPaquete);
+router.get("/:id/paquetes", paquete.obtenerPaquetesPorCuidador);
+router.post("/:id/paquetes", paquete.crearPaquete);
 router.put("/paquetes/:id", paquete.editarPaquete);
 router.delete("/paquetes/:id", paquete.eliminarPaquete);
 
