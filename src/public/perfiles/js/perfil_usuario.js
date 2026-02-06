@@ -1,10 +1,19 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const resp = await fetch("/users/profile_data", {
+            credentials: "include"
+        });
 
+        const data = await resp.json();
 
-document.addEventListener("DOMContentLoaded", () => {
-    const nickname = localStorage.getItem("nickname");
-    if (nickname) {
-        document.getElementById("user_place_holder").innerText = nickname;
-        document.getElementById("profile_name").value = nickname;
+        document.getElementById("user_place_holder").innerText = data.nombre_perfil;
+        document.getElementById("profile_name").value = data.nombre_perfil;
+        document.getElementById("name").value = data.nombre_completo;
+        document.getElementById("profile_photo").src = data.foto_perfil;
+        document.getElementById("pass").value = data.contraseña;
+
+    } catch (error) {
+        console.log("Error: ", error);
     }
 });
 
@@ -94,9 +103,6 @@ document.getElementById("btn_edit_user").addEventListener("click", async (e) => 
         if (body.profile_name) {
             document.getElementById("user_place_holder").textContent = body.profile_name;
         }
-        document.getElementById("profile_name").value = "";
-        document.getElementById("name").value = "";
-        document.getElementById("pass").value = "";
         alert("Perfil actualizado correctamente");
     }
 });
