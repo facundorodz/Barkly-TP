@@ -29,7 +29,7 @@ router.post("/login_user", async (req, res) => {
             }
             const cuidador = response_hero.rows[0];
             req.session.userId = response_hero.rows[0].id; 
-            req.session.username = response_hero.rows[0].nombre_perfil;
+            req.session.username = cuidador.nombre;
             return res.json({success: true, type: "hero", cuidador: {id: cuidador.id,nombre: cuidador.nombre}});
         }   catch (error) {
                 console.error("Error en login:", error);

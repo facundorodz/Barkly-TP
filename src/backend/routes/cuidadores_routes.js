@@ -9,10 +9,10 @@ router.put("/:id", controlador.editarCuidador);
 router.delete("/session", controlador.eliminarCuidador);
 
 
-router.get("/:id/paquetes", paquete.obtenerPaquetesPorCuidador);
-router.post("/:id/paquetes", paquete.crearPaquete);
-router.put("/paquetes/:id", paquete.editarPaquete);
-router.delete("/paquetes/:id", paquete.eliminarPaquete);
+//router.get("/:id/paquetes", paquete.obtenerPaquetesPorCuidador);
+//router.post("/:id/paquetes", paquete.crearPaquete);
+//router.put("/paquetes/:id", paquete.editarPaquete);
+//router.delete("/paquetes/:id", paquete.eliminarPaquete);
 
 module.exports = router;
 

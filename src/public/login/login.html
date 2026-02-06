@@ -16,7 +16,7 @@
             <h1 class="fw-bold">Iniciar sesión</h1>
                 <p>¿Todavía no tenes cuenta? <a href="/pagina_seleccion_registrar/pagina_seleccion_registro.html">Unite acá</a></p>
                 <form id="login-form" class="login-form" action="/users/login_user" method="post">
-                    <input type="hidden" name="login_type" id="login_type" value="user">
+                    <input type="hidden" name="login_type" id="loginElegir" value="user">
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Nombre de usuario</label>
                     <input type="text" name="profile_name" id="profile_name" class="form-control">
@@ -27,10 +27,10 @@
                     <input type="password" name="pass" id="pass" class="form-control">
                     <div id="loginElegir" class="btn-group" role="group" aria-label="Basic radio toggle button group">
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                        <label class="btn btn-outline-danger texto-elegir" for="btnradio1"> <img src="../assets/images/icono_para_cliente.png" alt="Cliente" id="iconoCliente"> Usuario</label>
+                        <label class="btn btn-outline-danger texto-elegir" for="btnradio1"> <img src="../assets/images/icono_para_cliente.png" alt="Cliente" id="iconoCliente" onclick="document.getElementById('loginElegir').value='user'"> Usuario</label>
 
                         <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                        <label class="btn btn-outline-danger texto-elegir" for="btnradio2"> <img src="../assets/images/icono_superheroe.png" id="iconoSuperheroe" alt="Superheroe"> Superheroe</label>
+                        <label class="btn btn-outline-danger texto-elegir" for="btnradio2"> <img src="../assets/images/icono_superheroe.png" id="iconoSuperheroe" alt="Superheroe" onclick="document.getElementById('loginElegir').value='hero'"> Superheroe</label>
                     </div>
                 </div>
                 <div class="container text-center">

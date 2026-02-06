@@ -1,12 +1,10 @@
-
-
 document.querySelector("form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const datos = {
     profile_name: document.getElementById("profile_name").value,
     pass: document.getElementById("pass").value,
-    login_type: document.getElementById("login_type").value
+    login_type: document.getElementById("loginElegir").value
   };
 
   try {

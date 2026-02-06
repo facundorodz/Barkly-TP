@@ -24,8 +24,6 @@ services:
       DB_USER: postgres
       DB_PASSWORD: barkly_tp
       DB_NAME: barkly
-    depends_on:
-      - postgres
 
   frontend:
     build: ./src/public
@@ -33,8 +31,6 @@ services:
     restart: always
     ports:
       - "3000:3000"
-    depends_on:
-      - backend
 
 volumes:
   pgdata:
