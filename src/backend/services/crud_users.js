@@ -63,11 +63,33 @@ router.post("/add_dog", async (req, res) => {
     if (!req.session.userId) {
         return res.status(401).json({ error: "No estás logueado" });
     }
-    const { dog_name, age } = req.body;
-    try {
-        await db.query(
-            "INSERT INTO perros (id_usuario, nombre, edad, id_raza) VALUES ($1,$2,$3,1)",[req.session.userId, dog_name, age]
+
+    const { dog_name, age, breed } = req.body;
+    console.log(req.body);
+    
+    try { // Se fija si existe la raza en la BD
+        let breedId;
+
+        const breedResult = await db.query(
+            "SELECT id FROM razas WHERE nombre = $1",
+            [breed]
         );
+
+        if (breedResult.rows.length === 0) { // Si no existe, la crea y devuelve el ID.
+            const breedInsert = await db.query(
+                "INSERT INTO razas (nombre, tamanio, temperamento, fortaleza, velocidad, color_predominante) VALUES ($1, 'a', 'a', 1, 1, 'a') RETURNING id",
+                [breed]
+            );
+            breedId = breedInsert.rows[0].id;
+        } else { // Si ya existía, agarra el ID
+            breedId = breedResult.rows[0].id;
+        }
+
+        await db.query(
+            "INSERT INTO perros (id_usuario, nombre, edad, id_raza) VALUES ($1,$2,$3,$4)",
+            [req.session.userId, dog_name, age, breedId]
+        );
+
         console.log("Agregué un perro a:", req.session.userId);
         return res.json({ success: true });
 
@@ -76,7 +98,6 @@ router.post("/add_dog", async (req, res) => {
         return res.status(500).json({ error: "Error al guardar el perro" });
     }
 });
-
 
 router.get("/show_dogs", async (req, res) => {
     if (!req.session.userId) {

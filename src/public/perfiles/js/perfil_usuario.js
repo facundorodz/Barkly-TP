@@ -139,6 +139,7 @@ async function borrarCuenta() {
 async function agregar_mascota() {
     const dog_name = document.getElementById("dog_name").value.trim();
     const age = document.getElementById("inputEdad").value;
+    const breed = document.getElementById("inputraza").value;
 
     if (!dog_name) {
         alert("Debes ingresar el nombre de la mascota");
@@ -148,9 +149,12 @@ async function agregar_mascota() {
         alert("Debes seleccionar la edad de la mascota");
         return;
     }
-    const body = {
+    // Agregar más información acá para que la raza sea una ENTIDAD bien diseñada.
+    // (tamanio, temperamento, fortaleza, velocidad, color_predominante)
+    const body = { 
         dog_name: dog_name,
-        age: age
+        age: age,
+        breed: breed
     };
 
     try {
