@@ -79,6 +79,7 @@ document.getElementById("btn_edit_user").addEventListener("click", async (e) => 
     const profile_name = document.getElementById("profile_name").value.trim();
     const name = document.getElementById("name").value.trim();
     const pass = document.getElementById("pass").value.trim();
+    const profile_photo = document.getElementById("photo").value.trim();
 
     if (profile_name !== ""){
         body.profile_name = profile_name;
@@ -88,7 +89,11 @@ document.getElementById("btn_edit_user").addEventListener("click", async (e) => 
     }
     if (pass !== ""){
         body.pass = pass;
+    }
+    if (profile_photo) {
+        body.profile_photo = profile_photo;
     } 
+
     const response = await fetch("/edit_user", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
@@ -104,6 +109,7 @@ document.getElementById("btn_edit_user").addEventListener("click", async (e) => 
             document.getElementById("user_place_holder").textContent = body.profile_name;
         }
         alert("Perfil actualizado correctamente");
+        window.location.reload();
     }
 });
 
