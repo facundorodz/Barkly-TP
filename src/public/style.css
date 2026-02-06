@@ -14,9 +14,14 @@ a {
 
 .navbar {
   background: linear-gradient(180deg, #1a1a1a 0%, #000000 100%);
-  position: sticky;
+  position: fixed;
+  top: 0;
   width: 100%;
+  z-index: 1050;
+
 }
+
+
 
 .navbar-brand {
     font-family: 'Oswald', oblique;
@@ -156,8 +161,16 @@ li {
 }
 
 .polaroid {
-    box-shadow: #000000;
+    background: white;
+    box-shadow: 0 10px 70px wheat;;
+    padding: 10px 10px 25px;
+    margin: 10px;
     transform: rotate(-5deg);
+}
+
+.polaroid:hover {
+    transform: rotate(0deg) scale(1.05);
+    transition: transform 0.3s ease;
 }
 
 hr {
@@ -166,8 +179,6 @@ hr {
     height: 4px;
     padding-top: 4px;
 }
-
-
 
 .cuidador_perfil {
     width: 100%;
@@ -345,4 +356,24 @@ hr {
     background-color: #2b1010;
     color:#ffffff;
     height: 55px;
+}
+
+/* Enfoque visual en el catálogo */
+.cuidador_perfil {
+  transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease, filter .15s ease;
+}
+
+.cuidador_enfocado {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 0 0 2px rgba(220,40,60,.45), 0 18px 40px rgba(0,0,0,.45);
+}
+
+.cuidador_desenfocado {
+  opacity: .35;
+  filter: grayscale(35%);
+}
+
+/* (Opcional) para que el usuario vea dónde está el catálogo al buscar */
+#catalogo {
+  scroll-margin-top: 90px;
 }

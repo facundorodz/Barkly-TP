@@ -15,14 +15,15 @@
 <body>
     <main>
         <div class="navbar-container" justify-content="center" >
-            <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top">
                 <div class="container-fluid">
                     <a class="navbar-brand d-flex align-items-center" href="">
                         <img src="/assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
                         Barkly Co.</a>
+                        <!-- BUSCADOR -->
                         <div class="buscador">
                         <form class="d-flex" role="search" style="width: 550px;">
-                            <input class="form-control me-2" type="search" placeholder="Buscar un superhéroe" aria-label="Search"/>
+                            <input id="buscadorNombre" class="form-control me-2" type="search" placeholder="Buscar un superhéroe" aria-label="Search"/>
                             <button class="btn btn-outline-danger search-btn" id="buscar-btn" type="submit">Buscar</button>
                         </form>
                         </div>

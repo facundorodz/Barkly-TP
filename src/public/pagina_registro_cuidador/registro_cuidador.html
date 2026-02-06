@@ -76,10 +76,17 @@
                           </div>
                         </div>
 
-                      <div class="col-11 campo-foto">
-                        <label for="foto_perfil" class="form-label">Foto de perfil</label>
-                        <input type="file" class="form-control" id="foto_perfil" name="foto_perfil" accept="image/*">
-                      </div>
+                        <div class="col-11 campo-foto">
+                          <label for="profile_photo" class="form-label">Foto de perfil (enlace)</label>
+                          <input
+                            type="url"
+                            class="form-control"
+                            id="foto_perfil"
+                            name="profile_photo"
+                            placeholder="https://ejemplo.com/foto.jpg"
+                            required>
+                        </div>
+
                       <img 
                         id="preview_foto" style="margin-top:10px; width:120px; display:none; border-radius:8px;">
 

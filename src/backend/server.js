@@ -41,6 +41,10 @@ app.use((req, res) => {
   });
 });
 
+app.get("/viejo_perfil_cuidador", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/perfiles/viejo_perfil_cuidador.html"));
+});
+
 
 app.listen(PORT, () => {
   console.log(` Backend API corriendo en http://localhost:${PORT}`);
