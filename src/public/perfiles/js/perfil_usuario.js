@@ -93,9 +93,9 @@ document.getElementById("btn_edit_user").addEventListener("click", async (e) => 
     if (profile_photo) {
         body.profile_photo = profile_photo;
     } 
-
-    const response = await fetch("/edit_user", {
+    const response = await fetch("http://localhost:8080/api/crud_users/edit_user", {
         method: "PUT",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     });
@@ -122,7 +122,10 @@ async function borrarCuenta() {
         return;
     } 
     try {
-        const resp = await fetch("/delete_user", { method: "DELETE" });
+        const resp = await fetch("http://localhost:8080/api/crud_users/delete_user", {
+            method: "DELETE",
+            credentials: "include"
+        });
         const data = await resp.json();
         if (data.success) {
             alert("Cuenta eliminada correctamente");
@@ -154,10 +157,11 @@ async function agregar_mascota() {
     };
 
     try {
-        const resp = await fetch("/add_dog", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
+        const resp = await fetch("http://localhost:8080/api/crud_users/add_dog", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
         });
         const data = await resp.json();
         if (resp.ok && data.success) {
@@ -176,7 +180,9 @@ async function agregar_mascota() {
 
 async function mostrar_mascotas() {
     try {
-        const resp = await fetch("/show_dogs");
+        const resp = await fetch("http://localhost:8080/api/crud_users/show_dogs", {
+        credentials: "include"
+        });
         const data = await resp.json();
         const contenedor = document.querySelector(".my_dogs");
         
@@ -228,9 +234,11 @@ async function eliminar_mascota(dog_id) {
         return;
     } 
     try {
-        const resp = await fetch(`/delete_dog/${dog_id}`, {
-            method: "DELETE"
+        const resp = await fetch(`http://localhost:8080/api/crud_users/delete_dog/${dog_id}`, {
+        method: "DELETE",
+        credentials: "include"
         });
+
         const data = await resp.json();
 
         if (data.success) {

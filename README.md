@@ -63,7 +63,7 @@ En la página de **perfil-usuario.html**, tenemos el apartado de edición del pe
 ### Backend
 Para levantar el backend escribiremos la siguiente linea.
 ```
-make run-backend
+
 ```
 ### Frontend
 Para levantar el frontend, nos iremos a nuestro navegador favorito, al siguiente enlace:

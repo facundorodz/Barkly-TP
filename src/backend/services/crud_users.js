@@ -3,6 +3,8 @@ const router = express.Router();
 const db = require("../bdd/bdd.js");
 const path = require("path");
 
+
+
 router.delete("/delete_user", async (req, res) => {
     console.log("LLEGO AL DELETE");
     if (!req.session.userId) {
