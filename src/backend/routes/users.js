@@ -185,5 +185,16 @@ router.get("/user_info", (req, res) => {
     });
 });
 
+router.get("/profile_data", async (req, res) => {
+    try {
+        const result = await db.query(
+            "SELECT nombre_perfil, nombre_completo, contraseña, foto_perfil FROM usuarios WHERE id = $1",
+            [req.session.userId]
+        ); return res.json(result.rows[0]);
+    } catch (error) {
+        console.log("Error: ", error)
+        return res.statusCode(500)
+    }
+})
 
 module.exports = router;
