@@ -1,3 +1,21 @@
+function mostrarError(mensaje) {
+  const alert = document.getElementById('alert-error');
+  const msg = document.getElementById('alert-error-msg');
+
+  msg.textContent = mensaje;
+
+  alert.classList.remove('d-none');
+  alert.classList.add('show');
+
+}
+
+function ocultarError() {
+    const alert = document.getElementById('alert-error');
+    alert.classList.add('d-none');
+    alert.classList.remove('show');
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
 
   const boton = document.getElementById("ver-mas-boton");
@@ -65,7 +83,17 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
       });
     })
-    .catch(err => console.error("Error cargando cuidadores:", err));
+    .catch(err => {
+  console.error("Error cargando cuidadores:", err);
+
+  if (err.message === 'Failed to fetch') {
+    mostrarError('No se pudo conectar con el servidor');
+    return;
+  }
+
+  mostrarError(err?.message || 'Error cargando cuidadores');
+});
+
 
 
   if (boton && conteiner) {
@@ -102,6 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } catch (err) {
       console.error("Error obteniendo sesión:", err);
+      mostrarError(err?.message || "Ocurrió un error inesperado");
     }
   })();
 
