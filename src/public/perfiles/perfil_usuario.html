@@ -17,7 +17,7 @@
       <div class="navbar-container" justify-content="center" >
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
             <img src="../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
                         Barkly Co</a>
             <div class="buscador">
@@ -129,31 +129,18 @@
                       </div>
                       <div class="col-11">
                         <label for="raza" class="form-label">Raza</label>
-                        <select id="inputraza" name="raza">
-                          <option disabled selected>Elegí una raza</option>
-                          <option> Beagle </option>
-                          <option> Border Collie </option>
-                          <option> Bulldog Francés </option>
-                          <option> Cocker Spaniel </option>
-                          <option> Chihuahua </option>
-                          <option> Doberman </option>
-                          <option> Golden Retriever </option>
-                          <option> Gran Danés </option>
-                          <option> Husky Siberiano </option>
-                          <option> Labrador Retriever </option>
-                          <option> Mastín Inglés </option>
-                          <option> Pastor Alemán </option>
-                          <option> Pastor Australiano </option>
-                          <option> Pomerania </option>
-                          <option> Pug </option>
-                          <option> Rottweiler </option>
-                          <option> San Bernardo </option>
-                          <option> Schnauzer </option>
-                          <option> Shin Tzu </option>
-                          <option> Terranova </option>
-                          <option> Yorkshire Terrier </option>
 
+                        <select id="input_raza" name="raza" class="form-select">
+                          <option disabled selected value="">Elegí una raza</option>
+
+                          <option value="2">Beagle</option>
+                          <option value="3">Border Collie</option>
+                          <option value="4">Bulldog Francés</option>
+                          <option value="5">Cocker Spaniel</option>
+                          <option value="6">Chihuahua</option>
+                          <option value="7">Doberman</option>
                         </select>
+
                       </div>
 
                       <button type="button" id="closeModal" class="btn btn-danger guardar-mascota" onclick="agregar_mascota()"> Guardar </button>

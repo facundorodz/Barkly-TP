@@ -65,10 +65,10 @@ router.post("/add_dog", async (req, res) => {
     if (!req.session.userId) {
         return res.status(401).json({ error: "No estás logueado" });
     }
-    const { dog_name, age } = req.body;
+    const { dog_name, age, raza } = req.body;
     try {
         await db.query(
-            "INSERT INTO perros (id_usuario, nombre, edad, id_raza) VALUES ($1,$2,$3,1)",[req.session.userId, dog_name, age]
+            "INSERT INTO perros (id_usuario, nombre, edad, id_raza) VALUES ($1,$2,$3,$4)",[req.session.userId, dog_name, age, raza]
         );
         console.log("Agregué un perro a:", req.session.userId);
         return res.json({ success: true });

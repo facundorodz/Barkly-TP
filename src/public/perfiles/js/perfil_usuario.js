@@ -142,6 +142,7 @@ async function borrarCuenta() {
 async function agregar_mascota() {
     const dog_name = document.getElementById("dog_name").value.trim();
     const age = document.getElementById("inputEdad").value;
+    const raza = document.getElementById("input_raza").value;
 
     if (!dog_name) {
         alert("Debes ingresar el nombre de la mascota");
@@ -153,7 +154,8 @@ async function agregar_mascota() {
     }
     const body = {
         dog_name: dog_name,
-        age: age
+        age: age,
+        raza:raza
     };
 
     try {
