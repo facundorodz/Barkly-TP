@@ -25,12 +25,18 @@
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Contraseña</label>
                     <input type="password" name="pass" id="pass" class="form-control">
-                    <div id="loginElegir" class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                        <label class="btn btn-outline-danger texto-elegir" for="btnradio1"> <img src="../assets/images/icono_para_cliente.png" alt="Cliente" id="iconoCliente" onclick="document.getElementById('loginElegir').value='user'"> Usuario</label>
-
-                        <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                        <label class="btn btn-outline-danger texto-elegir" for="btnradio2"> <img src="../assets/images/icono_superheroe.png" id="iconoSuperheroe" alt="Superheroe" onclick="document.getElementById('loginElegir').value='hero'"> Superheroe</label>
+                    <div class="btn-group" role="group">
+                    <input type="hidden" id="loginElegir" value="user">
+                    <input type="radio" class="btn-check" name="login_radio" id="radioUser" autocomplete="off" checked onclick="document.getElementById('loginElegir').value='user'">
+                    <label class="btn btn-outline-danger texto-elegir" for="radioUser">
+                        <img src="../assets/images/icono_para_cliente.png" alt="Cliente" id="iconoCliente">
+                        Usuario
+                    </label>
+                    <input type="radio" class="btn-check" name="login_radio" id="radioHero" autocomplete="off" onclick="document.getElementById('loginElegir').value='hero'">
+                    <label class="btn btn-outline-danger texto-elegir" for="radioHero">
+                        <img src="../assets/images/icono_superheroe.png" id="iconoSuperheroe" alt="Superheroe">
+                        Superheroe
+                    </label>
                     </div>
                 </div>
                 <div class="container text-center">
