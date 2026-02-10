@@ -27,7 +27,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
     }
 
     if (data.type === "hero") {
-      localStorage.setItem("hero", JSON.stringify(data.cuidador));
+      localStorage.setItem("id_cuidador", JSON.stringify(data.cuidador.id));
       window.location.href = "/perfiles/perfil_cuidador.html";
     }
 
