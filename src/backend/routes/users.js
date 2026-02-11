@@ -38,8 +38,7 @@ router.post("/register_user", async (req, res) => {
 });
 
 router.post("/register_hero", async (req, res) => {
-  const { profile_name, franchise_name, powers, experience, password } = req.body;
-  const photo = null;
+  const { profile_name, franchise_name, powers, experience, password, photo } = req.body;
 
   try {
     const exists = await db.query(
