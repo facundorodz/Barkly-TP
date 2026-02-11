@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:3000/api/cuidadores";
+const API_URL = "http://localhost:3000/cuidadores";
 
 document.addEventListener("DOMContentLoaded", () => {
 

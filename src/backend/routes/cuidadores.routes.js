@@ -3,12 +3,6 @@ const router = express.Router();
 const controlador = require("../services/controller.cuidadores.js");
 const paquete = require("../services/controller.paquetes.js");
 
-console.log("obtenerPaquetesPorCuidador:", typeof paquete.obtenerPaquetesPorCuidador);
-console.log("crearPaquete:", typeof paquete.crearPaquete);
-console.log("obtenerPaquetePorCuidador:", typeof paquete.obtenerPaquetePorCuidador);
-console.log("editarPaquetePorCuidador:", typeof paquete.editarPaquetePorCuidador);
-console.log("eliminarPaquetePorCuidador:", typeof paquete.eliminarPaquetePorCuidador);
-
 
 // CRUD CUIDADORES
 router.get("/cuidadores", controlador.obtenerCuidadores);
