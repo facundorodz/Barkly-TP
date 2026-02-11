@@ -6,7 +6,8 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
     franchise_name: document.getElementById("franchise_name").value,
     password: document.getElementById("password").value,
     powers: document.getElementById("powers").value,
-    experience: document.getElementById("experience").value
+    experience: document.getElementById("experience").value,
+    photo: document.getElementById("foto_perfil").value
   };
 
   try {

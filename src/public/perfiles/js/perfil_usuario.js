@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async () => {
     try {
-        const resp = await fetch("/users/profile_data", {
+        const resp = await fetch("http://localhost:8080/api/users/profile_data", {
             credentials: "include"
         });
 

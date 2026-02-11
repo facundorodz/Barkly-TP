@@ -118,5 +118,4 @@ router.get("/user_info", (req, res) => {
     });
 });
 
-
 module.exports = router;

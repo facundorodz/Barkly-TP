@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="cuidador_perfil">
 
               <img
-                src="${c.foto_perfil || "https://via.placeholder.com/150"}"
+                src="${c.foto_perfil}"
                 class="polaroid"
                 width="400"
                 height="400"

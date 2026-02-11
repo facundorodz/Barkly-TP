@@ -9,78 +9,77 @@
         
         <link rel="stylesheet" href = "/perfiles/css/perfil_usuario_estilos.css">
         <link rel="icon" href="../assets/images/icono_metadata.png" type="image/png">
-        <script src="./js/perfil_usuario.js" defer></script>
         
-    </head>
-
-    <body>
-      <div class="navbar-container" justify-content="center" >
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-          <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="../index.html">
-            <img src="../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
-                        Barkly Co</a>
-            <div class="buscador">
-              <form class="d-flex" role="search" style="width: 550px;">
-                <input class="form-control me-2" type="search" placeholder="Buscar un superhéroe" aria-label="Search"/>
-                <button class="btn btn-outline-danger search-btn" id="buscar-btn" type="submit">Buscar</button>
-              </form>
+      </head>
+      
+      <body>
+        <div class="navbar-container" justify-content="center" >
+          <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+              <a class="navbar-brand d-flex align-items-center" href="../index.html">
+                <img src="../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+                Barkly Co</a>
+                <div class="buscador">
+                  <form class="d-flex" role="search" style="width: 550px;">
+                    <input class="form-control me-2" type="search" placeholder="Buscar un superhéroe" aria-label="Search"/>
+                    <button class="btn btn-outline-danger search-btn" id="buscar-btn" type="submit">Buscar</button>
+                  </form>
             </div>
-                        <div class="collapse navbar-collapse align" id="mas-info">
-                            <ul class="navbar-nav ms-auto">
-                                <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="../index.html">Servicios</a> 
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="../index.html">Cuidadores</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="../index.html">Sobre Nosotros</a>
-                                </li>
-                                <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="../index.html">Reseñas</a>
-                                </li>
-                            </ul>
-                                <a role="button" id="login" class="btn btn-danger" href="#mi-perfil" >Mi perfil </a>
-                    </div>
-                </div>
-            </nav>
-        </div>
-
-  <div class="contenedor-general">
-
-    <div class="titulo-pagina" id="#mi-perfil">
-      <h1 style="text-align: center;">Mi perfil</h1>
-    </div>
-
-    <div class="header">
-      <div class="izquierda">
-        <div class="upload">
-          <div class="imagen-placeholder">
-            <img class="imagen" id="profile_photo"  width="100" height="100"/>
-            <input type="url" id="photo" placeholder="https://ejemplo.com/foto.jpg">
-        </div>
+            <div class="collapse navbar-collapse align" id="mas-info">
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="../index.html">Servicios</a> 
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="../index.html">Cuidadores</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="../index.html">Sobre Nosotros</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="../index.html">Reseñas</a>
+                </li>
+              </ul>
+              <a role="button" id="login" class="btn btn-danger" href="#mi-perfil" >Mi perfil </a>
+            </div>
+          </div>
+        </nav>
       </div>
+      
+      <div class="contenedor-general">
+        
+        <div class="titulo-pagina" id="#mi-perfil">
+          <h1 style="text-align: center;">Mi perfil</h1>
         </div>
-
-        <div class="info-usuario">
-          <div id="user_place_holder">
-            <h2></h2>
+        
+        <div class="header">
+          <div class="izquierda">
+            <div class="upload">
+              <div class="imagen-placeholder">
+                <img class="imagen" id="profile_photo"  width="100" height="100"/>
+                <input type="url" id="photo" placeholder="https://ejemplo.com/foto.jpg">
+              </div>
+            </div>
+          </div>
+          
+          <div class="info-usuario">
+            <div id="user_place_holder">
+              <h2></h2>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-
-        <div class="container">
-          <div class="form-container">
-            <div action="" class="formulario" style="text-align: left;">  
-              <div class="titulo-seccion">  
-                <h2> Mis datos</h2>  
-              </div>
-                <form id="formPerfil">
-
-                  <div class="col-11">
-                    <label class="form-label">Usuario</label>
+      
+      <div class="container">
+        <div class="form-container">
+          <div action="" class="formulario" style="text-align: left;">  
+            <div class="titulo-seccion">  
+              <h2> Mis datos</h2>  
+            </div>
+            <form id="formPerfil">
+              
+              <div class="col-11">
+                <label class="form-label">Usuario</label>
                     <input type="text" class="form-control" id="profile_name">
                   </div>
 
@@ -88,81 +87,80 @@
                     <label class="form-label">Nombre y Apellido</label>
                     <input type="text" class="form-control" id="name">
                   </div>
-
+                  
                   <div class="col-11">
                     <label class="form-label">Contraseña</label>
                     <input type="password" class="form-control" id="pass">
                   </div>
-
+                  
                   <button type="button" id="btn_edit_user" class="btn btn-outline-danger">Editar perfil</button>
                   <button type="button" class="btn btn-outline-danger" onclick="borrarCuenta()">Borrar cuenta</button>
                 </form>
+              </div>
             </div>
-          </div>
-
-          <div class="col-md-6 d-flex flex-column gap-2 derecha">
-            <div class="my_dogs"> 
-              <div class="mascotas-header"> 
-                <h2> Mis mascotas</h2> 
-                <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Añadir mascota</button>
-               </div> 
-
-              <hr>
-
-              <div class="modal" id="modal">
-                <div class="modal-header">
+            
+            <div class="col-md-6 d-flex flex-column gap-2 derecha">
+              <div class="my_dogs"> 
+                <div class="mascotas-header"> 
+                  <h2> Mis mascotas</h2> 
+                  <button data-modal-target="#modal" type="button" class="btn btn-dark anadir"> Añadir mascota</button>
+                </div> 
+                
+                <hr>
+                
+                <div class="modal" id="modal">
+                  <div class="modal-header">
                     <h2> Nueva mascota </h2>
                     <button data-close-button class="close-button"> &times;</button>
-                </div>
-
-                <div class="modal-body"> 
-                  <div class="modal-form">
-                    <form action="" id="formMascota">
-                      <div class="col-11">
-
-                        <label for="nombre" class="form-label">Nombre </label>
-                        <input type="text" class="form-control" id="dog_name" name="dog_name" placeholder="Ej: Milanesa">
-                      </div>
-                      <div class="col-11">
+                  </div>
+                  
+                  <div class="modal-body"> 
+                    <div class="modal-form">
+                      <form action="" id="formMascota">
+                        <div class="col-11">
+                          
+                          <label for="nombre" class="form-label">Nombre </label>
+                          <input type="text" class="form-control" id="dog_name" name="dog_name" placeholder="Ej: Milanesa">
+                        </div>
+                        <div class="col-11">
                           <label for="inputEdad" class="form-label">Edad (años)</label>
                           <input type="number" class="form-control" id="inputEdad" min="0" placeholder="Ej: 3">
-                      </div>
-                      <div class="col-11">
-                        <label for="raza" class="form-label">Raza</label>
-
-                        <select id="input_raza" name="raza" class="form-select">
-                          <option disabled selected value="">Elegí una raza</option>
-
-                          <option value="2">Beagle</option>
-                          <option value="3">Border Collie</option>
-                          <option value="4">Bulldog Francés</option>
-                          <option value="5">Cocker Spaniel</option>
-                          <option value="6">Chihuahua</option>
-                          <option value="7">Doberman</option>
-                        </select>
-
-                      </div>
-
-                      <button type="button" id="closeModal" class="btn btn-danger guardar-mascota" onclick="agregar_mascota()"> Guardar </button>
-                    </form>
+                        </div>
+                        <div class="col-11">
+                          <label for="raza" class="form-label">Raza</label>
+                          
+                          <select id="input_raza" name="raza" class="form-select">
+                            <option disabled selected value="">Elegí una raza</option>
+                            
+                            <option value="2">Beagle</option>
+                            <option value="3">Border Collie</option>
+                            <option value="4">Bulldog Francés</option>
+                            <option value="5">Cocker Spaniel</option>
+                            <option value="6">Chihuahua</option>
+                            <option value="7">Doberman</option>
+                          </select>
+                          
+                        </div>
+                        
+                        <button type="button" id="closeModal" class="btn btn-danger guardar-mascota" onclick="agregar_mascota()"> Guardar </button>
+                      </form>
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="mis-paquetes">
+                <h2>
+                  Paquetes comprados
+                </h2>
+                <hr>
+              </div>
             </div>
-          <div class="mis-paquetes">
-              <h2>
-                Paquetes comprados
-              </h2>
-              <hr>
           </div>
-        </div>
-      </div>
-
+          
       <div class="col-12" style="text-align: center;">
 
       </div>
     </div>
-        
-
+    <script src="./js/perfil_usuario.js" defer></script>
   </body>
-</html>
+  </html>
