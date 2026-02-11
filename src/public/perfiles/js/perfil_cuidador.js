@@ -7,10 +7,9 @@
 
     const API_CUIDADORES = `${API_BASE}/api/cuidadores`;
     const API_PAQUETES = `${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`;
-
+    
     // ID del cuidador: se espera que el login lo guarde así.
     // Ej: localStorage.setItem("id_cuidador", "1");
-
 
     // ==========================
     // HELPERS
@@ -324,7 +323,7 @@
         if (!paqueteId) {
           // CREAR
           setEstado("ok", "Creando paquete...");
-          await fetchJSON(`${API_PAQUETES}/${paqueteId}`, {
+          await fetchJSON(`${API_PAQUETES}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)

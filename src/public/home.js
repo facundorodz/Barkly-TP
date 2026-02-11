@@ -96,11 +96,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!container) return;
 
       if (data.response) {
-        container.innerHTML = `
+        if (data.role === "user"){
+          container.innerHTML = `
           <a class="btn btn-danger" href="/perfiles/perfil_usuario.html">
             Ver perfil
           </a>
         `;
+        } else {
+          container.innerHTML = `
+          <a class="btn btn-danger" href="/perfiles/perfil_cuidador.html">
+            Ver perfil
+          </a>
+        `;
+        }
       }
 
     } catch (err) {

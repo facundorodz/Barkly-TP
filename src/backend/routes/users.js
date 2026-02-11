@@ -2,42 +2,6 @@ const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
 
-router.post("/login_user", async (req, res) => {
-    console.log("Login intento:", req.body);
-    const { profile_name, pass, login_type } = req.body;
-    if(login_type === "user"){
-        try {
-            const response_usuario = await db.query("SELECT * FROM usuarios WHERE nombre_perfil = $1 AND contraseña = $2",[profile_name, pass]
-        );
-            if (response_usuario.rows.length === 0) {
-                return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
-            }
-            req.session.userId = response_usuario.rows[0].id; 
-            req.session.username = response_usuario.rows[0].nombre_perfil;
-            return res.json({ success: true, type: "user" });
-        }   catch (error) {
-                console.error("Error en login:", error);
-                return res.status(500).json({ error: "Error interno en el servidor" });
-        }
-
-    } else if (login_type === "hero"){
-        try {
-            const response_hero = await db.query("SELECT * FROM superheroes WHERE nombre = $1 ",[profile_name]
-        );
-            if (response_hero.rows.length === 0) {
-                return res.status(400).json({ error: "Usuario o contraseña incorrectos" });
-            }
-            const cuidador = response_hero.rows[0];
-            req.session.userId = response_hero.rows[0].id; 
-            req.session.username = cuidador.nombre;
-            return res.json({success: true, type: "hero", cuidador: {id: cuidador.id,nombre: cuidador.nombre}});
-        }   catch (error) {
-                console.error("Error en login:", error);
-                return res.status(500).json({ error: "Error interno en el servidor" });
-        }
-    }
-});
-
 router.post("/register_user", async (req, res) => {
   const { profile_name, pass, name, profile_photo } = req.body;
 
@@ -83,14 +47,14 @@ router.post("/register_hero", async (req, res) => {
       return res.status(400).json({ error: "Ya existe un cuidador con ese nombre" });
     }
 
-    await db.query(
+    const result = await db.query(
       `INSERT INTO superheroes
        (nombre, franquicia, experiencia, poderes, contrasenia, foto_perfil)
-       VALUES ($1, $2, $3, $4, $5, $6)`,
+       VALUES ($1, $2, $3, $4, $5, $6)  RETURNING id`,
       [profile_name, franchise_name, experience, powers, password, photo]
     );
-
-    return res.json({ success: true });
+    const cuidador = result.rows[0];
+    return res.json({ success: true, cuidador: {id:cuidador.id} });
 
   } catch (error) {
     console.error(error);
@@ -159,7 +123,8 @@ router.get("/user_info", (req, res) => {
     }
     res.json({
         response: true,
-        username: req.session.username
+        username: req.session.username,
+        role : req.session.role
     });
 });
 

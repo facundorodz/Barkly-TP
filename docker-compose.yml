@@ -24,6 +24,10 @@ services:
       DB_USER: postgres
       DB_PASSWORD: barkly_tp
       DB_NAME: barkly
+    
+    volumes:
+      - ./uploads:/app/uploads
+
 
   frontend:
     build: ./src/public

@@ -23,6 +23,7 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
     const data = await resp.json();
 
     if (data.success) {
+      localStorage.setItem("id_cuidador", data.cuidador.id);
       window.location.href = "/perfiles/perfil_cuidador.html";
     } else {
       alert(data.error);
