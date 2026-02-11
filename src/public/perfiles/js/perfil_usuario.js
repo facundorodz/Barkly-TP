@@ -1,10 +1,19 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const resp = await fetch("/users/profile_data", {
+            credentials: "include"
+        });
 
+        const data = await resp.json();
 
-document.addEventListener("DOMContentLoaded", () => {
-    const nickname = localStorage.getItem("nickname");
-    if (nickname) {
-        document.getElementById("user_place_holder").innerText = nickname;
-        document.getElementById("profile_name").value = nickname;
+        document.getElementById("user_place_holder").innerText = data.nombre_perfil;
+        document.getElementById("profile_name").value = data.nombre_perfil;
+        document.getElementById("name").value = data.nombre_completo;
+        document.getElementById("profile_photo").src = data.foto_perfil;
+        document.getElementById("pass").value = data.contraseña;
+
+    } catch (error) {
+        console.log("Error: ", error);
     }
 });
 
@@ -70,6 +79,7 @@ document.getElementById("btn_edit_user").addEventListener("click", async (e) => 
     const profile_name = document.getElementById("profile_name").value.trim();
     const name = document.getElementById("name").value.trim();
     const pass = document.getElementById("pass").value.trim();
+    const profile_photo = document.getElementById("photo").value.trim();
 
     if (profile_name !== ""){
         body.profile_name = profile_name;
@@ -79,9 +89,13 @@ document.getElementById("btn_edit_user").addEventListener("click", async (e) => 
     }
     if (pass !== ""){
         body.pass = pass;
+    }
+    if (profile_photo) {
+        body.profile_photo = profile_photo;
     } 
-    const response = await fetch("/edit_user", {
+    const response = await fetch("http://localhost:8080/api/crud_users/edit_user", {
         method: "PUT",
+        credentials: "include",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body)
     });
@@ -94,10 +108,8 @@ document.getElementById("btn_edit_user").addEventListener("click", async (e) => 
         if (body.profile_name) {
             document.getElementById("user_place_holder").textContent = body.profile_name;
         }
-        document.getElementById("profile_name").value = "";
-        document.getElementById("name").value = "";
-        document.getElementById("pass").value = "";
         alert("Perfil actualizado correctamente");
+        window.location.reload();
     }
 });
 
@@ -110,7 +122,10 @@ async function borrarCuenta() {
         return;
     } 
     try {
-        const resp = await fetch("/delete_user", { method: "DELETE" });
+        const resp = await fetch("http://localhost:8080/api/crud_users/delete_user", {
+            method: "DELETE",
+            credentials: "include"
+        });
         const data = await resp.json();
         if (data.success) {
             alert("Cuenta eliminada correctamente");
@@ -127,6 +142,7 @@ async function borrarCuenta() {
 async function agregar_mascota() {
     const dog_name = document.getElementById("dog_name").value.trim();
     const age = document.getElementById("inputEdad").value;
+    const raza = document.getElementById("input_raza").value;
 
     if (!dog_name) {
         alert("Debes ingresar el nombre de la mascota");
@@ -138,14 +154,16 @@ async function agregar_mascota() {
     }
     const body = {
         dog_name: dog_name,
-        age: age
+        age: age,
+        raza:raza
     };
 
     try {
-        const resp = await fetch("/add_dog", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body)
+        const resp = await fetch("http://localhost:8080/api/crud_users/add_dog", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
         });
         const data = await resp.json();
         if (resp.ok && data.success) {
@@ -164,7 +182,9 @@ async function agregar_mascota() {
 
 async function mostrar_mascotas() {
     try {
-        const resp = await fetch("/show_dogs");
+        const resp = await fetch("http://localhost:8080/api/crud_users/show_dogs", {
+        credentials: "include"
+        });
         const data = await resp.json();
         const contenedor = document.querySelector(".my_dogs");
         
@@ -216,9 +236,11 @@ async function eliminar_mascota(dog_id) {
         return;
     } 
     try {
-        const resp = await fetch(`/delete_dog/${dog_id}`, {
-            method: "DELETE"
+        const resp = await fetch(`http://localhost:8080/api/crud_users/delete_dog/${dog_id}`, {
+        method: "DELETE",
+        credentials: "include"
         });
+
         const data = await resp.json();
 
         if (data.success) {

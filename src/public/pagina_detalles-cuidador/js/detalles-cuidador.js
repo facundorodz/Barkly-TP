@@ -1,12 +1,9 @@
-const API = "http://localhost:3000";
-
 const params = new URLSearchParams(window.location.search);
 const idCuidador = params.get("id");
 
-// Helpers
 function splitToList(texto) {
   return String(texto ?? "")
-    .split(/[\n,;•-]+/g)   // separadores típicos
+    .split(/[\n,;•-]+/g)  
     .map(s => s.trim())
     .filter(Boolean);
 }
@@ -19,7 +16,6 @@ function money(v) {
 function renderBones(promedio) {
   const cont = document.getElementById("calificacionBones");
   cont.innerHTML = "";
-  // mock visual: 5 huesitos llenos según promedio (1..5). Si no hay promedio -> 0
   const n = Math.max(0, Math.min(5, Math.round(Number(promedio || 0))));
   for (let i = 0; i < 5; i++) {
     const span = document.createElement("span");
@@ -90,7 +86,7 @@ async function cargarCuidadorYPaquetes() {
   }
 
   // 1) cuidador
-  const r1 = await fetch(`${API}/cuidadores/${idCuidador}`);
+  const r1 = await fetch(`http://localhost:8080/api/cuidadores/${idCuidador}`);
   if (!r1.ok) throw new Error("No se pudo obtener el cuidador");
   const c = await r1.json();
 
@@ -104,7 +100,7 @@ async function cargarCuidadorYPaquetes() {
   renderBones(c.calificacion_promedio || c.promedio || 0);
 
   // 2) paquetes
-  const r2 = await fetch(`${API}/cuidadores/${idCuidador}/paquetes`);
+  const r2 = await fetch(`http://localhost:8080/api/cuidadores/${idCuidador}/paquetes`);
   if (!r2.ok) throw new Error("No se pudieron obtener los paquetes");
   const paquetes = await r2.json();
 
@@ -201,7 +197,7 @@ async function enviarResenia() {
   };
 
   try {
-    const res = await fetch(`${API}/resenias`, {
+    const res = await fetch(`http://localhost:8080/api/cuidadores/resenias`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)

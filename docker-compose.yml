@@ -12,5 +12,27 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
+  backend:
+    build: ./src/backend
+    container_name: barkly-backend
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: barkly_tp
+      DB_NAME: barkly
+
+  frontend:
+    build: ./src/public
+    container_name: barkly-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+
 volumes:
   pgdata:
+
+

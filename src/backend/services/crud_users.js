@@ -3,6 +3,8 @@ const router = express.Router();
 const db = require("../bdd/bdd.js");
 const path = require("path");
 
+
+
 router.delete("/delete_user", async (req, res) => {
     console.log("LLEGO AL DELETE");
     if (!req.session.userId) {
@@ -29,7 +31,7 @@ router.delete("/delete_user", async (req, res) => {
 
 router.put("/edit_user", async (req, res) => {
     console.log("LLEGO AL PUT");
-    const { profile_name, pass, name } = req.body;
+    const { profile_name, pass, name, profile_photo } = req.body;
     if (!req.session.userId) {
         return res.status(401).json({ success: false, message: "No estás logueado" });
     }
@@ -50,6 +52,9 @@ router.put("/edit_user", async (req, res) => {
     if (pass){
         await db.query("UPDATE usuarios set contraseña = $1 WHERE id = $2 ", [pass, req.session.userId]);
     }
+    if (profile_photo) {
+        await db.query("UPDATE usuarios set foto_perfil = $1 WHERE id = $2", [profile_photo, req.session.userId])
+    }
     console.log("Edite a: ", req.session.userId);
     return res.json({ success: true });
 });
@@ -60,10 +65,10 @@ router.post("/add_dog", async (req, res) => {
     if (!req.session.userId) {
         return res.status(401).json({ error: "No estás logueado" });
     }
-    const { dog_name, age } = req.body;
+    const { dog_name, age, raza } = req.body;
     try {
         await db.query(
-            "INSERT INTO perros (id_usuario, nombre, edad, id_raza) VALUES ($1,$2,$3,1)",[req.session.userId, dog_name, age]
+            "INSERT INTO perros (id_usuario, nombre, edad, id_raza) VALUES ($1,$2,$3,$4)",[req.session.userId, dog_name, age, raza]
         );
         console.log("Agregué un perro a:", req.session.userId);
         return res.json({ success: true });

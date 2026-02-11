@@ -2,14 +2,15 @@
 // ==========================
     // CONFIG
     // ==========================
-    const API_BASE = "http://localhost:3000";
-    const CUIDADOR_ID = 2;
-    const API_CUIDADORES = `${API_BASE}/cuidadores`;
+    const API_BASE = "http://localhost:8080";
+    const CUIDADOR_ID = localStorage.getItem("id_cuidador");
+
+    const API_CUIDADORES = `${API_BASE}/api/cuidadores`;
     const API_PAQUETES = `${API_CUIDADORES}/${CUIDADOR_ID}/paquetes`;
 
     // ID del cuidador: se espera que el login lo guarde así.
     // Ej: localStorage.setItem("id_cuidador", "1");
-    const cuidadorId = localStorage.getItem("id_cuidador");
+
 
     // ==========================
     // HELPERS
@@ -210,7 +211,7 @@
 
       try {
         setEstado("ok", "Eliminando cuenta...");
-        await fetchJSON(`${API_CUIDADORES}/${CUIDADOR_ID}`, { method: "DELETE" });
+        await fetchJSON(`${API_CUIDADORES}/session`, { method: "DELETE" });
         setEstado("ok", "Cuenta eliminada.");
         localStorage.removeItem("id_cuidador");
         renderPaquetes([]);
