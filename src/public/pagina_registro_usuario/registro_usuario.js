@@ -6,8 +6,9 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   const body = {
     name: document.getElementById("nombre").value,
     profile_name: document.getElementById("perfil").value,
-    pass: document.getElementById("password").value
-  };
+    pass: document.getElementById("password").value,
+    profile_photo: document.getElementById("profile_photo").value
+};
 
 
   try {

@@ -2,11 +2,8 @@ const express = require("express");
 const router = express.Router();
 const db = require("../bdd/bdd.js");
 
-
 router.post("/register_user", async (req, res) => {
-  const { profile_name, pass, name } = req.body;
-  const profile_photo = null;
-
+  const { profile_name, pass, name, profile_photo } = req.body;
 
   try {
     const exists = await db.query(
