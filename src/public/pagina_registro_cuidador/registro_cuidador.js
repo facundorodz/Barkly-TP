@@ -6,7 +6,8 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
     franchise_name: document.getElementById("franchise_name").value,
     password: document.getElementById("password").value,
     powers: document.getElementById("powers").value,
-    experience: document.getElementById("experience").value
+    experience: document.getElementById("experience").value,
+    photo: document.getElementById("foto_perfil").value
   };
 
   try {
@@ -22,6 +23,7 @@ document.getElementById("cuidador-form").addEventListener("submit", async (e) =>
     const data = await resp.json();
 
     if (data.success) {
+      localStorage.setItem("id_cuidador", data.cuidador.id);
       window.location.href = "/perfiles/perfil_cuidador.html";
     } else {
       alert(data.error);

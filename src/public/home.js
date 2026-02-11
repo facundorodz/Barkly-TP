@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="cuidador_perfil">
 
               <img
-                src="${c.foto_perfil || "https://via.placeholder.com/150"}"
+                src="${c.foto_perfil}"
                 class="polaroid"
                 width="400"
                 height="400"
@@ -100,11 +100,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!container) return;
 
       if (data.response) {
-        container.innerHTML = `
+        if (data.role === "user"){
+          container.innerHTML = `
           <a class="btn btn-danger" href="/perfiles/perfil_usuario.html">
             Ver perfil
           </a>
         `;
+        } else {
+          container.innerHTML = `
+          <a class="btn btn-danger" href="/perfiles/perfil_cuidador.html">
+            Ver perfil
+          </a>
+        `;
+        }
       }
 
     } catch (err) {

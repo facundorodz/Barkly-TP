@@ -16,7 +16,6 @@ const obtenerCuidadores = async (req, res) => {
 const obtenerCuidadorPorID = async (req, res) => {
   try {
     const { id } = req.params;
-
     const result = await pool.query(
       "SELECT * FROM superheroes WHERE id = $1",
       [id]
