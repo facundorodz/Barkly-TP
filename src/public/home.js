@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:3000/cuidadores";
+const API_URL = "http://localhost:3000/api/cuidadores";
 
 document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("buscadorNombre");
