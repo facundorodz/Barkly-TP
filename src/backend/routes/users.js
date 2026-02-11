@@ -126,7 +126,8 @@ router.get("/user_info", (req, res) => {
     }
     res.json({
         response: true,
-        username: req.session.username
+        username: req.session.username,
+        role : req.session.role
     });
 });
 
