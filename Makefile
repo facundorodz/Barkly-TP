@@ -12,10 +12,10 @@ start-all:
 stop-all:
 	sudo docker compose stop
 
-start-db:
+start-postgres:
 	sudo docker compose up -d postgres
 
-stop-db:
+stop-postgres:
 	sudo docker compose stop postgres
 
 start-backend:
