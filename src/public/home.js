@@ -1,3 +1,11 @@
+window.verDetalle = function(id) {
+  console.log("CLICK CUIDADOR ID:", id);
+
+  window.location.href =
+    `/pagina_detalles_cuidador/detalles_cuidador.html?id=${id}`;
+};
+
+
 
 const API_URL = "http://localhost:8080/api/cuidadores";
 

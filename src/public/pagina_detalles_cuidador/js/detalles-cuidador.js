@@ -1,5 +1,17 @@
+console.log(window.location.href);
+
 const params = new URLSearchParams(window.location.search);
 const idCuidador = params.get("id");
+
+console.log("ID:", idCuidador);
+
+if (!idCuidador) {
+  alert("NO llegó el ID");
+  throw new Error("Sin ID");
+}
+
+
+
 
 function splitToList(texto) {
   return String(texto ?? "")
@@ -80,6 +92,7 @@ function paqueteCardHTML(paquete, idx) {
 }
 
 async function cargarCuidadorYPaquetes() {
+  console.log(idCuidador);
   if (!idCuidador) {
     alert("Falta ?id= en la URL");
     return;
