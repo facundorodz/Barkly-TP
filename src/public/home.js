@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-  fetch(API_URL)
+  /*fetch(API_URL)
     .then(res => res.json())
     .then(cuidadores => {
 
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
       });
     })
-    .catch(err => console.error("Error cargando cuidadores:", err));
+    .catch(err => console.error("Error cargando cuidadores:", err));*/
 
 
   if (boton && conteiner) {
@@ -300,8 +300,6 @@ function verDetalle(id) {
     console.error("ID inválido:", id);
     return;
   }
-
-  // OJO: asegurate que exista esa ruta/carpeta (guiones vs underscore)
   window.location.href = `/pagina_detalles-cuidador/detalles-cuidador.html?id=${id}`;
 }
 
