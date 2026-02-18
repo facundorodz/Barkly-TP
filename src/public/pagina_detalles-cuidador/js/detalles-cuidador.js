@@ -132,6 +132,214 @@ async function cargarCuidadorYPaquetes() {
   });
 }
 
+
+  // ✅ Backend
+  // Si tu backend NO usa /api, cambiá API_PREFIX a "" y ajustá ENDPOINTS abajo.
+  /*const API_BASE = "http://localhost:8080";
+  const API_PREFIX = "/api"; // <- dejar "/api" si tus rutas son /api/cuidadores...
+
+  // ✅ Endpoints (ajustá si tu server usa /cuidadores en vez de /api/cuidadores)
+  const ENDPOINTS = {
+    cuidador: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}`,
+    paquetes: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}/paquetes`,
+    promedioResenias: (id) => `${API_BASE}${API_PREFIX}/resenias/promedio/${id}`,
+  };
+
+  // ✅ Obtener id del cuidador desde la URL (?id=123)
+  const params = new URLSearchParams(window.location.search);
+  const idCuidador = params.get("id");
+
+  // -----------------------------
+  // Helpers UI
+  // -----------------------------
+  const $ = (id) => document.getElementById(id);
+
+  function setText(id, value, fallback = "—") {
+    const el = $(id);
+    if (!el) return;
+    el.textContent = value ?? fallback;
+  }
+
+  function splitToList(texto) {
+    // soporta "a,b,c" o "a\nb\nc" o "a - b - c"
+    return String(texto ?? "")
+      .split(/[\n,;•-]+/g)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
+
+  function money(v) {
+    if (v === null || v === undefined || v === "") return "—";
+    // Si querés formato ARS, avisame y lo cambio a Intl.NumberFormat.
+    return `$${v}`;
+  }
+
+  function renderBones(promedio) {
+    const cont = $("calificacionBones");
+    if (!cont) return;
+
+    cont.innerHTML = "";
+    const n = Math.max(0, Math.min(5, Math.round(Number(promedio || 0))));
+
+    for (let i = 0; i < 5; i++) {
+      const span = document.createElement("span");
+      span.className = "bone";
+      span.style.opacity = i < n ? "1" : ".25";
+      span.innerHTML = "<i></i>";
+      cont.appendChild(span);
+    }
+  }
+
+  function renderPoderes(poderes) {
+    const ul = $("listaPoderes");
+    const fallback = $("poderesFallback");
+
+    if (ul) ul.innerHTML = "";
+    if (fallback) fallback.textContent = "";
+
+    let items = [];
+    if (Array.isArray(poderes)) items = poderes;
+    else items = splitToList(poderes);
+
+    if (!items.length) {
+      if (fallback) fallback.textContent = "—";
+      return;
+    }
+
+    if (!ul) return;
+    items.forEach((p) => {
+      const li = document.createElement("li");
+      li.textContent = p;
+      ul.appendChild(li);
+    });
+  }
+
+  function paqueteCardHTML(paquete, idx) {
+    const nombre = paquete.nombre_paquete || `Paquete ${idx + 1}`;
+    const actividades = splitToList(paquete.descripcion);
+
+    const actividadesHTML = (actividades.length ? actividades : ["Sin descripción"])
+      .map((a) => `<li>${escapeHtml(a)}</li>`)
+      .join("");
+
+    return `
+      <div class="card card-accent">
+        <h3 class="card-title">${escapeHtml(nombre)}</h3>
+        <div class="divider"></div>
+
+        <p class="pack-label">Descripción:</p>
+        <ul class="list">
+          ${actividadesHTML}
+        </ul>
+
+        <div class="divider"></div>
+
+        <div class="price-row">
+          <span>PRECIO:</span>
+          <strong>${money(paquete.precio)}</strong>
+        </div>
+
+        <button class="btn" data-id="${paquete.id}">Contratar paquete</button>
+      </div>
+    `;
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  async function fetchJSON(url) {
+    const res = await fetch(url);
+    if (!res.ok) {
+      const t = await res.text().catch(() => "");
+      throw new Error(`HTTP ${res.status} - ${url} - ${t}`);
+    }
+    return res.json();
+  }
+
+  // -----------------------------
+  // Carga principal (pública)
+  // -----------------------------
+  async function cargarDetallePublico() {
+    if (!idCuidador) {
+      alert("Falta el parámetro ?id= en la URL (ej: detalles-cuidador.html?id=1)");
+      return;
+    }
+
+    // 1) CUIDADOR
+    const cuidador = await fetchJSON(ENDPOINTS.cuidador(idCuidador));
+
+    setText("cuidadorNombre", cuidador.nombre, "Nombre cuidador");
+    setText("cuidadorFranquicia", cuidador.franquicia, "Franquicia");
+    setText("cuidadorExperiencia", `${cuidador.experiencia ?? 0} años`, "0 años");
+
+    renderPoderes(cuidador.poderes);
+
+    // 2) PROMEDIO RESEÑAS (si el endpoint existe)
+    // Si falla, no cortamos la página.
+    try {
+      const prom = await fetchJSON(ENDPOINTS.promedioResenias(idCuidador));
+      renderBones(Number(prom?.promedio || 0));
+    } catch (e) {
+      // Si no tenés endpoint aún, igual mostramos 0
+      renderBones(0);
+    }
+
+    // 3) PAQUETES
+    const grid = $("packsGrid");
+    if (grid) grid.innerHTML = "";
+
+    let paquetes = [];
+    try {
+      const data = await fetchJSON(ENDPOINTS.paquetes(idCuidador));
+      paquetes = Array.isArray(data) ? data : [];
+    } catch (e) {
+      paquetes = [];
+    }
+
+    if (!grid) return;
+
+    if (paquetes.length === 0) {
+      grid.innerHTML = `
+        <div class="card card-accent">
+          <h3 class="card-title">Sin paquetes</h3>
+          <div class="divider"></div>
+          <p class="pack-sub">Este cuidador aún no cargó paquetes.</p>
+        </div>
+      `;
+      return;
+    }
+
+    // Mostrar hasta 3 como tu diseño
+    /*grid.innerHTML = paquetes.slice(0, 3).map((p, i) => paqueteCardHTML(p, i)).join("");
+
+    // Botón contratar (por ahora solo redirige; no requiere login)
+    grid.querySelectorAll("button[data-id]").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const idPaquete = btn.getAttribute("data-id");
+        // Ajustá destino si tenés otra página de checkout
+        window.location.href = `/checkout.html?idCuidador=${encodeURIComponent(idCuidador)}&idPaquete=${encodeURIComponent(idPaquete)}`;
+      });
+    });*/
+//  }
+
+  // -----------------------------
+  // Init: asegurar DOM listo
+  // -----------------------------
+  /*document.addEventListener("DOMContentLoaded", () => {
+    cargarDetallePublico().catch((err) => {
+      console.error("Error cargando detalle:", err);
+      alert("No se pudo cargar el detalle del cuidador. Revisá consola y endpoints.");
+    });
+  });*/
+
+
+
 /* =========================
    RESEÑAS (mismo estilo)
 ========================= */
@@ -238,6 +446,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // init
+/*cargarDetallePublico().catch((err) => {
+  console.error("Error cargando detalle:", err);
+  alert("No se pudo cargar el detalle del cuidador. Revisá consola y endpoints.");
+});*/
 cargarCuidadorYPaquetes().catch(err => {
   console.error(err);
   alert("Error cargando detalle. Revisá backend y endpoints.");

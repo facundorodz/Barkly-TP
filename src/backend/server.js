@@ -39,11 +39,11 @@ app.use("/api/resenias", reseniasRoutes);
 app.use("/api/crud_users", crudUsersRouter);
 
 
-app.use((req, res) => {
+/*app.use((req, res) => {
   res.status(404).json({
     error: "Ruta no encontrada",
   });
-});
+});*/
 
 app.get("/viejo_perfil_cuidador", (req, res) => {
   res.sendFile(path.join(__dirname, "../public/perfiles/viejo_perfil_cuidador.html"));
@@ -52,4 +52,10 @@ app.get("/viejo_perfil_cuidador", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(` Backend API corriendo en http://localhost:${PORT}`);
+});
+
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Ruta no encontrada",
+  });
 });
