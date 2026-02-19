@@ -1,10 +1,8 @@
 window.verDetalle = function(id) {
   console.log("CLICK CUIDADOR ID:", id);
-
   window.location.href =
     `/pagina_detalles_cuidador/detalles_cuidador.html?id=${id}`;
 };
-
 
 
 const API_URL = "http://localhost:8080/api/cuidadores";
@@ -17,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const input = document.getElementById("buscadorNombre");
   const navbar = document.querySelector(".navbar");
   const offset = navbar.offsetTop;
-
 
 
   fetch(API_URL)
@@ -148,7 +145,6 @@ window.addEventListener("scroll", () => {
 
   let cuidadoresCache = []; // guardo lista completa para filtrar
 
-  // ===== Helpers =====
   const normalizar = (txt) =>
     String(txt ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // saca tildes
 
@@ -204,7 +200,6 @@ const aplicarFiltroNombre = () => {
 
   const q = normalizar(input.value).trim();
 
-  // Si no hay texto, mostrar todo el catálogo
   if (!q) {
     renderCatalogo(cuidadoresCache);
     return;
@@ -215,15 +210,12 @@ const aplicarFiltroNombre = () => {
     normalizar(c.nombre).includes(q)
   );
 
-  
-  // Scroll al catálogo (enfoque de navegación)
+
   if (catalogo) catalogo.scrollIntoView({ behavior: "smooth", block: "start" });
 
-  // Renderizar únicamente los resultados coincidentes
   renderCatalogo(filtrados);
 };
 
-  // ===== 1) Cargar cuidadores =====
   const cargarCuidadores = async () => {
     try {
       if (!catalogo) return;
@@ -241,7 +233,7 @@ const aplicarFiltroNombre = () => {
       cuidadoresCache = Array.isArray(data) ? data : [];
 
       renderCatalogo(cuidadoresCache);
-      aplicarFiltroNombre(); // por si ya había texto en el input
+      aplicarFiltroNombre(); 
     } catch (err) {
       console.error("Error cargando cuidadores:", err);
       if (catalogo) {
@@ -258,12 +250,10 @@ const aplicarFiltroNombre = () => {
 
   cargarCuidadores();
 
-  // ===== 2) Filtro por nombre (input) =====
   if (input) {
     input.addEventListener("input", aplicarFiltroNombre);
   }
 
-  // ===== 3) Toggle "Ver más" =====
   if (!boton) {
     console.error("No se encontró el elemento #ver-mas-boton");
   } else if (!conteiner) {
@@ -280,7 +270,6 @@ const aplicarFiltroNombre = () => {
     });
   }
 
-  // ===== 4) Botón "Ver perfil" si hay sesión =====
   (async () => {
     try {
       const resp = await fetch("/users/session_info");
@@ -299,17 +288,7 @@ const aplicarFiltroNombre = () => {
     } catch (error) {
       console.error("Error al obtener session_info:", error);
     }
-  })();
+  });
 });
 
-// ===== Redirección al detalle =====
-function verDetalle(id) {
-  if (!id) {
-    console.error("ID inválido:", id);
-    return;
-  }
-
-  // OJO: asegurate que exista esa ruta/carpeta (guiones vs underscore)
-  window.location.href = `/pagina_detalles-cuidador/detalles-cuidador.html?id=${id}`;
-}
 
