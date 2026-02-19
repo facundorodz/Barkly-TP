@@ -1,6 +1,6 @@
 /*const params = new URLSearchParams(window.location.search);
 const idCuidador = params.get("id");*/
-const API_BASE = "http://localhost:8080"; // <- tu backend real
+/*const API_BASE = "http://localhost:8080"; // <- tu backend real
 const API_PREFIX = "/api"
 
 const ENDPOINTS = {
@@ -37,6 +37,8 @@ function getIdCuidadorElegido() {
 
   return null;
 }
+
+const idCuidador = getIdCuidadorElegido();
 
 function renderBones(promedio) {
   const cont = document.getElementById("calificacionBones");
@@ -154,45 +156,28 @@ async function cargarCuidadorYPaquetes() {
       // B) Si preferís POST directo, te lo agrego.
     });
   });
-}
+}*/
 
 
 
-  /*const API_BASE = "http://localhost:8080"; // <- tu backend real
+
+  const API_BASE = "http://localhost:8080";
   const API_PREFIX = "/api";
 
   const ENDPOINTS = {
     cuidador: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}`,
     paquetes: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}/paquetes`,
+    // si no existe, se ignora:
     promedioResenias: (id) => `${API_BASE}${API_PREFIX}/resenias/promedio/${id}`,
   };
 
-  // -----------------------------
-  // ✅ Obtener ID del cuidador elegido
-  // -----------------------------
-  function getIdCuidadorElegido() {
-    // 1) URL (?id=123)
-    const params = new URLSearchParams(window.location.search);
-    const raw = params.get("id");
-    const idUrl = Number(raw);
-
-    if (Number.isInteger(idUrl) && idUrl > 0) return idUrl;
-
-    // 2) Fallback: localStorage (por si abrís la página sin ?id)
-    const rawLS = localStorage.getItem("cuidadorSeleccionadoId");
-    const idLS = Number(rawLS);
-
-    if (Number.isInteger(idLS) && idLS > 0) return idLS;
-
-    return null;
-  }
-
-  const idCuidador = getIdCuidadorElegido();
-
-  // -----------------------------
-  // Helpers UI
-  // -----------------------------
   const $ = (id) => document.getElementById(id);
+
+  function getIdCuidador() {
+    const params = new URLSearchParams(window.location.search);
+    const id = Number(params.get("id"));
+    return Number.isInteger(id) && id > 0 ? id : null;
+  }
 
   function setText(id, value, fallback = "—") {
     const el = $(id);
@@ -207,40 +192,9 @@ async function cargarCuidadorYPaquetes() {
       .filter(Boolean);
   }
 
-  function money(v) {
-    if (v === null || v === undefined || v === "") return "—";
-    return `$${v}`;
-  }
-
-  function escapeHtml(str) {
-    return String(str ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function renderBones(promedio) {
-    const cont = $("calificacionBones");
-    if (!cont) return;
-
-    cont.innerHTML = "";
-    const n = Math.max(0, Math.min(5, Math.round(Number(promedio || 0))));
-
-    for (let i = 0; i < 5; i++) {
-      const span = document.createElement("span");
-      span.className = "bone";
-      span.style.opacity = i < n ? "1" : ".25";
-      span.innerHTML = "<i></i>";
-      cont.appendChild(span);
-    }
-  }
-
   function renderPoderes(poderes) {
     const ul = $("listaPoderes");
     const fallback = $("poderesFallback");
-
     if (ul) ul.innerHTML = "";
     if (fallback) fallback.textContent = "";
 
@@ -259,32 +213,59 @@ async function cargarCuidadorYPaquetes() {
     });
   }
 
+  function renderBones(promedio) {
+    const cont = $("calificacionBones");
+    if (!cont) return;
+
+    cont.innerHTML = "";
+    const n = Math.max(0, Math.min(5, Math.round(Number(promedio || 0))));
+
+    for (let i = 0; i < 5; i++) {
+      const bone = document.createElement("span");
+      bone.className = "bone";
+      bone.style.opacity = i < n ? "1" : ".25";
+      cont.appendChild(bone);
+    }
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function money(v) {
+    if (v === null || v === undefined || v === "") return "—";
+    return `$${v}`;
+  }
+
   function paqueteCardHTML(paquete, idx) {
     const nombre = paquete.nombre_paquete || `Paquete ${idx + 1}`;
     const actividades = splitToList(paquete.descripcion);
-
     const actividadesHTML = (actividades.length ? actividades : ["Sin descripción"])
       .map((a) => `<li>${escapeHtml(a)}</li>`)
       .join("");
 
     return `
-      <div class="card card-accent">
-        <h3 class="card-title">${escapeHtml(nombre)}</h3>
+      <div class="card">
+        <h3 class="pack-title">${escapeHtml(nombre)}</h3>
         <div class="divider"></div>
 
-        <p class="pack-label">Descripción:</p>
-        <ul class="list">
-          ${actividadesHTML}
-        </ul>
+        <div style="opacity:.9;">Descripción:</div>
+        <ul>${actividadesHTML}</ul>
 
         <div class="divider"></div>
-
         <div class="price-row">
           <span>PRECIO:</span>
           <strong>${money(paquete.precio)}</strong>
         </div>
 
-        <button class="btn" data-id="${paquete.id}">Contratar paquete</button>
+        <button class="btn btn-cta" data-paquete="${paquete.id}">
+          Contratar paquete
+        </button>
       </div>
     `;
   }
@@ -298,39 +279,38 @@ async function cargarCuidadorYPaquetes() {
     return res.json();
   }
 
-  // -----------------------------
-  // Carga principal
-  // -----------------------------
-  async function cargarDetallePublico() {
-    if (!idCuidador) {
-      alert("No se encontró la ID del cuidador. Abrí la página con ?id= (ej: detalles-cuidador.html?id=1).");
+  async function cargarDetalle() {
+    const id = getIdCuidador();
+    if (!id) {
+      alert("Falta ?id= en la URL. Volvé al catálogo y tocá 'Ver cuidador'.");
+      //window.location.href = "/index.html";
       return;
     }
 
-    // 1) CUIDADOR
-    const cuidador = await fetchJSON(ENDPOINTS.cuidador(idCuidador));
+    setText("detalleEstado", "Cargando…", "");
 
-    setText("cuidadorNombre", cuidador.nombre, "Nombre cuidador");
-    setText("cuidadorFranquicia", cuidador.franquicia, "Franquicia");
-    setText("cuidadorExperiencia", `${cuidador.experiencia ?? 0} años`, "0 años");
+    // Cuidador
+    const c = await fetchJSON(ENDPOINTS.cuidador(id));
+    setText("cuidadorNombre", c.nombre, "Nombre cuidador");
+    setText("cuidadorFranquicia", c.franquicia, "Franquicia");
+    setText("cuidadorExperiencia", `${c.experiencia ?? 0} años`, "0 años");
+    renderPoderes(c.poderes);
 
-    renderPoderes(cuidador.poderes);
-
-    // 2) PROMEDIO RESEÑAS (si existe endpoint)
+    // Promedio reseñas (opcional)
     try {
-      const prom = await fetchJSON(ENDPOINTS.promedioResenias(idCuidador));
+      const prom = await fetchJSON(ENDPOINTS.promedioResenias(id));
       renderBones(Number(prom?.promedio || 0));
     } catch {
       renderBones(0);
     }
 
-    // 3) PAQUETES
+    // Paquetes
     const grid = $("packsGrid");
     if (grid) grid.innerHTML = "";
 
     let paquetes = [];
     try {
-      const data = await fetchJSON(ENDPOINTS.paquetes(idCuidador));
+      const data = await fetchJSON(ENDPOINTS.paquetes(id));
       paquetes = Array.isArray(data) ? data : [];
     } catch {
       paquetes = [];
@@ -340,37 +320,35 @@ async function cargarCuidadorYPaquetes() {
 
     if (paquetes.length === 0) {
       grid.innerHTML = `
-        <div class="card card-accent">
-          <h3 class="card-title">Sin paquetes</h3>
+        <div class="card">
+          <h3 class="pack-title">Sin paquetes</h3>
           <div class="divider"></div>
-          <p class="pack-sub">Este cuidador aún no cargó paquetes.</p>
+          <p style="opacity:.85">Este cuidador aún no cargó paquetes.</p>
         </div>
       `;
+      setText("detalleEstado", "Listo", "");
       return;
     }
 
     grid.innerHTML = paquetes.slice(0, 3).map((p, i) => paqueteCardHTML(p, i)).join("");
 
-    grid.querySelectorAll("button[data-id]").forEach((btn) => {
+    // Botón contratar (demo)
+    grid.querySelectorAll("button[data-paquete]").forEach((btn) => {
       btn.addEventListener("click", () => {
-        const idPaquete = btn.getAttribute("data-id");
-        window.location.href =
-          `/checkout.html?idCuidador=${encodeURIComponent(idCuidador)}&idPaquete=${encodeURIComponent(idPaquete)}`;
+        const idPaquete = btn.getAttribute("data-paquete");
+        alert(`Contratación demo: cuidador=${id}, paquete=${idPaquete}`);
       });
     });
-  }*/
 
-  // -----------------------------
-  // Init
-  // -----------------------------
+    setText("detalleEstado", "Listo", "");
+  }
+
   /*document.addEventListener("DOMContentLoaded", () => {
-    cargarDetallePublico().catch((err) => {
+    cargarDetalle().catch((err) => {
       console.error("Error cargando detalle:", err);
-      alert("No se pudo cargar el detalle del cuidador. Revisá consola y endpoints.");
+      alert("Error cargando detalle. Revisá backend y endpoints.");
     });
   });*/
-
-
 
 /* =========================
    RESEÑAS (mismo estilo)
@@ -472,21 +450,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btn = document.getElementById("btnSendReview");
   if (btn) btn.addEventListener("click", enviarResenia);
-  /*cargarDetallePublico().catch((err) => {
+  cargarDetalle().catch((err) => {
     console.error("Error cargando detalle:", err);
-    alert("No se pudo cargar el detalle del cuidador. Revisá consola y endpoints.");
-  });*/
+    alert("Error cargando detalle. Revisá backend y endpoints.");
+  });
 
   // opcional
   //cargarResenias();
 });
 
 // init
-/*cargarDetallePublico().catch((err) => {
-  console.error("Error cargando detalle:", err);
-  alert("No se pudo cargar el detalle del cuidador. Revisá consola y endpoints.");
-});*/
-cargarCuidadorYPaquetes().catch(err => {
+/*cargarCuidadorYPaquetes().catch(err => {
   console.error(err);
   alert("Error cargando detalle. Revisá backend y endpoints.");
-});
+});*/

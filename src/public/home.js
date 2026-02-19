@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:8080/api/cuidadores";
+/*const API_URL = "http://localhost:8080/api/cuidadores";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -118,7 +118,7 @@ window.addEventListener("scroll", () => {
               }
             </ul>
             <hr>
-            <a href="/pagina_detalles-cuidador/detalles-cuidador.html?id=${c.id}" class="btn btn-danger mt-2">
+            <a onclick="verDetalle(${c.id})" class="btn btn-danger mt-2">
               Ver cuidador
             </a>
           </div>
@@ -231,11 +231,185 @@ const aplicarFiltroNombre = () => {
 });
 
 // ===== Redirección al detalle =====
-/*function verDetalle(id) {
+function verDetalle(id) {
   if (!id) {
     console.error("ID inválido:", id);
     return;
   }
+
+  // OJO: asegurate que exista esa ruta/carpeta (guiones vs underscore)
   window.location.href = `/pagina_detalles-cuidador/detalles-cuidador.html?id=${id}`;
 }*/
 
+
+
+const API_CUIDADORES = "http://localhost:8080/api/cuidadores";
+const API_USER_INFO = "http://localhost:8080/api/users/user_info";
+
+document.addEventListener("DOMContentLoaded", () => {
+  const boton = document.getElementById("ver-mas-boton");
+  const conteiner = document.getElementById("mas-cuidadores");
+  const catalogo = document.getElementById("catalogo");
+  const input = document.getElementById("buscadorNombre");
+  const navbar = document.querySelector(".navbar");
+
+  // ===== Navbar fijo =====
+  if (navbar) {
+    const offset = navbar.offsetTop;
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > offset) navbar.classList.add("navbar-fixed");
+      else navbar.classList.remove("navbar-fixed");
+    });
+  }
+
+  // ===== Toggle Ver más =====
+  if (boton && conteiner) {
+    boton.addEventListener("click", (e) => {
+      e.preventDefault();
+      const oculto = conteiner.style.display === "" || conteiner.style.display === "none";
+      conteiner.style.display = oculto ? "block" : "none";
+      boton.textContent = oculto ? "Ver menos" : "Ver más";
+    });
+  }
+
+  // ===== Sesión (opcional, no bloquea) =====
+  (async () => {
+    try {
+      const resp = await fetch(API_USER_INFO, { credentials: "include" });
+      const data = await resp.json();
+      const container = document.getElementById("buttons");
+      if (!container) return;
+
+      if (data?.response) {
+        if (data.role === "user") {
+          container.innerHTML = `<a class="btn btn-danger" href="/perfiles/perfil_usuario.html">Ver perfil</a>`;
+        } else {
+          container.innerHTML = `<a class="btn btn-danger" href="/perfiles/perfil_cuidador.html">Ver perfil</a>`;
+        }
+      } else {
+        container.innerHTML = `<a class="btn btn-outline-light" href="/login/login.html">Iniciar sesión</a>`;
+      }
+    } catch {
+      const container = document.getElementById("buttons");
+      if (container) container.innerHTML = `<a class="btn btn-outline-light" href="/login/login.html">Iniciar sesión</a>`;
+    }
+  })();
+
+  // ===== Catálogo + buscador =====
+  let cuidadoresCache = [];
+
+  const normalizar = (txt) =>
+    String(txt ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+  const renderCatalogo = (lista) => {
+    if (!catalogo) return;
+    catalogo.innerHTML = "";
+
+    if (!Array.isArray(lista) || lista.length === 0) {
+      catalogo.innerHTML = `
+        <div class="col-12">
+          <p class="text-center text-muted">No se encontraron cuidadores.</p>
+        </div>
+      `;
+      return;
+    }
+
+    lista.forEach((c) => {
+      const poderes = String(c.poderes ?? "")
+        .split(",")
+        .map((p) => p.trim())
+        .filter(Boolean);
+
+      catalogo.innerHTML += `
+        <div class="col-md-4">
+          <div class="cuidador_perfil">
+            <img
+              src="${c.foto_perfil || "https://via.placeholder.com/600x600"}"
+              class="polaroid"
+              alt="Foto de ${c.nombre || "Cuidador"}"
+            >
+            <h3 class="card-title">${c.nombre || "Sin nombre"}</h3>
+            <div class="text-danger fw-semibold">${c.franquicia || "—"}</div>
+            <hr>
+            <ul style="text-align:left; margin:0 auto; width:fit-content;">
+              ${
+                poderes.length
+                  ? poderes.map((p) => `<li>${p}</li>`).join("")
+                  : "<li>—</li>"
+              }
+            </ul>
+            <hr>
+
+            <!-- ✅ Detalle sigue en 3000 (estático), pero manda ID por query -->
+            <a
+              href="/pagina_detalles-cuidador/detalles-cuidador.html?id=${encodeURIComponent(c.id)}"
+              class="btn btn-danger mt-2 w-100"
+            >
+              Ver cuidador
+            </a>
+          </div>
+        </div>
+      `;
+    });
+  };
+
+  const aplicarFiltroNombre = () => {
+    if (!input) return;
+
+    const q = normalizar(input.value).trim();
+
+    // Si no hay texto, mostrar todo el catálogo
+    if (!q) {
+      renderCatalogo(cuidadoresCache);
+      return;
+    }
+
+    // Filtrar SOLO coincidencias
+    const filtrados = cuidadoresCache.filter((c) =>
+      normalizar(c.nombre).includes(q)
+    );
+
+    
+    // Scroll al catálogo (enfoque de navegación)
+    if (catalogo) catalogo.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    // Renderizar únicamente los resultados coincidentes
+    renderCatalogo(filtrados);
+  };
+
+  const cargarCuidadores = async () => {
+    try {
+      if (!catalogo) return;
+
+      catalogo.innerHTML = `
+        <div class="col-12">
+          <p class="text-center text-muted">Cargando cuidadores...</p>
+        </div>
+      `;
+
+      const res = await fetch(API_CUIDADORES);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const data = await res.json();
+      cuidadoresCache = Array.isArray(data) ? data : [];
+
+      renderCatalogo(cuidadoresCache);
+      aplicarFiltroNombre();
+    } catch (err) {
+      console.error("Error cargando cuidadores:", err);
+      if (catalogo) {
+        catalogo.innerHTML = `
+          <div class="col-12">
+            <p class="text-center text-danger">
+              Error cargando cuidadores. Revisá API: ${API_CUIDADORES}
+            </p>
+          </div>
+        `;
+      }
+    }
+  };
+
+  cargarCuidadores();
+
+  if (input) input.addEventListener("input", aplicarFiltroNombre);
+});
