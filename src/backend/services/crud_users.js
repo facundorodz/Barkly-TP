@@ -108,6 +108,63 @@ router.delete("/delete_dog/:id", async (req, res) => {
     }
 });
 
+router.get("/dog/:id", async (req, res) => {
+    const dog_id = req.params.id;
+
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "No estás logueado" });
+    }
+
+    try {
+        const result = await db.query(
+            "SELECT id, nombre, edad FROM perros WHERE id = $1",
+            [dog_id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Perro no encontrado" });
+        }
+
+        return res.json({
+            success: true,
+            mascota: {
+                id: result.rows[0].id,
+                dog_name: result.rows[0].nombre,
+                dog_age: result.rows[0].edad
+            }
+        });
+
+    } catch (error) {
+        console.error("Error al obtener perro:", error);
+        return res.status(500).json({ error: "Error al obtener perro" });
+    }
+});
+
+
+router.post("/edit_dog/:id", async (req, res) => {
+    const dog_id = req.params.id;
+
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "No estás logueado" });
+    }
+
+    const { dog_name, age } = req.body;
+
+    try {
+        await db.query(
+            "UPDATE perros SET nombre = $1, edad = $2 WHERE id = $3",
+            [dog_name, age, dog_id]
+        );
+
+        return res.json({ success: true });
+
+    } catch (error) {
+        console.error("Error al editar perro:", error);
+        return res.status(500).json({ error: "Error al editar perro" });
+    }
+});
+
+
 router.get("/user_info", (req, res) => {
     if (!req.session.userId) {
         return res.json({ response: false });

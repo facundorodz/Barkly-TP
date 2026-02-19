@@ -365,8 +365,8 @@ exports.crearPaquete = async (req, res) => {
     }
 
     const result = await pool.query(
-      `INSERT INTO paquetes (id_superheroe, nombre_paquete, descripcion, precio)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO paquetes (id_superheroe, nombre_paquete, descripcion, precio, cupos_disponibles)
+       VALUES ($1, $2, $3, $4,10)
        RETURNING id, id_superheroe, nombre_paquete, descripcion, precio`,
       [cuidadorId, nombre_paquete, descripcion, precioNum]
     );

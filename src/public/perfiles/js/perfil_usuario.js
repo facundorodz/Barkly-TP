@@ -214,6 +214,10 @@ async function mostrar_mascotas() {
                         <button class="btn btn-sm btn-danger" onclick="eliminar_mascota(${dog.id})">
                             🗑️
                         </button>
+                        <button onclick="editar_mascota(${dog.id})">
+                            ✏️
+                        </button>
+
                     </td>
                 </tr>
             `;
@@ -254,9 +258,6 @@ async function eliminar_mascota(dog_id) {
         alert("Error al eliminar mascota");
     }
 }
-
-
-
 
 document.addEventListener("DOMContentLoaded", mostrar_mascotas);
 
