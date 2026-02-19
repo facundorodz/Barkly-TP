@@ -143,7 +143,6 @@ router.get("/dog/:id", async (req, res) => {
 
 router.post("/edit_dog/:id", async (req, res) => {
     const dog_id = req.params.id;
-
     if (!req.session.userId) {
         return res.status(401).json({ error: "No estás logueado" });
     }

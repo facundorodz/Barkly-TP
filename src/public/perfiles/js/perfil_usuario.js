@@ -214,7 +214,7 @@ async function mostrar_mascotas() {
                         <button class="btn btn-sm btn-danger" onclick="eliminar_mascota(${dog.id})">
                             🗑️
                         </button>
-                        <button onclick="editar_mascota(${dog.id})">
+                        <button onclick="abrir_modal_editar_mascota(${dog.id})">
                             ✏️
                         </button>
 
@@ -258,6 +258,106 @@ async function eliminar_mascota(dog_id) {
         alert("Error al eliminar mascota");
     }
 }
+async function abrir_modal_editar_mascota(id) {
+    id_dog = id;
+    const modalExistente = document.getElementById("modalEditarMascota");
+    if (modalExistente) {
+        modalExistente.remove();
+    }
+
+    const html = `
+        <div class="modal" id="modalEditarMascota">
+            <div class="modal-header">
+                <h2>Editar mascota</h2>
+                <button class="close-button" onclick="cerrar_modal_editar()">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-form">
+                    <form id="formEditarMascota">
+
+                        <div class="col-11">
+                            <label class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="edit_dog_name">
+                        </div>
+
+                        <div class="col-11">
+                            <label class="form-label">Edad (años)</label>
+                            <input type="number" class="form-control" id="edit_dog_age" min="0">
+                        </div>
+
+                        <button type="button"
+                                class="btn btn-danger"
+                                onclick="guardar_cambios_mascota()">
+                            Guardar cambios
+                        </button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", html);
+    const modal = document.getElementById("modalEditarMascota");
+    modal.classList.add("active");
+    
+    try {
+        const resp = await fetch(
+            `http://localhost:8080/api/crud_users/dog/${id_dog}`,
+            { credentials: "include" }
+        );
+
+        const data = await resp.json();
+        const mascota = data.mascota;
+
+        document.getElementById("edit_dog_name").value = mascota.dog_name;
+        document.getElementById("edit_dog_age").value = mascota.dog_age;
+
+    } catch (error) {
+        console.error("Error cargando datos:", error);
+    }
+}
+
+function cerrar_modal_editar() {
+    const modal = document.getElementById("modalEditarMascota");
+    if (modal) modal.remove();
+}
+
+
+async function guardar_cambios_mascota() {
+    try {
+
+        const dog_name = document.getElementById("edit_dog_name").value;
+        const age = document.getElementById("edit_dog_age").value;
+
+        const resp = await fetch(
+            `http://localhost:8080/api/crud_users/edit_dog/${id_dog}`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "include",
+                body: JSON.stringify({
+                    dog_name: dog_name,
+                    age: age  
+                })
+            }
+        );
+
+        if (!resp.ok) {
+            throw new Error("Error al actualizar");
+        }
+
+        await mostrar_mascotas();
+        cerrar_modal_editar();
+
+    } catch (error) {
+        console.error("Error al guardar cambios:", error);
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", mostrar_mascotas);
 
