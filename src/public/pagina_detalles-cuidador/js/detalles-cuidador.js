@@ -1,5 +1,13 @@
-const params = new URLSearchParams(window.location.search);
-const idCuidador = params.get("id");
+/*const params = new URLSearchParams(window.location.search);
+const idCuidador = params.get("id");*/
+const API_BASE = "http://localhost:8080"; // <- tu backend real
+const API_PREFIX = "/api"
+
+const ENDPOINTS = {
+  cuidador: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}`,
+  paquetes: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}/paquetes`,
+  promedioResenias: (id) => `${API_BASE}${API_PREFIX}/resenias/promedio/${id}`,
+};
 
 function splitToList(texto) {
   return String(texto ?? "")
@@ -11,6 +19,23 @@ function splitToList(texto) {
 function money(v) {
   if (v === null || v === undefined || v === "") return "—";
   return `$${v}`;
+}
+
+function getIdCuidadorElegido() {
+  // 1) URL (?id=123)
+  const params = new URLSearchParams(window.location.search);
+  const raw = params.get("id");
+  const idUrl = Number(raw);
+
+  if (Number.isInteger(idUrl) && idUrl > 0) return idUrl;
+
+  // 2) Fallback: localStorage (por si abrís la página sin ?id)
+  const rawLS = localStorage.getItem("cuidadorSeleccionadoId");
+  const idLS = Number(rawLS);
+
+  if (Number.isInteger(idLS) && idLS > 0) return idLS;
+
+  return null;
 }
 
 function renderBones(promedio) {
@@ -124,8 +149,7 @@ async function cargarCuidadorYPaquetes() {
       const idPaquete = btn.getAttribute("data-id");
 
       // A) Redirigir a checkout (recomendado)
-      window.location.href =
-        `/checkout.html?idCuidador=${encodeURIComponent(idCuidador)}&idPaquete=${encodeURIComponent(idPaquete)}`;
+      window.location.href = `/checkout.html?idCuidador=${encodeURIComponent(idCuidador)}&idPaquete=${encodeURIComponent(idPaquete)}`;
 
       // B) Si preferís POST directo, te lo agrego.
     });
@@ -133,21 +157,37 @@ async function cargarCuidadorYPaquetes() {
 }
 
 
-  // ✅ Backend
-  // Si tu backend NO usa /api, cambiá API_PREFIX a "" y ajustá ENDPOINTS abajo.
-  /*const API_BASE = "http://localhost:8080";
-  const API_PREFIX = "/api"; // <- dejar "/api" si tus rutas son /api/cuidadores...
 
-  // ✅ Endpoints (ajustá si tu server usa /cuidadores en vez de /api/cuidadores)
+  /*const API_BASE = "http://localhost:8080"; // <- tu backend real
+  const API_PREFIX = "/api";
+
   const ENDPOINTS = {
     cuidador: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}`,
     paquetes: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}/paquetes`,
     promedioResenias: (id) => `${API_BASE}${API_PREFIX}/resenias/promedio/${id}`,
   };
 
-  // ✅ Obtener id del cuidador desde la URL (?id=123)
-  const params = new URLSearchParams(window.location.search);
-  const idCuidador = params.get("id");
+  // -----------------------------
+  // ✅ Obtener ID del cuidador elegido
+  // -----------------------------
+  function getIdCuidadorElegido() {
+    // 1) URL (?id=123)
+    const params = new URLSearchParams(window.location.search);
+    const raw = params.get("id");
+    const idUrl = Number(raw);
+
+    if (Number.isInteger(idUrl) && idUrl > 0) return idUrl;
+
+    // 2) Fallback: localStorage (por si abrís la página sin ?id)
+    const rawLS = localStorage.getItem("cuidadorSeleccionadoId");
+    const idLS = Number(rawLS);
+
+    if (Number.isInteger(idLS) && idLS > 0) return idLS;
+
+    return null;
+  }
+
+  const idCuidador = getIdCuidadorElegido();
 
   // -----------------------------
   // Helpers UI
@@ -161,7 +201,6 @@ async function cargarCuidadorYPaquetes() {
   }
 
   function splitToList(texto) {
-    // soporta "a,b,c" o "a\nb\nc" o "a - b - c"
     return String(texto ?? "")
       .split(/[\n,;•-]+/g)
       .map((s) => s.trim())
@@ -170,8 +209,16 @@ async function cargarCuidadorYPaquetes() {
 
   function money(v) {
     if (v === null || v === undefined || v === "") return "—";
-    // Si querés formato ARS, avisame y lo cambio a Intl.NumberFormat.
     return `$${v}`;
+  }
+
+  function escapeHtml(str) {
+    return String(str ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
   function renderBones(promedio) {
@@ -197,9 +244,7 @@ async function cargarCuidadorYPaquetes() {
     if (ul) ul.innerHTML = "";
     if (fallback) fallback.textContent = "";
 
-    let items = [];
-    if (Array.isArray(poderes)) items = poderes;
-    else items = splitToList(poderes);
+    const items = Array.isArray(poderes) ? poderes : splitToList(poderes);
 
     if (!items.length) {
       if (fallback) fallback.textContent = "—";
@@ -244,15 +289,6 @@ async function cargarCuidadorYPaquetes() {
     `;
   }
 
-  function escapeHtml(str) {
-    return String(str ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
   async function fetchJSON(url) {
     const res = await fetch(url);
     if (!res.ok) {
@@ -263,11 +299,11 @@ async function cargarCuidadorYPaquetes() {
   }
 
   // -----------------------------
-  // Carga principal (pública)
+  // Carga principal
   // -----------------------------
   async function cargarDetallePublico() {
     if (!idCuidador) {
-      alert("Falta el parámetro ?id= en la URL (ej: detalles-cuidador.html?id=1)");
+      alert("No se encontró la ID del cuidador. Abrí la página con ?id= (ej: detalles-cuidador.html?id=1).");
       return;
     }
 
@@ -280,13 +316,11 @@ async function cargarCuidadorYPaquetes() {
 
     renderPoderes(cuidador.poderes);
 
-    // 2) PROMEDIO RESEÑAS (si el endpoint existe)
-    // Si falla, no cortamos la página.
+    // 2) PROMEDIO RESEÑAS (si existe endpoint)
     try {
       const prom = await fetchJSON(ENDPOINTS.promedioResenias(idCuidador));
       renderBones(Number(prom?.promedio || 0));
-    } catch (e) {
-      // Si no tenés endpoint aún, igual mostramos 0
+    } catch {
       renderBones(0);
     }
 
@@ -298,7 +332,7 @@ async function cargarCuidadorYPaquetes() {
     try {
       const data = await fetchJSON(ENDPOINTS.paquetes(idCuidador));
       paquetes = Array.isArray(data) ? data : [];
-    } catch (e) {
+    } catch {
       paquetes = [];
     }
 
@@ -315,21 +349,19 @@ async function cargarCuidadorYPaquetes() {
       return;
     }
 
-    // Mostrar hasta 3 como tu diseño
-    /*grid.innerHTML = paquetes.slice(0, 3).map((p, i) => paqueteCardHTML(p, i)).join("");
+    grid.innerHTML = paquetes.slice(0, 3).map((p, i) => paqueteCardHTML(p, i)).join("");
 
-    // Botón contratar (por ahora solo redirige; no requiere login)
     grid.querySelectorAll("button[data-id]").forEach((btn) => {
       btn.addEventListener("click", () => {
         const idPaquete = btn.getAttribute("data-id");
-        // Ajustá destino si tenés otra página de checkout
-        window.location.href = `/checkout.html?idCuidador=${encodeURIComponent(idCuidador)}&idPaquete=${encodeURIComponent(idPaquete)}`;
+        window.location.href =
+          `/checkout.html?idCuidador=${encodeURIComponent(idCuidador)}&idPaquete=${encodeURIComponent(idPaquete)}`;
       });
-    });*/
-//  }
+    });
+  }*/
 
   // -----------------------------
-  // Init: asegurar DOM listo
+  // Init
   // -----------------------------
   /*document.addEventListener("DOMContentLoaded", () => {
     cargarDetallePublico().catch((err) => {
@@ -440,6 +472,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btn = document.getElementById("btnSendReview");
   if (btn) btn.addEventListener("click", enviarResenia);
+  /*cargarDetallePublico().catch((err) => {
+    console.error("Error cargando detalle:", err);
+    alert("No se pudo cargar el detalle del cuidador. Revisá consola y endpoints.");
+  });*/
 
   // opcional
   //cargarResenias();

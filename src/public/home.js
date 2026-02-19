@@ -11,70 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const offset = navbar.offsetTop;
 
 
-
-  /*fetch(API_URL)
-    .then(res => res.json())
-    .then(cuidadores => {
-
-      if (!catalogo) return;
-
-      if (!Array.isArray(cuidadores) || cuidadores.length === 0) {
-        catalogo.innerHTML = `
-          <div class="col-12 text-center text-muted">
-            No se encontraron cuidadores
-          </div>
-        `;
-        return;
-      }
-
-      catalogo.innerHTML = "";
-
-      cuidadores.forEach(c => {
-
-        const poderes = String(c.poderes ?? "")
-          .split(",")
-          .map(p => p.trim())
-          .filter(Boolean);
-
-        catalogo.innerHTML += `
-          <div class="col-md-4">
-            <div class="cuidador_perfil">
-
-              <img
-                src="${c.foto_perfil}"
-                class="polaroid"
-                width="400"
-                height="400"
-                alt="Foto de ${c.nombre || "Cuidador"}"
-              >
-
-              <h3>${c.nombre || "Sin nombre"}</h3>
-              ${c.franquicia || ""}
-
-              <hr>
-
-              <ul style="text-align:left">
-                ${
-                  poderes.length
-                    ? poderes.map(p => `<li>${p}</li>`).join("")
-                    : "<li>—</li>"
-                }
-              </ul>
-
-              <hr>
-
-              <a onclick="verDetalle(${c.id})" class="btn btn-danger mt-2">
-                Ver cuidador
-              </a>
-
-            </div>
-          </div>
-        `;
-      });
-    })
-    .catch(err => console.error("Error cargando cuidadores:", err));*/
-
-
   if (boton && conteiner) {
     boton.addEventListener("click", e => {
       e.preventDefault();
@@ -182,7 +118,7 @@ window.addEventListener("scroll", () => {
               }
             </ul>
             <hr>
-            <a onclick="verDetalle(${c.id})" class="btn btn-danger mt-2">
+            <a href="/pagina_detalles-cuidador/detalles-cuidador.html?id=${c.id}" class="btn btn-danger mt-2">
               Ver cuidador
             </a>
           </div>
@@ -295,11 +231,11 @@ const aplicarFiltroNombre = () => {
 });
 
 // ===== Redirección al detalle =====
-function verDetalle(id) {
+/*function verDetalle(id) {
   if (!id) {
     console.error("ID inválido:", id);
     return;
   }
   window.location.href = `/pagina_detalles-cuidador/detalles-cuidador.html?id=${id}`;
-}
+}*/
 
