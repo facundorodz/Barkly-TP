@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 const openModalButtons = document.querySelectorAll("[data-modal-target]")
-const closeModalButtons = document.querySelectorAll("[data-close-button]")
+const closeModalButtons = document.querySelectorAll(".close-button")
 
 openModalButtons.forEach(button => {
     button.addEventListener("click", () => {
@@ -168,7 +168,7 @@ async function agregar_mascota() {
         const data = await resp.json();
         if (resp.ok && data.success) {
             alert("Mascota agregada correctamente");
-            closeModal();
+            closeModal(modal);
             document.getElementById("formMascota").reset(); 
             mostrar_mascotas();
         } else {
@@ -209,7 +209,11 @@ async function mostrar_mascotas() {
                 <tr>
                     <td>${dog.dog_name}</td>
                     <td>${dog.dog_age}</td>
-                    <td>${dog.raza}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info" onclick="mostrar_info_raza('${dog.raza_id}')">
+                            ${dog.raza}
+                        </button>
+                    </td>
                     <td>
                         <button class="btn btn-sm btn-danger" onclick="eliminar_mascota(${dog.id})">
                             🗑️
@@ -258,6 +262,45 @@ async function eliminar_mascota(dog_id) {
         alert("Error al eliminar mascota");
     }
 }
+function abrirModalRaza() {
+    document.getElementById("modalRaza").style.display = "flex";
+}
+
+function cerrarModalRaza() {
+    document.getElementById("modalRaza").style.display = "none";
+}
+
+window.addEventListener("click", (e) => {
+    const modal = document.getElementById("modalRaza");
+    if(e.target === modal) {
+        cerrarModalRaza();
+    }
+});
+
+async function mostrar_info_raza(razaId) {
+    console.log(razaId);
+    try {
+        const resp = await fetch(`http://localhost:8080/api/crud_users/view_raza/${razaId}`, {
+            credentials: "include"
+        });
+        const data = await resp.json();
+        document.getElementById("modalRazaTitle").innerText = data.raza.nombre;
+        document.getElementById("modalRazaBody").innerHTML = `
+            <p><strong>Fuerza:</strong> ${data.raza.fortaleza}</p>
+            <p><strong>Tamaño:</strong> ${data.raza.tamanio}</p>
+            <p><strong>Color:</strong> ${data.raza.color_predominante}</p>
+            <p><strong>velocidad:</strong> ${data.raza.velocidad}</p>
+            <p><strong>Temperamento:</strong> ${data.raza.temperamento}</p>
+
+        `;
+        abrirModalRaza();
+
+    } catch (error) {
+        console.error("Error al obtener info de la raza:", error);
+        alert("No se pudo cargar la información de la raza.");
+    }
+}
+
 async function abrir_modal_editar_mascota(id) {
     id_dog = id;
     const modalExistente = document.getElementById("modalEditarMascota");
