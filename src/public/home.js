@@ -1,4 +1,4 @@
-
+//CODIGO VIEJO QUE ANDA
 /*const API_URL = "http://localhost:8080/api/cuidadores";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -242,7 +242,7 @@ function verDetalle(id) {
 }*/
 
 
-
+// LO NUEVO QUE IMPLEMENTO (sino anda descomentar el anteriory borrar este)
 const API_CUIDADORES = "http://localhost:8080/api/cuidadores";
 const API_USER_INFO = "http://localhost:8080/api/users/user_info";
 

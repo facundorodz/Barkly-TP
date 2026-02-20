@@ -160,195 +160,140 @@ async function cargarCuidadorYPaquetes() {
 
 
 
+const API = "http://localhost:3000";
 
-  const API_BASE = "http://localhost:8080";
-  const API_PREFIX = "/api";
+const params = new URLSearchParams(window.location.search);
+const idCuidador = params.get("id");
 
-  const ENDPOINTS = {
-    cuidador: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}`,
-    paquetes: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}/paquetes`,
-    // si no existe, se ignora:
-    promedioResenias: (id) => `${API_BASE}${API_PREFIX}/resenias/promedio/${id}`,
-  };
+// Helpers
+function splitToList(texto) {
+  return String(texto ?? "")
+    .split(/[\n,;•-]+/g)  
+    .map(s => s.trim())
+    .filter(Boolean);
+}
 
-  const $ = (id) => document.getElementById(id);
+function money(v) {
+  if (v === null || v === undefined || v === "") return "—";
+  return `$${v}`;
+}
 
-  function getIdCuidador() {
-    const params = new URLSearchParams(window.location.search);
-    const id = Number(params.get("id"));
-    return Number.isInteger(id) && id > 0 ? id : null;
+function renderBones(promedio) {
+  const cont = document.getElementById("calificacionBones");
+  cont.innerHTML = "";
+  // mock visual: 5 huesitos llenos según promedio (1..5). Si no hay promedio -> 0
+  const n = Math.max(0, Math.min(5, Math.round(Number(promedio || 0))));
+  for (let i = 0; i < 5; i++) {
+    const span = document.createElement("span");
+    span.className = "bone";
+    span.style.opacity = i < n ? "1" : ".25";
+    span.innerHTML = "<i></i>";
+    cont.appendChild(span);
+  }
+}
+
+// Render poderes como lista
+function renderPoderes(poderes) {
+  const ul = document.getElementById("listaPoderes");
+  //const fallback = document.getElementById("poderesFallback");
+  ul.innerHTML = "";
+  //fallback.textContent = "";
+
+  let items = [];
+  if (Array.isArray(poderes)) items = poderes;
+  else items = splitToList(poderes);
+
+  if (items.length === 0) {
+    //fallback.textContent = "—";
+    return;
   }
 
-  function setText(id, value, fallback = "—") {
-    const el = $(id);
-    if (!el) return;
-    el.textContent = value ?? fallback;
-  }
+  items.forEach(p => {
+    const li = document.createElement("li");
+    li.textContent = p;
+    ul.appendChild(li);
+  });
+}
 
-  function splitToList(texto) {
-    return String(texto ?? "")
-      .split(/[\n,;•-]+/g)
-      .map((s) => s.trim())
-      .filter(Boolean);
-  }
+// Render un paquete con lista de actividades (descripción)
+function paqueteCardHTML(paquete, idx) {
+  const nombre = paquete.nombre_paquete || `Paquete ${idx + 1}`;
+  const actividades = splitToList(paquete.descripcion);
 
-  function renderPoderes(poderes) {
-    const ul = $("listaPoderes");
-    const fallback = $("poderesFallback");
-    if (ul) ul.innerHTML = "";
-    if (fallback) fallback.textContent = "";
+  const actividadesHTML = (actividades.length ? actividades : ["Sin descripción"])
+    .map(a => `<li>${a}</li>`)
+    .join("");
 
-    const items = Array.isArray(poderes) ? poderes : splitToList(poderes);
+  return `
+    <div class="card card-accent">
+      <h3 class="card-title">${nombre}</h3>
+      <div class="divider"></div>
 
-    if (!items.length) {
-      if (fallback) fallback.textContent = "—";
-      return;
-    }
+      <p class="pack-label">Descripción:</p>
+      <ul class="list">
+        ${actividadesHTML}
+      </ul>
 
-    if (!ul) return;
-    items.forEach((p) => {
-      const li = document.createElement("li");
-      li.textContent = p;
-      ul.appendChild(li);
-    });
-  }
+      <div class="divider"></div>
 
-  function renderBones(promedio) {
-    const cont = $("calificacionBones");
-    if (!cont) return;
-
-    cont.innerHTML = "";
-    const n = Math.max(0, Math.min(5, Math.round(Number(promedio || 0))));
-
-    for (let i = 0; i < 5; i++) {
-      const bone = document.createElement("span");
-      bone.className = "bone";
-      bone.style.opacity = i < n ? "1" : ".25";
-      cont.appendChild(bone);
-    }
-  }
-
-  function escapeHtml(str) {
-    return String(str ?? "")
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function money(v) {
-    if (v === null || v === undefined || v === "") return "—";
-    return `$${v}`;
-  }
-
-  function paqueteCardHTML(paquete, idx) {
-    const nombre = paquete.nombre_paquete || `Paquete ${idx + 1}`;
-    const actividades = splitToList(paquete.descripcion);
-    const actividadesHTML = (actividades.length ? actividades : ["Sin descripción"])
-      .map((a) => `<li>${escapeHtml(a)}</li>`)
-      .join("");
-
-    return `
-      <div class="card">
-        <h3 class="pack-title">${escapeHtml(nombre)}</h3>
-        <div class="divider"></div>
-
-        <div style="opacity:.9;">Descripción:</div>
-        <ul>${actividadesHTML}</ul>
-
-        <div class="divider"></div>
-        <div class="price-row">
-          <span>PRECIO:</span>
-          <strong>${money(paquete.precio)}</strong>
-        </div>
-
-        <button class="btn btn-cta" data-paquete="${paquete.id}">
-          Contratar paquete
-        </button>
+      <div class="price-row">
+        <strong>${money(paquete.precio)}</strong>
       </div>
-    `;
+
+      <button class="btn" data-id="${paquete.id}">Contratar paquete</button>
+    </div>
+  `;
+}
+
+async function cargarCuidadorYPaquetes() {
+  if (!idCuidador) {
+    alert("Falta ?id= en la URL");
+    return;
   }
 
-  async function fetchJSON(url) {
-    const res = await fetch(url);
-    if (!res.ok) {
-      const t = await res.text().catch(() => "");
-      throw new Error(`HTTP ${res.status} - ${url} - ${t}`);
-    }
-    return res.json();
+  // 1) cuidador
+  const r1 = await fetch(`${API}/cuidadores/${idCuidador}`);
+  if (!r1.ok) throw new Error("No se pudo obtener el cuidador");
+  const c = await r1.json();
+
+  document.getElementById("cuidadorNombre").textContent = c.nombre ?? "Nombre cuidador";
+  document.getElementById("cuidadorFranquicia").textContent = c.franquicia ?? "Franquicia";
+  document.getElementById("cuidadorExperiencia").textContent = `${c.experiencia ?? "0"} años`;
+
+  renderPoderes(c.poderes);
+
+  // si tu backend devuelve promedio de calificación:
+  renderBones(c.calificacion_promedio || c.promedio || 0);
+
+  // 2) paquetes
+  const r2 = await fetch(`${API}/cuidadores/${idCuidador}/paquetes`);
+  if (!r2.ok) throw new Error("No se pudieron obtener los paquetes");
+  const paquetes = await r2.json();
+
+  const grid = document.getElementById("packsGrid");
+  grid.innerHTML = "";
+
+  const list = Array.isArray(paquetes) ? paquetes : [];
+
+  
+  if (list.length === 0) {
+    grid.innerHTML = `<div class="card card-accent"><h3 class="card-title">Sin paquetes</h3><div class="divider"></div><p class="pack-sub">Este cuidador aún no cargó paquetes.</p></div>`;
+    return;
   }
 
-  async function cargarDetalle() {
-    const id = getIdCuidador();
-    if (!id) {
-      alert("Falta ?id= en la URL. Volvé al catálogo y tocá 'Ver cuidador'.");
-      //window.location.href = "/index.html";
-      return;
-    }
+  // Render
+  grid.innerHTML = list.slice(0, 3).map((p, i) => paqueteCardHTML(p, i)).join("");
 
-    setText("detalleEstado", "Cargando…", "");
+  // botones contratar
+  grid.querySelectorAll("button[data-id]").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idPaquete = btn.getAttribute("data-id");
 
-    // Cuidador
-    const c = await fetchJSON(ENDPOINTS.cuidador(id));
-    setText("cuidadorNombre", c.nombre, "Nombre cuidador");
-    setText("cuidadorFranquicia", c.franquicia, "Franquicia");
-    setText("cuidadorExperiencia", `${c.experiencia ?? 0} años`, "0 años");
-    renderPoderes(c.poderes);
-
-    // Promedio reseñas (opcional)
-    try {
-      const prom = await fetchJSON(ENDPOINTS.promedioResenias(id));
-      renderBones(Number(prom?.promedio || 0));
-    } catch {
-      renderBones(0);
-    }
-
-    // Paquetes
-    const grid = $("packsGrid");
-    if (grid) grid.innerHTML = "";
-
-    let paquetes = [];
-    try {
-      const data = await fetchJSON(ENDPOINTS.paquetes(id));
-      paquetes = Array.isArray(data) ? data : [];
-    } catch {
-      paquetes = [];
-    }
-
-    if (!grid) return;
-
-    if (paquetes.length === 0) {
-      grid.innerHTML = `
-        <div class="card">
-          <h3 class="pack-title">Sin paquetes</h3>
-          <div class="divider"></div>
-          <p style="opacity:.85">Este cuidador aún no cargó paquetes.</p>
-        </div>
-      `;
-      setText("detalleEstado", "Listo", "");
-      return;
-    }
-
-    grid.innerHTML = paquetes.slice(0, 3).map((p, i) => paqueteCardHTML(p, i)).join("");
-
-    // Botón contratar (demo)
-    grid.querySelectorAll("button[data-paquete]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const idPaquete = btn.getAttribute("data-paquete");
-        alert(`Contratación demo: cuidador=${id}, paquete=${idPaquete}`);
-      });
+      window.location.href =
+        `/checkout.html?idCuidador=${encodeURIComponent(idCuidador)}&idPaquete=${encodeURIComponent(idPaquete)}`;
     });
-
-    setText("detalleEstado", "Listo", "");
-  }
-
-  /*document.addEventListener("DOMContentLoaded", () => {
-    cargarDetalle().catch((err) => {
-      console.error("Error cargando detalle:", err);
-      alert("Error cargando detalle. Revisá backend y endpoints.");
-    });
-  });*/
+  });
+}
 
 /* =========================
    RESEÑAS (mismo estilo)
@@ -415,7 +360,7 @@ async function enviarResenia() {
   };
 
   try {
-    const res = await fetch(`http://localhost:8080/api/cuidadores/resenias`, {
+    const res = await fetch(`${API}/resenias`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload)
@@ -450,17 +395,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const btn = document.getElementById("btnSendReview");
   if (btn) btn.addEventListener("click", enviarResenia);
-  cargarDetalle().catch((err) => {
-    console.error("Error cargando detalle:", err);
-    alert("Error cargando detalle. Revisá backend y endpoints.");
-  });
 
   // opcional
   //cargarResenias();
 });
 
 // init
-/*cargarCuidadorYPaquetes().catch(err => {
+cargarCuidadorYPaquetes().catch(err => {
   console.error(err);
   alert("Error cargando detalle. Revisá backend y endpoints.");
-});*/
+});
+
