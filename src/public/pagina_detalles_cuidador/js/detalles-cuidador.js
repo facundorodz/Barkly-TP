@@ -1,4 +1,6 @@
 console.log(window.location.href);
+console.log("URL COMPLETA:", window.location.href);
+console.log("SEARCH:", window.location.search);
 
 const params = new URLSearchParams(window.location.search);
 const idCuidador = params.get("id");
@@ -6,7 +8,6 @@ const idCuidador = params.get("id");
 console.log("ID:", idCuidador);
 
 if (!idCuidador) {
-  alert("NO llegó el ID");
   throw new Error("Sin ID");
 }
 

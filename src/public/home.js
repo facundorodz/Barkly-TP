@@ -1,9 +1,3 @@
-window.verDetalle = function(id) {
-  console.log("CLICK CUIDADOR ID:", id);
-  window.location.href =
-    `/pagina_detalles_cuidador/detalles_cuidador.html?id=${id}`;
-};
-
 
 const API_URL = "http://localhost:8080/api/cuidadores";
 
@@ -35,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
       catalogo.innerHTML = "";
 
       cuidadores.forEach(c => {
-
+        console.log("ID del cuidador:", c.id);
         const poderes = String(c.poderes ?? "")
           .split(",")
           .map(p => p.trim())
@@ -65,13 +59,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     : "<li>—</li>"
                 }
               </ul>
-
-              <hr>
-
-              <a onclick="verDetalle(${c.id})" class="btn btn-danger mt-2">
+              <button class="btn btn-danger mt-2"
+                onclick="window.location.assign('pagina_detalles_cuidador/detalles_cuidador.html?id=${c.id}')">
                 Ver cuidador
-              </a>
-
+              </button>
             </div>
           </div>
         `;
@@ -186,9 +177,11 @@ window.addEventListener("scroll", () => {
               }
             </ul>
             <hr>
-            <a onclick="verDetalle(${c.id})" class="btn btn-danger mt-2">
+            <button class="btn btn-danger mt-2"
+              onclick="window.location.assign('pagina_detalles_cuidador/detalles_cuidador.html?id=${c.id}')">
               Ver cuidador
-            </a>
+            </button>
+
           </div>
         </div>
       `;
