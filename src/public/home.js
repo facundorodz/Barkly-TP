@@ -84,7 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
               ${poderes.length ? poderes.map(p => `<li>${p}</li>`).join("") : "<li>—</li>"}
             </ul>
             <hr>
-            <button class="btn btn-primary btnVerCuidador" data-id="${c.id}">Ver cuidador</button>
+            <button class="btn btn-danger btnVerCuidador" data-id="${c.id}">Ver cuidador</button>
           </div>
         </div>`;
     });
