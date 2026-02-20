@@ -1,287 +1,112 @@
-
 const API_URL = "http://localhost:8080/api/cuidadores";
 
 document.addEventListener("DOMContentLoaded", () => {
-
-  const boton = document.getElementById("ver-mas-boton");
-  const conteiner = document.getElementById("mas-cuidadores");
   const catalogo = document.getElementById("catalogo");
+  const botonVerMas = document.getElementById("ver-mas-boton");
   const input = document.getElementById("buscadorNombre");
-  const navbar = document.querySelector(".navbar");
-  const offset = navbar.offsetTop;
 
-
-  fetch(API_URL)
-    .then(res => res.json())
-    .then(cuidadores => {
-
-      if (!catalogo) return;
-
-      if (!Array.isArray(cuidadores) || cuidadores.length === 0) {
-        catalogo.innerHTML = `
-          <div class="col-12 text-center text-muted">
-            No se encontraron cuidadores
-          </div>
-        `;
-        return;
-      }
-
-      catalogo.innerHTML = "";
-
-      cuidadores.forEach(c => {
-        console.log("ID del cuidador:", c.id);
-        const poderes = String(c.poderes ?? "")
-          .split(",")
-          .map(p => p.trim())
-          .filter(Boolean);
-
-        catalogo.innerHTML += `
-          <div class="col-md-4">
-            <div class="cuidador_perfil">
-
-              <img
-                src="${c.foto_perfil}"
-                class="polaroid"
-                width="400"
-                height="400"
-                alt="Foto de ${c.nombre || "Cuidador"}"
-              >
-
-              <h3>${c.nombre || "Sin nombre"}</h3>
-              ${c.franquicia || ""}
-
-              <hr>
-
-              <ul style="text-align:left">
-                ${
-                  poderes.length
-                    ? poderes.map(p => `<li>${p}</li>`).join("")
-                    : "<li>—</li>"
-                }
-              </ul>
-              <button class="btn btn-danger mt-2"
-                onclick="window.location.assign('pagina_detalles_cuidador/detalles_cuidador.html?id=${c.id}')">
-                Ver cuidador
-              </button>
-            </div>
-          </div>
-        `;
-      });
-    })
-    .catch(err => console.error("Error cargando cuidadores:", err));
-
-
-  if (boton && conteiner) {
-    boton.addEventListener("click", e => {
-      e.preventDefault();
-
-      const oculto =
-        conteiner.style.display === "" ||
-        conteiner.style.display === "none";
-
-      conteiner.style.display = oculto ? "block" : "none";
-      boton.textContent = oculto ? "Ver menos" : "Ver más";
-    });
-  }
-
-  (async () => {
-    try {
-      const resp = await fetch("http://localhost:8080/api/users/user_info", {
-        credentials: "include"
-      });
-
-      const data = await resp.json();
-      const container = document.getElementById("buttons");
-
-      if (!container) return;
-
-      if (data.response) {
-        if (data.role === "user"){
-          container.innerHTML = `
-          <a class="btn btn-danger" href="/perfiles/perfil_usuario.html">
-            Ver perfil
-          </a>
-        `;
-        } else {
-          container.innerHTML = `
-          <a class="btn btn-danger" href="/perfiles/perfil_cuidador.html">
-            Ver perfil
-          </a>
-        `;
-        }
-      }
-
-    } catch (err) {
-      console.error("Error obteniendo sesión:", err);
-    }
-  })();
-
-});
-
-document.addEventListener("DOMContentLoaded", () => {
-  const input = document.getElementById("buscadorNombre");
-  const boton = document.getElementById("ver-mas-boton");
-  const conteiner = document.getElementById("mas-cuidadores");
-  const catalogo = document.getElementById("catalogo");
-  const navbar = document.querySelector(".navbar");
-  const offset = navbar.offsetTop;
-
-window.addEventListener("scroll", () => {
-  if (window.scrollY > offset) {
-    navbar.classList.add("navbar-fixed");
-  } else {
-    navbar.classList.remove("navbar-fixed");
-  }
-});
-
-  let cuidadoresCache = []; // guardo lista completa para filtrar
+  let cuidadoresCache = [];
 
   const normalizar = (txt) =>
-    String(txt ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // saca tildes
+    String(txt ?? "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 
   const renderCatalogo = (lista) => {
     if (!catalogo) return;
-
     catalogo.innerHTML = "";
 
     if (!Array.isArray(lista) || lista.length === 0) {
-      catalogo.innerHTML = `
-        <div class="col-12">
-          <p class="text-center text-muted">No se encontraron cuidadores.</p>
-        </div>
-      `;
+      catalogo.innerHTML = `<div class="col-12"><p class="text-center text-muted">No se encontraron cuidadores.</p></div>`;
       return;
     }
 
-    lista.forEach((c) => {
-      const poderes = String(c.poderes ?? "").split(",").map((p) => p.trim()).filter(Boolean);
-      
+    lista.forEach(c => {
+      const poderes = String(c.poderes ?? "").split(",").map(p => p.trim()).filter(Boolean);
       catalogo.innerHTML += `
         <div class="col-md-4">
           <div class="cuidador_perfil cuidador_item">
-            <img
-              src="${c.foto_perfil || "https://via.placeholder.com/150"}"
-              class="polaroid"
-              width="400"
-              height="400"
-              alt="Foto de ${c.nombre || "Cuidador"}"
-            >
+            <img src="${c.foto_perfil || 'https://via.placeholder.com/150'}" class="polaroid" width="400" height="400" alt="Foto de ${c.nombre || 'Cuidador'}">
             <h3 class="card-title">${c.nombre || "Sin nombre"}</h3>
             ${c.franquicia || "—"} <br>
             <hr>
             <ul style="text-align: left; margin: 0 auto; width: fit-content;">
-              ${
-                poderes.length
-                  ? poderes.map((p) => `<li>${p}</li>`).join("")
-                  : "<li>—</li>"
-              }
+              ${poderes.length ? poderes.map(p => `<li>${p}</li>`).join("") : "<li>—</li>"}
             </ul>
             <hr>
-            <button class="btn btn-danger mt-2"
-              onclick="window.location.assign('pagina_detalles_cuidador/detalles_cuidador.html?id=${c.id}')">
-              Ver cuidador
-            </button>
-
+            <button class="btn btn-primary btnVerCuidador" data-id="${c.id}">Ver cuidador</button>
           </div>
-        </div>
-      `;
+        </div>`;
     });
   };
 
-const aplicarFiltroNombre = () => {
-  if (!input) return;
-
-  const q = normalizar(input.value).trim();
-
-  if (!q) {
-    renderCatalogo(cuidadoresCache);
-    return;
-  }
-
-  // Filtrar SOLO coincidencias
-  const filtrados = cuidadoresCache.filter((c) =>
-    normalizar(c.nombre).includes(q)
-  );
-
-
-  if (catalogo) catalogo.scrollIntoView({ behavior: "smooth", block: "start" });
-
-  renderCatalogo(filtrados);
-};
+  const aplicarFiltroNombre = () => {
+    if (!input) return;
+    const q = normalizar(input.value).trim();
+    renderCatalogo(q ? cuidadoresCache.filter(c => normalizar(c.nombre).includes(q)) : cuidadoresCache);
+  };
 
   const cargarCuidadores = async () => {
     try {
-      if (!catalogo) return;
-
-      catalogo.innerHTML = `
-        <div class="col-12">
-          <p class="text-center text-muted">Cargando cuidadores...</p>
-        </div>
-      `;
-
+      catalogo.innerHTML = `<div class="col-12"><p class="text-center text-muted">Cargando cuidadores...</p></div>`;
       const res = await fetch(API_URL);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
       const data = await res.json();
       cuidadoresCache = Array.isArray(data) ? data : [];
-
       renderCatalogo(cuidadoresCache);
-      aplicarFiltroNombre(); 
+      aplicarFiltroNombre();
     } catch (err) {
       console.error("Error cargando cuidadores:", err);
-      if (catalogo) {
-        catalogo.innerHTML = `
-          <div class="col-12">
-            <p class="text-center text-danger">
-              Error cargando cuidadores. Revisá el backend y el endpoint /cuidadores
-            </p>
-          </div>
-        `;
-      }
+      catalogo.innerHTML = `<div class="col-12"><p class="text-center text-danger">Error cargando cuidadores. Revisá el backend y el endpoint /cuidadores</p></div>`;
     }
   };
 
-  cargarCuidadores();
+  if (input) input.addEventListener("input", aplicarFiltroNombre);
 
-  if (input) {
-    input.addEventListener("input", aplicarFiltroNombre);
-  }
-
-  if (!boton) {
-    console.error("No se encontró el elemento #ver-mas-boton");
-  } else if (!conteiner) {
-    console.error("No se encontró el elemento #mas-cuidadores");
-  } else {
-    boton.addEventListener("click", (e) => {
+  if (botonVerMas) {
+    botonVerMas.addEventListener("click", (e) => {
       e.preventDefault();
-
-      const isHidden =
-        conteiner.style.display === "none" || conteiner.style.display === "";
-
-      conteiner.style.display = isHidden ? "block" : "none";
-      boton.textContent = isHidden ? "Ver menos" : "Ver más";
+      const isHidden = catalogo.style.display === "none" || catalogo.style.display === "";
+      catalogo.style.display = isHidden ? "flex" : "none";
+      botonVerMas.textContent = isHidden ? "Ver menos" : "Ver más";
     });
   }
 
-  (async () => {
+  // Delegación de eventos para botones "Ver cuidador"
+  catalogo.addEventListener("click", async (e) => {
+    const btn = e.target.closest(".btnVerCuidador");
+    if (!btn) return;
+    const cuidadorId = btn.getAttribute("data-id");
+    if (!cuidadorId) return;
+
     try {
-      const resp = await fetch("/users/session_info");
-      const data = await resp.json();
-      const container = document.getElementById("buttons");
+      const res = await fetch(`${API_URL}/${cuidadorId}`);
+      if (!res.ok) throw new Error("Error al cargar cuidador");
+      const cuidador = await res.json();
 
-      if (!container) return;
+      const paquetesRes = await fetch(`${API_URL}/${cuidadorId}/paquetes`);
+      const paquetes = await paquetesRes.json();
 
-      if (data.logged) {
-        container.innerHTML = `
-          <a role="button" class="btn btn-danger" href="/perfiles/perfil_usuario.html">
-            Ver perfil
-          </a>
-        `;
-      }
-    } catch (error) {
-      console.error("Error al obtener session_info:", error);
+      // Renderizar modal
+      document.getElementById("modalNombre").textContent = cuidador.nombre || "—";
+      document.getElementById("modalFranquicia").textContent = cuidador.franquicia || "—";
+      document.getElementById("modalExperiencia").textContent = cuidador.experiencia || "—";
+      document.getElementById("modalPoderes").textContent = cuidador.poderes || "—";
+      document.getElementById("modalAvatar").src = cuidador.foto_perfil || "";
+
+      const ul = document.getElementById("modalPaquetes");
+      ul.innerHTML = "";
+      paquetes.forEach(p => {
+        ul.innerHTML += `<li>${p.nombre_paquete} - $${p.precio}</li>`;
+      });
+
+      // Abrir modal
+      const modalEl = document.getElementById("modalCuidador");
+      const modal = new bootstrap.Modal(modalEl);
+      modal.show();
+    } catch (err) {
+      console.error(err);
+      alert("No se pudo cargar la información del cuidador.");
     }
   });
+
+  cargarCuidadores();
 });
-
-

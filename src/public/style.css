@@ -377,3 +377,73 @@ hr {
 #catalogo {
   scroll-margin-top: 90px;
 }
+
+/* --- MODAL CUIDADOR --- */
+#modalCuidador .modal-content {
+    background: linear-gradient(180deg, #1a0000 0%, #3b0000 100%);
+    color: #fff;
+    border-radius: 15px;
+    font-family: 'Oswald', sans-serif;
+    padding: 20px;
+}
+
+#modalCuidador .modal-header {
+    border-bottom: 2px solid #DC3545;
+}
+
+#modalCuidador .modal-title {
+    color: #DC3545;
+    font-size: 28px;
+    font-weight: 600;
+}
+
+#modalCuidador .modal-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    font-size: 18px;
+}
+
+#modalCuidador .modal-body p {
+    margin: 5px 0;
+}
+
+#modalCuidador #modalAvatar {
+    max-height: 200px;
+    border: 2px solid #DC3545;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(220, 53, 69, 0.5);
+}
+
+#modalCuidador ul#modalPaquetes {
+    list-style-position: inside;
+    width: 100%;
+    max-width: 400px;
+    padding-left: 20px;
+}
+
+#modalCuidador ul#modalPaquetes li {
+    background-color: #590101;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+#modalCuidador .modal-footer {
+    border-top: 2px solid #DC3545;
+    display: flex;
+    justify-content: center;
+}
+
+#modalCuidador .btn-secondary {
+    background-color: #2b1010;
+    border-color: #DC3545;
+    color: #fff;
+}
+
+#modalCuidador .btn-secondary:hover {
+    background-color: #3b1010;
+    border-color: #b02a37;
+    color: #fff;
+}
