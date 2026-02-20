@@ -58,36 +58,56 @@ En la página de **perfil-usuario.html**, tenemos el apartado de edición del pe
 ---
 
 # ¿Cómo levantar la página?
+La página se puede levantar por partes (frontend, backend y database) o todo junto.
 
-## Con Make
-### Backend
-Para levantar el backend escribiremos la siguiente linea.
-```
-
-```
-### Frontend
-Para levantar el frontend, nos iremos a nuestro navegador favorito, al siguiente enlace:
-```
-https://localhost:3000/
-```
-**Después de haber levantado el backend.**
-
----
-
-## Con Docker
 ### Para levantar todo junto.
 ```
-docker-compose up -d --build 
+docker compose up -d --build
 ```
 
 ### Para levantar por separado.
 ```
-docker-compose up backend 
-docker-compose up frontend
-docker-compose up postgres
+docker compose up -d frontend
+docker compose up -d backend
+docker compose up -d postgres
 ```
 
-### Para detener la página
+### Para detener la página.
 ```
-docker-compose down
+sudo docker compose stop
+```
+
+### Para detener por separado.
+```
+docker compose stop frontend
+docker compose stop backend
+docker compose stop postgres
+```
+---
+
+## Con Make
+Tal vez estos comandos puedan ser difíciles de recordar, por lo que, decidimos utilizar un Makefile y hacerlo más intuitivo.
+
+### Para levantar todo junto.
+```
+make start-all
+```
+
+### Para levantar por separado.
+```
+make start-frontend
+make start-backend
+make start-postgres
+```
+
+### Para detener todo junto.
+```
+make stop-all
+```
+
+### Para detener por separado.
+```
+make stop-frontend
+make stop-backend
+make stop-postgres
 ```
