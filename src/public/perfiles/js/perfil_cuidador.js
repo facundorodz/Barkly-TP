@@ -16,7 +16,7 @@
         tipo === "ok" ? "alert-success" :
         tipo === "warn" ? "alert-warning" :
         "alert-danger";
-
+ 
       area.innerHTML = `<div class="alert ${clase} mb-0" role="alert">${mensaje}</div>`;
     }
 
@@ -31,7 +31,7 @@
         const text = await res.text().catch(() => "");
         throw new Error(`HTTP ${res.status} - ${text || "Error en respuesta"}`);
       }
-      // algunas rutas pueden responder sin json; intentamos parsear
+    
       const ct = res.headers.get("content-type") || "";
       if (ct.includes("application/json")) return res.json();
       return null;
@@ -204,10 +204,11 @@
 
       try {
         setEstado("ok", "Eliminando cuenta...");
-        await fetchJSON(`${API_CUIDADORES}/session`, { method: "DELETE" });
+        await fetchJSON(`${API_CUIDADORES}/${CUIDADOR_ID}`, { method: "DELETE" });
         setEstado("ok", "Cuenta eliminada.");
         localStorage.removeItem("id_cuidador");
         renderPaquetes([]);
+        window.location.href = "/index.html"; 
       } catch (err) {
         console.error(err);
         setEstado("error", "No se pudo eliminar la cuenta. Verificá que tu backend tenga DELETE /cuidadores/:id.");
