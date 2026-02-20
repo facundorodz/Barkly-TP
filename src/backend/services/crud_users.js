@@ -85,7 +85,7 @@ router.get("/show_dogs", async (req, res) => {
         return res.status(401).json({ error: "No estás logueado" });
     }
     try {
-        const result = await db.query(`SELECT p.id, p.nombre AS dog_name, p.edad AS dog_age, r.nombre AS raza FROM perros p JOIN razas r ON p.id_raza = r.id WHERE p.id_usuario = $1`, [req.session.userId]);
+        const result = await db.query(`SELECT p.id, p.nombre AS dog_name, p.edad AS dog_age, r.nombre AS raza, r.id AS raza_id FROM perros p JOIN razas r ON p.id_raza = r.id WHERE p.id_usuario = $1`, [req.session.userId]);
         return res.json({ mascotas: result.rows });
     } catch (error) {
         console.error(error);
@@ -140,6 +140,45 @@ router.get("/dog/:id", async (req, res) => {
     }
 });
 
+router.get("/view_raza/:id", async (req, res) => {
+    const raza_id = req.params.id;
+
+    if (!req.session.userId) {
+        return res.status(401).json({ error: "No estás logueado" });
+    }
+
+    try {
+        const result = await db.query(
+            `SELECT id, nombre, tamanio, temperamento, fortaleza, velocidad, color_predominante
+             FROM razas
+             WHERE id = $1`,
+            [raza_id]
+        );
+
+        if (result.rows.length === 0) {
+            return res.status(404).json({ error: "Raza no encontrada" });
+        }
+
+        const raza = result.rows[0];
+
+        return res.json({
+            success: true,
+            raza: {
+                id: raza.id,
+                nombre: raza.nombre,
+                tamanio: raza.tamanio,
+                temperamento: raza.temperamento,
+                fortaleza: raza.fortaleza,
+                velocidad: raza.velocidad,
+                color_predominante: raza.color_predominante
+            }
+        });
+
+    } catch (error) {
+        console.error("Error al obtener raza:", error);
+        return res.status(500).json({ error: "Error al obtener raza" });
+    }
+});
 
 router.post("/edit_dog/:id", async (req, res) => {
     const dog_id = req.params.id;
