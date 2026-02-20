@@ -96,6 +96,7 @@ const eliminarCuidador = async (req, res) => {
         console.error(err);
         return res.status(500).json({ error: "Error al cerrar sesión" });
       }
+      res.clearCookie("connect.sid");
       res.status(200).json({ success: true });
     });
 
