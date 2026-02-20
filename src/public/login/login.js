@@ -1,4 +1,4 @@
-const API_URL = "https://TU-BACKEND.onrender.com";
+const API_URL = "https://barkly-tp-1.onrender.com";
 
 
 document.querySelector("form").addEventListener("submit", async (e) => {
@@ -11,7 +11,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
   };
 
   try {
-    const resp = await fetch("https://barkly-tp-gs5i.onrender.com/api/users/login", {
+    const resp = await fetch(`${API_URL}/api/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
