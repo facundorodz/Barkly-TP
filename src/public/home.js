@@ -69,8 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
       botonVerMas.textContent = isHidden ? "Ver menos" : "Ver más";
     });
   }
-
-  // Delegación de eventos para botones "Ver cuidador"
   catalogo.addEventListener("click", async (e) => {
     const btn = e.target.closest(".btnVerCuidador");
     if (!btn) return;
@@ -85,7 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const paquetesRes = await fetch(`${API_URL}/${cuidadorId}/paquetes`);
       const paquetes = await paquetesRes.json();
 
-      // Renderizar modal
       document.getElementById("modalNombre").textContent = cuidador.nombre || "—";
       document.getElementById("modalFranquicia").textContent = cuidador.franquicia || "—";
       document.getElementById("modalExperiencia").textContent = cuidador.experiencia || "—";
@@ -98,7 +95,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ul.innerHTML += `<li>${p.nombre_paquete} - $${p.precio}</li>`;
       });
 
-      // Abrir modal
       const modalEl = document.getElementById("modalCuidador");
       const modal = new bootstrap.Modal(modalEl);
       modal.show();

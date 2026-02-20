@@ -18,9 +18,6 @@ exports.obtenerPaquetesPorCuidador = async (req, res) => {
   }
 };
 
-// ===============================
-// GET /cuidadores/:id/paquetes/:paqueteId
-// ===============================
 exports.obtenerPaquetePorCuidador = async (req, res) => {
   try {
     const cuidadorId = Number(req.params.id);
@@ -48,10 +45,6 @@ exports.obtenerPaquetePorCuidador = async (req, res) => {
   }
 };
 
-// ===============================
-// POST /cuidadores/:id/paquetes
-// body: { nombre_paquete, descripcion, precio }
-// ===============================
 exports.crearPaquete = async (req, res) => {
   try {
     const cuidadorId = Number(req.params.id);
@@ -89,10 +82,6 @@ exports.crearPaquete = async (req, res) => {
   }
 };
 
-// ===============================
-// PUT /cuidadores/:id/paquetes/:paqueteId
-// body: { nombre_paquete, descripcion, precio }
-// ===============================
 exports.editarPaquetePorCuidador = async (req, res) => {
   try {
     const cuidadorId = Number(req.params.id);
@@ -127,9 +116,6 @@ exports.editarPaquetePorCuidador = async (req, res) => {
   }
 };
 
-// ===============================
-// DELETE /cuidadores/:id/paquetes/:paqueteId
-// ===============================
 exports.eliminarPaquetePorCuidador = async (req, res) => {
   try {
     const cuidadorId = Number(req.params.id);

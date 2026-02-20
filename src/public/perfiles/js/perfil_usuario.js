@@ -358,7 +358,6 @@ async function guardar_cambios_mascota() {
     }
 }
 
-
 document.addEventListener("DOMContentLoaded", mostrar_mascotas);
 
 
