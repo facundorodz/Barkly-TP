@@ -1,3 +1,4 @@
+<<<<<<< HEAD:src/public/pagina_detalles-cuidador/js/detalles-cuidador.js
 /*const params = new URLSearchParams(window.location.search);
 const idCuidador = params.get("id");*/
 /*const API_BASE = "http://localhost:8080"; // <- tu backend real
@@ -8,6 +9,23 @@ const ENDPOINTS = {
   paquetes: (id) => `${API_BASE}${API_PREFIX}/cuidadores/${id}/paquetes`,
   promedioResenias: (id) => `${API_BASE}${API_PREFIX}/resenias/promedio/${id}`,
 };
+=======
+console.log(window.location.href);
+console.log("URL COMPLETA:", window.location.href);
+console.log("SEARCH:", window.location.search);
+
+const params = new URLSearchParams(window.location.search);
+const idCuidador = params.get("id");
+>>>>>>> feature/editar_mascotas:src/public/pagina_detalles_cuidador/js/detalles-cuidador.js
+
+console.log("ID:", idCuidador);
+
+if (!idCuidador) {
+  throw new Error("Sin ID");
+}
+
+
+
 
 function splitToList(texto) {
   return String(texto ?? "")
@@ -107,6 +125,7 @@ function paqueteCardHTML(paquete, idx) {
 }
 
 async function cargarCuidadorYPaquetes() {
+  console.log(idCuidador);
   if (!idCuidador) {
     alert("Falta ?id= en la URL");
     return;

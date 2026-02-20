@@ -15,8 +15,6 @@ const path = require("path");
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-
-
 app.use(cors({
   origin: true,
   credentials: true
@@ -39,8 +37,10 @@ app.use("/api/resenias", reseniasRoutes);
 app.use("/api/crud_users", crudUsersRouter);
 
 
-app.get("/viejo_perfil_cuidador", (req, res) => {
-  res.sendFile(path.join(__dirname, "../public/perfiles/viejo_perfil_cuidador.html"));
+app.use((req, res) => {
+  res.status(404).json({
+    error: "Ruta no encontrada",
+  });
 });
 
 
