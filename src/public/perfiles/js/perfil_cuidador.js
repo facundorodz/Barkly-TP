@@ -387,6 +387,25 @@
       }
     });
 
+    const btnCerrar = document.getElementById("btnCerrarSesion");
+
+    btnCerrar.addEventListener("click", async (e) => {
+      try {
+        const resp = await fetch("http://localhost:8080/api/users/logout", {
+          method: "POST",
+          credentials: "include" 
+        });
+
+        if (!resp.ok) throw new Error("Error al cerrar sesión");
+        window.location.href = "../index.html";
+
+      } catch (err) {
+        console.error("No se pudo cerrar sesión:", err);
+        alert("Error cerrando sesión, intente de nuevo.");
+      }
+    });
+
+
     // INIT
     resetFormPaquete();
     cargarTodo();
