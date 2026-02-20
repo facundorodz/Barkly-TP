@@ -128,6 +128,14 @@ router.get("/user_info", (req, res) => {
     });
 });
 
+router.post("/logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).json({ error: "No se pudo cerrar sesión" });
+    res.json({ success: true });
+  });
+});
+
+
 router.get("/profile_data", async (req, res) => {
     try {
         const result = await db.query(

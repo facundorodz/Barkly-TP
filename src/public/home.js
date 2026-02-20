@@ -1,4 +1,56 @@
+
 const API_URL = "http://localhost:8080/api/cuidadores";
+  (async () => {
+    try {
+      const resp = await fetch("http://localhost:8080/api/users/user_info", {
+        credentials: "include"
+      });
+
+      const data = await resp.json();
+      const container = document.getElementById("buttons");
+
+      if (!container) return;
+
+      if (data.response) {
+        if (data.role === "user"){
+          container.innerHTML = `
+          <a class="btn btn-danger" href="/perfiles/perfil_usuario.html">
+            Ver perfil
+          </a>
+          <button class="btn btn-outline-danger" id="btnCerrarSesion">
+          Cerrar sesión
+        </button>
+        `;
+        } else {
+          container.innerHTML = `
+          <a class="btn btn-danger" href="/perfiles/perfil_cuidador.html">
+            Ver perfil
+          </a>
+        `;
+        }
+      const btnCerrar = document.getElementById("btnCerrarSesion");
+      btnCerrar.addEventListener("click", async () => {
+        try {
+          const logoutResp = await fetch("http://localhost:8080/api/users/logout", {
+            method: "POST",
+            credentials: "include"
+          });
+          if (!logoutResp.ok) throw new Error("Error al cerrar sesión");
+
+          // Redirigir al home
+          window.location.href = "/index.html";
+        } catch (err) {
+          console.error("No se pudo cerrar sesión:", err);
+          alert("Error cerrando sesión, intente de nuevo.");
+        }
+      });
+        
+      }
+
+    } catch (err) {
+      console.error("Error obteniendo sesión:", err);
+    }
+  })();
 
 document.addEventListener("DOMContentLoaded", () => {
   const catalogo = document.getElementById("catalogo");
@@ -69,6 +121,8 @@ document.addEventListener("DOMContentLoaded", () => {
       botonVerMas.textContent = isHidden ? "Ver menos" : "Ver más";
     });
   }
+
+  // Delegación de eventos para botones "Ver cuidador"
   catalogo.addEventListener("click", async (e) => {
     const btn = e.target.closest(".btnVerCuidador");
     if (!btn) return;
@@ -83,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const paquetesRes = await fetch(`${API_URL}/${cuidadorId}/paquetes`);
       const paquetes = await paquetesRes.json();
 
+      // Renderizar modal
       document.getElementById("modalNombre").textContent = cuidador.nombre || "—";
       document.getElementById("modalFranquicia").textContent = cuidador.franquicia || "—";
       document.getElementById("modalExperiencia").textContent = cuidador.experiencia || "—";
@@ -95,6 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
         ul.innerHTML += `<li>${p.nombre_paquete} - $${p.precio}</li>`;
       });
 
+      // Abrir modal
       const modalEl = document.getElementById("modalCuidador");
       const modal = new bootstrap.Modal(modalEl);
       modal.show();
@@ -106,3 +162,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   cargarCuidadores();
 });
+
+
+
+
