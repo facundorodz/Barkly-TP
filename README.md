@@ -70,7 +70,6 @@ docker compose up -d --build
 docker compose up -d frontend
 docker compose up -d backend
 docker compose up -d postgres
-
 ```
 
 ### Para detener la página.

@@ -1,25 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">  
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"crel="stylesheet"/>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap" rel="stylesheet">  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> 
+  <title> Barkly Co</title>
         
-        <title> Barkly Co</title>
-        
-        <link rel="stylesheet" href = "./perfil_cuidador_estilos.css">
-        <link rel="icon" href="../assets/images/icono_metadata.png" type="image/png">
-        <script src="./perfil_cuidador.js" defer></script>        
-    </head>
+  <link rel="icon" href="/assets/images/icono_metadata.png" type="image/png">
+  <link rel="stylesheet" href="/perfiles/css/perfil_cuidador_estilos.css">
 
-    <body>
-      <div class="navbar-container" justify-content="center" >
+</head>
+
+<body>
+
+        <div class="navbar-container" justify-content="center" >
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
           <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="">
-            <img src="../assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+            <a class="navbar-brand d-flex align-items-center" href="../index.html">
+
+            <img src="/assets/images/icono_rojo.png" alt="Logo Barkly CO" width="50" height="50" class="me-2">
+
                         Barkly Co</a>
             <div class="buscador">
               <form class="d-flex" role="search" style="width: 550px;">
@@ -42,272 +45,242 @@
                                 <a class="nav-link active" aria-current="page" href="../index.html">Reseñas</a>
                                 </li>
                             </ul>
-                                <a role="button" id="login" class="btn btn-danger" href="pages/login/login.html" >Iniciar Sesión </a>
-                                <button type="button" id="registrarse" class="btn btn-outline-danger">Registrar</button>
+                                <a role="button" id="login" class="btn btn-danger" href="/perfiles/perfil_cuidador.html" > Mi Perfil </a>
                     </div>
                 </div>
             </nav>
         </div>
 
-  <div class="contenedor-general">
+  <div class="container my-4">
 
-    <div class="titulo-pagina">
-      <h1 style="text-align: center;">Mi perfil</h1>
-    </div>
-
-    <div class="header">
-      <div class="izquierda">
-        <div class="upload">
-          <div class="imagen-placeholder">
-            <img class="imagen" id="profilePic" src="../assets/images/subir_imagen.png" height=100 width=100>
-            <div class="round">
-              <input type="file" name="photo" id="photo" onchange="displayProfilePic()">
-              <i class="fa fa-camera" style="color: aliceblue;"></i>
+    <!-- HEADER PERFIL -->
+    <div class="header d-flex align-items-center justify-content-between flex-wrap gap-3">
+      <div class="d-flex align-items-center gap-3">
+        <img id="avatar" class="avatar" src="https://via.placeholder.com/84" alt="Foto del cuidador">
+        <div>
+          <h2 class="mb-0" id="nombreHeader">Perfil del cuidador</h2>
+          <div class="mt-1">
+            <span class="badge bg-warning text-dark pill">Cuidador</span>
+            <span class="badge bg-light text-dark pill" id="franquiciaHeader">—</span>
+          </div>
+          <div class="mt-2 small">
+            <span class="me-3">Experiencia: <strong id="experienciaHeader">—</strong></span>
+            <span>Poderes: <strong id="poderesHeader">—</strong></span>
           </div>
         </div>
       </div>
-        </div>
 
-        <div class="info-usuario">
-          <h2 id="nombre-superheroe-header">Usuario</h2>
-          <div class="usuario-header">
-            <p id="franquicia-header">Franquicia</p>
-          </div>
-        </div>
+      <div class="text-end">
+        <div class="small">Paquetes activos</div>
+        <div class="display-6 fw-semibold mb-0" id="contadorPaquetes">0</div>
       </div>
     </div>
 
-        <div class="container">
-          <div class="form-container">
-            <div action="" class="formulario" style="text-align: left;">  
-              <div class="titulo-seccion">  
-                <h2> Mis datos</h2>  
+    <!-- ESTADO -->
+    <div class="mt-3" id="estadoArea"></div>
+
+    <div class="row g-4 mt-1">
+
+      <!-- PERFIL (CRUD) -->
+      <div class="col-lg-4">
+        <div class="card shadow-sm form-cuidador">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between">
+              <h5 class="card-title mb-0">Mi perfil</h5>
+              <span class="badge bg-secondary pill" id="badgeId">ID: —</span>
+            </div>
+
+            <hr class="my-3">
+
+            <form id="formPerfil">
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input class="form-control" id="nombre" required />
               </div>
-              <form action="" id="form-perfil">
-              
-                <div class="col-11">
-                  <label for="nombre" id="usuarioPlaceHolder" class="form-label">Nombre de Cuidador</label>
-                  <input type="text" class="form-control" id="nombre" name="nickname" placeholder="Ej: Hulk">
-                </div>
 
-                <div class="col-11">
-                  <label for="nombre" class="form-label">Franquicia</label>
-                  <input type="text" class="form-control" id="franquicia" name="nombre" placeholder="Ej: DC">
+              <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <div class="input-group">
+                  <input type="password" class="form-control" id="contrasenia" placeholder="Nueva contraseña" autocomplete="new-password"/>
+                  <button class="btn btn-outline-secondary" type="button" id="togglePassword" tabindex="-1">
+                    👁
+                  </button>
                 </div>
+              </div>
 
-                <div class="col-11">
-                  <label for="nombre" class="form-label">Poderes</label>
-                  <input type="text" class="form-control" id="poderes" name="nombre" placeholder="Ej: volar y super fuerza">
-                </div>
- 
-                <div class="col-11">
-                  <label for="nombre" class="form-label">Experiencia</label>
-                  <input class="form-control" id="experiencia" name="nombre" placeholder="Años">
-                </div>
+              <div class="mb-3">
+                <label class="form-label">Franquicia</label>
+                <input class="form-control" id="franquicia" />
+              </div>
 
-                <div class="col-11">
-                    <label for="contrasenia" class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" id="contrasena" for="inputPassword3" name="password" >
-                </div>
+              <div class="mb-3">
+                <label class="form-label">Experiencia</label>
+                <input type="number" min="0" class="form-control" id="experiencia" />
+              </div>
 
-                <div class="col-md-6">
-                  <label for="inputState" class="form-label">Cantidad de paquetes ofrecidos</label>
-                  <select id="inputState" class="form-select" name="cantidad-perros">
-                    <option selected>Elegir...</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
+              <div class="mb-3">
+                <label class="form-label">Poderes / habilidades</label>
+                <input class="form-control" id="poderes" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Foto (URL) (opcional)</label>
+                <input class="form-control" id="foto_perfil" placeholder="https://..." />
+              </div>
+
+              <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-primary btn-sm">Guardar cambios</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="btnRecargar">
+                  Recargar
+                </button>
+              </div>
+            </form>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center">
+              <a class="btn btn-outline-secondary btn-sm" id="btnCerrarSesion">Cerrar sesión</a>
+              <button class="btn btn-outline-danger btn-sm" id="btnEliminarCuenta" type="button">
+                Eliminar cuenta
+              </button>
+            </div>
+
+            <div class="small muted mt-3" id="notaSesion"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAQUETES (CRUD) -->
+      <div class="col-lg-8">
+        <div class="card shadow-sm mb-4 crud-paquetes">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <h5 class="card-title mb-0">Mis paquetes</h5>
+                <button id="btnAbrirModalPaquete" type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAgregarPaquete">
+                  + Agregar paquete
+                </button>
+            </div>
+
+            <div class="table-responsive mt-3">
+              <table class="table table-hover align-middle mb-0">
+                <thead>
+                  <tr>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th class="text-end">Precio</th>
+                    <th class="text-center">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tbodyPaquetes"></tbody>
+              </table>
+            </div>
+
+            <div class="small muted mt-3 notaPaquetes" id="notaPaquetes"></div>
+          </div>
+        </div>
+
+        <!-- FORM PAQUETE (Agregar / Editar) -->
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+              <h5 class="card-title mb-0" id="tituloFormPaquete">Agregar paquete</h5>
+              <span class="small muted" id="modoFormPaquete">Modo: Crear</span>
+            </div>
+
+            <hr class="my-3">
+
+            <form id="formPaquete">
+              <input type="hidden" id="paquete_id" />
+
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <label class="form-label">Nombre del paquete</label>
+                  <select class="form-select" id="nombre_paquete" required>
+                    <option value="" disabled selected>Seleccionar paquete</option>
+                    <option value="Paquete Estándar">Estándar</option>
+                    <option value="Paquete Premium">Premium</option>
+                    <option value="Paquete Deluxe">Deluxe</option>
                   </select>
                 </div>
-              </form>
-              <div class="d-flex justify-content-between">
-                <button type="submit" class="btn btn-outline-danger btn-sm">
-                  Guardar cambios
-                </button>
-                <button type="button" class="btn btn-outline-secondary btn-sm" id="btn-cancelar-perfil">
-                  Deshacer cambios
-                </button>
-              </div>
-              <hr/>
-              <div class="d-flex justify-content-between">
-                <button type="button" class="btn btn-danger btn-sm" id="btn-eliminar-cuenta">
-                  Eliminar cuenta
-                </button>
-              </div>
-            </div>
-          </div>
 
-          <div class="col-md-6 d-flex flex-column gap-2 derecha">
-            <div class="mis-paquetes"> 
-              <div class="paquetes-header"> 
-                <h2> Mis Paquetes</h2> 
-                <button data-modal-target="#modal" type="b" class="btn btn-dark anadir" onclick="agregarPaquetes()">Añadir paquetes</button>
-               </div> 
-              <hr>
+                <div class="col-md-4">
+                  <label class="form-label">Precio</label>
+                  <input type="number" min="0" class="form-control" id="precio" required />
+                </div>
 
-            </div>
-          <div class="mis-clientes">
-              <h2>
-                Tus clientes
-              </h2>
-              <hr>
+                <div class="col-12">
+                  <label class="form-label">Descripción</label>
+                  <textarea class="form-control" id="descripcion" rows="2" required></textarea>
+                </div>
+              </div>
+
+              <div class="mt-3 d-flex gap-2">
+                <button type="submit" class="btn btn-success btn-sm" id="btnGuardarPaquete">Guardar</button>
+                <button type="button" class="btn btn-outline-secondary btn-sm" id="btnLimpiarPaquete">Limpiar</button>
+              </div>
+
+              <div class="small muted mt-2">
+                Tip: podés crear 1 o varios paquetes. No es obligatorio tener 3.
+              </div>
+            </form>
           </div>
         </div>
+        <script src="/perfiles/js/perfil_cuidador.js" defer></script>
+
       </div>
+    </div>
+        <!-- MODAL: AGREGAR PAQUETE -->
+    <div class="modal fade" id="modalAgregarPaquete" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 16px;">
+          <div class="modal-header">
+            <h5 class="modal-title">Agregar paquete</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
 
-      <div class="col-12" style="text-align: center;">
-        <button type="submit" id="guardar-boton" class="btn btn-danger" onclick="submitForm()">Guardar</button>
-      </div>       
-    <script src=".perfiles/js/perfil_cuidador.js" defer></script>
+          <form id="formPaqueteModal">
+            <div class="modal-body">
+              <div class="row g-3">
+                <div class="col-md-4">
+                  <select class="form-select" id="m_nombre_paquete" required>
+                    <option value="" selected disabled>Seleccioná un paquete...</option>
+                    <option value="Paquete Estándar">Estándar</option>
+                    <option value="Paquete Premium">Premium</option>
+                    <option value="Paquete Deluxe">Deluxe</option>
+                  </select>
+                </div>
 
-    <!-- ================== SCRIPT ================== -->
-  <script>
+                <div class="col-md-4">
+                  <label class="form-label">Precio</label>
+                  <input type="number" min="0" class="form-control" id="m_precio" required />
+                </div>
 
+                <div class="col-12">
+                  <label class="form-label">Descripción</label>
+                  <textarea class="form-control" id="m_descripcion" rows="2" required></textarea>
+                </div>
 
-    const API_URL = "http://localhost:3000/cuidadores";
-    const CUIDADOR_ID = 1;
+                <div class="col-12">
+                  <div class="alert alert-info mb-0">
+                    <div class="form-text">Solo podés tener hasta 3 paquetes como máximo.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-    //FUNCIONES QUE SE EJECUNTAN EN EL NAVEGADOR Y MANDAN PETICIONES A LA BASE DE DATOS
-
-    // ===============================
-    // CARGAR DATOS DEL CUIDADOR
-    // ===============================
-    async function cargarCuidador() {
-      try {
-        const res = await fetch(`${API_URL}/${CUIDADOR_ID}`);
-        const data = await res.json();
-
-        // Encabezado
-        document.getElementById("nombre-superheroe-header").textContent = data.nombre;
-        document.getElementById("franquicia-header").textContent = data.franquicia;
-        document.getElementById("foto_cuidador").src = data.foto_cuidador;
-
-        // Formulario
-        document.getElementById("nombre").value = data.nombre;
-        document.getElementById("franquicia").value = data.franquicia;
-        document.getElementById("experiencia").value = data.experiencia;
-        document.getElementById("poderes").value = data.poderes;
-        document.getElementById("contrasena").value = data.contrasenia;
-
-      } catch (err) {
-        console.error("Error cargando cuidador:", err);
-      }
-    }
-
-    // ===============================
-    // GUARDAR CAMBIOS
-    // ===============================
-    document.getElementById("form-perfil").addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const cambios = {
-        nombre: document.getElementById("nombre").value,
-        franquicia: document.getElementById("franquicia").value,
-        experiencia: Number(document.getElementById("experiencia").value),
-        poderes: document.getElementById("poderes").value,
-        contrasenia: document.getElementById("contrasena").value,
-      };
-
-      await fetch(`${API_URL}/${CUIDADOR_ID}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(cambios),
-      });
-
-      alert("Datos actualizados");
-      cargarCuidador();
-    });
-
-    // ===============================
-    // ELIMINAR CUENTA
-    // ===============================
-    document.getElementById("btn-eliminar-cuenta").addEventListener("click", async () => {
-      if (!confirm("¿Seguro que querés eliminar este cuidador?")) return;
-
-      await fetch(`${API_URL}/${CUIDADOR_ID}`, {
-        method: "DELETE"
-      });
-
-      alert("Cuenta eliminada");
-    });
-
-
-  // ===============================
-  // CARGAR LISTA DE PAQUETES
-  // ===============================
-  async function cargarPaquetes() {
-    try {
-      const res = await fetch(`http://localhost:3000/cuidadores/${CUIDADOR_ID}/paquetes`);
-      const paquetes = await res.json();
-
-      const tbody = document.querySelector("#tabla-paquetes tbody");
-      tbody.innerHTML = "";
-
-      paquetes.forEach(p => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${p.nombre_paquete}</td>
-            <td>${p.descripcion}</td>
-            <td>$${p.precio}</td>
-            <td class="text-center">
-              <button class="btn btn-sm btn-outline-primary" onclick='cargarFormularioPaquete(${JSON.stringify(p)})'>Editar</button>
-              <button class="btn btn-sm btn-outline-danger" onclick="eliminarPaquete(${p.id})">Eliminar</button>
-            </td>
-          </tr>
-        `;
-      });
-
-      // 🔥 EL CONTADOR SIEMPRE SE ACTUALIZA DESDE LA BDD
-      document.getElementById("contador-paquetes").textContent = paquetes.length;
-    } catch (error) {
-      console.error("Error cargando paquetes:", error);
-    }
-  }
-
-  function cargarFormularioPaquete(p) {
-    document.getElementById("paquete_id").value = p.id;
-    document.getElementById("nombre_paquete").value = p.nombre_paquete;
-    document.getElementById("descripcion_paquete").value = p.descripcion;
-    document.getElementById("precio_paquete").value = p.precio;
-  }
-
-
-  // ===============================
-  // Editar paquete
-  // ===============================
-  async function editarPaquete(id) {
-    const nombre = prompt("Nuevo nombre:");
-    const desc = prompt("Nueva descripción:");
-    const precio = prompt("Nuevo precio:");
-
-    await fetch(`${API_URL}/paquetes/${id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        nombre_paquete: nombre,
-        descripcion: desc,
-        precio: precio
-      })
-    });
-
-    cargarPaquetes();
-  }
-
-  async function eliminarPaquete(id) {
-    if (!confirm("Eliminar paquete?")) return;
-
-    await fetch(`${API_URL}/paquetes/${id}`, { method: "DELETE" });
-
-    cargarPaquetes();
-  }
-
-    // ===============================
-    // AL CARGAR LA PÁGINA
-    // ===============================
-    cargarCuidador();
-    cargarPaquetes();
-
-    
-  </script>
-  </body>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">
+                Cancelar
+              </button>
+              <button type="submit" class="btn btn-success btn-sm">
+                Guardar paquete
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
